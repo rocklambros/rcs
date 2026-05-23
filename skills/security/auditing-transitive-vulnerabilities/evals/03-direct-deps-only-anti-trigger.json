@@ -1,0 +1,12 @@
+{
+  "skill": "auditing-transitive-vulnerabilities",
+  "scenario_id": "03-direct-deps-only-anti-trigger",
+  "scenario_kind": "anti-trigger",
+  "query": "I have a tiny Python project with exactly two direct dependencies declared in `pyproject.toml`: `requests` and `click`. That's it. There's no lockfile and no SBOM. Audit my transitive vulnerabilities.",
+  "files": [],
+  "expected_behavior": [
+    "Does NOT proceed to run a transitive-vuln scan on the bare manifest — recognizes that transitive analysis requires a RESOLVED dependency graph (lockfile or SBOM), and that the declared `pyproject.toml` alone is insufficient",
+    "Recommends generating a lockfile first (e.g., `uv lock` or `pip-compile`) OR generating an SBOM via the generating-sbom skill, BEFORE re-running this audit",
+    "Does NOT incorrectly claim that two direct deps means zero transitive deps (acknowledges that `requests` and `click` each pull in their own transitive trees, so transitive exposure exists even with a small direct-dep set)"
+  ]
+}
