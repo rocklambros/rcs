@@ -1,0 +1,12 @@
+{
+  "skill": "tuning-classification-threshold",
+  "scenario_id": "01-happy-path",
+  "scenario_kind": "happy-path",
+  "query": "I have a credit-card fraud classifier on a 50,000-transaction held-out set. Base rate of fraud is about 0.6 percent. From our security operations team: missing a fraud is roughly 100 times worse than triggering a false alarm (analyst review overhead). I have separate validation and test slices — y_val, p_val, y_test, p_test as NumPy arrays. What threshold should I deploy at?",
+  "files": [],
+  "expected_behavior": [
+    "Recommends a cost-weighted threshold selector (not Youden's J, not F1, not 0.5) with cost_ratio = 100 (FN-cost / FP-cost), driven explicitly by the user's stated 100x asymmetry",
+    "Names that the threshold MUST be picked on the validation slice (y_val, p_val) and the final operating-point metrics MUST be reported on the held-out test slice (y_test, p_test), NOT on the same data used to pick",
+    "Explicitly refuses to default to threshold 0.5 (or notes that 0.5 is wrong for this problem) — the chosen t* will likely be well below 0.5 because false negatives dominate the cost"
+  ]
+}
