@@ -10,6 +10,15 @@ __pycache__/
 # Eval results (regenerated per run; not committed)
 skills/**/evals/results-*.json
 
+# Secrets and local environment overrides (never commit)
+.env
+.env.local
+.python-version
+
+# Logs and temp artifacts from uv / pytest / eval runs
+*.log
+*.tmp
+
 # OS
 .DS_Store
 Thumbs.db
