@@ -1,0 +1,12 @@
+{
+  "skill": "running-chollet-ratio-check",
+  "scenario_id": "02-edge-case",
+  "scenario_kind": "edge-case",
+  "query": "I have 2,000,000 product reviews on an e-commerce site, each one labeled with a star rating from 1 to 5. The mean review length is about 95 words. We want to bucket the rating into 3 classes (1 star, 2-3 stars, 4-5 stars) and classify which bucket each review belongs to. Which model family should I use?",
+  "files": [],
+  "expected_behavior": [
+    "Computes the Chollet ratio = 2,000,000 / 95 ≈ 21,000 (allow approximate value) and uses that to conclude the dataset is large enough that a Transformer or pretrained fine-tune is the appropriate starting family",
+    "STILL requires running a TF-IDF + linear baseline first for comparison (does not skip the baseline just because the ratio favors a Transformer)",
+    "Provides at least one regularization or fine-tuning default specific to Transformer fine-tuning on this scale (e.g. low learning rate around 2e-5 to 5e-5, OR limited epochs around 2-4, OR early stopping, OR weight decay) — not just 'use BERT'"
+  ]
+}

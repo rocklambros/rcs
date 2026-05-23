@@ -1,0 +1,12 @@
+{
+  "skill": "running-chollet-ratio-check",
+  "scenario_id": "03-anti-trigger",
+  "scenario_kind": "anti-trigger",
+  "query": "I have a tabular dataset — 30 numeric and categorical features per row, 20,000 rows. I want to predict customer churn (binary classification). Should I use the Chollet samples-per-word ratio to pick between a deep model and a simple one?",
+  "files": [],
+  "expected_behavior": [
+    "Identifies the dataset as TABULAR (not text or sequence) and explicitly declines to apply the Chollet ratio because the heuristic is text/sequence-specific",
+    "Hands off to a tabular-appropriate model-selection approach — e.g. ml-datasci/building-baseline-models or naming the tabular ladder (Dummy → linear → random forest / gradient-boosted trees) — rather than forcing the text-specific ratio computation",
+    "Mentions that for tabular data the dominant rule of thumb is that tree-based models (gradient-boosted trees / random forest) tend to win on tabular until datasets become very large, NOT samples-per-sequence-length"
+  ]
+}
