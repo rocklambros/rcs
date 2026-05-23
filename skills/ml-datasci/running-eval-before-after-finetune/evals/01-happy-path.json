@@ -1,0 +1,12 @@
+{
+  "skill": "running-eval-before-after-finetune",
+  "scenario_id": "01-happy-path",
+  "scenario_kind": "happy-path",
+  "query": "I fine-tuned Llama-3.1-8B for a customer-intent classification task. I have base-model predictions on a 500-row held-out eval set (68% correct) and fine-tune predictions on the same 500 rows (73% correct). I want to know whether the 5-point improvement is real. The labels are per-row binary correct/incorrect. Walk me through the analysis.",
+  "files": [],
+  "expected_behavior": [
+    "Identifies this as paired-binary and recommends McNemar's test on the discordant pairs (b and c in the 2x2 contingency table) — NOT chi-squared on the marginal accuracies, AND explicitly notes that the concordant pairs do not contribute to the test",
+    "Requires reporting an effect size with a 95% confidence interval (odds ratio c/b OR paired-Δaccuracy = (c-b)/n with paired-proportion CI), NOT a bare p-value as the conclusion",
+    "Requires a power-check at n=500 with the observed discordance rate (or against a minimum-detectable-effect the user specifies) before issuing a certify / do-not-certify verdict — flags underpowered evals as 'underpowered-inconclusive' rather than as 'no significant difference'"
+  ]
+}

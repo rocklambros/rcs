@@ -1,0 +1,12 @@
+{
+  "skill": "running-eval-before-after-finetune",
+  "scenario_id": "02-edge-case",
+  "scenario_kind": "edge-case",
+  "query": "I have per-row log-likelihoods from both my base model and my SFT fine-tune on a 2000-row held-out eval. I want to know whether the fine-tune is better. I ran a Shapiro-Wilk on the per-row differences (LL_finetune - LL_base) and got p = 0.0008. Now what?",
+  "files": [],
+  "expected_behavior": [
+    "Identifies that Shapiro p = 0.0008 rejects Normality of the per-row differences and that paired-t therefore violates its parametric assumption — recommends Wilcoxon signed-rank instead, with the Shapiro result named as the gating assumption check that drove the choice",
+    "Recommends a paired non-parametric effect size with a confidence interval (paired rank-biserial r or paired Cliff's delta with bootstrap 95% CI), NOT just the Wilcoxon p-value",
+    "Names the direction of the effect explicitly (e.g., 'fine-tune log-likelihood is higher than base' or 'positive median of the per-row differences'), not just 'the test was significant' or 'they differ'"
+  ]
+}
