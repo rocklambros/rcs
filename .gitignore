@@ -27,3 +27,6 @@ Thumbs.db
 .vscode/
 .idea/
 *.swp
+
+# Project-local Claude Code state (per-machine, not for sharing)
+.claude/

@@ -50,9 +50,9 @@ The `skills/<track>/<name>/SKILL.md` files follow the Anthropic Skills format an
 | [`auditing-data-quality`](skills/workflow/auditing-data-quality/) | workflow | Per-column null / range / type / cardinality audit + semantic-class detection + row-level integrity | ✅ shipped | 17 |
 | [`building-baseline-models`](skills/ml-datasci/building-baseline-models/) | ml-datasci | 3-rung baseline ladder (Dummy / Linear / RandomForest) on the same train/test split + same metric as the final model | ✅ shipped | 17 |
 | [`evaluating-regression-models`](skills/ml-datasci/evaluating-regression-models/) | ml-datasci | RMSE + MAE + R² + adjusted-R² + residual plots + k-fold CV; refuses R² alone | ✅ shipped | 17 |
-| [`auditing-context-window-pressure`](skills/workflow/auditing-context-window-pressure/) | workflow | Multi-turn session pressure audit: context %, cache-hit-rate, instruction-hierarchy size, tool-result bloat | 🔨 drafting | 17 |
+| [`auditing-context-window-pressure`](skills/workflow/auditing-context-window-pressure/) | workflow | Multi-turn session pressure audit: context %, cache-hit-rate, instruction-hierarchy size, tool-result bloat (mandatory file-offload + subagent-summary triage) | ✅ shipped | 17 |
 
-_17 shipped + 1 drafting (18 total) of ~99 planned skills. See each track's README for the planned-skills roadmap; see [`docs/superpowers/plans/2026-05-23-rcs-batch-creation-plan.md`](docs/superpowers/plans/2026-05-23-rcs-batch-creation-plan.md) for the v2–v7 roadmap._
+_18 shipped of ~99 planned skills. See each track's README for the planned-skills roadmap; see [`docs/superpowers/plans/2026-05-23-rcs-batch-creation-plan.md`](docs/superpowers/plans/2026-05-23-rcs-batch-creation-plan.md) for the v2–v7 roadmap._
 
 ## Governance
 

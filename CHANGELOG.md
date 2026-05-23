@@ -4,6 +4,15 @@ All notable changes to RCS are documented here. Per-skill changes use the skill'
 
 ## [Unreleased]
 
+### Changed
+
+- `workflow/auditing-context-window-pressure` v0.1.0 → v0.1.1: Step 7 + Quick start + Outputs + Failure modes restructured to make file-offload (move 1) and subagent-summary (move 2) MANDATORY before `/compact` / `/clear` / CLAUDE.md trim. Sonnet happy-path re-eval scored 3/3 (was 2/3 at v0.1.0). Status promoted `drafting` → `shipped`. Stale cross-references to renamed `auditing-claude-md-hierarchy` corrected to `auditing-instruction-hierarchy`.
+- Cumulative skill count at HEAD: 18 shipped + 0 drafting (was 17 shipped + 1 drafting at `v1.0.0-phase2-thru-6`).
+
+### Added
+
+- `.gitignore`: ignore project-local `.claude/` directory (per-machine Claude Code state).
+
 ## [v1.0.0-phase2-thru-6] — 2026-05-23
 
 Phase 2 (high-Σ low-effort), Phase 3 (stats discipline), Phase 4 (ML eval), Phase 5 (data + workflow hygiene), and Phase 6 (Claude Code meta + context) shipped via 5 independent batch PRs (#2, #3, #4, #5, #6) authored in parallel sessions using the PRAGMATIC discipline. This release consolidates the per-batch changelog fragments and updates the user-facing catalogs.
