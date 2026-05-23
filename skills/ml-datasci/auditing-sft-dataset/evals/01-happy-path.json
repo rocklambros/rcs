@@ -1,0 +1,12 @@
+{
+  "skill": "auditing-sft-dataset",
+  "scenario_id": "01-happy-path",
+  "scenario_kind": "happy-path",
+  "query": "I have a 120K-row SFT dataset I scraped from a customer-support forum, plus a 2K held-out eval split. Both files are JSONL in ShareGPT format (conversations field with from/value turns). Target model is Llama-3.1-8B. I want to audit the dataset before launching training. Walk me through it.",
+  "files": [],
+  "expected_behavior": [
+    "Walks the audit covering at minimum: chat-template conformance under the target Llama-3 template, duplicate detection (exact AND near-duplicate clustering, not just hash equality), AND train-vs-eval leakage via substring n-gram overlap",
+    "Requires PII detection with an explicit policy input (or the documented default minimum) AND specifies that failing rows are quarantined to separate files, NOT silently dropped from the dataset",
+    "Names that leakage findings recommend dropping TRAIN rows (not eval rows) AND that the audit is re-runnable / re-audited after remediation, not a one-shot certification"
+  ]
+}

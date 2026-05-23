@@ -1,0 +1,12 @@
+{
+  "skill": "auditing-sft-dataset",
+  "scenario_id": "03-anti-trigger",
+  "scenario_kind": "anti-trigger",
+  "query": "I'm fine-tuning a small model for a quick prototype. I'm using a 5K-row subset of the published yahma/alpaca-cleaned dataset from Hugging Face. Should I run a full audit on it before training?",
+  "files": [],
+  "expected_behavior": [
+    "Does NOT recommend running the full 7-dimension SFT audit on the published, pre-curated yahma/alpaca-cleaned dataset",
+    "Notes that the upstream dataset has been audited / cleaned (per its dataset card) and recommends a lightweight spot-check (sample N rows, verify format + length distribution under the target template) instead",
+    "Does NOT silently approve the dataset for training either — the spot-check still happens, and any operator-specific concerns (PII policy that the upstream curation may not cover, leakage against the operator's specific eval set) still warrant the relevant individual audit steps"
+  ]
+}

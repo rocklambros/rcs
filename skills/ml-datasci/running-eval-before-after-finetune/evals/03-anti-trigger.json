@@ -1,0 +1,12 @@
+{
+  "skill": "running-eval-before-after-finetune",
+  "scenario_id": "03-anti-trigger",
+  "scenario_kind": "anti-trigger",
+  "query": "I fine-tuned a model and it gets 73% on my held-out eval. Is that a good result? Evaluate the fine-tune for me.",
+  "files": [],
+  "expected_behavior": [
+    "Does NOT run the paired before/after test — explicitly notes that the paired test requires base-checkpoint predictions on the same eval set and those have not been supplied",
+    "Refuses to call 73% an 'improvement' or to certify the fine-tune without the baseline comparison; offers two paths forward (evaluate the base on the same eval first, then return for the paired analysis; OR if the user only wants standalone characterization, point at a single-checkpoint eval skill like evaluating-binary-classifiers)",
+    "Does NOT silently treat the user's '73%' as the final answer — names the missing piece (base-checkpoint scores on the same eval) as the blocker, not a stylistic preference"
+  ]
+}

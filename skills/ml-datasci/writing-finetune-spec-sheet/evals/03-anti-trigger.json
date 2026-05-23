@@ -1,0 +1,12 @@
+{
+  "skill": "writing-finetune-spec-sheet",
+  "scenario_id": "03-anti-trigger",
+  "scenario_kind": "anti-trigger",
+  "query": "I'm noodling on a weekend project — I'm fine-tuning a tiny 1B model on my laptop just to explore whether the approach is interesting. It's never leaving my machine. Should I write a full model spec sheet for it?",
+  "files": [],
+  "expected_behavior": [
+    "Does NOT recommend walking the full 7-section spec-sheet workflow for a personal-scratch experiment that never leaves the author's machine — explicitly notes the spec sheet is for deliverables (publication, hand-off, regulated deployment) and that this audience does not need it",
+    "Suggests a lighter alternative (e.g., a short README in the project folder with what was tried, what was observed, what to try next) instead of the full spec sheet",
+    "Offers to return to the full spec-sheet workflow if the user later decides to publish, hand off, or deploy the fine-tune to a wider audience — does not foreclose the workflow, only notes it is not appropriate for the current audience"
+  ]
+}
