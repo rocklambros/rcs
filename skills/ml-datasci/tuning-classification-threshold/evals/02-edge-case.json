@@ -1,0 +1,12 @@
+{
+  "skill": "tuning-classification-threshold",
+  "scenario_id": "02-edge-case",
+  "scenario_kind": "edge-case",
+  "query": "I have a classifier flagging anomalous user sessions for our internal SOC. We don't actually have a cost model — no one has quantified the dollar cost of a false positive vs a false negative. The team just wants me to pick a threshold. What do I do?",
+  "files": [],
+  "expected_behavior": [
+    "Refuses to silently default to cost_ratio = 1 or threshold = 0.5 just because no cost model exists — explicitly names the missing cost model as a problem to surface, not paper over",
+    "Recommends EITHER (a) eliciting a cost proxy / FPR budget from the team based on a concrete operational constraint such as analyst review capacity (e.g. 'we can review N flags per day' → FPR budget), OR (b) using a cost-blind selector like Youden's J explicitly labeled as a placeholder until cost is quantified",
+    "Documents in the recommendation that the chosen threshold should be re-tuned once a real cost model or hard budget is available"
+  ]
+}

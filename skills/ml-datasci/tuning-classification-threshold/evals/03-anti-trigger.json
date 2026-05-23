@@ -1,0 +1,12 @@
+{
+  "skill": "tuning-classification-threshold",
+  "scenario_id": "03-anti-trigger",
+  "scenario_kind": "anti-trigger",
+  "query": "I have a 5-class intent classifier (5 user intents). The decision rule is argmax over the softmax output — the predicted class is whichever class has the highest probability. The classes are reasonably balanced. Help me tune the threshold.",
+  "files": [],
+  "expected_behavior": [
+    "Identifies that a multi-class softmax-argmax decision rule has no single binary threshold to tune — the decision rule IS 'max-probability class' — and does NOT force a binary threshold sweep onto this problem",
+    "Either hands off to ml-datasci/evaluating-multiclass-classifiers OR names that as the right tool for the multi-class evaluation, rather than running the binary threshold-selection workflow",
+    "If suggesting any threshold-like variant for multi-class, names a multi-class-appropriate one (top-1-with-reject below a confidence floor, OR per-class cost-weighted argmax via a K x K cost matrix) — not a single scalar threshold"
+  ]
+}

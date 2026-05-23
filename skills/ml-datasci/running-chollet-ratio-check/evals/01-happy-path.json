@@ -1,0 +1,12 @@
+{
+  "skill": "running-chollet-ratio-check",
+  "scenario_id": "01-happy-path",
+  "scenario_kind": "happy-path",
+  "query": "I have 7,000 customer-support tickets labeled with 6 intent categories. Average ticket length is about 280 words. I want to classify intent. Should I fine-tune BERT or use a simpler model like TF-IDF + logistic regression?",
+  "files": [],
+  "expected_behavior": [
+    "Computes the Chollet ratio (n_samples / mean_seq_len) = 7000 / 280 = 25 (allow approximate value) and uses that as the decision criterion",
+    "Recommends TF-IDF + a linear classifier (logistic regression OR linear SVM) as the starting point, citing the ratio being well below the ~1500 threshold and warning that BERT will likely overfit on this dataset size",
+    "Requires a comparison between the BoW / linear baseline and any deep model before deploying — i.e. does not allow skipping the baseline even if BERT is eventually tried"
+  ]
+}
