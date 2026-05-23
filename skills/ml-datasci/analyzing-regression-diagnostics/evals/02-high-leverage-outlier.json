@@ -1,0 +1,12 @@
+{
+  "skill": "analyzing-regression-diagnostics",
+  "scenario_id": "02-high-leverage-outlier",
+  "scenario_kind": "edge-case",
+  "query": "I fit an OLS regression on n = 80 observations with p = 3 predictors. Cook's D for observation 42 is 1.4. All other observations have Cook's D below 0.05. Should I just drop observation 42 and refit?",
+  "files": [],
+  "expected_behavior": [
+    "Names Cook's D > 1 as highly influential and refuses to silently drop observation 42 — the default response is to investigate the observation and report both regressions (with and without the point), not removal as the first action",
+    "Recommends inspecting the observation for a substantive reason (data-entry error, out-of-scope case, different population) before any drop decision, and names that 'silently drop' is the anti-pattern",
+    "Recommends a side-by-side comparison of fitted coefficients with and without observation 42 so the reader can see which coefficients move and by how much"
+  ]
+}

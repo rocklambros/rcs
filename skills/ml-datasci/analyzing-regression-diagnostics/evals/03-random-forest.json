@@ -1,0 +1,12 @@
+{
+  "skill": "analyzing-regression-diagnostics",
+  "scenario_id": "03-random-forest",
+  "scenario_kind": "anti-trigger",
+  "query": "I trained a random forest regressor with 500 trees on a tabular dataset and got R² = 0.84 on the test set. Run the regression diagnostics — Cook's D, leverage, VIF, residual Normality, the whole battery.",
+  "files": [],
+  "expected_behavior": [
+    "Refuses to run classical regression diagnostics (Cook's D, leverage, VIF, residual Normality) on a random forest because the diagnostics assume a linear / GLM coefficient structure that a tree ensemble does not have",
+    "Explains that the random forest has no fitted coefficients whose standard errors could be biased by heteroscedasticity, no leverage matrix in the OLS sense, and no VIF interpretation — the diagnostics simply do not apply",
+    "Hands off to the appropriate alternative — predictive scoring via evaluating-regression-models (RMSE, MAE, R² with CV) and feature-importance methods like SHAP or permutation importance for interpretation"
+  ]
+}
