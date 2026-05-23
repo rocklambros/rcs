@@ -8,14 +8,14 @@ description: >
   a plugin's mcpServers config. Produces a per-check verdict, a blocking-issues list,
   and a final integrate / integrate-with-constraints / reject recommendation.
 version: 0.1.0
-status: drafting
+status: shipped
 track: security
 audience: [security-eng, ai-security, skill-author]
 evidence:
   - jetson-runbook
   - RCAP
   - claude-secure-coding-rules
-last-updated: 2026-05-22
+last-updated: 2026-05-23
 ---
 
 # Auditing an MCP Server Before Pre-Trust
@@ -153,7 +153,7 @@ Output: Skill begins audit, immediately fails Check 1 (no LICENSE file in repo r
 
 ## Status & version
 
-- Status: drafting
+- Status: shipped
 - Version: 0.1.0
-- Last-updated: 2026-05-22
+- Last-updated: 2026-05-23
 - Provenance: migrated from `~/.claude/skills/mcp-server-pre-trust-audit/`; reformatted to Layer-3 contract; slug renamed to enforce gerund convention

@@ -33,10 +33,10 @@ The `skills/<track>/<name>/SKILL.md` files follow the Anthropic Skills format an
 
 | Skill | Track | What it does | Status | Σ |
 |---|---|---|---|---|
-| [`running-adversarial-premortem`](skills/workflow/running-adversarial-premortem/) | workflow | Multi-round adversarial premortem on spec / plan / paper / proof / codebase | 🔨 drafting | 17 |
-| [`auditing-mcp-server-pre-trust`](skills/security/auditing-mcp-server-pre-trust/) | security | Six-check audit before registering an MCP server | 🔨 drafting | 18 |
+| [`running-adversarial-premortem`](skills/workflow/running-adversarial-premortem/) | workflow | Multi-round adversarial premortem on spec / plan / paper / proof / codebase | ✅ shipped | 17 |
+| [`auditing-mcp-server-pre-trust`](skills/security/auditing-mcp-server-pre-trust/) | security | Six-check audit before registering an MCP server | ✅ shipped | 18 |
 
-_2 of ~80 planned skills authored (currently `drafting`; pending eval validation). See each track's README for the planned-skills roadmap._
+_2 of ~80 planned skills shipped. See each track's README for the planned-skills roadmap._
 
 ## Governance
 

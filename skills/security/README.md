@@ -6,10 +6,6 @@ This track encodes day-job disciplines: MCP pre-trust auditing, vulnerability tr
 
 ## Shipped skills
 
-_None yet. `auditing-mcp-server-pre-trust` is at `status: drafting` pending eval validation; see "Drafting" section below._
-
-## Drafting
-
 | Skill | What it does | When to use | Σ |
 |---|---|---|---|
 | [`auditing-mcp-server-pre-trust`](auditing-mcp-server-pre-trust/) | Six-check audit (license, source, network, version pin, secret handling, tool subset) of any proposed MCP server before pre-trust | Whenever you are about to add an MCP server to your Claude Code config | 18 |

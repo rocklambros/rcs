@@ -2,7 +2,7 @@
 
 All RCS skills, organized first by audience track and then by ROI rank (Σ score from the v1 brainstorm).
 
-## Drafting (v1.0.0-phase1, pending eval validation)
+## Shipped (v1.0.0-phase1)
 
 | Skill | Track | Σ |
 |---|---|---|

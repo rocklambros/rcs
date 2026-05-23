@@ -4,10 +4,6 @@ Cross-cutting research and engineering hygiene. Applies to both security and ml-
 
 ## Shipped skills
 
-_None yet. `running-adversarial-premortem` is at `status: drafting` pending eval validation; see "Drafting" section below._
-
-## Drafting
-
 | Skill | What it does | When to use | Σ |
 |---|---|---|---|
 | [`running-adversarial-premortem`](running-adversarial-premortem/) | Multi-round adversarial premortem on a spec / plan / design / paper / proof / codebase — per-claim audit table + stops-mattering-if + prioritized remediation | When the cost of being wrong is high; AI/ML/agentic/security-sensitive designs; mathematical proofs; high-stakes plans | 17 |

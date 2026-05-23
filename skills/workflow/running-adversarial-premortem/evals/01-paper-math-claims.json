@@ -6,7 +6,7 @@
   "files": [],
   "expected_behavior": [
     "Produces a per-claim audit table that has at least one row per theorem with the columns Location, Concern, Strongest counter, and Stops-mattering-if",
-    "Names at least one specific concern about the use of 'isomorphism' on a small finite set (6 or 8 elements) — that demonstrating bijection of operations is required, not just bijection of sets",
+    "Names a concern about the isomorphism claim that goes beyond bijection of representations to address whether operations / functional behavior / measure-zero exclusions / multi-head interaction would also be preserved",
     "Provides a prioritized remediation list ordered by severity × likelihood / detectability, NOT alphabetically or by appearance order"
   ]
 }

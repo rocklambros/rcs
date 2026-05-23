@@ -2,7 +2,7 @@
   "skill": "auditing-mcp-server-pre-trust",
   "scenario_id": "01-pinned-licensed-mcp",
   "scenario_kind": "happy-path",
-  "query": "I want to add https://github.com/example/filesystem-mcp v1.2.3 to my Claude Code setup. The README says it exposes read_file, write_file, and list_directory tools. License is MIT. Install command they recommend is npm install filesystem-mcp@1.2.3. Audit it.",
+  "query": "I want to add https://github.com/example/filesystem-mcp v1.2.3 to my Claude Code setup. (Assume the GitHub repo and npm package exist exactly as described.) The README says it exposes read_file, write_file, and list_directory tools. License is MIT. Install command they recommend is npm install filesystem-mcp@1.2.3. Audit it from the information given — do not attempt to fetch the URL.",
   "files": [],
   "expected_behavior": [
     "Walks all six checks (license, source, network, version pin, secret handling, tool subset) — at minimum lists each check explicitly",

@@ -9,14 +9,14 @@ description: >
   proofs, agentic-system designs, or any high-stakes plan where surfacing failure
   modes you would otherwise miss is the goal.
 version: 0.1.0
-status: drafting
+status: shipped
 track: workflow
 audience: [security-eng, ai-security, ml-engineer, data-scientist, skill-author]
 evidence:
   - ATACE
   - incident-rank-validation
   - TRACT
-last-updated: 2026-05-22
+last-updated: 2026-05-23
 ---
 
 # Running an Adversarial Premortem
@@ -155,7 +155,7 @@ Output: Skill refuses to engage premortem. Explains that premortem is for high-s
 
 ## Status & version
 
-- Status: drafting
+- Status: shipped
 - Version: 0.1.0
-- Last-updated: 2026-05-22
+- Last-updated: 2026-05-23
 - Provenance: migrated from `~/.claude/skills/adversarial-premortem.skill` (zip-encoded); reformatted to Layer-3 contract
