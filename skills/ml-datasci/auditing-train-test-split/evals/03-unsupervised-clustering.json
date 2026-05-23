@@ -1,0 +1,12 @@
+{
+  "skill": "auditing-train-test-split",
+  "scenario_id": "03-unsupervised-clustering",
+  "scenario_kind": "anti-trigger",
+  "query": "I'm running k-means clustering on customer segments. Audit my train/test split.",
+  "files": [],
+  "expected_behavior": [
+    "Does NOT criticize the user for not having a train/test split (does NOT claim it is a leakage or methodological failure)",
+    "Names cluster-stability / bootstrap-silhouette / gap-statistic / ARI-under-perturbation as an appropriate validation approach for unsupervised clustering",
+    "Clarifies that the train/test split paradigm is a supervised-learning concept and does not transfer directly to k-means"
+  ]
+}

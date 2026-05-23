@@ -1,0 +1,12 @@
+{
+  "skill": "auditing-train-test-split",
+  "scenario_id": "02-temporal-leakage-timeseries",
+  "scenario_kind": "edge-case",
+  "query": "I'm forecasting demand from 5 years of weekly sales. I used `train_test_split(X, y, test_size=0.2, random_state=42, shuffle=True)`. Audit it.",
+  "files": [],
+  "expected_behavior": [
+    "Flags the temporal-order violation (random split on time-indexed data leaks future information into training)",
+    "Recommends time-aware splitting — TimeSeriesSplit, walk-forward / rolling-origin, or a manual date-based cutoff",
+    "Explains why shuffle=True is wrong for time-series data (the model is given access to future weeks when predicting past weeks, which does not match the deployment condition)"
+  ]
+}
