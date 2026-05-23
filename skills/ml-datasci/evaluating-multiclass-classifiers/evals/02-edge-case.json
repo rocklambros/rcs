@@ -1,0 +1,12 @@
+{
+  "skill": "evaluating-multiclass-classifiers",
+  "scenario_id": "02-edge-case",
+  "scenario_kind": "edge-case",
+  "query": "I have a 10-class severity classifier. Class 0 makes up roughly 70 percent of the data, classes 1-6 each make up about 4 percent, and classes 7, 8, 9 each make up about 1 percent. I'm currently reporting 91 percent overall accuracy and 0.62 macro-F1. Is the classifier good?",
+  "files": [],
+  "expected_behavior": [
+    "Refuses to call 91 percent accuracy 'good' and explicitly identifies that the majority class (~70 percent) makes overall accuracy misleading — always-predict-class-0 already gets ~70 percent",
+    "Flags that macro-F1 of 0.62 likely hides per-class collapse on the rare classes (7, 8, 9 — 1 percent each) and demands per-class F1 / per-class recall for those rare classes before declaring the classifier good",
+    "Either (a) recommends switching the lead metric to weighted-F1 if deployment cost follows class frequency, OR (b) keeps macro-F1 as lead but requires explicit reporting and justification of per-class performance on the rare classes"
+  ]
+}

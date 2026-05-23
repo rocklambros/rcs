@@ -1,0 +1,12 @@
+{
+  "skill": "evaluating-multiclass-classifiers",
+  "scenario_id": "03-anti-trigger",
+  "scenario_kind": "anti-trigger",
+  "query": "I have a binary classifier — spam vs ham. y_true is 0/1 and y_pred_proba is shape (n, 2). Evaluate it as a multi-class problem please, using your multi-class evaluation report.",
+  "files": [],
+  "expected_behavior": [
+    "Identifies the task as binary (2 classes), NOT a multi-class task that benefits from the multi-class report template",
+    "Hands off to ml-datasci/evaluating-binary-classifiers (or names that as the right skill) rather than forcing a K x K confusion matrix or one-vs-rest plumbing onto a 2-class problem",
+    "Explains that multi-class metrics on a binary task collapse to (or are just re-named versions of) the binary metrics (e.g. macro-F1 = mean of class-0-F1 and class-1-F1), so applying the full multi-class template adds plumbing without diagnostic value"
+  ]
+}

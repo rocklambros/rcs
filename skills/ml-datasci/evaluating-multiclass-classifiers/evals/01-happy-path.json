@@ -1,0 +1,12 @@
+{
+  "skill": "evaluating-multiclass-classifiers",
+  "scenario_id": "01-happy-path",
+  "scenario_kind": "happy-path",
+  "query": "I trained a 5-class image classifier on a hospital diagnosis dataset (5 diagnosis categories, roughly balanced — between 800 and 1200 samples per class in the held-out test set). I have y_true (integer labels 0-4) and y_pred_proba (shape (n, 5)) as NumPy arrays. Evaluate the classifier.",
+  "files": [],
+  "expected_behavior": [
+    "Names per-class precision / recall / F1 with per-class support as required output (not just aggregated F1)",
+    "Names a full 5 x 5 confusion matrix, with at least one of counts OR row-normalized explicitly required (and ideally both)",
+    "Names macro-F1, weighted-F1, AND a justification for which one leads the report based on the cost model (not just defaults to one without justification)"
+  ]
+}
