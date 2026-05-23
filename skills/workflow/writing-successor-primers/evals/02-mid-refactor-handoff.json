@@ -1,0 +1,12 @@
+{
+  "skill": "writing-successor-primers",
+  "scenario_id": "02-mid-refactor-handoff",
+  "scenario_kind": "edge-case",
+  "query": "We're in the middle of a major refactor — half the code is the old design, half is the new design, and there's a transition layer between them. I have to hand this off next week. How do I write the primer when the project's principles are literally changing under us?",
+  "files": [],
+  "expected_behavior": [
+    "Recommends splitting the founding-principles section into 'principles of the old design (still in force for module X)' and 'principles of the new design (in force for module Y)' AND naming the transition layer as a first-class concept the successor must understand",
+    "Requires the defense-in-depth false-confidence section to explicitly call out the mid-refactor risk — for example, a redundancy layer that protected the old design may not cover the new design or vice versa — so the successor does not trust a layer that is no longer load-bearing",
+    "Recommends a dated migration log (or 'what is NOT here' entry listing the old-design pieces slated for removal AND the dates by which the migration is expected to complete) so the successor knows which side of the transition each file lives on"
+  ]
+}

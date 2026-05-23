@@ -1,0 +1,12 @@
+{
+  "skill": "writing-successor-primers",
+  "scenario_id": "03-throwaway-script",
+  "scenario_kind": "anti-trigger",
+  "query": "I wrote a quick 80-line Python script that dedupes a CSV. Should I write a successor primer for it before I move on to other things?",
+  "files": [],
+  "expected_behavior": [
+    "Does NOT produce a full successor primer (no founding-principles section, no defense-in-depth false-confidence section, no glossary)",
+    "Explains that a primer is for non-trivial projects with founding-principles worth preserving and real successor risk; an 80-line throwaway script does not meet that bar",
+    "Recommends a lighter-weight alternative such as a top-of-file docstring or a 3-5 line README naming input, output, and invocation — the right tool for the size of the artifact"
+  ]
+}

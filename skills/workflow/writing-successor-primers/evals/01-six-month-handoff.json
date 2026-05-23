@@ -1,0 +1,12 @@
+{
+  "skill": "writing-successor-primers",
+  "scenario_id": "01-six-month-handoff",
+  "scenario_kind": "happy-path",
+  "query": "I'm rolling off the incident-rank-validation project at the end of the month. There's no specific successor — whoever picks this up will probably be a new hire about 6 months from now. The project is a NUTS-sampler-based scoring pipeline that's been running for 8 months. Help me write the handoff doc.",
+  "files": [],
+  "expected_behavior": [
+    "Produces a primer with the required sections: a 3-sentence purpose, 5-8 founding principles (each with WHY plus a rejected trade-off, not just a feature list), and 3-5 where-to-start entry points naming concrete file paths or run commands",
+    "Includes an explicit defense-in-depth false-confidence section that names at least one layer of redundancy AND the single brittle component the redundancy could mask (NOT just a list of safety layers as strengths)",
+    "Includes a glossary of project-specific terms AND a 'what is NOT here' list that captures descoped areas, rejected alternatives, or intentional gaps — so the successor does not re-open closed decisions"
+  ]
+}
