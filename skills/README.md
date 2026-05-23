@@ -25,12 +25,7 @@ Sorted by Σ desc.
 | [`auditing-data-quality`](workflow/auditing-data-quality/) | workflow | 17 |
 | [`building-baseline-models`](ml-datasci/building-baseline-models/) | ml-datasci | 17 |
 | [`evaluating-regression-models`](ml-datasci/evaluating-regression-models/) | ml-datasci | 17 |
-
-## Drafting
-
-| Skill | Track | Σ | Reason |
-|---|---|---|---|
-| [`auditing-context-window-pressure`](workflow/auditing-context-window-pressure/) | workflow | 17 | Batch 5 Sonnet happy-path eval scored 2/3; Step 7 body revision pending |
+| [`auditing-context-window-pressure`](workflow/auditing-context-window-pressure/) | workflow | 17 |
 
 ## By track
 

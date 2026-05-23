@@ -12,6 +12,7 @@ Cross-cutting research and engineering hygiene. Applies to both security and ml-
 | [`deduplicating-records`](deduplicating-records/) | Multi-key dedup with index-refresh between passes, transitive collapse via connected-components / union-find, and ID-format normalization across sources | Ingesting a corpus from multiple sources; merging registries with different ID formats; observing duplicates after a recent merge or schema change | 18 |
 | [`pinning-reproducible-environments`](pinning-reproducible-environments/) | Per-ecosystem pin pattern (uv.lock / poetry.lock / package-lock.json / pnpm-lock.yaml / renv.lock / base-image digest) + runtime-version pinning + CI strict-install + weekly drift-check | Starting a new project; "works on my machine but not in CI" symptoms; teammate onboarding; reproducibility for a paper, regulatory submission, or audit trail | 17 |
 | [`auditing-data-quality`](auditing-data-quality/) | Per-column null / range / type / cardinality audit + semantic-class detection + outlier flagging (no auto-drop) + row-level integrity (duplicate rows, conflicting facts) | Receiving a new dataset; before fitting any model; when results suddenly look off; when a dataset changed shape between runs | 17 |
+| [`auditing-context-window-pressure`](auditing-context-window-pressure/) | Multi-turn session pressure audit: context %, cache-hit-rate, instruction-hierarchy size, tool-result bloat, system-reminder accumulation, /compact vs /clear triage with mandatory file-offload + subagent-summary moves first | Session feels slow; prompt-cache hit rate dropped; token cost seems high; before starting a long-running multi-turn workflow | 17 |
 
 ## Planned skills
 
@@ -38,12 +39,6 @@ Cross-cutting research and engineering hygiene. Applies to both security and ml-
 | `writing-successor-primers` | "If you have to pick this up cold" template | 15 | 📝 planned |
 | `writing-release-notes-as-postmortem` | Regression → root cause → test added to prevent recurrence | 15 | 📝 planned |
 | `auditing-mathematical-claims` | Per-claim: location, concern, strongest-counter, stops-mattering-if (ATACE math-flags template) | 13 | 📝 planned |
-
-### Context discipline
-
-| Skill | What it does | Σ | Status |
-|---|---|---|---|
-| [`auditing-context-window-pressure`](auditing-context-window-pressure/) | Multi-turn session pressure audit: context %, cache-hit-rate, instruction-hierarchy size, tool-result bloat, system-reminder accumulation, /compact vs /clear triage | 17 | 🔨 drafting (Batch 5: happy-path eval 2/3 — Step 7 body revision pending) |
 
 ## Cross-track references
 
