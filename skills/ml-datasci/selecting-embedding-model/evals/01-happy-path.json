@@ -1,0 +1,12 @@
+{
+  "skill": "selecting-embedding-model",
+  "scenario_id": "01-happy-path",
+  "scenario_kind": "happy-path",
+  "query": "We're building semantic search over 80,000 internal engineering markdown files. We're choosing between three candidates: text-embedding-3-large from OpenAI, voyage-3-large from Voyage AI, and the self-hosted bge-large-en-v1.5. Help us pick one.",
+  "files": [],
+  "expected_behavior": [
+    "Refuses to recommend any candidate based on public leaderboards (MTEB / BEIR) alone and requires a domain-specific evaluation",
+    "Specifies BOTH an extrinsic comparison (retrieval metrics like recall@k or MRR on a domain-specific golden Q-A set) AND an operational comparison (cost, latency, or index size) before recommending",
+    "Explicitly compares the candidates on at least three distinct axes (quality + at least two operational axes such as cost, latency, dimensionality, or index size) rather than choosing on a single metric"
+  ]
+}
