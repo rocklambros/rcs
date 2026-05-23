@@ -1,0 +1,12 @@
+{
+  "skill": "auditing-instruction-hierarchy",
+  "scenario_id": "03-new-project-setup",
+  "scenario_kind": "anti-trigger",
+  "query": "I just started a new project. What should I put in CLAUDE.md?",
+  "files": [],
+  "expected_behavior": [
+    "Does NOT engage the audit workflow (does not run wc -l, does not produce a trim list, does not measure against a line cap)",
+    "Explains that the audit skill is for existing CLAUDE.md content, while this question is greenfield setup — a different concern",
+    "Hands off — recommends a setup-CLAUDE-md path (e.g., the planned setting-up-claude-md skill) or describes what greenfield CLAUDE.md content should cover instead of auditing"
+  ]
+}
