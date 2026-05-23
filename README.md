@@ -38,6 +38,16 @@ The `skills/<track>/<name>/SKILL.md` files follow the Anthropic Skills format an
 
 _2 of ~80 planned skills shipped. See each track's README for the planned-skills roadmap._
 
+## Roadmap (v1)
+
+The next 16 v1 skills (Σ ≥ 17, covering stats discipline, ML eval, data hygiene, and Claude Code authoring meta) are scheduled across 5 independent batches in [`docs/superpowers/plans/2026-05-23-rcs-batch-creation-plan.md`](docs/superpowers/plans/2026-05-23-rcs-batch-creation-plan.md). Each batch is a self-contained PR authorable by a fresh Claude Code session via the invocation:
+
+```
+/superpowers:writing-skills create batch <N> at docs/superpowers/plans/2026-05-23-rcs-batch-creation-plan.md using PRAGMATIC
+```
+
+Batches 1-5 can run in parallel; Batch 6 (integration) runs after all merge. See the plan for the per-batch isolation contract.
+
 ## Governance
 
 - **License:** MIT (see `LICENSE`)
