@@ -1,0 +1,12 @@
+{
+  "skill": "writing-finetune-spec-sheet",
+  "scenario_id": "02-edge-case",
+  "scenario_kind": "edge-case",
+  "query": "I have my fine-tune ready. For the base checkpoint, I'll just put 'Llama-3.1-8B-Instruct from meta-llama, revision main'. And we haven't run the paired before/after evaluation yet — we just have the final eval-set accuracy of 73%. Can we still publish the spec sheet? Audience is regulated (we're submitting it for an internal model-risk review).",
+  "files": [],
+  "expected_behavior": [
+    "Refuses to accept 'main' as the revision identifier — explicitly asks for the immutable 40-character SHA, names that 'main' is a moving tag and is not sufficient as the reproducibility anchor for a regulated submission",
+    "Refuses to accept a single-number metric report such as '73% final accuracy' as the evaluation evidence — requires a paired before/after evaluation report (with effect size + CI, gating assumption check, eval-set hash) and recommends running ml-datasci/running-eval-before-after-finetune first",
+    "Emits an explicit completeness verdict of 'incomplete-do-not-publish' under audience='regulated' rather than producing a partial spec sheet — explains that for regulated audiences the missing audit / evaluation evidence is a blocking issue, not a warning"
+  ]
+}

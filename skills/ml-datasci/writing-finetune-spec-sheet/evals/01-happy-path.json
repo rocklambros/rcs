@@ -1,0 +1,12 @@
+{
+  "skill": "writing-finetune-spec-sheet",
+  "scenario_id": "01-happy-path",
+  "scenario_kind": "happy-path",
+  "query": "I just finished a DPO fine-tune of Llama-3.1-8B-Instruct on 12K preference pairs we collected internally. We're publishing it on our internal model registry next week. We have an audit manifest from the SFT-dataset audit, a paired McNemar eval report showing certified improvement, and we want to write a complete spec sheet / model card for the registry. Walk me through what the spec sheet needs to contain.",
+  "files": [],
+  "expected_behavior": [
+    "Names all 7 required sections — base checkpoint (with immutable revision SHA, NOT a tag name), training-data provenance (linking to the audit manifest), training recipe (objective + hyperparameters + hardware + seeds + wall time), evaluation evidence (linking to the paired eval report with effect size + CI), limitations / known failure modes, license reconciliation, AND intended-use + out-of-scope-use",
+    "Requires the base checkpoint's immutable revision SHA (not a tag like 'main' or a release name) — explicitly names that tags can move and the SHA is the reproducibility anchor",
+    "Requires BOTH the primary-use-cases list AND the out-of-scope-use-cases list to be populated — explicitly notes that the out-of-scope list is required (not optional) because it's the most actionable section for downstream deployers"
+  ]
+}
