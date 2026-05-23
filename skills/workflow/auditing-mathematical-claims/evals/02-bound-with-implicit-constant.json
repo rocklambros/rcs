@@ -1,0 +1,12 @@
+{
+  "skill": "auditing-mathematical-claims",
+  "scenario_id": "02-bound-with-implicit-constant",
+  "scenario_kind": "edge-case",
+  "query": "Lemma 3 in my paper claims the convergence rate is O(1/n) for an iterative algorithm running on d-dimensional inputs with condition number κ. The proof shows error ≤ C/n. Audit this lemma.",
+  "files": [],
+  "expected_behavior": [
+    "Names that the O(1/n) bound hides the constant C, and that C could depend on the problem parameters (dimension d, condition number κ, smoothness constant, or hyperparameters) — the asymptotic rate alone is uninformative for any practical setting if C grows in those parameters",
+    "Provides a Stops-mattering-if condition that requires C to be exhibited explicitly along with its dependence on the relevant problem parameters (d, κ, or hyperparameters)",
+    "Does NOT dismiss the bound as wrong by itself — the strongest counter acknowledges that big-O notation is standard idiom and the bound may be asymptotically tight; the concern is about practical interpretation, not formal falsity"
+  ]
+}

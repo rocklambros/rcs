@@ -1,0 +1,12 @@
+{
+  "skill": "running-power-analysis",
+  "scenario_id": "02-pilot-data-inflation",
+  "scenario_kind": "edge-case",
+  "query": "I ran a small pilot study with n = 20 total (10 per arm) and observed Cohen's d = 0.85 on the primary outcome. Now I want to plan the full trial at 80% power, α = 0.05, two-sided. Use d = 0.85 to compute my sample size.",
+  "files": [],
+  "expected_behavior": [
+    "Refuses to plan the full study on the raw pilot d = 0.85, naming that small-pilot effect-size estimates are statistically unstable and typically inflated (winner's-curse / regression-to-the-mean / wide-CI argument)",
+    "Recommends discounting the pilot d before planning — e.g., using a bootstrap lower CI bound, a lower-percentile of the pilot effect-size distribution, or falling back to a SESOI anchored in domain judgment — and explains why",
+    "Produces a sample-size plan based on a more conservative (smaller) effect-size value than 0.85, with a clearly larger n than the raw-pilot calculation would yield"
+  ]
+}

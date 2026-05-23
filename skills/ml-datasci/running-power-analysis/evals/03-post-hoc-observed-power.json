@@ -1,0 +1,12 @@
+{
+  "skill": "running-power-analysis",
+  "scenario_id": "03-post-hoc-observed-power",
+  "scenario_kind": "anti-trigger",
+  "query": "I already ran my two-sample t-test and got t = 1.40, p = 0.18, observed Cohen's d = 0.32 with n = 30 per group. A reviewer is asking me to report the post-hoc / observed power of my study so we can argue the result was just underpowered. Please compute the observed power using d = 0.32.",
+  "files": [],
+  "expected_behavior": [
+    "Refuses to interpret observed / post-hoc power as a meaningful quantity, naming that it is a deterministic 1-to-1 function of the p-value (or equivalent) and adds no information beyond the p-value itself",
+    "Recommends an alternative analysis that actually addresses the reviewer's underlying question — equivalence testing (TOST against a pre-specified bound) or a confidence-interval-based interpretation that names which effect sizes the data rules out",
+    "Does NOT silently produce a 'post-hoc power = X' number as a stand-alone summary metric; if any power calculation is shown, it is in the context of an a-priori reanalysis or to set up the equivalence-test framing, not as evidence that the underlying effect is real"
+  ]
+}

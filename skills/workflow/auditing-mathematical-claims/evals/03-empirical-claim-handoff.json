@@ -1,0 +1,12 @@
+{
+  "skill": "auditing-mathematical-claims",
+  "scenario_id": "03-empirical-claim-handoff",
+  "scenario_kind": "anti-trigger",
+  "query": "Our system achieved 87.3% accuracy on the GLUE benchmark, a 2.1 percentage point improvement over the previous state of the art. Please audit this claim using your math-claim audit template.",
+  "files": [],
+  "expected_behavior": [
+    "Identifies the claim as empirical (a benchmark accuracy / measurement), not a formal mathematical statement, and declines to engage the math-claim four-field audit template on it",
+    "Hands off to the appropriate alternative — running-adversarial-premortem (which covers methodology-failure modes such as eval bias, test-set leakage, multiple-hypothesis testing, base-rate cherry-picking) — rather than producing a forced math-style row",
+    "Explains the boundary between the two skill types: empirical / measurement claims belong in the premortem, formal mathematical statements (theorems, lemmas, bounds) belong in the math-claim audit"
+  ]
+}

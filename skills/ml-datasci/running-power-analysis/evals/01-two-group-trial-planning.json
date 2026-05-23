@@ -1,0 +1,12 @@
+{
+  "skill": "running-power-analysis",
+  "scenario_id": "01-two-group-trial-planning",
+  "scenario_kind": "happy-path",
+  "query": "I'm planning a two-arm randomized clinical trial of a new drug against placebo, with blood pressure reduction as the primary outcome. The smallest clinically meaningful effect is a 5 mmHg difference between arms. Prior literature suggests SD ≈ 12 mmHg in the placebo arm. I want 80% power at α = 0.05, two-sided. How many participants do I need per arm?",
+  "files": [],
+  "expected_behavior": [
+    "Computes Cohen's d = 5 / 12 ≈ 0.42 and reports the required sample size in the range of roughly 90–95 participants per arm (the standard two-sample t-test power calc result for d ≈ 0.417, α = 0.05, power = 0.80, two-sided)",
+    "Names that the effect size was derived from a SESOI (smallest meaningful effect of 5 mmHg) anchored in clinical judgment, NOT a generic Cohen rule-of-thumb",
+    "Includes a sensitivity check showing how the required n changes if the effect size assumption is off by roughly ± 25% (or equivalent), so the reader can judge how fragile the plan is to the effect-size assumption"
+  ]
+}

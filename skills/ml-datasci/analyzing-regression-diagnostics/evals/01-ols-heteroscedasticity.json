@@ -1,0 +1,12 @@
+{
+  "skill": "analyzing-regression-diagnostics",
+  "scenario_id": "01-ols-heteroscedasticity",
+  "scenario_kind": "happy-path",
+  "query": "I fit a multiple linear OLS regression of house price on 6 features (size, bedrooms, bathrooms, age, lot_size, neighborhood-fixed-effects) on n = 240 houses. R² = 0.71. The residuals-vs-fitted plot shows a clear fan pattern (spread of residuals grows with fitted price). Run my regression diagnostics and tell me what to do.",
+  "files": [],
+  "expected_behavior": [
+    "Identifies heteroscedasticity as the primary diagnostic failure (fan pattern in residuals vs fitted, Breusch-Pagan or equivalent named as the confirmatory test)",
+    "Recommends heteroscedasticity-consistent (HC1 / HC3 / sandwich / robust / White) standard errors as the remediation, NOT just refitting OLS or dropping observations",
+    "Produces or specifies a per-diagnostic verdict table covering at least linearity, Normality of residuals, homoscedasticity, and influence (Cook's D or leverage) — not a single bare verdict"
+  ]
+}
