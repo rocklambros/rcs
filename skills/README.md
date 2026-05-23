@@ -2,7 +2,7 @@
 
 All RCS skills, organized first by audience track and then by ROI rank (Σ score from the v1 brainstorm).
 
-## Shipped (v1.0.0-phase2-thru-6)
+## Shipped (v2.0-phase1 + v3.0-phase1)
 
 Sorted by Σ desc.
 
@@ -26,6 +26,30 @@ Sorted by Σ desc.
 | [`building-baseline-models`](ml-datasci/building-baseline-models/) | ml-datasci | 17 |
 | [`evaluating-regression-models`](ml-datasci/evaluating-regression-models/) | ml-datasci | 17 |
 | [`auditing-context-window-pressure`](workflow/auditing-context-window-pressure/) | workflow | 17 |
+| [`auditing-jupyter-execution-order`](workflow/auditing-jupyter-execution-order/) | workflow | 16 |
+| [`auditing-source-provenance`](workflow/auditing-source-provenance/) | workflow | 16 |
+| [`pre-registering-eval-study`](workflow/pre-registering-eval-study/) | workflow | 16 |
+| [`auditing-prompt-token-budget`](ml-datasci/auditing-prompt-token-budget/) | ml-datasci | 16 |
+| [`evaluating-multiclass-classifiers`](ml-datasci/evaluating-multiclass-classifiers/) | ml-datasci | 16 |
+| [`tuning-classification-threshold`](ml-datasci/tuning-classification-threshold/) | ml-datasci | 16 |
+| [`running-chollet-ratio-check`](ml-datasci/running-chollet-ratio-check/) | ml-datasci | 16 |
+| [`interpreting-conflicting-tests`](ml-datasci/interpreting-conflicting-tests/) | ml-datasci | 16 |
+| [`building-deterministic-data-pipelines`](workflow/building-deterministic-data-pipelines/) | workflow | 15 |
+| [`writing-successor-primers`](workflow/writing-successor-primers/) | workflow | 15 |
+| [`writing-release-notes-as-postmortem`](workflow/writing-release-notes-as-postmortem/) | workflow | 15 |
+| [`generating-data-dictionary`](ml-datasci/generating-data-dictionary/) | ml-datasci | 15 |
+| [`analyzing-regression-diagnostics`](ml-datasci/analyzing-regression-diagnostics/) | ml-datasci | 14 |
+| [`enforcing-leakage-firewall`](ml-datasci/enforcing-leakage-firewall/) | ml-datasci | 14 |
+| [`comparing-models-fairly`](ml-datasci/comparing-models-fairly/) | ml-datasci | 14 |
+| [`evaluating-rag-retrieval`](ml-datasci/evaluating-rag-retrieval/) | ml-datasci | 14 |
+| [`profiling-llm-cost`](ml-datasci/profiling-llm-cost/) | ml-datasci | 14 |
+| [`recommending-model-tier`](ml-datasci/recommending-model-tier/) | ml-datasci | 14 |
+| [`auditing-notebook-narrative`](workflow/auditing-notebook-narrative/) | workflow | 13 |
+| [`validating-schema-evolution`](workflow/validating-schema-evolution/) | workflow | 13 |
+| [`auditing-mathematical-claims`](workflow/auditing-mathematical-claims/) | workflow | 13 |
+| [`running-power-analysis`](ml-datasci/running-power-analysis/) | ml-datasci | 13 |
+| [`writing-model-cards`](ml-datasci/writing-model-cards/) | ml-datasci | 13 |
+| [`selecting-embedding-model`](ml-datasci/selecting-embedding-model/) | ml-datasci | 13 |
 
 ## By track
 

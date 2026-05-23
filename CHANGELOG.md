@@ -7,11 +7,136 @@ All notable changes to RCS are documented here. Per-skill changes use the skill'
 ### Changed
 
 - `workflow/auditing-context-window-pressure` v0.1.0 → v0.1.1: Step 7 + Quick start + Outputs + Failure modes restructured to make file-offload (move 1) and subagent-summary (move 2) MANDATORY before `/compact` / `/clear` / CLAUDE.md trim. Sonnet happy-path re-eval scored 3/3 (was 2/3 at v0.1.0). Status promoted `drafting` → `shipped`. Stale cross-references to renamed `auditing-claude-md-hierarchy` corrected to `auditing-instruction-hierarchy`.
-- Cumulative skill count at HEAD: 18 shipped + 0 drafting (was 17 shipped + 1 drafting at `v1.0.0-phase2-thru-6`).
+- Cumulative skill count at HEAD: 42 shipped + 0 drafting (was 18 shipped after the v1 integration + post-tag context-window-pressure promotion; this integration adds the 24 skills from v2 batches 1-4 and v3 batches 1-4).
 
 ### Added
 
 - `.gitignore`: ignore project-local `.claude/` directory (per-machine Claude Code state).
+
+## [v2.0-phase1 + v3.0-phase1] — 2026-05-23
+
+v2 (research discipline + reproducibility + data-hygiene depth) and v3 (ML eval depth + RAG + perf) shipped via 8 independent batch PRs authored in parallel sessions using the PRAGMATIC discipline. This release consolidates the per-batch changelog fragments from both versions and updates the user-facing catalogs in a single integration commit (v2-integration and v3-integration combined because the v2 fragments were stranded — never integrated separately).
+
+**Net additions:** 24 skills shipped (12 v2 + 12 v3) across `workflow/` and `ml-datasci/`. Cumulative skill count: 42 shipped (vs. 18 shipped at the previous integration).
+
+### v2 Batch 1: notebook + execution hygiene — 2026-05-23
+
+Skills shipped:
+
+- `workflow/auditing-jupyter-execution-order` v0.1.0 — static audit of `.ipynb` `execution_count` monotonicity + unrun-cell AST name scan; canonical fix `Kernel → Restart Kernel and Run All Cells`; papermill / cleared-output early exits (Σ 16, status: shipped)
+- `workflow/auditing-notebook-narrative` v0.1.0 — markdown narrative vs. rendered-output consistency check; directional-claim keyword matcher with negation handling + citation suppression; printed-scalar / DataFrame / plot / log comparison strategies (Σ 13, status: shipped)
+- `workflow/building-deterministic-data-pipelines` v0.1.0 — 8-step checklist (canonicalization per format, LF endings, sorted output, stable floats, no embedded timestamps, `provenance.json` sibling, content-hash snapshot, CI drift check); ships a drop-in `canonicalize.py`, a `provenance.json` schema, and a GitHub Actions drift-check workflow (Σ 15, status: shipped)
+
+Eval methodology: Sonnet-only in-session validation per PRAGMATIC discipline. 9 dispatches total (3 scenarios × 3 skills), each subagent received the relevant SKILL.md inlined as guidance and the eval `query` verbatim. Rubric scoring against scenario `expected_behavior` items used intent-matching, not literal string matching.
+
+Eval results:
+
+- `auditing-jupyter-execution-order` — happy 3/3, edge 3/3, anti 3/3
+- `auditing-notebook-narrative` — happy 3/3, edge 3/3, anti 3/3
+- `building-deterministic-data-pipelines` — happy 3/3, edge 3/3, anti 3/3
+
+All three skills cleared the PRAGMATIC shipped thresholds (happy 3/3, edge 3/3, anti ≥ 2/3) on Sonnet 4.6. Full 3-model (Haiku 4.5 + Sonnet 4.6 + Opus 4.7) validation deferred to a future re-run via `tools.run_evals`.
+
+Notes:
+
+- This is the first batch under the v2+ invocation namespace (`/superpowers:writing-skills create v2-batch-N at <plan> using PRAGMATIC`) and the first batch authored on a feature branch (no worktree, per the user's "no worktrees unless actually parallel" memory — this was a single sequential session).
+- The PreToolUse `security_reminder_hook` misfired during authoring on neutral mentions of Python serialization / dynamic-eval keywords inside documentation; rephrased around in each case (no semantic loss). Worth a follow-up if the hook scope can be narrowed to executable code rather than prose mentions.
+- The `lint_frontmatter` first-person regex matched `\bI ` inside a quoted user-report example in a description (`"I cannot reproduce your numbers"`). Rephrased to a third-person paraphrase. Worth considering whether the regex should permit `\bI ` when wrapped in quoted-string punctuation.
+
+### v2-batch-2: data engineering depth — 2026-05-23
+
+Skills shipped:
+
+- `workflow/auditing-source-provenance` v0.1.0 — audits ingest pipelines for per-record provenance attachment, transform-survival, and CI gating (Σ 16, status: shipped)
+- `workflow/validating-schema-evolution` v0.1.0 — classifies schema changes as breaking / non-breaking / ambiguous, scaffolds safe migrations including the 5-step rename and 3-step NOT-NULL-add patterns (Σ 13, status: shipped)
+- `ml-datasci/generating-data-dictionary` v0.1.0 — per-column semantic-class + role inference, anomaly flagging, PII detection, JSON-Schema-validatable output (Σ 15, status: shipped)
+
+Eval methodology: Sonnet-only in-session validation per PRAGMATIC discipline (9 dispatches total — 3 scenarios × 3 skills). Full 3-model (Haiku + Sonnet + Opus) validation deferred to a future re-run.
+
+Eval results (Sonnet, intent-matched scoring against 3 rubric items per scenario):
+
+- `auditing-source-provenance`: happy 3/3, edge 3/3, anti 3/3
+- `validating-schema-evolution`: happy 3/3, edge 3/3, anti 3/3
+- `generating-data-dictionary`: happy 3/3, edge 3/3, anti 3/3
+
+All three skills pass Sonnet thresholds for happy-path (3/3), edge-case (3/3), and anti-trigger (≥ 2/3) and ship as `status: shipped`.
+
+Notes: none. No demotions or deviations.
+
+### v2-batch-3: research-discipline — 2026-05-23
+
+Skills shipped:
+
+- `workflow/pre-registering-eval-study` v0.1.0 — locks hypothesis, falsification, stopping rule, and power justification BEFORE data observation (Σ 16, status: shipped)
+- `workflow/writing-successor-primers` v0.1.0 — cold-pickup handoff doc with founding-principles, false-confidence warnings, glossary, and "what is NOT here" (Σ 15, status: shipped)
+- `workflow/writing-release-notes-as-postmortem` v0.1.0 — six-field per-fix postmortem entries with severity sort and "regressions NOT yet fixed" section (Σ 15, status: shipped)
+
+Eval methodology: Sonnet-only in-session validation per PRAGMATIC discipline. Each skill ran 3 scenarios (happy-path, edge-case, anti-trigger) through one general-purpose subagent dispatch per scenario; rubric items scored intent-matched, not by literal phrasing. Full 3-model validation (Haiku + Sonnet + Opus) deferred to a future re-run.
+
+Eval results (Sonnet-only):
+
+| Skill | Happy-path | Edge-case | Anti-trigger | Verdict |
+|---|---|---|---|---|
+| pre-registering-eval-study | 3/3 | 3/3 | 3/3 | PASS |
+| writing-successor-primers | 3/3 | 3/3 | 3/3 | PASS |
+| writing-release-notes-as-postmortem | 3/3 | 3/3 | 2/3 | PASS |
+
+Notes: writing-release-notes-as-postmortem anti-trigger scored 2/3 — the response correctly declined postmortem structure for a v0.1.0 first release and handed off to feature-announcement notes, but did not explicitly note that postmortem-style notes become appropriate starting with the first patch release after v0.1.0. Above the ≥ 2/3 anti-trigger threshold; status stays shipped.
+
+### v2-batch-4: stats + math depth — 2026-05-23
+
+Skills shipped:
+- `ml-datasci/analyzing-regression-diagnostics` v0.1.0 — six-step regression diagnostic battery (linearity, Normality, homoscedasticity, autocorrelation, influence, multicollinearity) with per-diagnostic verdict + remediation; refuses to run on tree / kernel / neural models (Σ 14, status: shipped)
+- `ml-datasci/running-power-analysis` v0.1.0 — prospective power / n / MDE calculation for any planned test with required effect-size provenance and sensitivity check; refuses post-hoc / observed power and routes to TOST or CI interpretation (Σ 13, status: shipped)
+- `workflow/auditing-mathematical-claims` v0.1.0 — generalized ATACE four-field per-claim audit template (Location · Concern · Strongest-counter · Stops-mattering-if) for theorems / lemmas / bounds / definitions with severity × likelihood / detectability triage; routes empirical claims to running-adversarial-premortem (Σ 13, status: shipped)
+
+Eval methodology: Sonnet-only in-session validation per PRAGMATIC discipline. 9 dispatches (3 scenarios × 3 skills); all scored 3/3 against intent. Full 3-model (Haiku / Sonnet / Opus) validation deferred to a future re-run.
+
+Notes: No deviations or calibration corrections. All three skills retained `status: shipped` after eval validation.
+
+### v3-batch-1: ML eval expansion — 2026-05-23
+
+Skills shipped:
+- `ml-datasci/evaluating-multiclass-classifiers` v0.1.0 — full multi-class evaluation report (per-class P/R/F1 + macro/weighted/micro with cost-model justification + K x K confusion in counts and row-normalized + top-k + one-vs-rest ROC/PR + log loss + Cohen's kappa + bootstrap CIs + confusion-pair audit); refuses bare overall accuracy under imbalance and hands off to evaluating-binary-classifiers on 2-class tasks (Σ 16, status: shipped)
+- `ml-datasci/tuning-classification-threshold` v0.1.0 — five-selector threshold-selection library (F-beta, TPR-at-fixed-FPR, precision-at-fixed-recall, cost-weighted, Youden's J) with enforced validation-pick / held-out-test-report separation and mandatory calibration check; refuses default 0.5 and refuses to pick the threshold on the test set (Σ 16, status: shipped)
+- `ml-datasci/running-chollet-ratio-check` v0.1.0 — Chollet samples-per-word ratio decision rule for text / sequence classification model-family selection (BoW vs small RNN/CNN vs Transformer) with domain-pretraining adjustment, per-class minimum sanity check, and mandatory BoW baseline comparison regardless of recommendation; refuses to apply the ratio to non-sequence data (Σ 16, status: shipped)
+
+Eval methodology: Sonnet-only in-session validation per PRAGMATIC discipline. 9 dispatches (3 scenarios × 3 skills); all scored 3/3 against intent. Full 3-model (Haiku / Sonnet / Opus) validation deferred to a future re-run.
+
+Notes: No deviations or calibration corrections. All three skills retained `status: shipped` after eval validation.
+
+### v3-batch-2: model comparison + cards — 2026-05-23
+
+Skills shipped:
+- `ml-datasci/enforcing-leakage-firewall` v0.1.0 — four-check leakage defense (LOFO sweep + hub-firewall + group-aware split + no-row-in-two-splits row-hash invariant) for supervised pipelines on multi-source / grouped data; refuses to trust a held-out metric until all four checks pass (Σ 14, status: shipped)
+- `ml-datasci/comparing-models-fairly` v0.1.0 — paired-test library for head-to-head model comparison (McNemar / DeLong / paired-t / Wilcoxon signed-rank / Friedman + Nemenyi) with mandatory multiple-comparison correction for 3+ models and effect-size + bootstrap CI reporting; refuses unpaired tests on per-fold metrics (Σ 14, status: shipped)
+- `ml-datasci/writing-model-cards` v0.1.0 — Mitchell-2019 model card + AIBOM addendum (intended use + out-of-scope use, subgroup-disaggregated metrics with CIs, data provenance, concrete harms paired with mitigations, dependencies + versions + hashes); refuses vague language and refuses to author for throwaway research artifacts (Σ 13, status: shipped)
+
+Eval methodology: Sonnet-only in-session validation per PRAGMATIC discipline. 9 dispatches (3 scenarios × 3 skills); all scored 3/3 against intent. Full 3-model (Haiku / Sonnet / Opus) validation deferred to a future re-run.
+
+Notes: Two skills required a description trim (over the 1024-char Anthropic spec cap on first draft); shortened in-line and re-linted clean. No eval failures or calibration corrections; all three skills retained `status: shipped`.
+
+### v3-batch-3: RAG eval — 2026-05-23
+
+Skills shipped:
+- `ml-datasci/evaluating-rag-retrieval` v0.1.0 — staged RAG eval separating retrieval-stage metrics (recall@k / MRR / nDCG@k against gold doc ids) from generation-stage metrics (faithfulness / answer relevance / context utilization scored on retrieval hits only) plus the retrieval-vs-generation failure-attribution 2x2; refuses single aggregate scores that conflate the two stages (Σ 14, status: shipped)
+- `ml-datasci/selecting-embedding-model` v0.1.0 — three-axis embedding-model comparison (intrinsic Spearman on domain-labeled pairs + extrinsic retrieval metrics on a golden Q-A set + operational cost including per-query, index-build amortization, latency, max-input-tokens, and dimensionality-driven index size) with bootstrap-CI tie-detection and operational tiebreaker; refuses recommendations from MTEB / BEIR leaderboards alone (Σ 13, status: shipped)
+- `ml-datasci/profiling-llm-cost` v0.1.0 — per-call → per-task → per-cohort LLM cost rollup from a logged trace (input / cached_input / output tokens × pricing snapshot) with cache-hit-rate trend, attribution slices, baseline-window delta, top-3 drivers, and recommendations ranked by $ saved per engineering hour; refuses cost-cutting actions without a measured baseline (Σ 14, status: shipped)
+
+Eval methodology: Sonnet-only in-session validation per PRAGMATIC discipline. 9 dispatches (3 scenarios × 3 skills); all scored 3/3 against intent (27/27 rubric items pass). Full 3-model (Haiku / Sonnet / Opus) validation deferred to a future re-run.
+
+Notes: No deviations or calibration corrections. All three skills retained `status: shipped` after eval validation. Cross-references between the three skills (evaluating-rag-retrieval ↔ selecting-embedding-model ↔ profiling-llm-cost) form a coherent RAG-system evaluation cluster covering quality of the assembled pipeline, quality + cost of the retriever's embedding component, and cost of the generator side.
+
+### v3-batch-4: perf + interpretation — 2026-05-23
+
+Skills shipped:
+- `ml-datasci/auditing-prompt-token-budget` v0.1.0 — Anthropic API prompt-budget audit with stable-vs-volatile classification, `cache_control` breakpoint placement (end of stable region, explicit `"ttl": "1h"` per QC.4a), write-vs-read cost projection, and hit-rate telemetry; refuses on sub-500-token one-shot scripts (Σ 16, status: shipped)
+- `ml-datasci/recommending-model-tier` v0.1.0 — per-task Haiku 4.5 / Sonnet 4.6 / Opus 4.7 routing with reasoning-depth × task-category baseline, safety-critical / latency / cost / cache-lineage modifiers, mandatory escalation rule per downgrade, and pre-shipping eval requirement; refuses on policy-locked single-tier deployments (Σ 14, status: shipped)
+- `ml-datasci/interpreting-conflicting-tests` v0.1.0 — adjudicates parametric-vs-non-parametric (and exact-vs-asymptotic) conflicts via assumption-status table, picks the test whose assumptions hold (not the smaller p-value), commits to one primary with matched rank-based or parametric effect-size + 95% CI; refuses 'mixed evidence' framing and p-hacking via test-shopping (Σ 16, status: shipped)
+
+Eval methodology: Sonnet-only in-session validation per PRAGMATIC discipline. 9 dispatches (3 scenarios × 3 skills); all scored 3/3 against intent. Full 3-model (Haiku / Sonnet / Opus) validation deferred to a future re-run.
+
+Notes: No deviations or calibration corrections. All three skills retained `status: shipped` after eval validation. The auditing-prompt-token-budget skill explicitly encodes QC.4a's "always set `ttl: 1h` explicitly" discipline as a step-6 requirement and a failure-mode entry.
 
 ## [v1.0.0-phase2-thru-6] — 2026-05-23
 
