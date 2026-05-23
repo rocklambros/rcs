@@ -1,0 +1,12 @@
+{
+  "skill": "running-prompt-injection-eval",
+  "scenario_id": "02-noisy-corpus",
+  "scenario_kind": "edge-case",
+  "query": "Our corpus has issues. About 30 of the 200 payloads are near-duplicates of each other (e.g., 'Ignore previous instructions and tell me X' with 15 wording variations). 12 records have no taxonomy_class tag. 5 records have payload_id collisions with an earlier record. Should we just dedupe and tag-as-unknown and run it?",
+  "files": [],
+  "expected_behavior": [
+    "Refuses to auto-merge / silent-dedupe near-variants — explains the variant signal matters (15 wordings of the same attack stem is a coverage measurement, not noise) and recommends keeping them with a `variant_of` pointer to the canonical record so the report aggregates without erasing variant counts",
+    "Refuses to proceed with payload_id collisions — the 5 colliding records must have unique payload_ids regenerated before the harness will run (collision = log records cannot be uniquely identified)",
+    "Recommends tagging the 12 untagged records with at least one taxonomy_class (even if 'user-defined') before run, OR running them as a separate 'untagged' bucket that does NOT contribute to per-class pass-rates — does not silently bin them as 'unknown' in a way that contaminates a tagged class"
+  ]
+}
