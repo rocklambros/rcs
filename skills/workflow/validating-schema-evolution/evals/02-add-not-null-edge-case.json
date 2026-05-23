@@ -1,0 +1,12 @@
+{
+  "skill": "validating-schema-evolution",
+  "scenario_id": "02-add-not-null-edge-case",
+  "scenario_kind": "edge-case",
+  "query": "I want to add `NOT NULL` to the existing `signup_source` column on a 1.2 million row table. An unknown fraction of rows have NULL values. What's the safe migration?",
+  "files": [],
+  "expected_behavior": [
+    "Classifies adding NOT NULL to an existing nullable column with existing NULLs as a BREAKING change and refuses to emit a single-statement `ALTER COLUMN ... SET NOT NULL` without first handling the existing NULLs",
+    "Recommends backfilling the existing NULL rows with a sentinel / default value first (e.g., 'unknown' or '__legacy__'), preferably in batches to avoid long-running locks",
+    "Recommends adding a column DEFAULT before (or together with) the NOT NULL constraint so future INSERTs that omit the column also succeed"
+  ]
+}

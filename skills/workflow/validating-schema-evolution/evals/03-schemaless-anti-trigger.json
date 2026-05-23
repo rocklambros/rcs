@@ -1,0 +1,12 @@
+{
+  "skill": "validating-schema-evolution",
+  "scenario_id": "03-schemaless-anti-trigger",
+  "scenario_kind": "anti-trigger",
+  "query": "Our MongoDB collection stores user events as free-form documents. We want to start including a `device_id` field on new events going forward. Validate the schema evolution for me.",
+  "files": [],
+  "expected_behavior": [
+    "Does NOT produce a SQL migration script and does NOT treat the change as a classical schema diff with breaking / non-breaking classification on stored data",
+    "Explains that MongoDB without enforced $jsonSchema validation has no enforced schema to diff — the change is a writer-side convention, not a structural schema change",
+    "Recommends either enabling MongoDB $jsonSchema validation on the collection or using application-level model versioning (e.g., Pydantic, Zod) so future schema-evolution audits have something concrete to diff"
+  ]
+}
