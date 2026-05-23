@@ -1,0 +1,12 @@
+{
+  "skill": "pinning-reproducible-environments",
+  "scenario_id": "02-base-image-drift",
+  "scenario_kind": "edge-case",
+  "query": "My teammate's Docker container has the exact same Dockerfile as mine — same FROM line, same pip install steps — but the model produces different outputs. We checked the requirements file and lockfile and they match. What's going on?",
+  "files": [],
+  "expected_behavior": [
+    "Identifies base-image drift as the most likely cause: the FROM tag (e.g. python:3.13-slim) is floating and can resolve to different image content over time at the registry",
+    "Recommends pinning the base image to a SHA256 digest (FROM image@sha256:...) rather than a tag, so both builds reference bit-identical bytes",
+    "Explains that lockfiles only pin application-level dependencies, not the underlying OS image, system libraries, or interpreter build — and the difference can change numerical outputs"
+  ]
+}
