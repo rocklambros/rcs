@@ -1,0 +1,12 @@
+{
+  "skill": "profiling-llm-cost",
+  "scenario_id": "03-anti-trigger",
+  "scenario_kind": "anti-trigger",
+  "query": "I'm building a side project running llama-3 locally via Ollama on my laptop GPU. No paid API at all. Should I profile its LLM cost?",
+  "files": [],
+  "expected_behavior": [
+    "Recognizes that a local-model / free-tier setup does NOT incur per-token API charges and therefore the dollar-cost profiling workflow does not apply",
+    "Does NOT force the full cost-rollup workflow (per-call cost arithmetic, pricing-table multiplication, cache-hit-rate trend, baseline comparison) on a workload with no API spend",
+    "Suggests at least one alternative measurement that IS appropriate for local-model workloads (latency, throughput, GPU memory usage, or electricity / hardware amortization at high volume)"
+  ]
+}
