@@ -1,0 +1,12 @@
+{
+  "skill": "evaluating-binary-classifiers",
+  "scenario_id": "01-happy-path",
+  "scenario_kind": "happy-path",
+  "query": "I trained a logistic regression on spam vs ham. I have y_true and y_pred_proba as NumPy arrays — about 8,000 messages, roughly balanced (positive rate around 0.45). Evaluate the classifier.",
+  "files": [],
+  "expected_behavior": [
+    "Names ROC + PR + calibration (reliability diagram) as required plots, not just one of them",
+    "Names a threshold sweep across multiple thresholds (NOT defaulting to 0.5) and explains threshold selection",
+    "Names bootstrap-resampled 95% confidence intervals on AUC (or F1), not point estimates alone"
+  ]
+}

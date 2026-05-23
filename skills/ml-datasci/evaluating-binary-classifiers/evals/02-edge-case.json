@@ -1,0 +1,12 @@
+{
+  "skill": "evaluating-binary-classifiers",
+  "scenario_id": "02-edge-case",
+  "scenario_kind": "edge-case",
+  "query": "My fraud classifier has 99% accuracy on the test set. Sounds great, right?",
+  "files": [],
+  "expected_behavior": [
+    "Flags class imbalance (fraud is typically rare, so 99% accuracy is suspicious — likely the always-predict-not-fraud baseline) as the dominant explanation",
+    "Requests the class distribution (positive rate / minority-class fraction) before accepting the accuracy number",
+    "Recommends PR-AUC and per-class recall (or MCC) over bare accuracy as the right framing for an imbalanced classifier"
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "skill": "evaluating-binary-classifiers",
+  "scenario_id": "03-anti-trigger",
+  "scenario_kind": "anti-trigger",
+  "query": "I have a 3-class classifier — benign, malicious, suspicious. y_true has values 0, 1, 2 and y_pred_proba is shape (n, 3). Evaluate it.",
+  "files": [],
+  "expected_behavior": [
+    "Identifies the task as multi-class (3+ labels), NOT binary, and does not force binary-specific tools like a single ROC curve onto it",
+    "Hands off to a multi-class evaluation skill (e.g. evaluating-multiclass-classifiers) or names that as the right tool — rather than running the full binary-classifier report template",
+    "If offering a stopgap, recommends per-class precision / recall / F1 plus a confusion matrix (multi-class friendly metrics), not bare overall accuracy or one-vs-rest ROC as the final answer"
+  ]
+}
