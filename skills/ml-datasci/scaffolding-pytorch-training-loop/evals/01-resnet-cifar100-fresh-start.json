@@ -1,0 +1,12 @@
+{
+  "skill": "scaffolding-pytorch-training-loop",
+  "scenario_id": "01-resnet-cifar100-fresh-start",
+  "scenario_kind": "happy-path",
+  "query": "I'm starting a new PyTorch training script for a ResNet-50 image classifier on CIFAR-100. I want full determinism, mixed precision, a learning-rate schedule, early stopping, checkpointing, and W&B logging. Scaffold the training loop for me.",
+  "files": [],
+  "expected_behavior": [
+    "Wires deterministic seeding for Python, NumPy, PyTorch CPU, PyTorch CUDA, cudnn.deterministic=True with cudnn.benchmark=False, AND a DataLoader worker_init_fn (or equivalent generator-seeded DataLoader) so augmentation does not drift between runs",
+    "Wires AMP via torch.cuda.amp.autocast() together with a GradScaler whenever fp16 precision is used (or explicitly notes that bf16-AMP does not need the scaler), and includes gradient clipping with scaler.unscale_ before clip_grad_norm_",
+    "Saves a checkpoint that includes model state, optimizer state, scheduler state, AMP scaler state, epoch, and best monitor metric (not just model weights), and provides a resume path that restores all of these so resume continues training rather than restarting"
+  ]
+}
