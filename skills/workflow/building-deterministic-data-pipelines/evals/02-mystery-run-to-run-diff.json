@@ -1,0 +1,12 @@
+{
+  "skill": "building-deterministic-data-pipelines",
+  "scenario_id": "02-mystery-run-to-run-diff",
+  "scenario_kind": "edge-case",
+  "query": "My pipeline writes a JSON file. I have not changed the code or the source data this week, but every run produces a different file hash. The pipeline lives in a small Python script that loads a CSV, builds a dict, and dumps it to JSON. What is causing the drift?",
+  "files": [],
+  "expected_behavior": [
+    "Names at least two plausible causes from the deterministic-pipeline failure-mode catalog (e.g., dict insertion order without sort_keys=True, embedded timestamp inside the data payload, line-ending drift between machines, or float-precision drift)",
+    "Recommends a diagnosis step that pinpoints the divergent field — for example, running `diff <(jq -S . file1.json) <(jq -S . file2.json)` or an equivalent canonical-comparison tool — before jumping to fixes",
+    "Recommends adding sort_keys=True (or canonicalize-then-write) AND moving any embedded timestamp out of the data payload into a sibling provenance.json"
+  ]
+}

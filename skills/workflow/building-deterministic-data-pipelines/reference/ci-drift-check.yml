@@ -1,0 +1,62 @@
+# Example GitHub Actions workflow for the pipeline drift check.
+# Adapt to your CI tool of choice — the invariants matter, not the YAML shape.
+#
+# Trigger philosophy:
+#   - On PR touching the pipeline code or its inputs: run on every push
+#   - Weekly cron: catches drift from dep bumps even when the pipeline is not edited
+#
+# Failure semantics:
+#   - Drift detected → CI fails; the PR cannot merge until either the new
+#     hashes are committed (intentional change) or the cause is fixed (bug).
+
+name: pipeline-drift-check
+
+on:
+  pull_request:
+    paths:
+      - 'pipelines/**'
+      - 'data/inputs/**'
+      - 'hashes.txt'
+  schedule:
+    - cron: '0 8 * * 1'   # weekly Monday 08:00 UTC
+  workflow_dispatch:
+
+jobs:
+  drift-check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version-file: '.python-version'
+
+      - name: Install uv
+        run: pip install 'uv==0.4.18'   # pinned per QC.1
+
+      - name: Sync deps
+        run: uv sync --frozen
+
+      - name: Run pipeline
+        run: uv run python -m pipelines.run_all
+
+      - name: Recompute hashes
+        run: uv run python -m pipelines.tools.hash_artifacts > hashes.new.txt
+
+      - name: Diff against committed hashes
+        run: |
+          diff hashes.txt hashes.new.txt && echo "drift-check: OK" && exit 0
+          echo "drift-check: FAIL — committed hashes do not match recomputed hashes"
+          echo "--- committed ---"
+          cat hashes.txt
+          echo "--- recomputed ---"
+          cat hashes.new.txt
+          echo
+          echo "If this drift is intentional (data refresh, adapter version bump):"
+          echo "  1. Confirm the diff matches your expected change"
+          echo "  2. Commit hashes.new.txt as hashes.txt"
+          echo "  3. Update the adapter_version field in provenance.json files"
+          echo "  4. Re-push"
+          exit 1
