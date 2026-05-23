@@ -1,0 +1,12 @@
+{
+  "skill": "threat-modeling-agentic-systems",
+  "scenario_id": "03-one-shot-llm-summarizer",
+  "scenario_kind": "anti-trigger",
+  "query": "Threat-model our text summarization service. It takes a single user-supplied document, sends it to Claude with a fixed summarization prompt, and returns the result. There is no tool use, no planning loop, no memory, no iterations — just one model call per request. The service runs behind an API key per customer. Use OWASP Top 10 for LLM Applications as the catalog.",
+  "files": [],
+  "expected_behavior": [
+    "Recognizes that this system is a single-turn LLM application, not an agent, and declines to apply agentic-specific threat modeling to it (no planner-executor loop, no tool dispatch, no persistent memory, no multi-agent topology)",
+    "Either hands off to security/threat-modeling-llm-app explicitly OR clearly states that this skill is for agentic systems and the user should use the LLM-app sibling skill here",
+    "Does NOT invent agentic boundaries (planner→executor, memory→next-turn, tool-result→next-prompt, agent→agent) for a system that has none of them"
+  ]
+}
