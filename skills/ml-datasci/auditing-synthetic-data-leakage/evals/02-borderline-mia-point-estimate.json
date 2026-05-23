@@ -1,0 +1,12 @@
+{
+  "skill": "auditing-synthetic-data-leakage",
+  "scenario_id": "02-borderline-mia-point-estimate",
+  "scenario_kind": "edge-case",
+  "query": "I ran a single MIA attack on my synth dataset (PHI source) and got an AUC of 0.55. That is only slightly above the 0.5 chance baseline. The point estimate looks borderline-OK to me. Can I publish the synth set under the standard external-research data-use agreement?",
+  "files": [],
+  "expected_behavior": [
+    "Refuses to decide release on a point-estimate MIA AUC alone and requires a 95% confidence interval (e.g. via bootstrap or via repeated shadow runs) before any verdict",
+    "Names that if the 95% CI on MIA AUC spans values both at and meaningfully above 0.5, the audit cannot rule out a leak, and the operative number for a release decision under PHI is the CI upper bound (not the point estimate)",
+    "Recommends concrete remediation paths (re-fit with differential privacy / DP-CTGAN at a documented ε budget, increase the number of shadow models to tighten the CI, or restrict distribution and re-audit) rather than approving release under uncertainty for a sensitive-data class"
+  ]
+}
