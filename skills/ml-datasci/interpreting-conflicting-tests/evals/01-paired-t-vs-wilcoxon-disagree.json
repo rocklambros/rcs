@@ -1,0 +1,12 @@
+{
+  "skill": "interpreting-conflicting-tests",
+  "scenario_id": "01-paired-t-vs-wilcoxon-disagree",
+  "scenario_kind": "happy-path",
+  "query": "I have 22 paired before/after reaction-time measurements. Paired t-test gives t(21) = 2.6, p = 0.017 — significant. Wilcoxon signed-rank on the same data gives V = 165, p = 0.11 — not significant. Shapiro-Wilk on the differences gives W = 0.86, p = 0.005. The two tests disagree. Which should I report as my primary analysis, and what should go in the methods section?",
+  "files": [],
+  "expected_behavior": [
+    "Commits to Wilcoxon signed-rank as the primary analysis (NOT the paired t-test), explicitly because the paired t's Normality-of-differences assumption is violated by the Shapiro-Wilk result (p = 0.005)",
+    "Does NOT pick the test with the smaller p-value as the winner — explicitly bases the adjudication on the assumption-status, not on which result is more favorable",
+    "Recommends reporting a rank-based effect size (Cliff's δ, rank-biserial r, or Hodges-Lehmann median difference) with a 95% CI for the Wilcoxon result, AND suggests disclosing the paired-t result somewhere (e.g., supplement, methods note, or transparency paragraph) rather than hiding it"
+  ]
+}

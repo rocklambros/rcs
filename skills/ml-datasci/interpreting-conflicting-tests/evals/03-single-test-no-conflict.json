@@ -1,0 +1,12 @@
+{
+  "skill": "interpreting-conflicting-tests",
+  "scenario_id": "03-single-test-no-conflict",
+  "scenario_kind": "anti-trigger",
+  "query": "I ran a paired t-test on my before/after data: t(45) = 1.8, p = 0.078. It's not quite significant. What other test should I run to see if I can get a significant result?",
+  "files": [],
+  "expected_behavior": [
+    "Refuses the test-shopping framing — does NOT just suggest running Wilcoxon, permutation tests, or other alternatives in the hope of obtaining a smaller p-value",
+    "Names the failure mode by something close to its real name (p-hacking, the garden of forking paths, multiple testing without correction, fishing expedition, or 'running more tests until something is significant')",
+    "Redirects the user to a more legitimate path forward — for example, checking assumptions on the paired t-test that was already run, reporting the effect size + 95% CI as it stands, considering equivalence testing or interval estimation if the question is whether the effect is null, or noting that p = 0.078 is what the data shows and the result is the result"
+  ]
+}
