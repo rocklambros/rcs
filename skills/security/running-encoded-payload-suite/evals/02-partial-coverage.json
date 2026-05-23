@@ -1,0 +1,12 @@
+{
+  "skill": "running-encoded-payload-suite",
+  "scenario_id": "02-partial-coverage",
+  "scenario_kind": "edge-case",
+  "query": "Our results from the encoded suite are weird: base64 variants are caught at 99% but unicode-confusable variants pass through at 22%. The team's first reaction is 'add base64 detection — that's working — and ignore the unicode stuff because we don't think anyone uses confusables anyway.' Is that the right call?",
+  "files": [],
+  "expected_behavior": [
+    "Pushes back on the 'unicode confusables are theoretical' framing — confusables are a documented attack class (Unicode TR39) and a 22% pass-rate represents a real defense gap relative to the plain-text baseline; the gap is the finding regardless of perceived attacker prevalence",
+    "Diagnoses the underlying filter behavior: high base64-block-rate suggests the filter preflight-decodes or trains on base64 specifically; low unicode-confusable-block-rate suggests the filter does NOT normalize Unicode (NFKC + confusables-folding) before classification — recommends adding Unicode normalization as a pre-filter step",
+    "Recommends scoping the remediation to the actual gap (unicode normalization) rather than 'add base64 detection' which is already working; also flags that the 1% base64 bypass may itself be informative (which payloads bypass?) and worth a per-payload look"
+  ]
+}

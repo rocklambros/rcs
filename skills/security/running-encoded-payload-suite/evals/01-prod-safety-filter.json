@@ -1,0 +1,12 @@
+{
+  "skill": "running-encoded-payload-suite",
+  "scenario_id": "01-prod-safety-filter",
+  "scenario_kind": "happy-path",
+  "query": "Engagement RT-2026-06-ACME is signed. We have a 200-payload plain-text injection corpus where ACME's chatbot filter blocks 190/200 in plain text (95% block-rate). We want to know which of those 190 the filter misses when we re-encode them. Run the encoded suite with encodings = base64, hex, rot13, unicode-confusables, zero-width, and leetspeak. baseline_required=true.",
+  "files": [],
+  "expected_behavior": [
+    "Walks the 7-step workflow in order — explicitly requires the filter-presence sanity check (Step 2) before any encoding work, AND requires the plain-text baseline (Step 3) before any encoded outcomes can be scored as gaps",
+    "Excludes the 10 plain-text-NOT-blocked payloads from the gap analysis — a payload that the filter did not block in plain text cannot demonstrate an encoding bypass, and including them would inflate the bypass count",
+    "Defines a 'gap' precisely (plain-text=blocked AND at least one encoded variant=passed or partial), aggregates per-encoding bypass-rate as (passed+partial)/total rather than raw bypass count, and surfaces systematic patterns as findings rather than emitting one finding per bypassed payload"
+  ]
+}
