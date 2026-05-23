@@ -1,0 +1,12 @@
+{
+  "skill": "comparing-models-fairly",
+  "scenario_id": "01-happy-path",
+  "scenario_kind": "happy-path",
+  "query": "I trained two binary classifiers on the same dataset — Logistic Regression and Gradient Boosting. Both were scored on the exact same 5,000-instance held-out test set. LogReg gets ROC-AUC = 0.83. Gradient Boosting gets ROC-AUC = 0.85. Is the difference statistically significant? Should I deploy Gradient Boosting?",
+  "files": [],
+  "expected_behavior": [
+    "Recommends a PAIRED test that accounts for both models being scored on the SAME test instances (DeLong's test for ROC-AUC comparison, OR McNemar on the disagreement table at the chosen threshold) — NOT an unpaired two-sample comparison on the AUC point estimates",
+    "Reports an effect size (delta-AUC = 0.02) alongside the p-value or significance verdict — does not report significance as a yes/no without naming the magnitude of the difference",
+    "Distinguishes statistical significance from operational significance — does NOT automatically declare 'deploy Gradient Boosting' just because the test is significant; requires either a pre-registered meaningful-delta threshold or a justification for whether 0.02 AUC delta is worth the complexity / cost / interpretability trade-off"
+  ]
+}
