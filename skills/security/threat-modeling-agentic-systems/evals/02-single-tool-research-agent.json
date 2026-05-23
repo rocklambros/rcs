@@ -1,0 +1,12 @@
+{
+  "skill": "threat-modeling-agentic-systems",
+  "scenario_id": "02-single-tool-research-agent",
+  "scenario_kind": "edge-case",
+  "query": "Threat-model our research agent. It has exactly one tool: web_search(query) which returns the top-5 results with snippets from a third-party search API. The agent can call it up to 5 times in a single run; after the 5th call (or earlier if the planner decides) it produces a final answer to the user. There is no persistent memory across runs — every invocation starts fresh. Output is plain text returned to the calling user. The agent runs under a service account with only the search-API key — no other credentials. Use the OWASP Agentic Security Initiative as the catalog. Be honest about which agentic concerns are low-relevance for this design.",
+  "files": [],
+  "expected_behavior": [
+    "Cites OWASP Agentic Security Initiative as the user-supplied catalog and does not invent a different catalog",
+    "Identifies tool-result-feeds-next-prompt as a relevant agentic boundary even though the agent has only one tool (i.e., flags web-page content as an indirect-injection channel), AND treats the iteration loop as a relevant boundary even at only 5 iterations",
+    "Explicitly notes that at least one agentic concern is low-relevance or not applicable for this design — e.g., memory-poisoning has no memory to poison, multi-agent-cascade does not apply to a single agent, or excessive-agency is bounded by the read-only single-tool design — rather than forcing every catalog item into a register row"
+  ]
+}

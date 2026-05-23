@@ -1,0 +1,12 @@
+{
+  "skill": "threat-modeling-llm-app",
+  "scenario_id": "02-batch-no-user-input",
+  "scenario_kind": "edge-case",
+  "query": "Threat-model our nightly batch pipeline. It pulls the day's incident reports from PagerDuty's webhook archive, sends each report to Claude with a fixed summarization prompt, and posts the resulting summary to a private Slack channel monitored by our SRE on-call rotation. There is no external user input at runtime — the prompts are static, the inputs are PagerDuty content, and the output goes only to that private channel. Use MITRE ATLAS as the catalog. Be honest about which ATLAS techniques don't apply here.",
+  "files": [],
+  "expected_behavior": [
+    "Cites MITRE ATLAS as the user-supplied catalog and does not silently swap in or fabricate a different catalog",
+    "Treats the PagerDuty webhook content as a trust-boundary input (i.e., notes that incident-report content can carry indirect prompt-injection payloads) rather than treating the pipeline as having 'no user input' for threat-modeling purposes",
+    "Explicitly lists at least one ATLAS technique that does NOT apply in this deployment (e.g., model-extraction / training-data-poisoning against a hosted inference API) under a gap or out-of-scope section, instead of forcing every catalog item into a register row"
+  ]
+}

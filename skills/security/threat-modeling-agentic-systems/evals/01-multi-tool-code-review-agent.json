@@ -1,0 +1,12 @@
+{
+  "skill": "threat-modeling-agentic-systems",
+  "scenario_id": "01-multi-tool-code-review-agent",
+  "scenario_kind": "happy-path",
+  "query": "Threat-model our new code-review agent before we let it loose on production PRs. It's a planner-executor: at each iteration the planner (GPT-4o-mini) reads the current PR diff plus its scratchpad of prior tool results and decides which of four tools to call next — lint(file), security-scan(file), run-tests(suite), or post_comment(body). It can iterate up to 12 times. The scratchpad is a free-form markdown blob carried between iterations. The agent runs under a GitHub App identity with pull_requests:write installed at the org level. There is no cost cap and no human-in-the-loop gate. Use MAESTRO as the catalog and call out the top residual risks.",
+  "files": [],
+  "expected_behavior": [
+    "Cites MAESTRO as the user-supplied catalog and does not invent or silently substitute a catalog",
+    "Identifies at least three agentic-specific boundaries beyond standard LLM-app boundaries — at minimum the tool-result-feeds-next-prompt loop, the scratchpad/memory-write-to-next-turn, and either the iteration-loop or the agent identity / blast-radius — and walks the catalog against them",
+    "Flags at least two of: missing cost cap, org-level GitHub App scope being broader than needed, scratchpad-as-poisoning-channel, and post_comment-as-excessive-agency; and labels at least one mitigation as control-plane (iteration / cost cap / human-gate / identity scoping) rather than data-plane only"
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "skill": "threat-modeling-llm-app",
+  "scenario_id": "03-pure-rest-api",
+  "scenario_kind": "anti-trigger",
+  "query": "Threat-model our new orders API. It's a Go service exposing REST endpoints (GET /orders/:id, POST /orders, POST /orders/:id/refund). It reads/writes Postgres via sqlc, authenticates via OAuth2, and emits Kafka events on order state changes. No LLM, no ML model, no embeddings — pure REST CRUD plus event emission. Use OWASP API Security Top 10 as the catalog.",
+  "files": [],
+  "expected_behavior": [
+    "Recognizes that the system has no LLM component and declines to apply LLM-app-specific threat modeling, rather than forcing OWASP LLM Top 10 categories onto a REST API",
+    "Either hands off to a conventional STRIDE / OWASP API Security Top 10 threat-modeling approach OR explicitly states this skill is for LLM-backed apps and the user should use a generic STRIDE process here",
+    "Does NOT invent LLM-specific boundaries (model gateway, retriever → context, model → tool) for a system that has none"
+  ]
+}
