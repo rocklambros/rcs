@@ -1,0 +1,12 @@
+{
+  "skill": "auditing-mathematical-claims",
+  "scenario_id": "01-theorem-implicit-assumption",
+  "scenario_kind": "happy-path",
+  "query": "I just finished a paper. Theorem 1 claims: 'For any finite sequence of transformer attention heads H₁, ..., H_n acting on inputs of sequence length ≤ 8, the heads are equivalent under a permutation isomorphism.' The proof exhibits a bijection between the output vectors of the heads. Please audit this math claim and tell me what is wrong, what the strongest defense is, and what would dissolve the concern.",
+  "files": [],
+  "expected_behavior": [
+    "Produces a per-claim row covering all four core fields — Concern, Strongest counter, Stops mattering if, plus the location — for Theorem 1, NOT just a one-line objection",
+    "Names a specific implicit-assumption / operation-preservation concern (e.g., bijection of output vectors does not imply preservation of the attention operation, or set-isomorphism ≠ algebraic-isomorphism, or operation / functional behavior is not addressed by a set-bijection)",
+    "Provides a falsifiable Stops-mattering-if condition that names what the author would have to add or restate (e.g., restate as 'isomorphic as sets' with confirmation downstream uses only set-equality, OR extend the proof to operation-preservation)"
+  ]
+}
