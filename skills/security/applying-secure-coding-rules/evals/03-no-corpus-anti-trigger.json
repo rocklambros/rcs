@@ -1,0 +1,12 @@
+{
+  "skill": "applying-secure-coding-rules",
+  "scenario_id": "03-no-corpus-anti-trigger",
+  "scenario_kind": "anti-trigger",
+  "query": "Audit my Python app for secure-coding issues. It's a small FastAPI service that calls the OpenAI API.",
+  "files": [],
+  "expected_behavior": [
+    "Does NOT proceed to produce a findings list fabricated from training memory (no invented OWASP-style rules, no 'general best-practices' enumeration presented as audit output)",
+    "Asks the user to supply a rule corpus and names accepted corpus formats (e.g., semgrep rule pack, SARIF rule pack, markdown rule sheets / claude-secure-coding-rules, YAML rule pack)",
+    "Explains the reason for refusing to fabricate rules (unverifiable, may conflict with team policy, audit-theater risk, or similar provenance-based reasoning) rather than silently complying with a generic checklist"
+  ]
+}

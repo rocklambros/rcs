@@ -1,0 +1,12 @@
+{
+  "skill": "applying-secure-coding-rules",
+  "scenario_id": "02-polyglot-partial-coverage-edge-case",
+  "scenario_kind": "edge-case",
+  "query": "Our corpus is a semgrep rule pack covering only Python and JavaScript. The project is polyglot: Python (FastAPI backend), TypeScript (Next.js frontend), and Terraform (AWS infra under terraform/). Apply what applies and explicitly tell us where coverage is missing.",
+  "files": [],
+  "expected_behavior": [
+    "Applies the Python rules to the backend and the JavaScript (or TypeScript-compatible) rules to the frontend, and surfaces findings for both",
+    "Explicitly identifies that the Terraform / infra directory has NO corpus coverage and calls out the gap (rather than silently skipping or fabricating Terraform rules from memory)",
+    "Recommends a constructive next step for the uncovered Terraform code (e.g., add a Terraform-specific rule pack such as tfsec or Checkov to the corpus, or document infra/ as out of scope) instead of inventing rules"
+  ]
+}
