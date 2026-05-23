@@ -18,12 +18,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Fail if API key missing (main repo only)
-        if: github.repository == 'rockcyber/rcs' && env.ANTHROPIC_API_KEY == ''
+        if: github.repository == 'rocklambros/rcs' && env.ANTHROPIC_API_KEY == ''
         run: |
           echo "::error::ANTHROPIC_API_KEY secret not set in main repo"
           exit 1
       - name: Skip if API key missing (forks)
-        if: github.repository != 'rockcyber/rcs' && env.ANTHROPIC_API_KEY == ''
+        if: github.repository != 'rocklambros/rcs' && env.ANTHROPIC_API_KEY == ''
         run: |
           echo "::warning::ANTHROPIC_API_KEY not set in fork; skipping eval suite"
           exit 0

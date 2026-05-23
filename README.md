@@ -17,7 +17,7 @@ Production-quality Claude Code skills for AI security researchers, data scientis
 Clone and symlink each skill you want into `~/.claude/skills/`:
 
 ```bash
-git clone https://github.com/rockcyber/rcs.git
+git clone https://github.com/rocklambros/rcs.git
 cd rcs
 for skill in skills/*/*/; do
   name=$(basename "$skill")
