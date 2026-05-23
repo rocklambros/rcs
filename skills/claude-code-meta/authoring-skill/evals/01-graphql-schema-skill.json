@@ -1,0 +1,12 @@
+{
+  "skill": "authoring-skill",
+  "scenario_id": "01-graphql-schema-skill",
+  "scenario_kind": "happy-path",
+  "query": "I want to write a skill that helps with auditing GraphQL schemas. Walk me through it.",
+  "files": [],
+  "expected_behavior": [
+    "Recommends a gerund-form slug (e.g., 'auditing-graphql-schemas') and explicitly names the gerund / verb+ing naming rule",
+    "Lists the Layer-3 required H2 sections (When to use, When NOT to use, Quick start, Inputs, Workflow, Outputs, Failure modes, References, Examples, See also, Status & version) — at minimum naming several of them, not just describing 'the body'",
+    "Recommends writing the 3 evals (happy-path, edge-case, anti-trigger) BEFORE the SKILL.md body, citing the eval-first / Anthropic best-practices ordering"
+  ]
+}

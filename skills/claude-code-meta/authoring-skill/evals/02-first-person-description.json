@@ -1,0 +1,12 @@
+{
+  "skill": "authoring-skill",
+  "scenario_id": "02-first-person-description",
+  "scenario_kind": "edge-case",
+  "query": "My description is 'I can help you find vulnerabilities in your GraphQL schema.' Is that good?",
+  "files": [],
+  "expected_behavior": [
+    "Flags the first-person POV ('I can help...') as a violation of the description rules",
+    "Rewrites or proposes a third-person replacement description that names both WHAT the skill does and WHEN to trigger it",
+    "Cites the underlying rule — either the Anthropic best-practices guidance or the equivalent RCS conventions rule about third-person, system-prompt-injected descriptions"
+  ]
+}
