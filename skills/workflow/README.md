@@ -13,32 +13,19 @@ Cross-cutting research and engineering hygiene. Applies to both security and ml-
 | [`pinning-reproducible-environments`](pinning-reproducible-environments/) | Per-ecosystem pin pattern (uv.lock / poetry.lock / package-lock.json / pnpm-lock.yaml / renv.lock / base-image digest) + runtime-version pinning + CI strict-install + weekly drift-check | Starting a new project; "works on my machine but not in CI" symptoms; teammate onboarding; reproducibility for a paper, regulatory submission, or audit trail | 17 |
 | [`auditing-data-quality`](auditing-data-quality/) | Per-column null / range / type / cardinality audit + semantic-class detection + outlier flagging (no auto-drop) + row-level integrity (duplicate rows, conflicting facts) | Receiving a new dataset; before fitting any model; when results suddenly look off; when a dataset changed shape between runs | 17 |
 | [`auditing-context-window-pressure`](auditing-context-window-pressure/) | Multi-turn session pressure audit: context %, cache-hit-rate, instruction-hierarchy size, tool-result bloat, system-reminder accumulation, /compact vs /clear triage with mandatory file-offload + subagent-summary moves first | Session feels slow; prompt-cache hit rate dropped; token cost seems high; before starting a long-running multi-turn workflow | 17 |
+| [`auditing-jupyter-execution-order`](auditing-jupyter-execution-order/) | Static audit of `.ipynb` cell execution_count for out-of-order or unrun cells with downstream dependents | When a notebook is about to be shared, submitted, committed, graded, or promoted — or when a teammate cannot reproduce numbers from a `Restart-and-Run-All` | 16 |
+| [`auditing-source-provenance`](auditing-source-provenance/) | Audits ingest pipelines for per-record source provenance (repo + SHA + pull-date + adapter version + license) and verifies provenance survives downstream transforms | When ingesting external data, merging registries, diagnosing "where did this row come from", or preparing a dataset for an audit | 16 |
+| [`pre-registering-eval-study`](pre-registering-eval-study/) | Locks hypothesis, falsification, stopping rule, and power justification BEFORE any data is observed; refuses vague hypotheses and open-ended stopping rules. | Designing an LLM eval, A/B test, clinical study, or any decision that will rest on a test statistic. | 16 |
+| [`building-deterministic-data-pipelines`](building-deterministic-data-pipelines/) | Builds data pipelines whose outputs are bit-identical across runs (canonical JSON / JSONL / CSV / Parquet, LF endings, pinned float precision, provenance.json, content-hash snapshot, CI drift check) | When authoring an ingest / ETL / preprocessing pipeline whose output is shared or audit-grade, or when run-to-run output diffs appear without code or data change | 15 |
+| [`writing-successor-primers`](writing-successor-primers/) | Writes the cold-pickup document a successor needs to carry a non-trivial project forward: purpose, founding principles with rejected trade-offs, where-to-start entry points, defense-in-depth false-confidence warnings, glossary, and what is NOT here. | Project handoff, end-of-rotation, open-sourcing, or any milestone where the original author will not be available to answer questions. | 15 |
+| [`writing-release-notes-as-postmortem`](writing-release-notes-as-postmortem/) | Writes release notes that double as miniature postmortems for every fixed regression — per-fix entry names file/function, root-cause class, test added, and commit SHA; strips marketing language; surfaces deferred regressions. | Bug-fix, security-patch, or stability releases where audit traceability and recurrence prevention matter. | 15 |
+| [`auditing-notebook-narrative`](auditing-notebook-narrative/) | Audits notebook markdown narrative against rendered code-cell outputs; flags directional / numeric mismatches between prose claims and figures | When a notebook with both prose and outputs is about to be shared / graded / published, or when the notebook was retrained after the writeup was drafted | 13 |
+| [`validating-schema-evolution`](validating-schema-evolution/) | Diffs old vs new schemas, classifies each change as breaking / non-breaking / ambiguous, and scaffolds safe migrations (5-step rename, 3-step NOT-NULL add) | When a dataset or API schema is about to change, when a downstream consumer breaks after an upstream refresh, or when reviewing an API version bump for backwards compatibility | 13 |
+| [`auditing-mathematical-claims`](auditing-mathematical-claims/) | Four-field per-claim audit (Location · Concern · Strongest-counter · Stops-mattering-if) on theorems, lemmas, bounds, identities, and definitions with severity × likelihood / detectability prioritization; generalized ATACE math-flags template; routes empirical claims to running-adversarial-premortem | A finished proof, paper section, theoretical argument, or formal bound needs adversarial audit of the mathematics specifically (distinct from empirical-claim red-teaming) | 13 |
 
 ## Planned skills
 
-### Notebook + reproducibility
-
-| Skill | What it does | Σ | Status |
-|---|---|---|---|
-| `auditing-notebook-narrative` | Diff rendered figures against in-narrative claims | 13 | 📝 planned |
-| `building-deterministic-data-pipelines` | LF endings, sorted JSON keys, content-hash snapshots, provenance.json | 15 | 📝 planned |
-| `auditing-jupyter-execution-order` | Cells-out-of-order detection | 16 | 📝 planned |
-
-### Data engineering
-
-| Skill | What it does | Σ | Status |
-|---|---|---|---|
-| `validating-schema-evolution` | Schema-diff + breaking-change classification | 13 | 📝 planned |
-| `auditing-source-provenance` | provenance.json: source repo + commit SHA + pull date + adapter version | 16 | 📝 planned |
-
-### Research discipline
-
-| Skill | What it does | Σ | Status |
-|---|---|---|---|
-| `pre-registering-eval-study` | Lock + hypothesis + stopping rules + falsification criteria | 16 | 📝 planned |
-| `writing-successor-primers` | "If you have to pick this up cold" template | 15 | 📝 planned |
-| `writing-release-notes-as-postmortem` | Regression → root cause → test added to prevent recurrence | 15 | 📝 planned |
-| `auditing-mathematical-claims` | Per-claim: location, concern, strongest-counter, stops-mattering-if (ATACE math-flags template) | 13 | 📝 planned |
+_All planned skills under the `workflow/` track from v2 have shipped. Future workflow-track planned skills will appear here as the v4+ roadmap expands._
 
 ## Cross-track references
 
