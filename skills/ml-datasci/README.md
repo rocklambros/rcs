@@ -6,10 +6,9 @@ This track encodes disciplines that recur across model-building work: statistica
 
 ## Shipped skills
 
-_Populated in Phase 2._
-
 | Skill | What it does | When to use | Σ |
 |---|---|---|---|
+| [`reporting-effect-sizes`](reporting-effect-sizes/) | Selects the appropriate effect-size metric per test family (Cohen's d / dz, Cliff's δ, rank-biserial, OR, partial η², adj-R²) + 95% CI + direction sentence; refuses bare-p-value reports | When reporting any hypothesis-test result, writing stats homework / papers / dashboards, or seeing 'p < 0.05 so significant' without an effect size | 19 |
 
 ## Planned skills
 
@@ -19,7 +18,6 @@ _Populated in Phase 2._
 |---|---|---|---|
 | `selecting-statistical-test` | Decision tree from data characteristics → recommends t / Welch / Wilcoxon / Mann-Whitney / Sign / paired-t / Fisher / χ², names the gating assumption | 18 | 📝 planned (Phase 3) |
 | `checking-test-assumptions` | Shapiro / Levene / QQ / residual diagnostics → pass/fail per assumption with evidence | 18 | 📝 planned (Phase 3) |
-| `reporting-effect-sizes` | Cohen's d / Cliff's δ / R² + 95% CI + direction; refuses bare p-value | 19 | 📝 planned (Phase 2) |
 | `interpreting-conflicting-tests` | Assumption-status table to commit to a winner when t / Wilcoxon disagree | 16 | 📝 planned |
 | `analyzing-regression-diagnostics` | Linearity / residual normality / homoscedasticity / leverage / Cook's D | 14 | 📝 planned |
 | `running-power-analysis` | Sample-size + MDE + effect-size sanity check before running the study | 13 | 📝 planned |

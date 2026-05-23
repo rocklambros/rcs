@@ -9,12 +9,12 @@ This track encodes day-job disciplines: MCP pre-trust auditing, vulnerability tr
 | Skill | What it does | When to use | Σ |
 |---|---|---|---|
 | [`auditing-mcp-server-pre-trust`](auditing-mcp-server-pre-trust/) | Six-check audit (license, source, network, version pin, secret handling, tool subset) of any proposed MCP server before pre-trust | Whenever you are about to add an MCP server to your Claude Code config | 18 |
+| [`auditing-pinned-dependencies`](auditing-pinned-dependencies/) | Greps install commands and CI for unpinned deps (`npx -y`, `@latest`, `pip install` without `==`, unpinned `uvx --from git+`, `curl|sh`); per-file findings with pinned-form suggestions | When reviewing a new repo, evaluating an MCP install command, or hardening a project against supply-chain risk | 19 |
 
 ## Planned skills
 
 | Skill | What it does | Σ | Status |
 |---|---|---|---|
-| `auditing-pinned-dependencies` | Greps for unpinned installs, flags supply-chain risk | 19 | 📝 planned (Phase 2) |
 | `threat-modeling-llm-app` | Walks an LLM app through STRIDE-style threats; user supplies the checklist as input | 13 | 📝 planned |
 | `threat-modeling-agentic-systems` | MAESTRO/STRIDE walk for an agent design; user supplies the catalog | 11 | 📝 planned |
 | `triaging-vulnerability-findings` | SARIF processing: dedupe → EPSS-enrich → blast-radius → suppress with pragma | 14 | 📝 planned |
