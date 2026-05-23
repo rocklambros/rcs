@@ -1,0 +1,12 @@
+{
+  "skill": "writing-release-notes-as-postmortem",
+  "scenario_id": "03-first-release",
+  "scenario_kind": "anti-trigger",
+  "query": "We are cutting v0.1.0 — the first public release of our new open-source library. Help me write the release notes in postmortem style.",
+  "files": [],
+  "expected_behavior": [
+    "Does NOT apply the six-field postmortem structure (no per-fix entries with file/function, root-cause class, or 'test added' fields)",
+    "Explains that a first release has no prior regressions to postmortem, so postmortem-style notes do not fit; recommends feature-announcement notes covering capability list, supported platforms, install instructions, and known limitations instead",
+    "Hands off to (or describes) a feature-announcement pattern as the correct artifact for v0.1.0, optionally noting that postmortem-style notes become appropriate starting with the first patch or regression-fix release after v0.1.0"
+  ]
+}

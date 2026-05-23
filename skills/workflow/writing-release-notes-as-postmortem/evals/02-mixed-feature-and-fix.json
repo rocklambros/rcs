@@ -1,0 +1,12 @@
+{
+  "skill": "writing-release-notes-as-postmortem",
+  "scenario_id": "02-mixed-feature-and-fix",
+  "scenario_kind": "edge-case",
+  "query": "v2.4.0 is a minor release: we shipped a brand-new dashboard feature, three smaller features, AND we fixed 5 regressions that came in during the dashboard development cycle. Help me write the release notes.",
+  "files": [],
+  "expected_behavior": [
+    "Splits the notes into a feature-announcement section (for the dashboard and the three smaller features) AND a postmortem-flavored fixes section (for the 5 regressions) — does NOT force the postmortem six-field format onto the new features",
+    "Applies the six-field postmortem structure (ID, symptom, file/function, root cause, test added, SHA) ONLY to the 5 fixes; sorts the fixes section by severity descending",
+    "Includes the executive-summary line covering both halves (e.g., '4 features shipped; 5 regressions fixed across 1 critical + 3 major + 1 cosmetic; weighted severity X; coverage +N tests') AND keeps a 'regressions NOT yet fixed' section for any deferred bugs"
+  ]
+}
