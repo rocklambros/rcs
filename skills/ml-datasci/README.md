@@ -9,6 +9,12 @@ This track encodes disciplines that recur across model-building work: statistica
 | Skill | What it does | When to use | Σ |
 |---|---|---|---|
 | [`reporting-effect-sizes`](reporting-effect-sizes/) | Selects the appropriate effect-size metric per test family (Cohen's d / dz, Cliff's δ, rank-biserial, OR, partial η², adj-R²) + 95% CI + direction sentence; refuses bare-p-value reports | When reporting any hypothesis-test result, writing stats homework / papers / dashboards, or seeing 'p < 0.05 so significant' without an effect size | 19 |
+| [`evaluating-binary-classifiers`](evaluating-binary-classifiers/) | ROC + PR + calibration + CM + threshold sweep + bootstrap 95% CI from `(y_true, y_pred_proba)`; refuses bare accuracy on imbalanced data; refuses default 0.5 threshold | A trained binary classifier needs scoring; class imbalance suspected; only accuracy reported on imbalanced data; threshold selection needed | 19 |
+| [`selecting-statistical-test`](selecting-statistical-test/) | Decision-tree walk from data characteristics (sample count, paired/independent, scale, distributional assumptions) to recommended test, naming the gating assumption check | User has a hypothesis + data and needs to commit to a test before running it | 18 |
+| [`checking-test-assumptions`](checking-test-assumptions/) | Per-test assumption checks (Shapiro / Levene / QQ / residual diagnostics) with pass/fail verdicts and consequences | Before running any parametric test, after running one to validate, or when asked 'are the assumptions met?' | 18 |
+| [`auditing-train-test-split`](auditing-train-test-split/) | Leakage / stratification / group-aware / temporal-order audit of a train/test split | User creates a split; accuracy looks suspiciously high; same ID in train+test; time-series random-split; or group-aware data is row-split | 18 |
+| [`building-baseline-models`](building-baseline-models/) | 3-rung baseline ladder (Dummy / Linear / RandomForest) fit on the SAME train/test split and SAME metric as the final model; refuses to certify a complex-model metric without baseline comparison | About to fit gradient boosting / deep learning / any complex model; a metric is reported without comparison context; "is `<metric>` good?" without a baseline | 17 |
+| [`evaluating-regression-models`](evaluating-regression-models/) | RMSE + MAE + R² + adjusted-R² + residual plots (residuals-vs-fitted, QQ, histogram) + k-fold CV (`mean ± SD`) + Cook's D; refuses R² alone; recommends walk-forward CV for time-series | A regression model needs scoring; only R² is reported without RMSE/MAE; residual diagnostics needed; CV missing | 17 |
 
 ## Planned skills
 
@@ -16,8 +22,6 @@ This track encodes disciplines that recur across model-building work: statistica
 
 | Skill | What it does | Σ | Status |
 |---|---|---|---|
-| `selecting-statistical-test` | Decision tree from data characteristics → recommends t / Welch / Wilcoxon / Mann-Whitney / Sign / paired-t / Fisher / χ², names the gating assumption | 18 | 📝 planned (Phase 3) |
-| `checking-test-assumptions` | Shapiro / Levene / QQ / residual diagnostics → pass/fail per assumption with evidence | 18 | 📝 planned (Phase 3) |
 | `interpreting-conflicting-tests` | Assumption-status table to commit to a winner when t / Wilcoxon disagree | 16 | 📝 planned |
 | `analyzing-regression-diagnostics` | Linearity / residual normality / homoscedasticity / leverage / Cook's D | 14 | 📝 planned |
 | `running-power-analysis` | Sample-size + MDE + effect-size sanity check before running the study | 13 | 📝 planned |
@@ -29,10 +33,6 @@ This track encodes disciplines that recur across model-building work: statistica
 
 | Skill | What it does | Σ | Status |
 |---|---|---|---|
-| `auditing-train-test-split` | Leakage detection, stratification check, group-aware verification, temporal split for time series | 18 | 📝 planned (Phase 3) |
-| `building-baseline-models` | Dummy / LogReg / RF before fancy model | 17 | 📝 planned (Phase 4) |
-| `evaluating-binary-classifiers` | ROC + PR + calibration + CM + threshold sweep + class-imbalance + bootstrap CI from (y_true, y_proba) | 19 | 📝 planned (Phase 4) |
-| `evaluating-regression-models` | RMSE / MAE / R² / residual plots + cross-validation | 17 | 📝 planned (Phase 4) |
 | `evaluating-multiclass-classifiers` | Macro/micro F1, per-class PR, confusion matrix, top-k | 16 | 📝 planned |
 | `tuning-classification-threshold` | Domain-aware threshold sweep (FN-cost » FP-cost in security) | 16 | 📝 planned |
 | `running-chollet-ratio-check` | Samples-to-mean-seq-length → BoW vs LSTM vs Transformer recommendation | 16 | 📝 planned |

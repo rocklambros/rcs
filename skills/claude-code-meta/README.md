@@ -4,17 +4,15 @@ For Claude Code skill / plugin / hook / MCP / rule authors. Meta-skills that enc
 
 ## Shipped skills
 
-_Populated in Phase 6._
-
 | Skill | What it does | When to use | Σ |
 |---|---|---|---|
+| [`authoring-skill`](authoring-skill/) | Walks the Anthropic Skill best-practices + RCS Layer-3 contract for authoring a new skill: gerund-form slug, third-person description, 11 required H2 sections, eval-first ordering | User wants to write a new skill (Claude Code, Copilot CLI, Gemini CLI, Anthropic API plugin), is reviewing a SKILL.md, or asks "is my frontmatter right?" | 18 |
+| [`auditing-instruction-hierarchy`](auditing-instruction-hierarchy/) | Audits the agent-instruction file hierarchy (managed > user > project > plugin) for size budget (≤ 400 lines), cache hygiene (no timestamps in the cached prefix), and drift | CLAUDE.md feels bloated, prompt-cache hit rate is dropping, token usage seems high at session start, or the user is about to add a new instruction file | 18 |
 
 ## Planned skills
 
 | Skill | What it does | Σ | Status |
 |---|---|---|---|
-| `writing-claude-code-skill` | Walks the Anthropic best-practices checklist; eval-first workflow; Layer-3 H2 contract | 18 | 📝 planned (Phase 6) |
-| `auditing-claude-md-hierarchy` | Size check (≤ 400 lines), cache hygiene (no timestamps), drift detection | 18 | 📝 planned (Phase 6) |
 | `writing-claude-code-plugin` | marketplace.json + commands + agents + hooks + lifecycle | 11 | 📝 planned |
 | `writing-mcp-server-securely` | Six-check audit baked into the authoring workflow | 14 | 📝 planned |
 | `writing-claude-code-hook` | PreToolUse / PostToolUse / Stop / SessionStart patterns with security review | 12 | 📝 planned |

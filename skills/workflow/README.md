@@ -43,7 +43,7 @@ Cross-cutting research and engineering hygiene. Applies to both security and ml-
 
 | Skill | What it does | Σ | Status |
 |---|---|---|---|
-| `auditing-context-window-pressure` | CLAUDE.md hierarchy under 400 lines, cache-warm hygiene, drift detection | 17 | 📝 planned (Phase 6) |
+| [`auditing-context-window-pressure`](auditing-context-window-pressure/) | Multi-turn session pressure audit: context %, cache-hit-rate, instruction-hierarchy size, tool-result bloat, system-reminder accumulation, /compact vs /clear triage | 17 | 🔨 drafting (Batch 5: happy-path eval 2/3 — Step 7 body revision pending) |
 
 ## Cross-track references
 

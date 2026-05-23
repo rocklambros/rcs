@@ -33,20 +33,26 @@ The `skills/<track>/<name>/SKILL.md` files follow the Anthropic Skills format an
 
 | Skill | Track | What it does | Status | Σ |
 |---|---|---|---|---|
-| [`running-adversarial-premortem`](skills/workflow/running-adversarial-premortem/) | workflow | Multi-round adversarial premortem on spec / plan / paper / proof / codebase | ✅ shipped | 17 |
+| [`enforcing-seed-hygiene`](skills/workflow/enforcing-seed-hygiene/) | workflow | First-cell seed gate (Python/NumPy/PyTorch/JAX/TF/R) + CPU-pin for cross-platform sampler determinism + pre-commit hook | ✅ shipped | 20 |
+| [`validating-temporal-fields`](skills/workflow/validating-temporal-fields/) | workflow | Reject-future + min-year-fallback + event-vs-disclosure separation for temporal corpora | ✅ shipped | 19 |
+| [`auditing-pinned-dependencies`](skills/security/auditing-pinned-dependencies/) | security | Grep audit for unpinned installs across README / Dockerfile / CI / package.json / mcp.json | ✅ shipped | 19 |
+| [`reporting-effect-sizes`](skills/ml-datasci/reporting-effect-sizes/) | ml-datasci | Per-test-family effect-size selector + 95% CI + direction sentence; refuses bare-p-value | ✅ shipped | 19 |
+| [`evaluating-binary-classifiers`](skills/ml-datasci/evaluating-binary-classifiers/) | ml-datasci | ROC + PR + calibration + CM + threshold sweep + bootstrap 95% CI from `(y_true, y_pred_proba)` | ✅ shipped | 19 |
 | [`auditing-mcp-server-pre-trust`](skills/security/auditing-mcp-server-pre-trust/) | security | Six-check audit before registering an MCP server | ✅ shipped | 18 |
+| [`selecting-statistical-test`](skills/ml-datasci/selecting-statistical-test/) | ml-datasci | Decision-tree walk from data characteristics to a recommended test, naming the gating assumption | ✅ shipped | 18 |
+| [`checking-test-assumptions`](skills/ml-datasci/checking-test-assumptions/) | ml-datasci | Per-test assumption checks (Shapiro / Levene / QQ / residual) with pass/fail verdicts | ✅ shipped | 18 |
+| [`auditing-train-test-split`](skills/ml-datasci/auditing-train-test-split/) | ml-datasci | Leakage / stratification / group-aware / temporal-order audit of a train/test split | ✅ shipped | 18 |
+| [`deduplicating-records`](skills/workflow/deduplicating-records/) | workflow | Multi-key dedup with index-refresh, union-find transitive collapse, and ID-format normalization | ✅ shipped | 18 |
+| [`authoring-skill`](skills/claude-code-meta/authoring-skill/) | claude-code-meta | Anthropic best-practices + RCS Layer-3 contract for authoring a new skill | ✅ shipped | 18 |
+| [`auditing-instruction-hierarchy`](skills/claude-code-meta/auditing-instruction-hierarchy/) | claude-code-meta | Audits the agent-instruction file hierarchy for size budget, cache hygiene, and drift | ✅ shipped | 18 |
+| [`running-adversarial-premortem`](skills/workflow/running-adversarial-premortem/) | workflow | Multi-round adversarial premortem on spec / plan / paper / proof / codebase | ✅ shipped | 17 |
+| [`pinning-reproducible-environments`](skills/workflow/pinning-reproducible-environments/) | workflow | Per-ecosystem lockfile pattern + runtime-version pinning + base-image digest pinning + CI drift-check | ✅ shipped | 17 |
+| [`auditing-data-quality`](skills/workflow/auditing-data-quality/) | workflow | Per-column null / range / type / cardinality audit + semantic-class detection + row-level integrity | ✅ shipped | 17 |
+| [`building-baseline-models`](skills/ml-datasci/building-baseline-models/) | ml-datasci | 3-rung baseline ladder (Dummy / Linear / RandomForest) on the same train/test split + same metric as the final model | ✅ shipped | 17 |
+| [`evaluating-regression-models`](skills/ml-datasci/evaluating-regression-models/) | ml-datasci | RMSE + MAE + R² + adjusted-R² + residual plots + k-fold CV; refuses R² alone | ✅ shipped | 17 |
+| [`auditing-context-window-pressure`](skills/workflow/auditing-context-window-pressure/) | workflow | Multi-turn session pressure audit: context %, cache-hit-rate, instruction-hierarchy size, tool-result bloat | 🔨 drafting | 17 |
 
-_2 of ~80 planned skills shipped. See each track's README for the planned-skills roadmap._
-
-## Roadmap (v1)
-
-The next 16 v1 skills (Σ ≥ 17, covering stats discipline, ML eval, data hygiene, and Claude Code authoring meta) are scheduled across 5 independent batches in [`docs/superpowers/plans/2026-05-23-rcs-batch-creation-plan.md`](docs/superpowers/plans/2026-05-23-rcs-batch-creation-plan.md). Each batch is a self-contained PR authorable by a fresh Claude Code session via the invocation:
-
-```
-/superpowers:writing-skills create batch <N> at docs/superpowers/plans/2026-05-23-rcs-batch-creation-plan.md using PRAGMATIC
-```
-
-Batches 1-5 can run in parallel; Batch 6 (integration) runs after all merge. See the plan for the per-batch isolation contract.
+_17 shipped + 1 drafting (18 total) of ~99 planned skills. See each track's README for the planned-skills roadmap; see [`docs/superpowers/plans/2026-05-23-rcs-batch-creation-plan.md`](docs/superpowers/plans/2026-05-23-rcs-batch-creation-plan.md) for the v2–v7 roadmap._
 
 ## Governance
 
