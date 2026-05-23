@@ -1,0 +1,12 @@
+{
+  "skill": "auditing-prompt-token-budget",
+  "scenario_id": "03-sub-500-token-one-shot",
+  "scenario_kind": "anti-trigger",
+  "query": "I'm writing a one-shot Python script that uses the Anthropic API to summarize a user-provided paragraph. The system prompt is about 100 tokens, the user message is 200–400 tokens depending on input, and the script runs once and exits. Should I add prompt caching with cache_control?",
+  "files": [],
+  "expected_behavior": [
+    "Recommends NOT adding prompt caching for this use case — does not force the cache_control workflow on a one-shot small script",
+    "Names at least one concrete reason caching is the wrong tool here (sub-1024-token segments don't cache, no repeated prefix to amortize the write cost, single-call scripts can't have a cache hit, etc.)",
+    "Does NOT invent a token-budget problem that does not exist (e.g., does not warn about context-window headroom on a ~500-token prompt, does not recommend telemetry / hit-rate alerts on a one-shot script)"
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "skill": "interpreting-conflicting-tests",
+  "scenario_id": "02-outlier-driven-conflict",
+  "scenario_kind": "edge-case",
+  "query": "I'm comparing API response latency between two server configurations, 30 observations per group. Two-sample t-test: t(58) = 2.4, p = 0.020 — significant. Mann-Whitney U on the same data: U = 612, p = 0.18 — not significant. Levene's test for equal variance: p = 0.92 (passes). Shapiro on group A: p = 0.31 (passes). Shapiro on group B: p = 0.001 (fails). When I look at the data, group B has 29 observations between 200 and 600 ms and ONE observation at 4,800 ms. The tests disagree and I don't know what to report.",
+  "files": [],
+  "expected_behavior": [
+    "Identifies the single 4,800-ms observation in group B as the driver of the conflict — does not declare a clean parametric-vs-non-parametric winner without first addressing the outlier",
+    "Recommends investigating whether the outlier is a measurement / logging artifact (e.g., timeout cap, instrumentation bug) before deciding to drop it, AND warns against simply dropping outliers without a documented rule",
+    "Recommends a robust analysis path — for example reporting a trimmed-mean comparison, a Hodges-Lehmann shift estimate, or running BOTH the with-outlier and without-outlier analyses with a sensitivity disclosure — rather than committing to either the raw t or the raw Mann-Whitney as the sole answer"
+  ]
+}

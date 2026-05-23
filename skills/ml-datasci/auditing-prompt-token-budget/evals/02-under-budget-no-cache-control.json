@@ -1,0 +1,12 @@
+{
+  "skill": "auditing-prompt-token-budget",
+  "scenario_id": "02-under-budget-no-cache-control",
+  "scenario_kind": "edge-case",
+  "query": "My Anthropic API prompt is about 3,000 tokens total (a stable 2,800-token system prompt with a small few-shot section, plus a short user message). It's well under the 200k window and I'm only making about 200 calls/day. I'm not using prompt caching today. Do I need to add cache_control, or is it fine to leave alone given how small the prompt is?",
+  "files": [],
+  "expected_behavior": [
+    "Does NOT use 'small total prompt' or 'low call volume' as a reason to skip caching — recognizes that the question is whether the prefix is STABLE (it is, at 2,800 tokens), not whether the total budget is tight",
+    "Recommends adding cache_control on the stable system block, and explains that even at 200 calls/day the input-token savings on a 2,800-token cached prefix outweigh the one-time write cost (or equivalently computes the break-even hit rate and shows the user clears it)",
+    "Recommends an explicit TTL choice ('1h' for cross-call reuse, or '5m' if calls cluster tightly) rather than leaving the TTL implicit / defaulted"
+  ]
+}

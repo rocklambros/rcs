@@ -1,0 +1,12 @@
+{
+  "skill": "recommending-model-tier",
+  "scenario_id": "01-five-task-pipeline",
+  "scenario_kind": "happy-path",
+  "query": "I'm building a customer-support pipeline with these LLM-driven stages: (1) classify the incoming user message into one of 8 intent labels, (2) extract any named entities (account_id, product_name, error_code) from the message, (3) retrieve relevant KB articles and synthesize a draft answer, (4) write a multi-step plan if escalation is needed (open-ended), and (5) reformat the draft into our brand voice. Today every stage runs on Opus 4.7 and per-call cost is too high. Recommend a tier per stage, with rationale.",
+  "files": [],
+  "expected_behavior": [
+    "Produces a DIFFERENT tier assignment for at least three of the five stages (i.e., does NOT recommend the same tier for the whole pipeline — meaningfully uses Haiku, Sonnet, and Opus for tasks that genuinely differ in reasoning depth)",
+    "Recommends Haiku-tier for at least one of the low-reasoning-depth stages (intent classification, entity extraction, or brand-voice rewrite) and reserves Sonnet or Opus for the higher-reasoning stages (RAG synthesis and open-ended planning)",
+    "Provides cost or latency reasoning that ties the tier choice to a quantitative benefit (e.g., percent reduction in per-call cost, expected drop in P95 latency, or a baseline-vs-proposed comparison) — not just a qualitative 'this is cheaper'"
+  ]
+}

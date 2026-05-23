@@ -1,0 +1,12 @@
+{
+  "skill": "auditing-prompt-token-budget",
+  "scenario_id": "01-five-k-system-with-repeats",
+  "scenario_kind": "happy-path",
+  "query": "Our customer-support agent uses the Anthropic API with a roughly 5,000-token system prompt (persona + tool definitions + 4,000 tokens of few-shot examples that never change) plus a ~200-token user message on every turn. We send about 50,000 conversations per day, average 8 turns per conversation, and conversations are spread across days. Per-call cost has been climbing. Audit the prompt for budget and caching, and tell me where to put cache_control and which TTL to use.",
+  "files": [],
+  "expected_behavior": [
+    "Identifies that the 5,000-token system block (instructions + tool defs + few-shot examples) is the stable prefix that should be cached, and recommends placing cache_control at the END of the system content (not in the user message or the volatile region)",
+    "Recommends the explicit '1h' (extended) TTL — not the default 5m — and justifies it via the multi-day cross-conversation reuse pattern (or equivalently warns that the default reverted to 5m and must be set explicitly to get extended caching)",
+    "Projects a meaningful cost / savings outcome (either a percentage savings on input cost, or a write-cost-vs-read-cost comparison, or a break-even hit-rate analysis) to demonstrate that the cache pays back at the user's call volume"
+  ]
+}

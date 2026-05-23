@@ -1,0 +1,12 @@
+{
+  "skill": "recommending-model-tier",
+  "scenario_id": "02-benchmark-says-sonnet-cost-says-haiku",
+  "scenario_kind": "edge-case",
+  "query": "I'm shipping a content-moderation classifier. On my internal eval set, Sonnet 4.6 scores 92% accuracy and Haiku 4.5 scores 88%. The 4-point gap matters because false negatives let through harmful content. My budget only fits Haiku-tier per-call cost. Can I ship Haiku, or do I have to find more budget for Sonnet?",
+  "files": [],
+  "expected_behavior": [
+    "Recognizes that the task is safety-critical (content moderation) and does NOT casually recommend the bare Haiku downgrade as if it were a normal cost optimization",
+    "Recommends an escalation strategy — for example Haiku-as-primary with a confidence threshold that re-runs ambiguous or low-confidence inputs on Sonnet, OR a human-in-the-loop on uncertain cases — rather than picking one tier outright",
+    "Recommends a follow-up evaluation step that measures the combined (Haiku + escalation) system against Sonnet-alone on the SAME eval set, including the false-negative rate on the harmful-content class, before declaring the cost-saving strategy successful"
+  ]
+}
