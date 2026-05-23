@@ -1,0 +1,12 @@
+{
+  "skill": "enforcing-leakage-firewall",
+  "scenario_id": "01-happy-path",
+  "scenario_kind": "happy-path",
+  "query": "I built a binary classifier on a multi-source security framework crosswalk. The dataset merges control / threat pairs from NIST CSF, MITRE ATT&CK, OWASP Top 10, and ENISA AI Threat Landscape — about 8,000 pairs after deduplication. Features are sentence-transformer embeddings of the control text and a few engineered similarity features. Training ROC-AUC is 0.94 and random-split held-out test ROC-AUC is 0.91. Should I trust this model and deploy it?",
+  "files": [],
+  "expected_behavior": [
+    "Identifies the dataset as multi-source crosswalk and refuses to trust the 0.91 random-split test ROC-AUC at face value — explicitly calls out that random-split is insufficient for a multi-source generalization claim",
+    "Recommends a leave-one-source-out evaluation (LeaveOneGroupOut on source) OR specifically holds out NIST (or names hub-source isolation / hub-firewall) to test cross-source generalization, NOT just trusting the random-split number",
+    "Names at least one additional firewall check beyond the source split — either LOFO (leave-one-feature-out) to surface target-encoded or post-event features, OR group-aware splitting on canonical_control_id (controls that appear in multiple sources), OR a row-hash invariant for duplicate-row leakage"
+  ]
+}
