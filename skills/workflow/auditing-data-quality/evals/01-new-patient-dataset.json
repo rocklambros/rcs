@@ -1,0 +1,12 @@
+{
+  "skill": "auditing-data-quality",
+  "scenario_id": "01-new-patient-dataset",
+  "scenario_kind": "happy-path",
+  "query": "I just got a 50,000-row patient dataset for a binary classification task (readmission yes/no). It came as a CSV from the data engineering team. Audit it before I model.",
+  "files": [],
+  "expected_behavior": [
+    "Recommends a per-column report covering at minimum: nulls (count and %), type, distinct count, and range or summary statistics",
+    "Recommends a row-level integrity check for duplicate rows (and, when an ID column exists, same-content-different-ID duplicates) — not just per-column checks",
+    "Includes a cardinality or semantic-class check that would catch a high-cardinality column being misclassified as categorical (e.g. free-text notes labeled as a category)"
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "skill": "auditing-data-quality",
+  "scenario_id": "02-age-outlier-dilemma",
+  "scenario_kind": "edge-case",
+  "query": "My age column has values ranging from 0 all the way up to 250. Should I just drop the outliers before modeling?",
+  "files": [],
+  "expected_behavior": [
+    "Does NOT recommend an immediate auto-drop of the outliers; flags this as a decision that requires semantic context first",
+    "Requests semantic context for the suspect values — is 0 a missing-value sentinel? is 250 a data-entry error, a years-vs-months confusion, or a legitimate domain extreme?",
+    "Recommends contacting the data producer (or otherwise confirming the column's intended encoding) before dropping or imputing"
+  ]
+}
