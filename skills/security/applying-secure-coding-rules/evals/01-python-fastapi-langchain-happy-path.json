@@ -1,0 +1,12 @@
+{
+  "skill": "applying-secure-coding-rules",
+  "scenario_id": "01-python-fastapi-langchain-happy-path",
+  "scenario_kind": "happy-path",
+  "query": "Apply our `claude-secure-coding-rules` markdown corpus (at ~/rules/) to the FastAPI + LangChain app at ./app/. The corpus has rules for Python, FastAPI, Flask, Django, LangChain, JavaScript, and React. The target is Python 3.13 + FastAPI 0.115 + LangChain 0.3 + SQLAlchemy 2.0 + PostgreSQL, with a Dockerfile (python:3.13-slim, not digest-pinned). Produce the applicable findings and tell me which rules were skipped and why.",
+  "files": [],
+  "expected_behavior": [
+    "Produces or describes a stack manifest at the top of the report identifying the project as Python + FastAPI + LangChain (and ideally SQLAlchemy / Postgres / Dockerfile) so the user can verify the detected stack",
+    "Selects a subset of corpus rules as applicable based on the detected stack (Python + FastAPI + LangChain rules apply) and surfaces findings; does NOT silently apply Flask/Django/JS/React rules to this project",
+    "Lists or summarizes skipped rules with reasons (e.g., 'Flask-specific rules skipped because project uses FastAPI', 'JS/React rules skipped because project is Python-only') rather than silently dropping them"
+  ]
+}
