@@ -1,0 +1,12 @@
+{
+  "skill": "threat-modeling-llm-app",
+  "scenario_id": "01-chatbot-rag-tools",
+  "scenario_kind": "happy-path",
+  "query": "Threat-model our customer-support chatbot before launch. Architecture: a Next.js client sends user messages to our backend; we construct a prompt with a system message + the user message + top-5 retrieved chunks from a Confluence-backed RAG over our internal docs; we call GPT-4o-mini through our LiteLLM gateway; the model can call two tools: lookup_order(order_id) which is read-only against our orders DB, and refund_order(order_id, amount) which writes a refund row and notifies the payments service. Output is rendered back in the chat UI. Use OWASP Top 10 for LLM Applications v1.1 as the catalog. Produce a threat register and call out the top residual risks.",
+  "files": [],
+  "expected_behavior": [
+    "Cites OWASP LLM Top 10 (v1.1 or the named version) as the catalog source and does not invent a substitute catalog",
+    "Identifies at least four distinct trust boundaries (user → app, app → model, retriever → context, model → tool, and/or model → output sink) and walks at least three OWASP LLM Top 10 items against them",
+    "Produces a threat register table where each row pairs a STRIDE classification with at least one concrete mitigation (not 'improve security' or 'add monitoring'), and explicitly flags refund_order or excessive-agency as a top residual risk requiring a human-in-the-loop or equivalent gate"
+  ]
+}
