@@ -1,0 +1,12 @@
+{
+  "skill": "building-canary-rollout",
+  "scenario_id": "03-anti-trigger",
+  "scenario_kind": "anti-trigger",
+  "query": "Our model serves an internal analytics dashboard. About 3 analysts on our team use it day-to-day. We have a new version we want to roll out — should we canary it?",
+  "files": [],
+  "expected_behavior": [
+    "Does NOT recommend a canary / traffic-split / multi-stage rollout workflow for a 3-user internal tool",
+    "Explains that canary rollouts require meaningful production traffic volume for statistical comparison; 3 users is far below any sensible cohort sample size",
+    "Recommends a lighter-weight alternative — a feature flag toggle plus manual analyst sign-off, and / or a documented rollback path — rather than the canary statistical machinery"
+  ]
+}

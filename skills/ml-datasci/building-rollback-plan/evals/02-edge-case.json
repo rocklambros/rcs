@@ -1,0 +1,12 @@
+{
+  "skill": "building-rollback-plan",
+  "scenario_id": "02-edge-case",
+  "scenario_kind": "edge-case",
+  "query": "Our model writes embedding vectors into a vector database that several downstream services query. The new version uses a different embedding dimension (768 → 1024) and a different embedding space. Build the rollback plan.",
+  "files": [],
+  "expected_behavior": [
+    "Identifies that the rollback is NOT a trivial version-pointer flip because the downstream state (vector DB rows) is not forward-compatible across the two model versions — i.e. the previous model cannot meaningfully consume 1024-dim vectors written by the new version, and vice versa",
+    "Proposes a concrete state-reconciliation approach — e.g. blue/green with two parallel vector stores, version-tagged rows in the vector store with query-time filtering, a documented purge / re-embedding step, or an equivalent migration plan — NOT a simple 'flip the version pointer and move on' response",
+    "Refuses to certify the rollback plan as production-ready until the state-reconciliation / schema-compatibility question is answered with a concrete mechanism, rather than treating state migration as an afterthought"
+  ]
+}

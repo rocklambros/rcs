@@ -1,0 +1,12 @@
+{
+  "skill": "packaging-model-for-deployment",
+  "scenario_id": "03-anti-trigger",
+  "scenario_kind": "anti-trigger",
+  "query": "I'm still in early exploration on a tabular classification problem. I'm comparing logistic regression, random forest, and gradient boosting to see which is most promising. Should I package the model now?",
+  "files": [],
+  "expected_behavior": [
+    "Does NOT engage the full packaging workflow (joblib artifact + manifest + smoke test + schema) for an exploratory notebook with no near-term deployment",
+    "Explains that packaging is a hand-off discipline for the chosen model just before deployment, not a step in model selection / exploration",
+    "Recommends a model-selection or evaluation workflow instead — e.g. building baseline comparisons (building-baseline-models) and / or fair evaluation (evaluating-binary-classifiers) — and suggests revisiting packaging once a single model is chosen for deployment"
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "skill": "building-canary-rollout",
+  "scenario_id": "02-edge-case",
+  "scenario_kind": "edge-case",
+  "query": "We want to canary the new churn model, but our cohorts are very imbalanced — the enterprise customer tier sees about 200 inference requests per day, while the SMB tier sees about 50,000 per day. How should the per-cohort regression check work?",
+  "files": [],
+  "expected_behavior": [
+    "Flags that 200 requests per day is too small a sample for a meaningful per-cohort statistical comparison within a typical canary stage window (e.g. 24-48 hours)",
+    "Offers a concrete remediation — at minimum one of: extend the canary stage duration so the small cohort accumulates enough sample, lower the per-cohort sample minimum while explicitly documenting the reduced statistical power, OR defer the per-cohort check for the small cohort to a longer post-rollout monitoring window",
+    "Does NOT proceed as if a 200-request cohort can be used the same way as the 50,000-request cohort — i.e. the response treats sample-size as a precondition for the cohort check, not an afterthought"
+  ]
+}

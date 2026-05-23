@@ -1,0 +1,12 @@
+{
+  "skill": "building-canary-rollout",
+  "scenario_id": "01-happy-path",
+  "scenario_kind": "happy-path",
+  "query": "We're about to promote churn-rf v0.2.0 to production, replacing v0.1.0. The system serves a few million inference requests per day across multiple regions and customer tiers. The product team wants the new model live by Friday. Plan the rollout.",
+  "files": [],
+  "expected_behavior": [
+    "Produces a staged traffic-split plan with multiple ramp stages (small percentage first, e.g. 1% / 5% / 25% / 100% or similar progressive ramp), NOT a 0%-to-100% overnight flip",
+    "Requires pre-committed guardrail metrics and thresholds — both a business / online metric (with direction and a minimum acceptable delta) AND a technical metric (latency p99 or error rate or similar) — set BEFORE the rollout begins",
+    "Defines per-cohort regression checks (splitting on at least geo / region or customer tier or equivalent dimensions) AND wires an auto-rollback trigger that fires deterministically when a pre-committed threshold is crossed, rather than relying on manual intervention"
+  ]
+}
