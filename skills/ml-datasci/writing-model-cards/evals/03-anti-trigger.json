@@ -1,0 +1,12 @@
+{
+  "skill": "writing-model-cards",
+  "scenario_id": "03-anti-trigger",
+  "scenario_kind": "anti-trigger",
+  "query": "I'm reproducing a paper's CNN on CIFAR-10 in a Jupyter notebook for a graduate-school class assignment. The model will never be deployed, served, or used by anyone other than me and the grading TA. Should I write a full model card for it?",
+  "files": [],
+  "expected_behavior": [
+    "Identifies the artifact as throwaway research / pedagogy with no deployment context, no customer exposure, and no downstream redistribution — and concludes a full model card is NOT necessary here",
+    "Recommends a lighter-weight alternative appropriate to the context — e.g. a short README in the notebook directory naming the paper, the version of the dataset, the libraries used, and the run environment — rather than the full 8-section + AIBOM model card",
+    "Notes that if the notebook artifact later becomes the basis for an actual deployment, open-weights release, or external sharing, the model-card workflow should be revisited at that point (does not just refuse with no follow-up guidance)"
+  ]
+}
