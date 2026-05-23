@@ -1,0 +1,12 @@
+{
+  "skill": "reporting-effect-sizes",
+  "scenario_id": "02-non-normal-paired-edge-case",
+  "scenario_kind": "edge-case",
+  "query": "The Shapiro-Wilk test on my paired differences gave p = 0.003 (non-Normal). I switched to a Wilcoxon signed-rank test: V = 38, p = 0.018, n = 18 paired observations. What effect-size metric should I report now?",
+  "files": [],
+  "expected_behavior": [
+    "Does NOT recommend Cohen's d (or Cohen's dz) — those assume Normality which has been rejected",
+    "Recommends a non-parametric paired effect-size metric: matched-pairs rank-biserial r, Cliff's delta on the difference scores, or an equivalent rank-based measure",
+    "Includes a 95% confidence interval recommendation (typically bootstrap, since closed-form is not clean for non-parametric metrics)"
+  ]
+}
