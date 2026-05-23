@@ -1,0 +1,12 @@
+{
+  "skill": "auditing-notebook-narrative",
+  "scenario_id": "03-pure-code-notebook",
+  "scenario_kind": "anti-trigger",
+  "query": "Audit this notebook for narrative-vs-output consistency. It has 12 code cells doing data loading, feature engineering, and model training. There is one markdown cell at the top that just says '# Bike Share Regression — Run 4' (a heading). No other markdown.",
+  "files": [],
+  "expected_behavior": [
+    "Recognizes that the notebook has no narrative markdown to audit — only a heading cell — and does NOT attempt to fabricate claims to check",
+    "Does NOT emit a mismatch verdict or recommend revising the writeup (because there is no writeup to revise)",
+    "Hands off or exits early, optionally suggesting the user run a different audit instead — execution-order, data-quality, or another applicable audit — rather than forcing the narrative audit"
+  ]
+}
