@@ -1,0 +1,12 @@
+{
+  "skill": "checking-test-assumptions",
+  "scenario_id": "02-mixed-failures",
+  "scenario_kind": "edge-case",
+  "query": "Shapiro for group A: p = 0.12. Shapiro for group B: p = 0.001. Levene: p = 0.04. What now?",
+  "files": [],
+  "expected_behavior": [
+    "Flags Group B as non-Normal (Shapiro p = 0.001 < 0.05)",
+    "Flags unequal variance (Levene p = 0.04 < 0.05)",
+    "Recommends Mann-Whitney U as the primary path (or Welch's t as an explicitly-named fallback that addresses only the variance issue)"
+  ]
+}
