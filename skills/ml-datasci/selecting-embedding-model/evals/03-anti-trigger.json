@@ -1,0 +1,12 @@
+{
+  "skill": "selecting-embedding-model",
+  "scenario_id": "03-anti-trigger",
+  "scenario_kind": "anti-trigger",
+  "query": "We're locked into OpenAI for everything — no other providers are allowed. Should we switch our embedding model?",
+  "files": [],
+  "expected_behavior": [
+    "Recognizes that meaningful embedding-model selection requires comparing candidates and that a single-provider lock-in eliminates most candidate options",
+    "Does NOT recommend a cross-provider model (e.g., Voyage, Cohere, BGE) given the stated lock-in constraint",
+    "Offers a constrained path that fits the lock-in: either compare OpenAI's own embedding tiers against one another (e.g., text-embedding-3-small vs text-embedding-3-large) OR pivot to non-embedding fixes (chunking, reranker, hybrid retrieval) that lift retrieval quality without changing the embedding provider"
+  ]
+}

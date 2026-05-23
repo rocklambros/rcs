@@ -1,0 +1,12 @@
+{
+  "skill": "evaluating-rag-retrieval",
+  "scenario_id": "02-edge-case",
+  "scenario_kind": "edge-case",
+  "query": "Our RAG retrieves the correct document in the top-3 for 90% of golden questions, but the final answer is wrong on about 40% of those same questions. The retriever seems fine — what's going on and what should I do next?",
+  "files": [],
+  "expected_behavior": [
+    "Identifies the failure mode as generation-stage (retrieval-hit + generation-wrong cell of the attribution matrix), not retrieval-stage",
+    "Recommends generation-side fixes (prompt grounding/citation requirement, context-window or lost-in-the-middle effects, generation-model swap, or similar) BEFORE recommending retriever changes",
+    "Recommends measuring faithfulness or answer-relevance on the retrieval-hit subset as the diagnostic to confirm the generation hypothesis"
+  ]
+}

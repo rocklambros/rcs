@@ -1,0 +1,12 @@
+{
+  "skill": "evaluating-rag-retrieval",
+  "scenario_id": "03-anti-trigger",
+  "scenario_kind": "anti-trigger",
+  "query": "I'm using GPT-4 to answer customer-support questions directly from its training data. There's no document store and no retrieval — just user query in, answer out. Evaluate it like a RAG system.",
+  "files": [],
+  "expected_behavior": [
+    "Identifies that this system is NOT a RAG (no retrieval stage, no document corpus, no top-k chunks) and that RAG-specific metrics do not apply",
+    "Does NOT recommend computing recall@k, MRR, or nDCG (which require a ranked retrieval result against gold doc ids)",
+    "Hands off to a direct-LLM evaluation approach (answer correctness against gold answers, or pure LLM-eval) instead of forcing the RAG report template"
+  ]
+}

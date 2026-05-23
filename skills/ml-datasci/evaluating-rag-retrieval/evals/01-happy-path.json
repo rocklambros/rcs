@@ -1,0 +1,12 @@
+{
+  "skill": "evaluating-rag-retrieval",
+  "scenario_id": "01-happy-path",
+  "scenario_kind": "happy-path",
+  "query": "Our RAG system answers customer-support questions over a corpus of 10,000 product docs. We have 150 golden question-answer pairs with the correct doc id for each. Walk me through how to evaluate the pipeline end-to-end.",
+  "files": [],
+  "expected_behavior": [
+    "Names retrieval-stage metrics (recall@k, MRR, or nDCG@k) as a distinct stage from generation-stage metrics, NOT a single aggregate score",
+    "Names generation-stage quality metrics (faithfulness or answer relevance) as a distinct second stage scored on retrieval hits",
+    "Names a failure-attribution table or analysis that separates retrieval failures from generation failures (the retrieval-hit-vs-miss × generation-correct-vs-wrong 2x2)"
+  ]
+}

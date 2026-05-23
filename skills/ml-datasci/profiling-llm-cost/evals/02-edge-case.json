@@ -1,0 +1,12 @@
+{
+  "skill": "profiling-llm-cost",
+  "scenario_id": "02-edge-case",
+  "scenario_kind": "edge-case",
+  "query": "Our prompt-cache hit rate dropped from 90% to 30% over the past week and our LLM cost is up significantly. The application code hasn't changed. What could have broken the cache, and how do I find it?",
+  "files": [],
+  "expected_behavior": [
+    "Names AT LEAST TWO distinct causes of cache-hit-rate erosion (such as: system-prompt edit, model-version pin floating to 'latest', timestamp or per-request identifier leaking into the cached prefix, tool-definition change, cache_control header removed, TTL expiration on low-volume traffic)",
+    "Recommends inspecting recent commits or diffs to the system prompt / tool definitions / model configuration to locate the specific change that broke byte-stability of the cached prefix",
+    "Recommends a concrete verification step (re-running a test call and inspecting the cache_read_input_tokens or cached_tokens field in the API response) to confirm the fix works before declaring victory"
+  ]
+}

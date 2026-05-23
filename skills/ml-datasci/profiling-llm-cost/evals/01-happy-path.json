@@ -1,0 +1,12 @@
+{
+  "skill": "profiling-llm-cost",
+  "scenario_id": "01-happy-path",
+  "scenario_kind": "happy-path",
+  "query": "Our customer-support agent's monthly LLM bill jumped from $4,000 to $11,000 last month and traffic only grew about 20%. We have a full trace log with model, input_tokens, cached_input_tokens, output_tokens, task_id, and step_name on every call. Help us find where the extra cost is coming from.",
+  "files": [],
+  "expected_behavior": [
+    "Builds a per-call OR per-task cost rollup from the logged token counts, multiplying by a model pricing table — does NOT recommend cost cuts without a measured baseline first",
+    "Computes a cache-hit rate (cached_input_tokens / total_input_tokens) and includes cache-hit-rate analysis as part of the diagnostic, since prompt-cache erosion is a top suspect for cost spikes",
+    "Slices the cost by at least one attribution dimension (model, step_name, route, or cohort) AND compares the current period against a prior baseline window to localize where the delta lives"
+  ]
+}

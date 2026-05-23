@@ -1,0 +1,12 @@
+{
+  "skill": "selecting-embedding-model",
+  "scenario_id": "02-edge-case",
+  "scenario_kind": "edge-case",
+  "query": "On our golden Q-A set, recall@5 for text-embedding-3-large is 0.78 with a bootstrap 95% CI of [0.74, 0.82], and recall@5 for text-embedding-3-small is 0.76 with a 95% CI of [0.72, 0.80]. Which one should we pick?",
+  "files": [],
+  "expected_behavior": [
+    "Identifies that the two candidates' bootstrap confidence intervals overlap and that they are therefore statistically indistinguishable on this quality metric",
+    "Recommends breaking the tie on an operational axis (cost per million tokens, latency, dimensionality / index size, or similar), NOT picking the higher point-estimate model arbitrarily",
+    "Recommends the cheaper / smaller / faster candidate (text-embedding-3-small) given the quality tie, with an explicit guardrail or condition for revisiting (e.g., monitor production drift, re-evaluate if recall drops below a threshold)"
+  ]
+}
