@@ -1,0 +1,12 @@
+{
+  "skill": "generating-sbom",
+  "scenario_id": "01-python-js-monorepo-happy-path",
+  "scenario_kind": "happy-path",
+  "query": "We need to send our customer a CycloneDX SBOM for our application. The repo is a polyglot monorepo: Python backend with `pyproject.toml` + `uv.lock` at the root, and a JS frontend at `frontend/` with `package.json` + `pnpm-lock.yaml`. Walk me through generating the SBOM and what the output should contain.",
+  "files": [],
+  "expected_behavior": [
+    "Recognizes that BOTH ecosystems must be captured (Python AND JS); does not produce a Python-only SBOM that silently misses the JS frontend",
+    "Names a concrete tool (e.g., syft as a universal default, or per-ecosystem `cyclonedx-py` + `cdxgen`) and a concrete invocation command that produces CycloneDX output",
+    "Specifies that the SBOM is generated from the RESOLVED dependency tree (i.e., uses the committed lockfile `uv.lock` and `pnpm-lock.yaml`), NOT from a fresh re-install that could re-resolve to different versions"
+  ]
+}

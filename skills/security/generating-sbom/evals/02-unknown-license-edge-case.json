@@ -1,0 +1,12 @@
+{
+  "skill": "generating-sbom",
+  "scenario_id": "02-unknown-license-edge-case",
+  "scenario_kind": "edge-case",
+  "query": "I generated an SBOM for a container image and 67 of the 487 components have no declared license. The SBOM file is valid CycloneDX. Should I just send it to the customer like this?",
+  "files": [],
+  "expected_behavior": [
+    "Flags the 67 no-license components as a compliance issue that should NOT be ignored before sending to a customer (treats unknown-license as a real signal, not metadata noise)",
+    "Identifies plausible root causes — most commonly a vendored bundle, an internal package without a LICENSE file, or a transitive dep where the upstream did not publish license metadata",
+    "Recommends concrete next steps (e.g., replace vendored bundles with properly-managed deps so licenses surface, add explicit `licenseConcluded` overrides for known internal packages, or contact the upstream maintainer) rather than just sending the SBOM as-is"
+  ]
+}

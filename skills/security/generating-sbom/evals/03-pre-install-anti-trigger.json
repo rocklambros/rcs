@@ -1,0 +1,12 @@
+{
+  "skill": "generating-sbom",
+  "scenario_id": "03-pre-install-anti-trigger",
+  "scenario_kind": "anti-trigger",
+  "query": "I just started a brand new Python project. I have a `pyproject.toml` with my declared dependencies but I have not yet run `uv sync` or `uv lock`, so no `uv.lock` exists yet. Generate the SBOM for me now.",
+  "files": [],
+  "expected_behavior": [
+    "Does NOT produce an SBOM from the unresolved `pyproject.toml` alone (does not call this a complete SBOM when there is no lockfile)",
+    "Explains that an accurate SBOM requires a RESOLVED dependency tree (a lockfile or an installed environment), because without resolution the transitive dependencies are unknown and the output would be misleading",
+    "Recommends the user FIRST run `uv lock` (or `uv sync`) to produce `uv.lock`, THEN re-run the SBOM-generation step"
+  ]
+}
