@@ -1,0 +1,12 @@
+{
+  "skill": "auditing-source-provenance",
+  "scenario_id": "02-partial-provenance-edge-case",
+  "scenario_kind": "edge-case",
+  "query": "Our production dataset's rows each have `source_name` and `source_url` columns, but no SHA, no pull date, and no adapter version. The pipeline has been running for six months. Is partial provenance good enough, or do we need to fix it — and if so, how do we backfill?",
+  "files": [],
+  "expected_behavior": [
+    "Identifies the current state as partial provenance and names the specific missing fields and the specific risks they cause (e.g., cannot detect upstream drift, cannot reproduce ingest for an audit, cannot tie a row to a specific upstream revision)",
+    "Recommends backfilling where possible (e.g., pull_date from the ingest commit's git-blame, source_sha by inspecting the upstream's git log around the pull date) and quarantining unrecoverable rows under a partial-completeness flag rather than silently mixing them with full-provenance rows",
+    "Recommends re-ingesting forward with the complete provenance schema so new rows do not perpetuate the gap"
+  ]
+}

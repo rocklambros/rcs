@@ -1,0 +1,12 @@
+{
+  "skill": "generating-data-dictionary",
+  "scenario_id": "03-mnist-anti-trigger",
+  "scenario_kind": "anti-trigger",
+  "query": "Generate a data dictionary for the MNIST training set so I have it on file for my paper.",
+  "files": [],
+  "expected_behavior": [
+    "Does NOT produce a 784-column per-pixel dictionary or otherwise treat each pixel as an independent column worth documenting individually",
+    "Recognizes MNIST as a well-known public benchmark with canonical documentation and points the user at the canonical source (e.g., Yann LeCun's MNIST page or the standard MNIST dataset description) rather than regenerating a dictionary from scratch",
+    "Notes that this skill is intended for unfamiliar or undocumented datasets and that for canonical public benchmarks the dataset's published citation / data sheet is the right artifact to reference"
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "skill": "auditing-source-provenance",
+  "scenario_id": "03-synthetic-data-anti-trigger",
+  "scenario_kind": "anti-trigger",
+  "query": "I generated 100K synthetic credit-card transactions using a Bayesian network I trained on internal data. There's no upstream URL — everything came from my generator. Audit my source provenance.",
+  "files": [],
+  "expected_behavior": [
+    "Does NOT engage the upstream-URL / source_repo / source_sha workflow that applies to externally-ingested data",
+    "Explains that for synthetic data, provenance is the generator code SHA + the seed + the training data's own provenance (transitively), and names those fields explicitly",
+    "Hands off (or notes the relevant adjacent skill) for synthetic-data utility / leakage audits, rather than forcing the ingest-time provenance schema onto a generator-produced dataset"
+  ]
+}

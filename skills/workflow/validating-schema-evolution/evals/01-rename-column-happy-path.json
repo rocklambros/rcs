@@ -1,0 +1,12 @@
+{
+  "skill": "validating-schema-evolution",
+  "scenario_id": "01-rename-column-happy-path",
+  "scenario_kind": "happy-path",
+  "query": "I want to rename the `customer_email` column to `email_address` in our Postgres `users` table. The table has 50 million rows and is read by several production services. Walk me through the safe migration.",
+  "files": [],
+  "expected_behavior": [
+    "Classifies the rename as AMBIGUOUS (or otherwise refuses to emit a destructive one-shot `DROP customer_email; ADD email_address`) and recommends a multi-step pattern that preserves data through the migration",
+    "Names the safe pattern explicitly: ADD new column → backfill (ideally in batches) → dual-write window → flip readers → DROP old column",
+    "Identifies that downstream consumers of `customer_email` must be updated before the old column can be dropped, and recommends grepping the application code / SQL / dashboards for references to the old column name"
+  ]
+}

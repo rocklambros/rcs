@@ -1,0 +1,12 @@
+{
+  "skill": "generating-data-dictionary",
+  "scenario_id": "01-fresh-client-csv-happy-path",
+  "scenario_kind": "happy-path",
+  "query": "A partner hospital sent us a 50,000-row patient CSV. Columns: patient_id, age, sex, diagnosis (free-text-looking), email, dob, outcome (binary). Generate a data dictionary I can hand to my team before we start modeling.",
+  "files": [],
+  "expected_behavior": [
+    "Produces per-column entries that include at least: type, null %, unique count, and semantic class (e.g., identifier / continuous / categorical / text / boolean / datetime)",
+    "Correctly classifies high-cardinality free-text columns (e.g., diagnosis) as text rather than categorical, and correctly classifies unique-equal-row-count columns (e.g., patient_id) as identifier with a note not to use as a feature",
+    "Flags PII-shaped columns (e.g., email, dob) so the user is aware they require redaction or special handling before sharing or modeling"
+  ]
+}
