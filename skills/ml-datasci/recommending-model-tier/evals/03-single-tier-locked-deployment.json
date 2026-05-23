@@ -1,0 +1,12 @@
+{
+  "skill": "recommending-model-tier",
+  "scenario_id": "03-single-tier-locked-deployment",
+  "scenario_kind": "anti-trigger",
+  "query": "Our enterprise contract with Anthropic locks us to Sonnet 4.6 only — Haiku and Opus are not available on our account by policy. I'm building a new entity-extraction service. Which model should I use?",
+  "files": [],
+  "expected_behavior": [
+    "Recognizes that the tier choice is already made by the enterprise policy (Sonnet 4.6) and does NOT recommend Haiku or Opus — does not pretend the user has a choice they don't have",
+    "Does NOT spend the response walking the standard per-task tier decision tree as if the user could pick a tier; either accepts Sonnet outright or notes that the workflow does not apply under a locked-tier constraint",
+    "Redirects the user to the levers that actually ARE under their control (prompt design, few-shot curation, structured-output schemas, escalation to human, prompt caching, or eval design) rather than fabricating a tier recommendation"
+  ]
+}
