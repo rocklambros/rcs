@@ -4,10 +4,13 @@ Cross-cutting research and engineering hygiene. Applies to both security and ml-
 
 ## Shipped skills
 
-_Populated in Phase 1._
+_None yet. `running-adversarial-premortem` is at `status: drafting` pending eval validation; see "Drafting" section below._
+
+## Drafting
 
 | Skill | What it does | When to use | Σ |
 |---|---|---|---|
+| [`running-adversarial-premortem`](running-adversarial-premortem/) | Multi-round adversarial premortem on a spec / plan / design / paper / proof / codebase — per-claim audit table + stops-mattering-if + prioritized remediation | When the cost of being wrong is high; AI/ML/agentic/security-sensitive designs; mathematical proofs; high-stakes plans | 17 |
 
 ## Planned skills
 
@@ -35,7 +38,6 @@ _Populated in Phase 1._
 
 | Skill | What it does | Σ | Status |
 |---|---|---|---|
-| `running-adversarial-premortem` | Multi-subagent premortem: location + concern + strongest-counter + stops-mattering-if | 17 | 📝 planned (Phase 1 — migrate from harness) |
 | `pre-registering-eval-study` | Lock + hypothesis + stopping rules + falsification criteria | 16 | 📝 planned |
 | `writing-successor-primers` | "If you have to pick this up cold" template | 15 | 📝 planned |
 | `writing-release-notes-as-postmortem` | Regression → root cause → test added to prevent recurrence | 15 | 📝 planned |
