@@ -1,0 +1,12 @@
+{
+  "skill": "running-multiturn-attack-suite",
+  "scenario_id": "03-single-shot-target",
+  "scenario_kind": "anti-trigger",
+  "query": "We have an LLM-based email triage service. The service receives one email at a time, calls the model with that email plus a fixed system prompt, returns a classification, and forgets. There's no session, no memory, no retrieval. Run the multi-turn attack suite against it.",
+  "files": [],
+  "expected_behavior": [
+    "Declines to engage the multi-turn suite — explains the target has no observable session state across requests, so multi-turn semantics like escalation, state-poisoning, role-drift, and context-overflow do not apply",
+    "Identifies that any 'attack' against this target is a single-turn payload problem and hands off to the running-prompt-injection-eval skill — or to running-encoded-payload-suite if the payloads are encoding-focused",
+    "Does NOT attempt to retrofit single-turn payloads into a 'multi-turn' framing just to engage — declines cleanly and points to the correct tool"
+  ]
+}
