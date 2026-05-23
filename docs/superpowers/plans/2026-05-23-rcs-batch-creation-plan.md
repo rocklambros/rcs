@@ -819,3 +819,339 @@ Each batch's fragment name (`batch-N-<short-name>.md`) is unique by construction
 **Parallelism:** Batches 1-5 are mutually independent. Run all 5 in parallel for fastest wall time, or sequentially if you prefer per-batch review.
 
 **Batch 6 runs alone after all of 1-5 have merged.**
+
+---
+
+# Subsequent versions (v2 — v7)
+
+> **Status:** Light scaffolding (slug + Σ + 1-line what + 1-line anti + 1-line per scenario). Each batch session writes full Layer-3 content using v1 SKILL.md templates (`skills/workflow/running-adversarial-premortem/`, `skills/security/auditing-mcp-server-pre-trust/`) as the format model + author judgment. Per the PRAGMATIC discipline.
+
+## Invocation namespace
+
+- **v1, batch N:** `/superpowers:writing-skills create batch N at <plan-file> using PRAGMATIC` (back-compat; existing pattern)
+- **vM (M ≥ 2), batch N:** `/superpowers:writing-skills create vM-batch-N at <plan-file> using PRAGMATIC`
+
+Per-version naming:
+
+| Artifact | v1 form | v2+ form |
+|---|---|---|
+| Branch | `feature/v1.0.0-batch-N-<short>` | `feature/vM.0-batch-N-<short>` |
+| Worktree dir (if used) | `RCS-batch-N` | `RCS-vM-batch-N` |
+| Shipped-fragment file | `shipped-fragments/batch-N.md` | `shipped-fragments/vM-batch-N.md` |
+| Changelog fragment | `changelog-fragments/batch-N-<short>.md` | `changelog-fragments/vM-batch-N-<short>.md` |
+| Integration tag | `v1.0.0-phase2-thru-6` | `vM.0-phase1` |
+
+Per-version integration runs after that version's authoring batches all merge. Same steps as v1 Batch 6.
+
+## v2 — Research discipline + reproducibility + data hygiene depth (12 skills, 4 batches + integration)
+
+**Theme:** Deepens `workflow/` (research discipline + reproducibility) plus 3 more `ml-datasci/` stats skills.
+**Integration tag:** `v2.0-phase1`
+
+### v2-batch-1 — notebook + execution hygiene (3 skills, workflow track)
+
+**Branch:** `feature/v2.0-batch-1-notebook-hygiene`
+
+- `workflow/auditing-jupyter-execution-order` (Σ 16) — detects cells-out-of-order in `.ipynb` via non-monotonic `execution_count`. Anti-trigger: papermill outputs where order is intentional. Evals: happy = notebook run 1/3/2/4; edge = mixed run + unrun cells; anti = papermill output.
+- `workflow/auditing-notebook-narrative` (Σ 13) — diffs narrative markdown claims vs rendered figure outputs. Anti-trigger: pure-code notebooks. Evals: happy = "Fig 3 shows X up" but renders down; edge = partial claim; anti = no narrative.
+- `workflow/building-deterministic-data-pipelines` (Σ 15) — LF endings, sorted JSON, content-hash snapshots, provenance.json, CI drift check. Anti-trigger: one-shot scripts. Evals: happy = JSON ordering non-det; edge = timestamp leaks; anti = ad-hoc script.
+
+### v2-batch-2 — data engineering depth (3 skills)
+
+**Branch:** `feature/v2.0-batch-2-data-engineering`
+
+- `workflow/auditing-source-provenance` (Σ 16) — every ingested record carries `provenance.json` (repo + SHA + pull-date + adapter version). Anti-trigger: pure-synthetic data. Evals: happy = pipeline missing provenance; edge = partial provenance; anti = synthetic.
+- `workflow/validating-schema-evolution` (Σ 13) — schema-diff between revisions; breaking-change classification; migration script scaffolding. Anti-trigger: schema-less stores. Evals: happy = column type change; edge = rename; anti = NoSQL bag.
+- `ml-datasci/generating-data-dictionary` (Σ 15) — per-column type/nullability/range/unique/semantic-class. Anti-trigger: well-known datasets. Evals: happy = fresh client CSV; edge = mixed-type column flagged; anti = MNIST.
+
+### v2-batch-3 — research discipline (3 skills, workflow track)
+
+**Branch:** `feature/v2.0-batch-3-research-discipline`
+
+- `workflow/pre-registering-eval-study` (Σ 16) — lock hypothesis + stopping rules + falsification criteria + power justification before running. Anti-trigger: pure EDA. Evals: happy = pre-reg for clinical-style eval; edge = vague hypothesis; anti = EDA.
+- `workflow/writing-successor-primers` (Σ 15) — "if you pick this up cold" doc (purpose, principles, where-to-start, defense-in-depth false-confidence warnings). Anti-trigger: short prototypes. Evals: happy = 6-mo project; edge = mid-refactor; anti = throwaway.
+- `workflow/writing-release-notes-as-postmortem` (Σ 15) — patch notes name each regression with file/function/root-cause/test-added. Anti-trigger: first release. Evals: happy = bug-fix release; edge = mixed feature+fix; anti = v0.1.0.
+
+### v2-batch-4 — stats + math depth (3 skills, ml-datasci + workflow)
+
+**Branch:** `feature/v2.0-batch-4-stats-math`
+
+- `ml-datasci/analyzing-regression-diagnostics` (Σ 14) — linearity/residual-normality/homoscedasticity/leverage/Cook's-D on fitted lm. Anti-trigger: non-linear models. Evals: happy = OLS with heteroscedasticity; edge = high-leverage outlier; anti = random forest.
+- `ml-datasci/running-power-analysis` (Σ 13) — sample-size + MDE + effect-size BEFORE running. Anti-trigger: post-hoc power. Evals: happy = planned 2-group; edge = pilot+full design; anti = post-hoc on null.
+- `workflow/auditing-mathematical-claims` (Σ 13) — generalized ATACE math-flags template; per claim: location/concern/strongest-counter/stops-mattering-if. Anti-trigger: empirical claims (use adversarial-premortem). Evals: happy = theorem with implicit assumption; edge = bound with implicit constant; anti = empirical claim.
+
+### v2-integration
+
+**Branch:** `feature/v2.0-integration` · Tag: `v2.0-phase1`
+
+---
+
+## v3 — ML eval depth + RAG + perf (12 skills, 4 batches + integration)
+
+**Theme:** Scales `ml-datasci/` ML-eval rigor + RAG eval + LLM perf/cost.
+**Integration tag:** `v3.0-phase1`
+
+### v3-batch-1 — ML eval expansion (3 skills, ml-datasci track)
+
+**Branch:** `feature/v3.0-batch-1-ml-eval-expansion`
+
+- `ml-datasci/evaluating-multiclass-classifiers` (Σ 16) — macro/micro F1, per-class PR, CM, top-k, one-vs-rest ROC. Anti-trigger: binary. Evals: happy = 5-class image; edge = 10-class imbalanced; anti = binary.
+- `ml-datasci/tuning-classification-threshold` (Σ 16) — domain-aware sweep (FN-cost » FP-cost in security); F-beta / TPR-at-fixed-FPR / cost-weighted. Anti-trigger: balanced multi-class softmax. Evals: happy = fraud with FN=100×FP; edge = unknown costs; anti = softmax argmax.
+- `ml-datasci/running-chollet-ratio-check` (Σ 16) — samples-to-mean-seq-length ratio → BoW vs LSTM vs Transformer. Anti-trigger: non-sequence. Evals: happy = ratio 25 (BoW); edge = ratio 20K (Transformer); anti = tabular.
+
+### v3-batch-2 — model comparison + cards (3 skills)
+
+**Branch:** `feature/v3.0-batch-2-model-comparison`
+
+- `ml-datasci/enforcing-leakage-firewall` (Σ 14) — LOFO + hub-firewall + group-aware + no-row-in-two-splits. Anti-trigger: clean IID single-source. Evals: happy = multi-source crosswalk; edge = subtle hub-leakage; anti = clean IID.
+- `ml-datasci/comparing-models-fairly` (Σ 14) — McNemar paired classifiers + paired-folds t/Wilcoxon + Bonferroni/Holm. Anti-trigger: single-model report. Evals: happy = A vs B same test set; edge = 3+ models (correction needed); anti = single model.
+- `ml-datasci/writing-model-cards` (Σ 13) — AIBOM-compliant card (intended use, training data, evals, limits, harms, license). Anti-trigger: research prototype not for deployment. Evals: happy = production-bound; edge = research-might-leak; anti = throwaway.
+
+### v3-batch-3 — RAG eval (3 skills, ml-datasci track)
+
+**Branch:** `feature/v3.0-batch-3-rag-eval`
+
+- `ml-datasci/evaluating-rag-retrieval` (Σ 14) — recall@k/MRR/nDCG/faithfulness/answer-relevance from golden Q-A. Anti-trigger: pure LLM no retrieval. Evals: happy = 10K-doc RAG; edge = retrieval right, generation wrong; anti = pure GPT.
+- `ml-datasci/selecting-embedding-model` (Σ 13) — intrinsic vs extrinsic comparison across candidates; cost/latency/quality. Anti-trigger: single-provider lock-in. Evals: happy = 3 candidates on domain; edge = tie within noise; anti = locked-in.
+- `ml-datasci/profiling-llm-cost` (Σ 14) — per-call token cost rollup; $ per task; cache-hit-rate impact. Anti-trigger: free-tier/sandbox. Evals: happy = prod agent audit; edge = cache-hit drop (find leak); anti = local llama dev.
+
+### v3-batch-4 — perf + interpretation (3 skills, ml-datasci track)
+
+**Branch:** `feature/v3.0-batch-4-perf-interpretation`
+
+- `ml-datasci/auditing-prompt-token-budget` (Σ 16) — tokenize prompts, flag > N, find dup boilerplate, recommend cache_control. Anti-trigger: tiny prompts. Evals: happy = 5K-token with 4K repeats; edge = under budget but no cache_control; anti = sub-500-token.
+- `ml-datasci/recommending-model-tier` (Σ 14) — Haiku/Sonnet/Opus per task by complexity/cost/latency/reasoning-depth. Anti-trigger: locked deployment. Evals: happy = 5-task pipeline; edge = benchmark says Sonnet, cost requires Haiku; anti = single-tier locked.
+- `ml-datasci/interpreting-conflicting-tests` (Σ 16) — when t and Wilcoxon disagree (or McNemar vs binomial sign), assumption-status table commits to a winner. Anti-trigger: single test no conflict. Evals: happy = t-sig + Wilcoxon-not; edge = outlier-driven conflict; anti = single test.
+
+### v3-integration
+
+**Branch:** `feature/v3.0-integration` · Tag: `v3.0-phase1`
+
+---
+
+## v4 — Security suite + AI red-team (13 skills, 5 batches + integration)
+
+**Theme:** `security/` track expansion: AppSec triage, SBOM, threat modeling (methodology-only), AI red-team harnesses.
+**Integration tag:** `v4.0-phase1`
+
+### v4-batch-1 — AppSec triage + SBOM (3 skills, security track)
+
+**Branch:** `feature/v4.0-batch-1-appsec-sbom`
+
+- `security/triaging-vulnerability-findings` (Σ 14) — SARIF in, dedupe → EPSS → blast-radius → suppress → PR comment. Anti-trigger: greenfield no SARIF. Evals: happy = 200-finding dump; edge = 3-tool overlap (dedupe); anti = no SARIF.
+- `security/generating-sbom` (Σ 12) — CycloneDX or SPDX from any stack. Format-only — no ML-BOM 1.7. Anti-trigger: pre-build. Evals: happy = mixed Python+JS monorepo; edge = unknown license transitive; anti = pre-install.
+- `security/auditing-transitive-vulnerabilities` (Σ 13) — dep graph + EPSS + reachability. Anti-trigger: leaf-only. Evals: happy = 10-level transitive; edge = vuln unreachable; anti = direct-only.
+
+### v4-batch-2 — applying secure-coding (1 skill)
+
+**Branch:** `feature/v4.0-batch-2-secure-coding-rules`
+
+- `security/applying-secure-coding-rules` (Σ 15) — surface secure-coding rules per language+framework+AI/ML stack from user-supplied corpus (e.g., claude-secure-coding-rules). Anti-trigger: no rule corpus. Evals: happy = Python+FastAPI+LangChain; edge = polyglot, partial coverage; anti = no corpus.
+
+### v4-batch-3 — threat modeling (2 skills)
+
+**Branch:** `feature/v4.0-batch-3-threat-modeling`
+
+- `security/threat-modeling-llm-app` (Σ 13) — STRIDE-style walk; user supplies catalog (OWASP LLM Top 10 / MAESTRO / custom). Anti-trigger: non-LLM. Evals: happy = chatbot+RAG; edge = batch LLM no user input; anti = pure REST.
+- `security/threat-modeling-agentic-systems` (Σ 11) — MAESTRO/STRIDE/OWASP-ASI walk for agent designs; user-supplied catalog. Anti-trigger: one-shot LLM (not agent). Evals: happy = multi-tool agent; edge = single-tool agent; anti = one-shot.
+
+### v4-batch-4 — AI red-team (4 skills, security track)
+
+**Branch:** `feature/v4.0-batch-4-red-team`
+
+- `security/scaffolding-red-team-engagement` (Σ 12) — RoE, scope, kill-switch, logging template. Anti-trigger: solo experiments. Evals: happy = paid engagement; edge = internal team; anti = personal jailbreak.
+- `security/running-prompt-injection-eval` (Σ 13) — generic harness; user-supplied corpus (DAN/base64/role-play/authority/etc.). Anti-trigger: no corpus or unauthorized prod. Evals: happy = pre-deployment eval; edge = noisy corpus; anti = unauthorized prod.
+- `security/running-multiturn-attack-suite` (Σ 12) — multi-turn injection (turn-by-turn escalation, state poisoning). Anti-trigger: single-turn-only. Evals: happy = multi-turn chatbot; edge = timing-dependent attack; anti = single-shot.
+- `security/running-encoded-payload-suite` (Σ 12) — base64/ROT13/unicode/zero-width/homoglyph harness. Anti-trigger: base model. Evals: happy = prod safety filter; edge = base64-caught but unicode-not; anti = base model.
+
+### v4-batch-5 — PII scrubbing + jailbreak-judge (2 skills)
+
+**Branch:** `feature/v4.0-batch-5-pii-judge`
+
+- `security/scrubbing-PII-with-policy` (Σ 12) — PII detect+redact with user policy (entity types, redaction style). Anti-trigger: pre-scrubbed upstream. Evals: happy = support transcripts; edge = pseudo-PII; anti = pre-scrubbed.
+- `security/evaluating-jailbreak-judge-agreement` (Σ 13) — Cohen's κ between LLM judges on jailbreak outcomes; flag low agreement. Anti-trigger: single judge. Evals: happy = 3 judges on 100 jailbreak attempts; edge = high agreement on easy, low on hard; anti = single judge.
+
+### v4-integration
+
+**Branch:** `feature/v4.0-integration` · Tag: `v4.0-phase1`
+
+---
+
+## v5 — MLOps + fine-tuning + synthetic data (14 skills, 5 batches + integration)
+
+**Theme:** Deployment + training pipelines + synthetic-data hygiene + privacy.
+**Integration tag:** `v5.0-phase1`
+
+### v5-batch-1 — model packaging + deployment (3 skills, ml-datasci track)
+
+**Branch:** `feature/v5.0-batch-1-deployment`
+
+- `ml-datasci/packaging-model-for-deployment` (Σ 12) — signature + schema + smoke test + manifest (joblib / ONNX / torchscript per stack). Anti-trigger: notebook-only. Evals: happy = sklearn to FastAPI; edge = custom preprocessing; anti = notebook.
+- `ml-datasci/building-canary-rollout` (Σ 9) — traffic-split + per-cohort metrics + auto-rollback trigger. Anti-trigger: single-user. Evals: happy = 5% canary; edge = imbalanced cohorts; anti = single-user.
+- `ml-datasci/building-rollback-plan` (Σ 10) — versioned store + rollback runbook + smoke-test gate. Anti-trigger: experimental no-impact. Evals: happy = prod recommender; edge = stateful model; anti = throwaway.
+
+### v5-batch-2 — drift monitoring (3 skills, ml-datasci track)
+
+**Branch:** `feature/v5.0-batch-2-drift-monitoring`
+
+- `ml-datasci/monitoring-data-drift` (Σ 11) — PSI/KL/KS per feature; baseline-window alerts. Anti-trigger: pre-deployment. Evals: happy = 6-mo deployed; edge = expected seasonal; anti = pre-deployment.
+- `ml-datasci/monitoring-prediction-drift` (Σ 11) — calibration-over-time + score-shift + per-segment erosion. Anti-trigger: pre-deployment. Evals: happy = shifting positive rate; edge = label-delay; anti = pre-deployment.
+- `ml-datasci/auditing-inference-latency-budget` (Σ 10) — P50/P95/P99 vs SLO; locate slow features/preprocessing/layers. Anti-trigger: batch/offline. Evals: happy = real-time breaching P99; edge = input-shape variance; anti = nightly batch.
+
+### v5-batch-3 — training pipeline scaffolding (2 skills, ml-datasci track)
+
+**Branch:** `feature/v5.0-batch-3-training-pipelines`
+
+- `ml-datasci/scaffolding-pytorch-training-loop` (Σ 12) — seed + AMP + grad-clip + LR sched + early-stop + checkpoint + resume + W&B. Anti-trigger: sklearn/xgboost. Evals: happy = vision classifier; edge = resume after preempt; anti = sklearn.
+- `ml-datasci/running-hyperparameter-sweep` (Σ 12) — seed-stratified Optuna/Ray Tune; sweep-vs-train budget split. Anti-trigger: single-config. Evals: happy = LR+BS sweep 32 trials; edge = sweep result ≈ defaults; anti = one-off.
+
+### v5-batch-4 — fine-tuning audits (3 skills, ml-datasci track)
+
+**Branch:** `feature/v5.0-batch-4-finetuning`
+
+- `ml-datasci/auditing-sft-dataset` (Σ 11) — PII/dup/leakage/format/chat-template before SFT. Anti-trigger: pre-curated benchmarks. Evals: happy = scraped chat data; edge = template artifacts; anti = Alpaca subset.
+- `ml-datasci/running-eval-before-after-finetune` (Σ 12) — paired McNemar on classification, paired-t on perplexity; attribute change to fine-tune. Anti-trigger: no baseline checkpoint. Evals: happy = SFT vs base; edge = small held-out (low power); anti = no baseline.
+- `ml-datasci/writing-finetune-spec-sheet` (Σ 10) — base + data + recipe + eval + license + intended-use. Anti-trigger: throwaway fine-tune. Evals: happy = HF publish; edge = internal-only; anti = personal scratch.
+
+### v5-batch-5 — synthetic data + privacy (3 skills, ml-datasci track)
+
+**Branch:** `feature/v5.0-batch-5-synthetic-privacy`
+
+- `ml-datasci/auditing-synthetic-data-utility` (Σ 11) — train-on-synth/test-on-real vs train-on-real/test-on-real; downstream-task fidelity. Anti-trigger: no real test set. Evals: happy = SDG for tabular; edge = preserves marginals not correlations; anti = no real.
+- `ml-datasci/auditing-synthetic-data-leakage` (Σ 10) — membership-inference attack on synth data. Anti-trigger: public-source SDG. Evals: happy = healthcare SDG; edge = MIA risk with small budget; anti = public source.
+- `ml-datasci/building-data-dictionary-with-consent-class` (Σ 11) — per-field consent class (collected/inferred/public) for DSR readiness. Anti-trigger: pre-design dataset. Evals: happy = DSR-readiness audit; edge = inferred-from-PII gray area; anti = pre-design.
+
+### v5-integration
+
+**Branch:** `feature/v5.0-integration` · Tag: `v5.0-phase1`
+
+---
+
+## v6 — Governance + teaching + Claude-Code meta + scaffolding (16 skills, 6 batches + integration)
+
+**Theme:** Governance/compliance methodologies + teaching/pedagogy + Claude-Code authoring meta + greenfield-scaffolding.
+**Integration tag:** `v6.0-phase1`
+
+### v6-batch-1 — governance methodologies (3 skills, security track)
+
+**Branch:** `feature/v6.0-batch-1-governance`
+
+- `security/writing-vdp-and-coordinated-disclosure` (Σ 12) — VDP template + disclosure timeline + safe-harbor language. Anti-trigger: internal-only tool. Evals: happy = SaaS first VDP; edge = private bug-bounty exists; anti = internal-only.
+- `security/scaffolding-ai-policy-doc` (Σ 10) — AI use policy (acceptable/prohibited use, oversight, IR, vendor inventory). Anti-trigger: pre-AI-use org. Evals: happy = mid-size company policy; edge = startup no governance; anti = pre-AI.
+- `security/interpreting-vendor-questionnaire-skeptically` (Σ 9) — skeptical pass on vendor questionnaire response (hedges, missing artifacts, contradictions). Anti-trigger: pre-RFP. Evals: happy = SOC2-claim thin evidence; edge = strong written but no contract; anti = no response.
+
+### v6-batch-2 — pentest + IR runbooks (3 skills, security track)
+
+**Branch:** `feature/v6.0-batch-2-pentest-ir`
+
+- `security/scaffolding-CTF-engagement` (Σ 10) — RoE, scope, finding template, severity rubric, PoC hygiene. Anti-trigger: solo CTF practice. Evals: happy = paid CTF red-team; edge = bug-bounty submission; anti = HTB solo.
+- `security/writing-pentest-finding` (Σ 11) — CVSS scoring + repro + remediation + evidence. Anti-trigger: low-sev dev-only. Evals: happy = client-deliverable RCE; edge = finding-chain (low+low→high); anti = "trivial" finding.
+- `security/running-cloud-IR-runbook` (Σ 10) — triage→evidence→comms→lessons (AWS/GCP/Azure). Anti-trigger: on-prem. Evals: happy = AWS IAM leak; edge = cross-account compromise; anti = laptop infection.
+
+### v6-batch-3 — teaching / pedagogy (5 skills, teaching track)
+
+**Branch:** `feature/v6.0-batch-3-teaching`
+
+- `teaching/explaining-statistical-concept` (Σ 9) — Socratic, audience-tier (HS/undergrad/grad/practitioner). Anti-trigger: concept in prerequisites. Evals: happy = "p-value to junior analyst"; edge = tier ambiguous; anti = already-known.
+- `teaching/writing-graded-rubric` (Σ 7) — criterion-referenced bands (novice/developing/proficient/advanced). Anti-trigger: pass/fail-only. Evals: happy = grad pset rubric; edge = multi-dim bands; anti = binary.
+- `teaching/writing-pset-walkthrough` (Σ 11) — "What it's asking / Why this works / What the result tells us / Gotcha" template. Anti-trigger: trivial single-step. Evals: happy = multi-step stats; edge = multi-path solution; anti = one-line calc.
+- `teaching/diffing-instructor-vs-student-solution` (Σ 11) — side-by-side diff with formative feedback. Anti-trigger: no reference solution. Evals: happy = stats pset with both; edge = right answer wrong path; anti = no reference.
+- `teaching/writing-onboarding-guide` (Σ 12) — multi-audience (engineer/scientist/executive) through one system. Anti-trigger: single-audience docs. Evals: happy = SaaS launch; edge = audience overlap; anti = API-only doc.
+
+### v6-batch-4 — Claude-Code authoring meta (5 skills, claude-code-meta track)
+
+**Branch:** `feature/v6.0-batch-4-cc-meta`
+
+- `claude-code-meta/writing-claude-code-plugin` (Σ 11) — marketplace.json + commands + agents + hooks + lifecycle. Anti-trigger: single-skill author. Evals: happy = packaging 5 skills; edge = hooks needing user approval; anti = one-skill.
+- `claude-code-meta/writing-mcp-server-securely` (Σ 14) — six-check audit baked into authoring (license/source/egress/version/secret/tool-subset). Anti-trigger: re-publishing audited server. Evals: happy = new MCP; edge = MCP with external egress; anti = republished.
+- `claude-code-meta/writing-claude-code-hook` (Σ 12) — PreToolUse/PostToolUse/Stop/SessionStart patterns with security review. Anti-trigger: just status-line config. Evals: happy = PreToolUse gating shell; edge = hook makes HTTP calls; anti = status-line.
+- `claude-code-meta/writing-deny-allow-rules` (Σ 13) — `.claude/rules/*.md` allow/deny authoring with glob path matching, severity, rationale. Anti-trigger: trivial allowlist (use settings.json). Evals: happy = deny destructive-git-on-main; edge = complex path glob; anti = trivial `ls` allowlist.
+- `claude-code-meta/writing-decision-trees-as-skills` (Σ 13) — meta: convert "given X, do Y" expertise into deterministic walk-the-tree skill. Anti-trigger: open-judgment no-tree skill. Evals: happy = converting written tree to skill; edge = tree with cycles; anti = non-tree.
+
+### v6-batch-5 — scaffolding (3 skills, workflow track)
+
+**Branch:** `feature/v6.0-batch-5-scaffolding`
+
+- `workflow/scaffolding-ml-research-notebook` (Σ 15) — uv/poetry + src/ + data/raw + tests/ + claudedocs/ + seed util + pre-commit + .gitignore. Anti-trigger: existing project. Evals: happy = fresh DS project; edge = existing-repo migration; anti = mature project.
+- `workflow/scaffolding-security-research-repo` (Σ 13) — SECURITY.md + threat-model template + gitleaks/semgrep pre-commit + VDP + license + sec-specific .gitignore. Anti-trigger: non-security greenfield. Evals: happy = fresh sec-research; edge = existing-repo sec adoption; anti = non-security.
+- `workflow/scaffolding-llm-eval-harness` (Σ 14) — model_id + dataset_hash + prompt_version + judge_model + results.jsonl. Anti-trigger: one-shot eval. Evals: happy = structured LLM eval pipeline; edge = non-judged metrics only; anti = one-shot.
+
+### v6-batch-6 — eval-driven dev + grad-school scaffolding (2 skills)
+
+**Branch:** `feature/v6.0-batch-6-eval-driven`
+
+- `claude-code-meta/running-eval-driven-skill-development` (Σ 13) — per Anthropic best-practices: write 3 evals BEFORE body, then body, then verify. Anti-trigger: trivial one-method skill. Evals: happy = authoring new domain skill; edge = evals hard to define; anti = one-line wrapper.
+- `workflow/scaffolding-grad-school-pset` (Σ 12) — Jupyter/RMarkdown template with stats discipline baked in (assumption-check → test → effect-size cells). Anti-trigger: non-pset (use ml-research-notebook). Evals: happy = DU-MSDSAI weekly pset; edge = programming pset; anti = research notebook.
+
+### v6-integration
+
+**Branch:** `feature/v6.0-integration` · Tag: `v6.0-phase1`
+
+---
+
+## v7 — Advanced ml-datasci specialties + remaining (16 skills, 5 batches + integration)
+
+**Theme:** Bayesian, conformal, causal, fairness, interpretability, DL overfit, advanced RAG, adversarial-ML, RLHF, DP, training-data erasure, sigstore.
+**Integration tag:** `v7.0-phase1`
+
+### v7-batch-1 — Bayesian + uncertainty + causal (3 skills, ml-datasci track)
+
+**Branch:** `feature/v7.0-batch-1-bayesian-causal`
+
+- `ml-datasci/running-bayesian-workflow` (Σ 10) — priors → posterior-predictive → R-hat/ESS/divergence diagnostics. Anti-trigger: pure frequentist. Evals: happy = clinical Bayesian; edge = NUTS divergences; anti = simple OLS.
+- `ml-datasci/building-conformal-prediction-set` (Σ 11) — split-conformal calibration → prediction-set → coverage check. Anti-trigger: point-prediction only. Evals: happy = classifier needing uncertainty; edge = small calibration set; anti = point-pred OK.
+- `ml-datasci/analyzing-causal-DAG` (Σ 9) — confounder checklist + do-calculus walk for observational study. Anti-trigger: RCT. Evals: happy = observational with confounders; edge = DAG with feedback; anti = RCT.
+
+### v7-batch-2 — fairness + interpretability + overfit (4 skills, ml-datasci track)
+
+**Branch:** `feature/v7.0-batch-2-fairness-interp`
+
+- `ml-datasci/auditing-model-fairness` (Σ 12) — eq-opp/dem-parity/calibration-within-group + intersectional. Anti-trigger: no relevant protected attr. Evals: happy = hiring audit; edge = small groups high variance; anti = no protected-attr context.
+- `ml-datasci/generating-shap-explanations` (Σ 11) — SHAP (tree/kernel/deep) with proper background-set. Anti-trigger: linear models. Evals: happy = XGBoost explanations; edge = SHAP drift across backgrounds; anti = linear regression.
+- `ml-datasci/auditing-deep-learning-overfit` (Σ 12) — train/val gap + learning curves + weight-norm growth + early-stop trigger. Anti-trigger: classical ML (use CV). Evals: happy = ResNet training; edge = gap due to shift not overfit; anti = sklearn.
+- `ml-datasci/evaluating-OOD-detection` (Σ 9) — Mahalanobis/energy/max-softmax-prob + in-vs-out benchmark. Anti-trigger: closed-world. Evals: happy = image classifier OOD; edge = near-OOD (same domain new style); anti = closed-world tabular.
+
+### v7-batch-3 — RAG specialty (3 skills, ml-datasci track)
+
+**Branch:** `feature/v7.0-batch-3-rag-specialty`
+
+- `ml-datasci/auditing-chunking-strategy` (Σ 13) — chunk-size sweep + overlap + boundary-aware splits (semantic/paragraph/sentence). Anti-trigger: full-doc retrieval. Evals: happy = legal RAG long docs; edge = chunking misses cross-paragraph; anti = whole-doc.
+- `ml-datasci/auditing-embedding-drift` (Σ 11) — KL/cosine drift between embedding cohorts over time. Anti-trigger: single-time-point dataset. Evals: happy = 6-mo drift; edge = expected concept evolution; anti = static.
+- `ml-datasci/building-rag-eval-set` (Σ 12) — golden Q-A + held-out + adversarial set with QA review. Anti-trigger: existing benchmark sufficient. Evals: happy = custom RAG eval set; edge = small domain (hard to diversify); anti = existing benchmark.
+
+### v7-batch-4 — adversarial-ML + RLHF + DP (3 skills, ml-datasci track)
+
+**Branch:** `feature/v7.0-batch-4-advanced-adversarial`
+
+- `ml-datasci/running-adversarial-perturbation-suite` (Σ 8) — FGSM/PGD/AutoAttack on vision/tabular. Anti-trigger: LLM prompt-injection (use security/running-prompt-injection-eval). Evals: happy = image robustness; edge = imperceptible-pixel-change attack; anti = LLM context.
+- `ml-datasci/auditing-rlhf-reward-hacking` (Σ 7) — reward-model probing for goodharting. Anti-trigger: no RLHF pipeline. Evals: happy = post-RLHF audit; edge = subtle hacking at boundary; anti = no RLHF.
+- `ml-datasci/applying-differential-privacy` (Σ 8) — ε/δ budget tracking + noise scale + per-query accounting. Anti-trigger: k-anonymity sufficient. Evals: happy = DP-SGD training; edge = composing DP queries; anti = k-anon OK.
+
+### v7-batch-5 — training-data erasure + sigstore (2 skills, security track)
+
+**Branch:** `feature/v7.0-batch-5-erasure-sigstore`
+
+- `security/verifying-training-data-erasure` (Σ 10) — DSR-proof workflow: dataset → embeddings → fine-tune → model output. Anti-trigger: no DSR exposure. Evals: happy = HIPAA DSR for fine-tuned model; edge = embedding-only retention; anti = no PII-derived.
+- `security/verifying-sigstore-signatures` (Σ 10) — cosign + in-toto + SLSA-level. Anti-trigger: unsigned-by-design ecosystem. Evals: happy = container with cosign; edge = attestation present, provenance broken; anti = no sigstore.
+
+### v7-integration
+
+**Branch:** `feature/v7.0-integration` · Tag: `v7.0-phase1`
+
+---
+
+## Grand summary: all versions
+
+| Version | Authoring batches | Skills | Integration tag |
+|---|---|---|---|
+| v1 | 5 + integration | 16 (+2 Phase-1 already shipped = 18 total) | `v1.0.0-phase2-thru-6` |
+| v2 | 4 + integration | 12 | `v2.0-phase1` |
+| v3 | 4 + integration | 12 | `v3.0-phase1` |
+| v4 | 5 + integration | 13 | `v4.0-phase1` |
+| v5 | 5 + integration | 14 | `v5.0-phase1` |
+| v6 | 6 + integration | 16 | `v6.0-phase1` |
+| v7 | 5 + integration | 16 | `v7.0-phase1` |
+
+**Grand totals:** 7 versions, 34 authoring batches + 7 integration batches = **41 invocations** to ship the full ~99-skill universe (97 net new + 2 Phase-1 migrations).
+
+**Recommended ship cadence:** one version per ~quarter (subject to your rate). Each version's batches can run in parallel within the version; integration sequences after.
