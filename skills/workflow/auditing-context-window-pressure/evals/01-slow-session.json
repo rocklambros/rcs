@@ -1,0 +1,12 @@
+{
+  "skill": "auditing-context-window-pressure",
+  "scenario_id": "01-slow-session",
+  "scenario_kind": "happy-path",
+  "query": "My Claude Code session is slow and feels like it's using too much context. Help me audit it.",
+  "files": [],
+  "expected_behavior": [
+    "Names the 75% threshold of the 200k window (or expresses the budget as a percentage of the context window) as the trigger for token-efficient mode",
+    "Recommends checking the prompt-cache hit rate as one of the audit's diagnostic steps",
+    "Recommends using subagent dispatches with a summary-only return contract (or equivalent: writing large tool results to a file and referring by path) to reduce inline tool-result bloat"
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "skill": "auditing-context-window-pressure",
+  "scenario_id": "02-cache-rate-cliff",
+  "scenario_kind": "edge-case",
+  "query": "My prompt cache hit rate just dropped from 90% to 30%. Why?",
+  "files": [],
+  "expected_behavior": [
+    "Names a mid-session edit to a CLAUDE.md file as one plausible cause (the cached prefix invalidates when its content changes)",
+    "Names dynamic content leaking into the cached prefix — e.g., timestamps, run IDs, or per-session identifiers — as a plausible cause",
+    "Recommends inspecting recent changes to the cached prefix (the CLAUDE.md hierarchy or SessionStart hook output) to find the source of the drift"
+  ]
+}
