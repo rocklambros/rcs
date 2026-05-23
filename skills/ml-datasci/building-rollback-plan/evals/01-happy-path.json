@@ -1,0 +1,12 @@
+{
+  "skill": "building-rollback-plan",
+  "scenario_id": "01-happy-path",
+  "scenario_kind": "happy-path",
+  "query": "We're about to promote recommender v3.1 to replace v3.0 in production. The model writes recommendation IDs that downstream services consume. Build the rollback plan we should have in place BEFORE the rollout starts.",
+  "files": [],
+  "expected_behavior": [
+    "Requires a versioned artifact store with the previous version (v3.0) still loadable — i.e. the rollback target artifact must exist and be available BEFORE the rollout, not constructed during an incident",
+    "Names the decision authority and / or auto-trigger explicitly: oncall (or auto-trigger) can roll back without manager approval, with deterministic pre-committed trigger rules — NOT a manual approval-chain process during an active incident",
+    "Requires the runbook to be tested / rehearsed (a staging drill, dry-run, or equivalent rehearsal) BEFORE production rollout, AND requires a smoke-test gate that the previous version must clear before traffic returns to it"
+  ]
+}

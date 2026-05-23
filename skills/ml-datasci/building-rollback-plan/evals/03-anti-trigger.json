@@ -1,0 +1,12 @@
+{
+  "skill": "building-rollback-plan",
+  "scenario_id": "03-anti-trigger",
+  "scenario_kind": "anti-trigger",
+  "query": "I have an experimental side-project classifier I'm trying on a small research dataset to see if a new architecture is worth pursuing. There's no production deployment, no users consuming the predictions, and no other services depend on it. Do I need a rollback plan?",
+  "files": [],
+  "expected_behavior": [
+    "Does NOT engage the full rollback-runbook workflow for an experimental research-only model with no production surface and no downstream consumers",
+    "Explains that rollback machinery (versioned artifact store + runbook + drill + smoke-test gate) is for production systems with real impact, not throwaway / experimental work",
+    "Optionally suggests revisiting the rollback discipline if and when the model is considered for actual deployment, but does NOT block the experimental work on a rollback plan now"
+  ]
+}
