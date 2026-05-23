@@ -12,7 +12,7 @@ All notable changes to RCS are documented here. Per-skill changes use the skill'
 - `.github/workflows/frontmatter-lint.yml`, `link-check.yml`, `eval-suite.yml`
 - All 5 track READMEs with planned-skills tables populated from the full ~80-skill universe
 
-### Added (Phase 1 — Free ships)
+### Added (Phase 1 — Free ships, status: drafting pending eval validation)
 
-- `workflow/running-adversarial-premortem` v0.1.0 — migrated from harness
-- `security/auditing-mcp-server-pre-trust` v0.1.0 — migrated from harness
+- `workflow/running-adversarial-premortem` v0.1.0 — migrated from `~/.claude/skills/adversarial-premortem.skill`; eval validation deferred
+- `security/auditing-mcp-server-pre-trust` v0.1.0 — migrated from `~/.claude/skills/mcp-server-pre-trust-audit/`; eval validation deferred

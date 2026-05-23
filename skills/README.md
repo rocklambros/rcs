@@ -2,6 +2,13 @@
 
 All RCS skills, organized first by audience track and then by ROI rank (Σ score from the v1 brainstorm).
 
+## Drafting (v1.0.0-phase1, pending eval validation)
+
+| Skill | Track | Σ |
+|---|---|---|
+| [`running-adversarial-premortem`](workflow/running-adversarial-premortem/) | workflow | 17 |
+| [`auditing-mcp-server-pre-trust`](security/auditing-mcp-server-pre-trust/) | security | 18 |
+
 ## By track
 
 - **[security/](security/)** — Security engineers, AI red-teamers, GRC, vuln triage, MCP pre-trust, pen-test discipline.
