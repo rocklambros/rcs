@@ -1,0 +1,12 @@
+{
+  "skill": "pinning-reproducible-environments",
+  "scenario_id": "01-new-python-project",
+  "scenario_kind": "happy-path",
+  "query": "I'm starting a new Python ML project from scratch. How do I set up reproducible dependencies so my CI matches what runs on my laptop and a teammate can reproduce my results six months from now?",
+  "files": [],
+  "expected_behavior": [
+    "Recommends a lockfile-producing tool (uv lock, poetry lock, or pip-compile --generate-hashes) over bare 'pip install', and explicitly says to commit the resulting lockfile",
+    "Requires pinning the Python runtime version via .python-version file or requires-python == in pyproject.toml — not just a >= constraint",
+    "Recommends a strict-install command in CI (uv sync --frozen, poetry install --no-update, or pip install --require-hashes) that refuses to run if the lockfile is stale or missing"
+  ]
+}

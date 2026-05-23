@@ -1,0 +1,12 @@
+{
+  "skill": "pinning-reproducible-environments",
+  "scenario_id": "03-throwaway-notebook",
+  "scenario_kind": "anti-trigger",
+  "query": "I'm just experimenting in a Jupyter notebook on my laptop for an afternoon to see if an idea is even viable. Should I set up uv lock and a Dockerfile and all that pinning machinery first?",
+  "files": [],
+  "expected_behavior": [
+    "Does NOT force the full uv lock / Dockerfile / CI drift-check setup on a throwaway notebook",
+    "Explains that pinning machinery is project-scoped — appropriate when the work will be shared, shipped, or reproduced — and a one-afternoon experiment is below the threshold",
+    "Notes that the user should revisit and set up pinning if the experiment graduates into a real project"
+  ]
+}

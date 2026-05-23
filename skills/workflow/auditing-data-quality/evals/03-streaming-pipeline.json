@@ -1,0 +1,12 @@
+{
+  "skill": "auditing-data-quality",
+  "scenario_id": "03-streaming-pipeline",
+  "scenario_kind": "anti-trigger",
+  "query": "I have a streaming pipeline ingesting about 1 million events per second from Kafka. Audit the data quality.",
+  "files": [],
+  "expected_behavior": [
+    "Does NOT recommend a full-table scan or batch per-column audit against a 1M-events/sec stream",
+    "Explains that this audit is designed for bounded tabular datasets, not unbounded streams, and points the user toward per-batch or rolling-window quality metrics",
+    "Recommends a streaming-quality tool, framework, or pattern (Great Expectations, Soda, custom rolling-window monitor, or per-batch metric pipeline) suited to the streaming case"
+  ]
+}
