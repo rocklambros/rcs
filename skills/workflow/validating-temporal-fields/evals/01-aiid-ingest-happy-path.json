@@ -1,0 +1,12 @@
+{
+  "skill": "validating-temporal-fields",
+  "scenario_id": "01-aiid-ingest-happy-path",
+  "scenario_kind": "happy-path",
+  "query": "I'm ingesting the AIID incident corpus into our pipeline. Each record has an incident_date field plus a disclosure URL with a publication date. What temporal validation should I add at ingest time?",
+  "files": [],
+  "expected_behavior": [
+    "Recommends rejecting (or quarantining) any row where incident_date is in the future relative to today",
+    "Recommends maintaining incident_date AND disclosure_date as separate fields, with a cross-field check that incident_date is less than or equal to disclosure_date",
+    "Names the min-year-fallback rule (or equivalent: when extracting year from free text, prefer the earliest plausible year rather than the latest)"
+  ]
+}
