@@ -1,0 +1,12 @@
+{
+  "skill": "building-data-dictionary-with-consent-class",
+  "scenario_id": "01-saas-dsr-readiness-audit",
+  "scenario_kind": "happy-path",
+  "query": "We run a SaaS product with about 200k user records across four tables: users (auth + profile), sessions (clickstream and device info), predictions (per-user model outputs like churn_score and segment_label), and audit_log (admin actions referencing user records). Regulatory scope is GDPR and CCPA. Processing purposes are account management, product analytics, model training, fraud detection. Build us a data dictionary that will let legal and the DPO answer Data Subject Requests inside 30 days.",
+  "files": [],
+  "expected_behavior": [
+    "Produces a per-field row structure that includes BOTH a semantic class (ID / categorical / continuous / text / datetime / etc.) AND a separate consent class (collected / inferred / derived / public / synthetic), and uses the consent class to drive the DSR scope of each field",
+    "Explicitly classifies model-output fields like predictions.churn_score as inferred (not collected) and lists them in scope for the GDPR access right (Article 15) and deletion right (Article 17), with named propagated downstream tables / caches / model snapshots so the DSR sweep does not miss the cascade",
+    "Includes a lawful-basis assignment per field-and-purpose pair (consent / contract / legal-obligation / vital-interest / public-task / legitimate-interest) rather than silently defaulting all rows to legitimate-interest, and flags ambiguous pairs for legal review"
+  ]
+}

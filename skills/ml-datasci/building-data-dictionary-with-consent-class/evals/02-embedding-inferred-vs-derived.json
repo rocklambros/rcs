@@ -1,0 +1,12 @@
+{
+  "skill": "building-data-dictionary-with-consent-class",
+  "scenario_id": "02-embedding-inferred-vs-derived",
+  "scenario_kind": "edge-case",
+  "query": "We compute a 256-dimensional embedding per user from their support-ticket text using a pretrained sentence encoder, and we use the embedding to route future tickets. What consent class applies to the user_embedding field — is it inferred (because a model produced it) or derived (because it is a deterministic transformation), and what is its DSR scope?",
+  "files": [],
+  "expected_behavior": [
+    "Distinguishes inferred (model produces a learned mapping to a label, e.g. a predicted churn_score or a gender prediction) from derived (deterministic transformation reproducible from inputs, e.g. an encoder applied to user text), and classifies the embedding as derived while still acknowledging that the upstream input (the support-ticket text) was collected from the user",
+    "Puts the embedding field in scope for Data Subject Request access AND deletion under GDPR (the embedding is information about the user even though it is not human-readable), and warns that DSR deletion must cascade to every downstream copy (vector index, routing-prediction cache, model-training corpus snapshots) not just the live row",
+    "Does NOT treat the embedding as out-of-scope for DSR purposes merely because it is a vector of floats rather than human-readable PII"
+  ]
+}
