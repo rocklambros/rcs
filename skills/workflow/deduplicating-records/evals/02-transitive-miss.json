@@ -1,0 +1,12 @@
+{
+  "skill": "deduplicating-records",
+  "scenario_id": "02-transitive-miss",
+  "scenario_kind": "edge-case",
+  "query": "We merged record A with record B, then B with C. But A and C are still flagged as duplicates in our review queue afterward. Why is this happening and how do I fix it?",
+  "files": [],
+  "expected_behavior": [
+    "Identifies the failure mode as transitive-collapse failure caused by greedy pairwise merging",
+    "Recommends rebuilding the duplicate graph and running union-find / connected-components on the full set of edges at once, not pairwise in passes",
+    "Names index-refresh between passes (or single-pass union-find) as the specific remediation — greedy pairwise merging with stale canonical-id indices is the root cause"
+  ]
+}

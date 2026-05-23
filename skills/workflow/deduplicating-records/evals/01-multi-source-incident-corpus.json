@@ -1,0 +1,12 @@
+{
+  "skill": "deduplicating-records",
+  "scenario_id": "01-multi-source-incident-corpus",
+  "scenario_kind": "happy-path",
+  "query": "I have an incident corpus with about 12,000 records merged from AIID, OECD AIM, and AIAAIC. Each source uses its own ID format (e.g. one source uses AIID-N, another uses AIID-N-OECD for the same incident). After ingest I see duplicates. How should I dedupe?",
+  "files": [],
+  "expected_behavior": [
+    "Recommends multi-key dedup with an ordered list of rules and documented confidence per rule (not a single fuzzy similarity threshold)",
+    "Explicitly names ID-format normalization (stripping source suffixes like -OECD) as a required pre-processing step before the rules fire",
+    "Recommends connected-components / union-find on a duplicate graph to handle the transitive case, NOT greedy pairwise merging"
+  ]
+}

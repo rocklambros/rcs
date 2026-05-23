@@ -1,0 +1,12 @@
+{
+  "skill": "deduplicating-records",
+  "scenario_id": "03-primary-key-dedup",
+  "scenario_kind": "anti-trigger",
+  "query": "I have a customers table with a primary key column customer_id. There are some duplicate rows. Dedupe it for me.",
+  "files": [],
+  "expected_behavior": [
+    "Does NOT engage the multi-key fuzzy dedup workflow or union-find on a duplicate graph",
+    "Recommends SQL SELECT DISTINCT or pandas drop_duplicates on the primary key column as the appropriate solution",
+    "Explains that the multi-key / fuzzy / connected-components workflow is reserved for cases where no single trusted identifier exists across input rows"
+  ]
+}
