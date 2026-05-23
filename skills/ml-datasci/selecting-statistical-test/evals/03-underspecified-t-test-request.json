@@ -1,0 +1,12 @@
+{
+  "skill": "selecting-statistical-test",
+  "scenario_id": "03-underspecified-t-test-request",
+  "scenario_kind": "anti-trigger",
+  "query": "Run a t-test on this column for me.",
+  "files": [],
+  "expected_behavior": [
+    "Does NOT immediately recommend running a t-test; instead elicits more information before committing",
+    "Asks at least whether the design is paired vs independent (or equivalently, whether the data is a single sample / within-subject / between-subject)",
+    "Asks at least about the distributional assumption (Normality, or sample-size justification for CLT relaxation)"
+  ]
+}

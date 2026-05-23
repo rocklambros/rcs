@@ -1,0 +1,12 @@
+{
+  "skill": "selecting-statistical-test",
+  "scenario_id": "01-paired-non-normal-small-n",
+  "scenario_kind": "happy-path",
+  "query": "I have before/after blood pressure for 18 patients. Shapiro on the differences gives p = 0.003. Which test?",
+  "files": [],
+  "expected_behavior": [
+    "Recommends the Wilcoxon signed-rank test (and does NOT recommend the paired t-test)",
+    "Identifies the design as paired (within-subject / before-after)",
+    "Names the Shapiro-Wilk p-value (p = 0.003) as the gating assumption check that drove the choice"
+  ]
+}
