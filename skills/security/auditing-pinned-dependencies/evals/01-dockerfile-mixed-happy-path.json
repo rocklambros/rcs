@@ -1,0 +1,12 @@
+{
+  "skill": "auditing-pinned-dependencies",
+  "scenario_id": "01-dockerfile-mixed-happy-path",
+  "scenario_kind": "happy-path",
+  "query": "Audit this Dockerfile for dependency-pinning issues:\n\n```\nFROM python:3.13-slim\nRUN apt-get update && apt-get install -y curl=7.88.1-10\nRUN pip install requests\nRUN pip install pandas==2.2.0\nRUN npm install -g typescript@5.4.5\nRUN npm install express\n```",
+  "files": [],
+  "expected_behavior": [
+    "Identifies at least one specific unpinned install with a line reference or quoted command (e.g., flags `pip install requests` or `npm install express` as unpinned)",
+    "Suggests a concrete pinned form for each finding (e.g., `requests==<version>` or `express@<version>`, or recommends `npm ci`/lockfile-based install)",
+    "Does NOT flag the already-pinned lines (`pandas==2.2.0`, `typescript@5.4.5`, `curl=7.88.1-10`) as pinning issues"
+  ]
+}

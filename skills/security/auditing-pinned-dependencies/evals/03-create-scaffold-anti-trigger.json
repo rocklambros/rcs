@@ -1,0 +1,12 @@
+{
+  "skill": "auditing-pinned-dependencies",
+  "scenario_id": "03-create-scaffold-anti-trigger",
+  "scenario_kind": "anti-trigger",
+  "query": "I just ran `npm create vite@latest my-app -- --template react` to bootstrap a new project. Should I have pinned the scaffolder version?",
+  "files": [],
+  "expected_behavior": [
+    "Does NOT flag the `npm create vite@latest` invocation as a pinning violation requiring remediation",
+    "Explains that `npm create *@latest` (or similar `create-*` scaffolders) are one-shot project bootstrappers, not runtime dependencies, so the `@latest` is acceptable here",
+    "Recommends instead that the user pin the RESULTING dependencies in the new project's package.json (or commit the package-lock.json for CI to consume via `npm ci`)"
+  ]
+}
