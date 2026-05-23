@@ -1,0 +1,12 @@
+{
+  "skill": "generating-data-dictionary",
+  "scenario_id": "02-mixed-type-column-edge-case",
+  "scenario_kind": "edge-case",
+  "query": "My `signup_date` column has values that look like '2024-01-15' in some rows, integers like 1705276800 in others (probably Unix epoch), and a handful that look like 45307 (probably Excel serial dates). Generate the dictionary entry for this column.",
+  "files": [],
+  "expected_behavior": [
+    "Identifies the column as a mixed-format / mixed-type column rather than silently classifying it as a single datetime format",
+    "Names the specific formats present (e.g., ISO date strings, Unix epoch seconds, Excel serial dates) and warns that a naive parse (pd.to_datetime with default args) will silently coerce some values to NaT",
+    "Recommends normalizing all values to a single ISO-8601 datetime format (with timezone) before modeling, and ideally provides or sketches a reconciliation strategy that handles each format"
+  ]
+}
