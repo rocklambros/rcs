@@ -1,0 +1,12 @@
+{
+  "skill": "auditing-sft-dataset",
+  "scenario_id": "02-edge-case",
+  "scenario_kind": "edge-case",
+  "query": "I generated a 30K-row synthetic SFT dataset using GPT-4 with self-instruct (I gave it ChatML-formatted few-shot examples). The data is in ShareGPT format. My target template is ChatML on Qwen-2.5. The chat-template render step says 8,200 rows have literal <|im_start|> tokens inside the assistant content. Is that a parse failure?",
+  "files": [],
+  "expected_behavior": [
+    "Identifies this as template-echo / scaffolding-leakage from the generator's few-shot prompt, NOT as a parse failure (the rows parse cleanly; the issue is content contamination)",
+    "Recommends either regenerating the affected rows OR applying a documented post-processor to strip the cross-template tokens from assistant content — NOT silently shipping the rows as-is",
+    "Notes that the audit's chat-template-conformance rule for cross-template tokens (e.g., the Llama-3 / Mistral / Gemma forbidden-inside-content lists) is what caught this, and that this class would have been missed by tokenizer-only validation"
+  ]
+}
