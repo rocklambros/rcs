@@ -1,0 +1,12 @@
+{
+  "skill": "auditing-instruction-hierarchy",
+  "scenario_id": "02-timestamp-in-claude-md",
+  "scenario_kind": "edge-case",
+  "query": "My project CLAUDE.md has a line like 'Today is 2026-05-23'. Is that OK?",
+  "files": [],
+  "expected_behavior": [
+    "Flags the literal date as a problem — does NOT bless it as OK",
+    "Explains that the timestamp breaks prompt-cache reuse (the cached prefix invalidates when the date changes, or the 5-minute TTL doesn't help once the literal differs)",
+    "Recommends moving the dynamic value out of CLAUDE.md and into a hook-injected <system-reminder> (or equivalent SessionStart mechanism), keeping the cached prefix stable"
+  ]
+}

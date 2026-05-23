@@ -1,0 +1,12 @@
+{
+  "skill": "auditing-context-window-pressure",
+  "scenario_id": "03-one-shot-api-call",
+  "scenario_kind": "anti-trigger",
+  "query": "I'm making a quick 3-message API call from a Python script. Audit the context.",
+  "files": [],
+  "expected_behavior": [
+    "Does NOT engage the full audit workflow (no 200k-window % estimate, no /compact recommendation, no cache-prefix drift investigation)",
+    "Explains that the audit is for long-running multi-turn Claude Code sessions where pressure accumulates, not for short one-shot API calls",
+    "Suggests an appropriate alternative — checking the API response's usage fields (input_tokens, output_tokens, cache metrics) directly, or otherwise treating this as a per-call sizing question rather than a session audit"
+  ]
+}

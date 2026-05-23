@@ -1,0 +1,12 @@
+{
+  "skill": "authoring-skill",
+  "scenario_id": "03-one-off-bash-script",
+  "scenario_kind": "anti-trigger",
+  "query": "I have a one-off bash script that cleans up logs in this project. Should I make it a skill?",
+  "files": [],
+  "expected_behavior": [
+    "Does NOT recommend authoring a skill for this script",
+    "Explains that skills are reusable workflow disciplines portable across projects, while this script is project-specific tooling",
+    "Recommends an alternative home for the script — committing it under the project's scripts/ directory and/or documenting it in CLAUDE.md"
+  ]
+}

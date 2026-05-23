@@ -1,0 +1,12 @@
+{
+  "skill": "auditing-instruction-hierarchy",
+  "scenario_id": "01-bloated-hierarchy",
+  "scenario_kind": "happy-path",
+  "query": "My CLAUDE.md hierarchy is bloated. Audit it.",
+  "files": [],
+  "expected_behavior": [
+    "Names the 400-line hard cap or the 250-line target as the size budget against which the hierarchy should be measured",
+    "Recommends checking each level of the hierarchy separately (e.g., user ~/.claude/CLAUDE.md, project ./CLAUDE.md, and plugin CLAUDE.md files) — not just one file",
+    "Recommends moving dynamic / per-session content (timestamps, run IDs) out of CLAUDE.md and into a <system-reminder> block injected by a hook"
+  ]
+}
