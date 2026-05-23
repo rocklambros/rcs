@@ -1,0 +1,12 @@
+{
+  "skill": "enforcing-seed-hygiene",
+  "scenario_id": "01-pytorch-cnn-happy-path",
+  "scenario_kind": "happy-path",
+  "query": "I'm starting a new ML notebook to train a binary classifier on a tabular dataset using PyTorch. Help me set it up so my results are reproducible across runs.",
+  "files": [],
+  "expected_behavior": [
+    "Produces a first-cell seed block (one block at the top of the notebook), not scattered per-cell seed calls",
+    "Covers at least Python random + NumPy + PyTorch (and CUDA manual_seed_all) in that block",
+    "Names a single integer seed value (e.g., SEED = 42) used by every library, and does NOT recommend additional np.random.seed(...) calls inside the training cell"
+  ]
+}

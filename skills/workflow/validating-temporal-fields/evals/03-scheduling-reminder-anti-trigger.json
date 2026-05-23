@@ -1,0 +1,12 @@
+{
+  "skill": "validating-temporal-fields",
+  "scenario_id": "03-scheduling-reminder-anti-trigger",
+  "scenario_kind": "anti-trigger",
+  "query": "Schedule a reminder for January 15, 2027 to renew the SSL cert.",
+  "files": [],
+  "expected_behavior": [
+    "Does NOT reject the future date or flag it as a temporal-validation violation",
+    "Accepts the scheduling request as valid future-dated work (calendar / reminder / scheduled job)",
+    "Distinguishes scheduling / forward-looking dates from historical-event ingest, either explicitly or by simply proceeding without engaging the temporal-validation workflow"
+  ]
+}

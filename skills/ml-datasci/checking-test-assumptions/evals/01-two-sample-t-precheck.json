@@ -1,0 +1,12 @@
+{
+  "skill": "checking-test-assumptions",
+  "scenario_id": "01-two-sample-t-precheck",
+  "scenario_kind": "happy-path",
+  "query": "I want to run a two-sample t-test on tumor sizes between treatment and control. n = 30 per group. Check the assumptions.",
+  "files": [],
+  "expected_behavior": [
+    "Recommends Shapiro-Wilk per group (or Anderson-Darling) as the Normality check",
+    "Recommends Levene's test (or Brown-Forsythe) as the equal-variance check",
+    "Produces a per-assumption table with verdicts (or a clearly-labeled equivalent structure with at minimum Assumption, Test, and Verdict columns) AND names the alternative test to switch to if a verdict fails"
+  ]
+}

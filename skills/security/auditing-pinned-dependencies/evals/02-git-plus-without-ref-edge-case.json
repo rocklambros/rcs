@@ -1,0 +1,12 @@
+{
+  "skill": "auditing-pinned-dependencies",
+  "scenario_id": "02-git-plus-without-ref-edge-case",
+  "scenario_kind": "edge-case",
+  "query": "We use `uvx --from git+https://github.com/example/internal-cli.git internal-cli` to install our internal CLI. Is that pinned?",
+  "files": [],
+  "expected_behavior": [
+    "Identifies the install command as UNPINNED (git+ URL without an @<sha> or #<ref> suffix)",
+    "Recommends adding a specific ref — either `#<tag>` (e.g., `#v1.2.3`) or `@<commit-sha>` — to pin the install",
+    "Explains that without a ref the install resolves to HEAD of the default branch, which can change without notice"
+  ]
+}

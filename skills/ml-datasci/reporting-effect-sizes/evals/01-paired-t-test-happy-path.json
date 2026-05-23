@@ -1,0 +1,12 @@
+{
+  "skill": "reporting-effect-sizes",
+  "scenario_id": "01-paired-t-test-happy-path",
+  "scenario_kind": "happy-path",
+  "query": "We ran a paired t-test on before/after systolic blood pressure for 30 patients. Results: p = 0.012, t(29) = 2.68, mean difference = 4.3 mmHg, SD of differences = 8.8 mmHg. Help me report this for the paper.",
+  "files": [],
+  "expected_behavior": [
+    "Computes or names Cohen's dz (the paired effect size) — NOT the unpaired Cohen's d which would ignore the within-subject pairing",
+    "Includes a 95% confidence interval on the effect-size estimate (any reasonable CI form is acceptable: dz CI, mean-difference CI, or both)",
+    "Includes a direction sentence stating WHICH measurement was higher / lower (e.g., after-treatment BP was lower than before by 4.3 mmHg) — not just 'groups differ'"
+  ]
+}

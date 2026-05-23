@@ -1,0 +1,12 @@
+{
+  "skill": "validating-temporal-fields",
+  "scenario_id": "02-future-dated-record-edge-case",
+  "scenario_kind": "edge-case",
+  "query": "One of our incident records has incident_date = 2027-11-03 but the disclosure date is 2024-09-15. The article text mentions 'the 2027 election' as context. Is the record valid? What should we do?",
+  "files": [],
+  "expected_behavior": [
+    "Identifies the 2027 as a contextual / forecast mention in the source text, NOT the actual event year",
+    "Recommends correcting incident_date to the disclosure year (2024) or marking incident_date as null pending manual review, rather than accepting 2027 as-is",
+    "Names this as the max-year-fallback (or future-year-extractor) anti-pattern, citing the article-context-leakage mechanism"
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "skill": "auditing-train-test-split",
+  "scenario_id": "01-group-leakage-visits",
+  "scenario_kind": "happy-path",
+  "query": "I'm building a classifier on hospital readmission. Each row is one visit; some patients have multiple visits. I used `train_test_split(X, y, test_size=0.2, random_state=42)`. Audit it.",
+  "files": [],
+  "expected_behavior": [
+    "Identifies group-leakage (the same patient can appear in both train and test because the split is row-level on visit-level data)",
+    "Recommends GroupShuffleSplit (or GroupKFold or StratifiedGroupKFold) keyed by patient_id as the corrected splitter",
+    "Explains why row-level random split inflates the generalization estimate for visit-level data (the model can learn patient-specific features rather than generalize to new patients)"
+  ]
+}

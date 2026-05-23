@@ -1,0 +1,12 @@
+{
+  "skill": "checking-test-assumptions",
+  "scenario_id": "03-permutation-test",
+  "scenario_kind": "anti-trigger",
+  "query": "I'm running a randomization permutation test. Check the assumptions.",
+  "files": [],
+  "expected_behavior": [
+    "Does NOT recommend Shapiro-Wilk or Levene's test as the relevant checks for a permutation test",
+    "Names exchangeability (under the null) as the relevant assumption for permutation / randomization tests",
+    "Explains that parametric assumption checks (Shapiro, Levene) do not apply because permutation tests do not rely on a parametric reference distribution"
+  ]
+}

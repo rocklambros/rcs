@@ -1,0 +1,12 @@
+{
+  "skill": "reporting-effect-sizes",
+  "scenario_id": "03-p-value-pedagogy-anti-trigger",
+  "scenario_kind": "anti-trigger",
+  "query": "For our stats lecture this week, explain how the p-value formula works and why p < 0.05 became the conventional significance threshold. Don't worry about effect sizes — that's next week's lecture.",
+  "files": [],
+  "expected_behavior": [
+    "Does NOT refuse the pedagogical request or block it with an effect-size mandate",
+    "Explains the p-value mechanics as asked (probability of observing a test statistic at least as extreme as the one obtained, assuming the null hypothesis is true) and at least mentions Fisher / Neyman-Pearson history or the 0.05 convention",
+    "May briefly note (one or two sentences max) that real-world reporting also requires effect sizes + CIs, but does NOT rewrite the request, refuse it, or pivot the lecture away from p-value mechanics"
+  ]
+}

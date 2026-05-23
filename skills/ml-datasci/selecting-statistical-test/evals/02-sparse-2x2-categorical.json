@@ -1,0 +1,12 @@
+{
+  "skill": "selecting-statistical-test",
+  "scenario_id": "02-sparse-2x2-categorical",
+  "scenario_kind": "edge-case",
+  "query": "I have a 2x2 contingency table: 3 successes / 7 failures vs 8 successes / 12 failures. Chi-squared or Fisher?",
+  "files": [],
+  "expected_behavior": [
+    "Recommends Fisher's exact test (and does NOT recommend the chi-squared test)",
+    "Names the rule that drives the choice: minimum expected cell count must be at least 5 for chi-squared; if any cell is below 5, use Fisher",
+    "Computes or estimates the expected counts to justify the recommendation (e.g., computes expected count for at least one cell and shows it falls below 5)"
+  ]
+}
