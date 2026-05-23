@@ -67,9 +67,14 @@ Batch 6 consolidates the changelog fragments, updates root README + skills/READM
 
    If skill passes all 3 scenarios → keep `status: shipped`.
    If any scenario fails materially → demote `status: drafting`, note the failure in the PR description.
-7. **Update the track README** (and only the track README — NOT root README, NOT skills/README.md, NOT CHANGELOG.md):
-   - Add row to "Shipped skills" table
-   - Remove the row from "Planned skills" table
+7. **Write a shipped-fragment file PER TRACK touched** (do NOT edit the track README directly — that's a Batch 6 job, and direct edits create merge conflicts when batches run in parallel):
+   For each track this batch ships a skill into, write `skills/<track>/shipped-fragments/batch-N.md` containing one row per shipped-from-this-batch skill, formatted exactly as a "Shipped skills" table row:
+   ```markdown
+   | [`<slug>`](../<slug>/) | <what-it-does one-liner> | <when-to-use one-liner> | <Σ> |
+   ```
+   (If a batch ships skills into 3 different tracks, write 3 fragment files — one per track.)
+
+   Batch 6 (Integration) consolidates these fragments into the track READMEs and removes the corresponding rows from each track's "Planned skills" table.
 8. **Write changelog fragment** at `docs/superpowers/changelog-fragments/batch-N-<short-name>.md`:
    ```markdown
    ### Batch N: <short-name> — 2026-05-23
@@ -84,8 +89,8 @@ Batch 6 consolidates the changelog fragments, updates root README + skills/READM
    ```
 9. **Commit per skill** (one commit per skill, not one combined commit) with messages:
    - `Add <track>/<skill-slug> skill (PRAGMATIC validation, status: <shipped|drafting>)`
-10. **Update track README in a separate commit** with message:
-   - `Move N shipped skills from Planned to Shipped in <track> track README`
+10. **Commit shipped-fragments in a separate commit** with message:
+   - `Add batch-N shipped-fragments for <track-list>` (e.g., `Add batch-1 shipped-fragments for workflow, security, ml-datasci`)
 11. **Commit changelog fragment** in a separate commit:
    - `Add batch-N changelog fragment`
 12. **Push branch and open PR** per the "Per-batch PR template" section below.
@@ -128,7 +133,7 @@ uv sync
 Whitelist (only these directories/files are in scope for batches 1-5):
 
 - `skills/<track>/<new-skill-slug>/**` — all new skill content
-- `skills/<track>/README.md` — for the batch's tracks ONLY
+- `skills/<track>/shipped-fragments/batch-N.md` — one fragment file per track the batch ships into
 - `docs/superpowers/changelog-fragments/batch-N-<short-name>.md` — the batch's changelog fragment
 
 Files the batch MUST NOT touch (batches 1-5):
@@ -136,7 +141,7 @@ Files the batch MUST NOT touch (batches 1-5):
 - `README.md` (root) — deferred to Batch 6
 - `skills/README.md` (cross-track index) — deferred to Batch 6
 - `CHANGELOG.md` — deferred to Batch 6
-- Other batches' track READMEs — deferred to other batches
+- `skills/<track>/README.md` (ALL track READMEs) — deferred to Batch 6 (avoids cross-batch merge conflicts on shared README files when multiple batches ship into the same track)
 - `pyproject.toml`, `.gitignore`, `LICENSE`, `CONTRIBUTING.md`, `docs/*.md` (conventions, eval-protocol, governance) — out of scope
 - `tools/**` — out of scope
 - `.github/workflows/**` — out of scope
@@ -177,7 +182,7 @@ Batch N: <descriptive name>. Ships <count> new skills authored via PRAGMATIC dis
 ### Files changed
 
 - `skills/<track>/<slug>/` directories (new)
-- `skills/<track>/README.md` (move skills from planned → shipped)
+- `skills/<track>/shipped-fragments/batch-N.md` for each track this batch ships into (new files only, no edits to existing READMEs)
 - `docs/superpowers/changelog-fragments/batch-N-<short-name>.md` (new)
 
 ### Eval results
@@ -204,7 +209,7 @@ Root README catalog, `skills/README.md` cross-track index, and `CHANGELOG.md` up
 **Branch:** `feature/v1.0.0-batch-1-high-sigma`
 **Short name (worktree dir):** `RCS-batch-1`
 **Skills shipped:** 4
-**Tracks touched (README updates):** `workflow/`, `security/`, `ml-datasci/`
+**Tracks touched (fragment files written):** `workflow/`, `security/`, `ml-datasci/`
 
 ### 1.1 enforcing-seed-hygiene (Σ 20)
 
@@ -332,7 +337,7 @@ Root README catalog + `skills/README.md` cross-track index + `CHANGELOG.md` upda
 **Branch:** `feature/v1.0.0-batch-2-stats-discipline`
 **Short name (worktree dir):** `RCS-batch-2`
 **Skills shipped:** 3
-**Tracks touched (README updates):** `ml-datasci/` only
+**Tracks touched (fragment files written):** `ml-datasci/` only
 
 ### 2.1 selecting-statistical-test (Σ 18)
 
@@ -416,7 +421,7 @@ Same structure as Batch 1, substituting:
 **Branch:** `feature/v1.0.0-batch-3-ml-eval`
 **Short name (worktree dir):** `RCS-batch-3`
 **Skills shipped:** 3
-**Tracks touched (README updates):** `ml-datasci/` only
+**Tracks touched (fragment files written):** `ml-datasci/` only
 
 ### 3.1 evaluating-binary-classifiers (Σ 19)
 
@@ -494,7 +499,7 @@ Same structure as Batch 1, substituting:
 **Branch:** `feature/v1.0.0-batch-4-data-hygiene`
 **Short name (worktree dir):** `RCS-batch-4`
 **Skills shipped:** 3
-**Tracks touched (README updates):** `workflow/` only
+**Tracks touched (fragment files written):** `workflow/` only
 
 ### 4.1 deduplicating-records (Σ 18)
 
@@ -571,7 +576,7 @@ Same structure as Batch 1, substituting:
 **Branch:** `feature/v1.0.0-batch-5-meta`
 **Short name (worktree dir):** `RCS-batch-5`
 **Skills shipped:** 3
-**Tracks touched (README updates):** `claude-code-meta/` and `workflow/`
+**Tracks touched (fragment files written):** `claude-code-meta/` and `workflow/`
 
 ### 5.1 writing-claude-code-skill (Σ 18)
 
@@ -674,23 +679,31 @@ Before starting Batch 6, confirm:
    ```
 
 2. **Consolidate changelog fragments** into CHANGELOG.md:
-   - Read every file in `docs/superpowers/changelog-fragments/`
+   - Read every file in `docs/superpowers/changelog-fragments/` (excluding `README.md`)
    - For each, add an `## [v1.0.0-batch-N] — <date>` section in CHANGELOG.md before the `## [Unreleased]` block
    - Preserve the fragment content verbatim under its section heading
-   - After consolidation, delete the fragment files: `git rm docs/superpowers/changelog-fragments/*.md`
+   - After consolidation, delete the fragment files: `git rm docs/superpowers/changelog-fragments/batch-*.md`
 
-3. **Update root `README.md`** "Skill catalog" section:
+3. **Consolidate track-README shipped-fragments** into each track's README:
+   For each track directory (`security`, `ml-datasci`, `workflow`, `teaching`, `claude-code-meta`):
+   - List all `skills/<track>/shipped-fragments/batch-*.md` files (excluding `README.md`)
+   - Read each fragment — each contains 1+ rows formatted as Shipped-skills table entries
+   - Append every fragment's rows to that track's `## Shipped skills` table (replacing any placeholder `_Populated in Phase X._` line)
+   - For each shipped-skill slug just added, REMOVE the corresponding row from that track's `## Planned skills` table (any subsection)
+   - Delete the fragment files: `git rm skills/<track>/shipped-fragments/batch-*.md`
+
+4. **Update root `README.md`** "Skill catalog" section:
    - Replace the placeholder table with the full list of shipped skills across all 5 tracks
    - Format: one row per shipped skill with `Skill · Track · What it does · Status · Σ`
    - Include the 2 Phase-1 skills + all skills shipped in batches 1-5
    - Update the trailing sentence to: `_N of ~80 planned skills shipped. See each track's README for the planned-skills roadmap._` (where N is the actual count)
 
-4. **Update `skills/README.md`** cross-track index:
+5. **Update `skills/README.md`** cross-track index:
    - Replace the "Shipped" subsection with the full list of all shipped skills across all 5 tracks
    - Format: `[`slug`](track/slug/) | track | Σ`
    - Sort by Σ descending
 
-5. **Lint sweep:**
+6. **Lint sweep:**
    ```bash
    uv run python -m tools.lint_frontmatter $(find skills -name SKILL.md)
    uv run python -m tools.lint_skill_md $(find skills -name SKILL.md)
@@ -776,14 +789,14 @@ After step 11, verify:
 
 ## Failure modes and recovery
 
-**Two batches both modify the same track README:**
-Batch 1 touches `workflow/`, `security/`, and `ml-datasci/` READMEs. Other batches touch a subset. Concurrent batch 1 + batch 2 will both touch `ml-datasci/README.md`. Mitigation: each batch only ADDS rows to "Shipped skills" and REMOVES rows from "Planned skills" — both operations are merge-friendly if rows don't overlap. If git auto-merge fails, the second-to-merge PR rebases on main and re-resolves.
+**Two batches both write a fragment for the same track:**
+Each batch writes `skills/<track>/shipped-fragments/batch-N.md` (one file per batch per track). Different batches → different filenames → no merge conflict. Batch 6 consolidates all fragments into each track's README in a single integration commit. This pattern eliminates the conflict class entirely.
 
 **Sonnet-only eval fails for a skill:**
 Skill ships as `status: drafting` (not `shipped`); the failure is documented in the changelog fragment + PR description. A future re-validation session can re-run the evals (in-session subagent dispatch, or via `tools.run_evals.py` if API key is available) and promote to shipped.
 
 **A batch PR cannot be merged due to upstream conflicts:**
-Run `git fetch origin && git rebase origin/main`. Resolve any conflicts (typically only in track READMEs). Force-push the branch (`git push -f`) and re-merge.
+With the fragment pattern in place, conflicts on `skills/<track>/README.md` should not occur. If they do (e.g., because a batch session was running against an older revision of this plan and edited a track README directly), run `git fetch origin && git rebase origin/main`. Resolve any conflicts, then force-push (`git push -f`) and re-merge. Going forward, ensure every batch session uses the current plan revision and writes fragments only.
 
 **Changelog fragment naming collision:**
 Each batch's fragment name (`batch-N-<short-name>.md`) is unique by construction. If two sessions accidentally pick the same `<short-name>`, the second commit will fail. Rename and retry.
