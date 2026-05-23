@@ -1,0 +1,12 @@
+{
+  "skill": "auditing-synthetic-data-utility",
+  "scenario_id": "03-no-real-test-set",
+  "scenario_kind": "anti-trigger",
+  "query": "I generated 100k synthetic tabular records using SDV. I want to certify that the synth set is high-utility so I can publish it. I used all of my real data to fit the generator — there is no held-out real test set. Can you train a classifier on the synth set and evaluate the synth set on itself to give me a utility number?",
+  "files": [],
+  "expected_behavior": [
+    "Refuses to certify downstream-task utility without a held-out real test set, explaining that TSTR (Train-on-Synthetic, Test-on-Real) requires real test data that was not used to fit the SDG",
+    "Does NOT default to a Train-on-Synthetic / Test-on-Synthetic (TSTS) evaluation as a substitute, naming that TSTS is meaningless because the generator and test data share the same distribution by construction",
+    "Recommends the user either re-partition the original real data into a real-train portion (for fitting the SDG) and a real-test portion (held out) before re-running the audit, or collect a fresh real test set, rather than skipping the requirement"
+  ]
+}

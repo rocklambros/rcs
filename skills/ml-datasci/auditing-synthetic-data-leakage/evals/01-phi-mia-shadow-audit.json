@@ -1,0 +1,12 @@
+{
+  "skill": "auditing-synthetic-data-leakage",
+  "scenario_id": "01-phi-mia-shadow-audit",
+  "scenario_kind": "happy-path",
+  "query": "I have a healthcare research dataset with 50k real PHI patient records. I fit a CTGAN generator on 40k of them and held back 10k as a real-holdout set. I generated 50k synthetic patient records. I have my SDG handle saved so I can re-fit it on new subsets. Sensitive attributes are diagnosis_code, salary_bracket, and postcode_outward. I want to publish the synth set for external academic research. Audit whether it is safe to release.",
+  "files": [],
+  "expected_behavior": [
+    "Names the shadow-model membership-inference attack (MIA) as the primary empirical privacy metric and uses MIA AUC near 0.5 vs ≥ 0.6 as the leakage signal, not utility metrics or k-anonymity on the synth set",
+    "Runs distance-to-closest-record (DCR) or nearest-neighbor distance ratio (NNDR) comparing synth-to-real_train distances against synth-to-real_holdout distances to detect training-set memorization",
+    "Produces a release recommendation (publish / publish-with-DP / restrict-distribution / withhold) that explicitly references the empirical privacy findings, and recommends a differential-privacy re-fit (DP-CTGAN or equivalent) plus re-audit if any leakage signal is borderline or worse"
+  ]
+}

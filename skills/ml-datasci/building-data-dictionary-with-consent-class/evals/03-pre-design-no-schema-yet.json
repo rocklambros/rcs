@@ -1,0 +1,12 @@
+{
+  "skill": "building-data-dictionary-with-consent-class",
+  "scenario_id": "03-pre-design-no-schema-yet",
+  "scenario_kind": "anti-trigger",
+  "query": "We are still designing a new product feature. We have wireframes and a rough idea of what data we might collect, but no schema has been written, no tables exist, and no data has been collected from any user yet. Build us a complete data dictionary with consent classes so we are ready for GDPR.",
+  "files": [],
+  "expected_behavior": [
+    "Recognizes that a data dictionary is a downstream artifact of a real schema and a real dataset, and does NOT generate fictional rows for a schema that does not exist yet",
+    "Redirects the user to design-stage privacy outputs instead — a data-collection consent form draft, a planned-schema sketch annotated with the intended consent class per field (so the eventual implementation can be checked against the intent), or a privacy impact assessment / DPIA outline",
+    "Does not force the full 9-step dictionary build on the pre-design scenario; offers to run the dictionary skill once an actual schema exists, and notes that a privacy-by-design workflow is the right tool for the design stage"
+  ]
+}

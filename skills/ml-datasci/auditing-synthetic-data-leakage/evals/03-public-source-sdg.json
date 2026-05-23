@@ -1,0 +1,12 @@
+{
+  "skill": "auditing-synthetic-data-leakage",
+  "scenario_id": "03-public-source-sdg",
+  "scenario_kind": "anti-trigger",
+  "query": "I want to release a synthetic version of the UCI Adult Census Income public benchmark dataset. The original real data has been on the UCI ML Repository since 1996 and has been used in thousands of public papers. Should I run the full membership-inference attack and per-attribute disclosure audit before releasing my synth version?",
+  "files": [],
+  "expected_behavior": [
+    "Recognizes that the source dataset is already in the public domain and that there is no protected membership signal to defend against, so the full shadow-model MIA + DCR + per-attribute disclosure workflow is over-engineered for this case",
+    "Does NOT force the full multi-stage privacy audit on a public-source SDG; explicitly says the workflow can be skipped or reduced to a lightweight exact-duplicate / cleanliness check",
+    "Hands off to the utility audit (auditing-synthetic-data-utility) or suggests that the meaningful release-readiness question for a public-source SDG is downstream-task utility, not privacy"
+  ]
+}
