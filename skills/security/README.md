@@ -6,16 +6,18 @@ This track encodes day-job disciplines: MCP pre-trust auditing, vulnerability tr
 
 ## Shipped skills
 
-_Populated in Phase 1._
+_None yet. `auditing-mcp-server-pre-trust` is at `status: drafting` pending eval validation; see "Drafting" section below._
+
+## Drafting
 
 | Skill | What it does | When to use | Σ |
 |---|---|---|---|
+| [`auditing-mcp-server-pre-trust`](auditing-mcp-server-pre-trust/) | Six-check audit (license, source, network, version pin, secret handling, tool subset) of any proposed MCP server before pre-trust | Whenever you are about to add an MCP server to your Claude Code config | 18 |
 
 ## Planned skills
 
 | Skill | What it does | Σ | Status |
 |---|---|---|---|
-| `auditing-mcp-server-pre-trust` | Six-check audit (license, source, network egress, version pin, secret handling, tool subset) before registering an MCP server | 18 | 📝 planned (Phase 1) |
 | `auditing-pinned-dependencies` | Greps for unpinned installs, flags supply-chain risk | 19 | 📝 planned (Phase 2) |
 | `threat-modeling-llm-app` | Walks an LLM app through STRIDE-style threats; user supplies the checklist as input | 13 | 📝 planned |
 | `threat-modeling-agentic-systems` | MAESTRO/STRIDE walk for an agent design; user supplies the catalog | 11 | 📝 planned |
