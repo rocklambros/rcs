@@ -1,0 +1,12 @@
+{
+  "skill": "building-baseline-models",
+  "scenario_id": "03-anti-trigger",
+  "scenario_kind": "anti-trigger",
+  "query": "I'm running PCA on a customer feature dataset to find the top components and visualize structure. What baselines do I need?",
+  "files": [],
+  "expected_behavior": [
+    "Does NOT force a Dummy / Logistic / RandomForest baseline ladder onto an unsupervised dimensionality-reduction task",
+    "Explains that supervised baselines apply when there is a target / label; PCA without a downstream supervised task does not have the same kind of baseline",
+    "Recommends the relevant unsupervised sanity checks — e.g. variance-explained per component, scree plot, Kaiser criterion / eigenvalue > 1, or comparison to a permuted-data PCA — instead of supervised baselines"
+  ]
+}

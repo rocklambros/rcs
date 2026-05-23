@@ -1,0 +1,12 @@
+{
+  "skill": "evaluating-regression-models",
+  "scenario_id": "01-happy-path",
+  "scenario_kind": "happy-path",
+  "query": "I fit a multiple linear regression to predict house price (USD) from 8 features. n_train = 960, n_test = 240. I have y_true and y_pred. Walk me through how to evaluate it.",
+  "files": [],
+  "expected_behavior": [
+    "Names RMSE or MAE in target units alongside R² (not R² alone) as the headline metrics",
+    "Names adjusted-R² (not just R²) as required for multi-feature regression — or at minimum penalizes/notes the multi-feature case",
+    "Names residual diagnostics — at least one of residuals-vs-fitted, QQ-plot of residuals, or residual histogram — as part of the evaluation, not just point-estimate metrics"
+  ]
+}

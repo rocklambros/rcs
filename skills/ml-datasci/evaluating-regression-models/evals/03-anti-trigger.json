@@ -1,0 +1,12 @@
+{
+  "skill": "evaluating-regression-models",
+  "scenario_id": "03-anti-trigger",
+  "scenario_kind": "anti-trigger",
+  "query": "I'm forecasting monthly demand 24 months ahead from 10 years of weekly sales data. My 5-fold KFold CV RMSE is 12.3. Evaluate it.",
+  "files": [],
+  "expected_behavior": [
+    "Does NOT accept standard k-fold (random / shuffled KFold) CV as valid for forecasting / time-series data",
+    "Recommends walk-forward CV (TimeSeriesSplit, expanding-window, or equivalent) as the right cross-validation scheme for forecasting",
+    "Explains that random k-fold leaks future information into training when rows have a temporal ordering — and therefore overstates real forecast accuracy"
+  ]
+}

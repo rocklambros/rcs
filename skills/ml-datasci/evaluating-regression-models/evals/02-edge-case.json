@@ -1,0 +1,12 @@
+{
+  "skill": "evaluating-regression-models",
+  "scenario_id": "02-edge-case",
+  "scenario_kind": "edge-case",
+  "query": "My R² is 0.85. Sounds great, right?",
+  "files": [],
+  "expected_behavior": [
+    "Requests RMSE (or MAE) in target units for interpretability — does not certify 0.85 R² as 'good' from the unitless number alone",
+    "Flags or asks whether the R² = 0.85 came from the training set or a held-out test set (train R² can be optimistic vs test R²)",
+    "Requests cross-validation results (or otherwise asks for evidence of metric stability across folds) before rendering a verdict"
+  ]
+}
