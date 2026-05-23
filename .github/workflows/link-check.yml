@@ -1,0 +1,35 @@
+name: Skill link integrity check
+
+on:
+  pull_request:
+    paths:
+      - 'skills/**'
+      - 'tools/lint_links.py'
+
+jobs:
+  links:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3
+      - name: Sync dependencies
+        run: uv sync
+      - name: Find changed skill directories
+        id: dirs
+        run: |
+          changed_dirs=$(git diff --name-only origin/${{ github.base_ref }}...HEAD -- 'skills/**' \
+            | awk -F/ '{ if (NF >= 3) print $1"/"$2"/"$3 }' | sort -u || true)
+          if [ -z "$changed_dirs" ]; then
+            changed_dirs=$(find skills -mindepth 2 -maxdepth 2 -type d)
+          fi
+          echo "dirs<<EOF" >> $GITHUB_OUTPUT
+          echo "$changed_dirs" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+      - name: Lint links
+        run: |
+          while read -r dir; do
+            [ -z "$dir" ] && continue
+            [ -f "$dir/SKILL.md" ] || continue
+            uv run python -m tools.lint_links "$dir"
+          done <<< "${{ steps.dirs.outputs.dirs }}"
