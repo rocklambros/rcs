@@ -1,0 +1,12 @@
+{
+  "skill": "pre-registering-eval-study",
+  "scenario_id": "02-vague-hypothesis",
+  "scenario_kind": "edge-case",
+  "query": "Help us pre-register a study. Our hypothesis is that 'our new model is better' and we want to 'collect data until the results stabilize'. We have a budget for maybe 1000-5000 evaluations.",
+  "files": [],
+  "expected_behavior": [
+    "Refuses to accept 'our new model is better' as a hypothesis and requires it to be rewritten as a directional, falsifiable, one-sentence claim with an operationalized outcome (metric + units + measurement procedure)",
+    "Rejects 'until the results stabilize' as a stopping rule and requires the user to choose one of fixed-n, group-sequential with alpha-spending, or Bayesian-posterior-threshold with full specification",
+    "Requires a minimum effect of interest to be fixed BEFORE any power calculation can be done; flags that without that anchor, the 1000-5000 budget range is not a power-justified plan"
+  ]
+}

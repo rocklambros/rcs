@@ -1,0 +1,12 @@
+{
+  "skill": "pre-registering-eval-study",
+  "scenario_id": "01-llm-jailbreak-comparison",
+  "scenario_kind": "happy-path",
+  "query": "We want to evaluate whether Claude Sonnet 4.6 is safer than Claude Haiku 4.5 on our internal jailbreak corpus of 500 prompts. Help us pre-register the study before we run anything.",
+  "files": [],
+  "expected_behavior": [
+    "Produces a directional, falsifiable primary hypothesis (e.g., 'Sonnet 4.6 produces fewer judged-unsafe completions than Haiku 4.5') and an operationalized primary outcome with a metric, units, and a measurement procedure (judges + agreement metric)",
+    "Specifies a fixed-n (or otherwise pre-specified) stopping rule, fixes a minimum effect of interest BEFORE data observation, and ties the planned n = 500 to a power calculation at the chosen alpha",
+    "States an explicit falsification criterion (a specific numeric result that would refute the hypothesis) AND requires the pre-registration document to be committed to a versioned location with a recorded hash BEFORE any data is observed"
+  ]
+}
