@@ -1,0 +1,12 @@
+{
+  "skill": "running-adversarial-premortem",
+  "scenario_id": "03-simple-bug-review",
+  "scenario_kind": "anti-trigger",
+  "query": "Can you check my Python loop for off-by-one errors? Here it is: for i in range(len(arr)): print(arr[i+1])",
+  "files": [],
+  "expected_behavior": [
+    "Does NOT engage the premortem workflow (does not produce a per-claim audit table or seed failure categories)",
+    "Explains that premortem is for high-stakes designs with multiple plausible failure modes; a single-bug code review is the wrong tool match",
+    "Hands off to a code-review or debugging approach and identifies the off-by-one (arr[i+1] reads past the end on the last iteration)"
+  ]
+}

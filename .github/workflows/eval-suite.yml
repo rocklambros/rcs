@@ -1,0 +1,57 @@
+name: Skill eval suite
+
+on:
+  pull_request:
+    paths:
+      - 'skills/**'
+  schedule:
+    - cron: '0 6 * * *'
+
+jobs:
+  evals:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: write
+    env:
+      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fail if API key missing (main repo only)
+        if: github.repository == 'rocklambros/rcs' && env.ANTHROPIC_API_KEY == ''
+        run: |
+          echo "::error::ANTHROPIC_API_KEY secret not set in main repo"
+          exit 1
+      - name: Skip if API key missing (forks)
+        if: github.repository != 'rocklambros/rcs' && env.ANTHROPIC_API_KEY == ''
+        run: |
+          echo "::warning::ANTHROPIC_API_KEY not set in fork; skipping eval suite"
+          exit 0
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3
+      - name: Sync dependencies
+        run: uv sync
+      - name: Determine target skills
+        id: targets
+        run: |
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            changed_dirs=$(git diff --name-only origin/${{ github.base_ref }}...HEAD -- 'skills/**' \
+              | awk -F/ '{ if (NF >= 3) print $1"/"$2"/"$3 }' | sort -u || true)
+          else
+            changed_dirs=$(find skills -mindepth 2 -maxdepth 2 -type d)
+          fi
+          echo "dirs<<EOF" >> $GITHUB_OUTPUT
+          echo "$changed_dirs" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+      - name: Run eval suite
+        run: |
+          failed=0
+          while read -r dir; do
+            [ -z "$dir" ] && continue
+            [ -f "$dir/SKILL.md" ] || continue
+            [ -d "$dir/evals" ] || continue
+            echo "::group::$dir"
+            uv run python -m tools.run_evals "$dir" || failed=1
+            echo "::endgroup::"
+          done <<< "${{ steps.targets.outputs.dirs }}"
+          exit $failed

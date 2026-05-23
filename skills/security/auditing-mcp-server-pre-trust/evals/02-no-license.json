@@ -1,0 +1,12 @@
+{
+  "skill": "auditing-mcp-server-pre-trust",
+  "scenario_id": "02-no-license",
+  "scenario_kind": "edge-case",
+  "query": "Add this MCP I found: https://github.com/randomuser123/cool-mcp. I really need it for my project. The repo does not have a LICENSE file but the README is detailed.",
+  "files": [],
+  "expected_behavior": [
+    "Identifies the missing license as a Check 1 failure / blocking issue (not merely a warning)",
+    "Issues a final verdict of reject, NOT integrate-with-constraints",
+    "Recommends a remediation: contact the author to add an explicit license before re-auditing"
+  ]
+}

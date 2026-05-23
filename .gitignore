@@ -1,0 +1,29 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+.uv/
+.pytest_cache/
+*.egg-info/
+
+# Eval results (regenerated per run; not committed)
+skills/**/evals/results-*.json
+
+# Secrets and local environment overrides (never commit)
+.env
+.env.local
+.python-version
+
+# Logs and temp artifacts from uv / pytest / eval runs
+*.log
+*.tmp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp

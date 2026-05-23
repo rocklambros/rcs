@@ -1,0 +1,12 @@
+{
+  "skill": "running-adversarial-premortem",
+  "scenario_id": "02-too-large-artifact",
+  "scenario_kind": "edge-case",
+  "query": "Here is our company's 14,000-line agent-platform architecture spec. Please run a full premortem.",
+  "files": [],
+  "expected_behavior": [
+    "Refuses to premortem the entire 14,000-line spec in one pass; explains that scope overflow produces noise",
+    "Asks the user for a scope_hint to narrow the premortem to one component, section, or claim",
+    "Suggests using the seed failure categories (premise / methodology / implementation / operational / reception / defense-in-depth) to choose where to focus the first round"
+  ]
+}
