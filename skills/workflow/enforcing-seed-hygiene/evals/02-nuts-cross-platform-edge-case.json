@@ -1,0 +1,12 @@
+{
+  "skill": "enforcing-seed-hygiene",
+  "scenario_id": "02-nuts-cross-platform-edge-case",
+  "scenario_kind": "edge-case",
+  "query": "My NUTS sampler results differ between my laptop and our Linux GPU server. Same seed, same code. Help me make them match.",
+  "files": [],
+  "expected_behavior": [
+    "Identifies the divergence as a CPU-pin / cross-platform reduction-order issue, NOT just a missing seed call",
+    "Recommends OMP_NUM_THREADS=1 (or equivalent thread-pin) and explicitly names JAX_PLATFORM_NAME=cpu or single-thread sampling for sampler workloads",
+    "Explains that the seed alone is insufficient because parallel floating-point reduction order is non-associative and platform-dependent"
+  ]
+}

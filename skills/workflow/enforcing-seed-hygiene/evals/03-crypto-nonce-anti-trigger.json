@@ -1,0 +1,12 @@
+{
+  "skill": "enforcing-seed-hygiene",
+  "scenario_id": "03-crypto-nonce-anti-trigger",
+  "scenario_kind": "anti-trigger",
+  "query": "Generate me a random nonce for an API request.",
+  "files": [],
+  "expected_behavior": [
+    "Does NOT recommend a fixed seed (no np.random.seed, random.seed, or SEED = 42 pattern in the response)",
+    "Recommends a cryptographically appropriate entropy source — secrets.token_bytes(...), secrets.token_hex(...), or os.urandom(...)",
+    "Explains that seeded RNG / PRNG is wrong for cryptographic use because the output is predictable from the seed"
+  ]
+}
