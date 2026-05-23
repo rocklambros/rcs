@@ -1,0 +1,12 @@
+{
+  "skill": "running-adversarial-premortem",
+  "scenario_id": "01-paper-math-claims",
+  "scenario_kind": "happy-path",
+  "query": "I just finished a paper claiming that all transformer attention heads are equivalent for short sequences (length ≤ 8). Theorem 1 proves this by showing isomorphism. Theorem 2 derives a polynomial bound on the equivalence gap. Can you premortem the math claims?",
+  "files": [],
+  "expected_behavior": [
+    "Produces a per-claim audit table that has at least one row per theorem with the columns Location, Concern, Strongest counter, and Stops-mattering-if",
+    "Names at least one specific concern about the use of 'isomorphism' on a small finite set (6 or 8 elements) — that demonstrating bijection of operations is required, not just bijection of sets",
+    "Provides a prioritized remediation list ordered by severity × likelihood / detectability, NOT alphabetically or by appearance order"
+  ]
+}
