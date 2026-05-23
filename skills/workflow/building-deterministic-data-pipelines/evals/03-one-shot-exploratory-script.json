@@ -1,0 +1,12 @@
+{
+  "skill": "building-deterministic-data-pipelines",
+  "scenario_id": "03-one-shot-exploratory-script",
+  "scenario_kind": "anti-trigger",
+  "query": "I'm writing a quick exploratory script that pulls one CSV from a URL, computes summary statistics, and prints them to stdout. Nothing downstream consumes this output. Should I add the full canonicalization + provenance + CI drift check workflow?",
+  "files": [],
+  "expected_behavior": [
+    "Recommends NOT applying the full deterministic-pipeline workflow to a one-shot exploratory script — the friction outweighs the benefit when nothing downstream depends on the output",
+    "Identifies the threshold for revisiting: the discipline becomes worth the cost once the script is shared, reused, or fed into another pipeline (i.e., it stops being one-shot)",
+    "Recommends the right alternative skill or discipline for the exploratory case — for example, seed hygiene for RNG-deterministic exploration, or a data-quality audit on the inputs — rather than forcing the full pipeline-determinism workflow"
+  ]
+}

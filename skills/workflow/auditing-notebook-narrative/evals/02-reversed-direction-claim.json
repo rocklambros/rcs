@@ -1,0 +1,12 @@
+{
+  "skill": "auditing-notebook-narrative",
+  "scenario_id": "02-reversed-direction-claim",
+  "scenario_kind": "edge-case",
+  "query": "Audit this notebook. Cell 8 (markdown) says: 'Model B outperforms Model A on the test set.' The adjacent code cell (Cell 9) prints a comparison table showing Model A F1 = 0.84 and Model B F1 = 0.79.",
+  "files": [],
+  "expected_behavior": [
+    "Identifies that the narrative claim (Model B outperforms Model A) is the OPPOSITE of what the rendered output shows (Model A's F1 = 0.84 exceeds Model B's F1 = 0.79)",
+    "Issues a mismatch verdict and surfaces the reversed-direction error specifically (does not pass the audit or shrug it off as ambiguous)",
+    "Recommends revising the prose — and, additionally, names that 'outperforms' without a stated metric is ambiguous and the writeup should name the metric (F1 in this case) explicitly"
+  ]
+}

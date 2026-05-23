@@ -1,0 +1,12 @@
+{
+  "skill": "auditing-notebook-narrative",
+  "scenario_id": "01-stale-narrative-after-retrain",
+  "scenario_kind": "happy-path",
+  "query": "Audit this notebook's narrative against the rendered outputs. Cell 5 (markdown) says: 'As Figure 1 shows, accuracy improves from 0.78 at epoch 1 to 0.91 at epoch 50.' The adjacent code cell (Cell 6) prints 'epoch 1: acc=0.78' and 'epoch 50: acc=0.82'. I retrained last week with a different learning rate; I think I forgot to update the writeup.",
+  "files": [],
+  "expected_behavior": [
+    "Identifies the specific number mismatch — narrative claims accuracy reaches 0.91 at epoch 50, but the rendered output shows 0.82 at epoch 50",
+    "Issues a mismatch verdict for the narrative claim rather than passing the audit",
+    "Recommends revising the narrative prose to match the current output (0.82) — or, if the user thinks the outputs are stale, re-running the cells and re-auditing"
+  ]
+}

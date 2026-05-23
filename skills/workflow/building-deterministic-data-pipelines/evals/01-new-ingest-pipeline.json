@@ -1,0 +1,12 @@
+{
+  "skill": "building-deterministic-data-pipelines",
+  "scenario_id": "01-new-ingest-pipeline",
+  "scenario_kind": "happy-path",
+  "query": "I'm writing an ingest pipeline that pulls incidents from a public API and writes a normalized JSONL file. Other pipelines join against this file, so its output needs to be bit-identical run-to-run. How do I set this up?",
+  "files": [],
+  "expected_behavior": [
+    "Specifies the JSON / JSONL canonicalization invariants: sort_keys=True for dict keys, sort records on a stable record key, LF line endings, and a pinned float-precision rule",
+    "Requires a sibling provenance.json with at minimum source URL, pulled-at timestamp, adapter version, input hashes, and output hash — so reviewers can audit which source version produced the artifact",
+    "Requires a CI drift check that re-runs the pipeline and asserts the new output hash matches the committed one (or equivalent: a periodic / per-PR job that catches silent dep-bump drift)"
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "skill": "auditing-jupyter-execution-order",
+  "scenario_id": "03-papermill-output-anti-trigger",
+  "scenario_kind": "anti-trigger",
+  "query": "I have a notebook produced by papermill from a templated `train.ipynb` with injected parameters (learning_rate=0.001, batch_size=64). The output notebook's metadata.papermill block is populated. The execution_count values are non-monotonic — papermill injected the parameter cell partway through. Audit it for execution-order issues.",
+  "files": [],
+  "expected_behavior": [
+    "Detects that this is a papermill-produced notebook (metadata.papermill is populated) and recognizes that papermill's execution sequence is intentional, not a bug",
+    "Does NOT issue a RE-RUN REQUIRED verdict and does NOT recommend Restart Kernel and Run All Cells as a fix for the non-monotonic execution_count",
+    "Either skips the execution-order audit entirely or hands off, suggesting the user validate reproducibility against papermill's parameter manifest or the input template instead"
+  ]
+}

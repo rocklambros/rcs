@@ -1,0 +1,12 @@
+{
+  "skill": "auditing-jupyter-execution-order",
+  "scenario_id": "02-unrun-cell-with-downstream-dependent",
+  "scenario_kind": "edge-case",
+  "query": "I have a notebook where Cell 4 defines df_clean by dropping NaN rows from df. Cell 4's execution_count is null (I edited it after my last run and forgot to re-execute). Cell 7 (execution_count=5) references df_clean and prints df_clean.describe(). The notebook looks fine when I scroll through — every cell shows output. Audit this for me.",
+  "files": [],
+  "expected_behavior": [
+    "Flags Cell 4 as unrun (execution_count = null) and identifies that Cell 7 depends on df_clean which Cell 4 defines",
+    "Explains that Cell 7's printed output reflects a stale df_clean — the kernel never re-evaluated Cell 4 against its current source, so Cell 7 ran against the previous version's binding",
+    "Recommends a kernel restart and full top-to-bottom re-run (Restart Kernel and Run All Cells, or equivalent) rather than just re-running Cell 4 alone"
+  ]
+}
