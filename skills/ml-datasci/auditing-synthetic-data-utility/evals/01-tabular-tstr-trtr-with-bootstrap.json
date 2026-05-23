@@ -1,0 +1,12 @@
+{
+  "skill": "auditing-synthetic-data-utility",
+  "scenario_id": "01-tabular-tstr-trtr-with-bootstrap",
+  "scenario_kind": "happy-path",
+  "query": "I generated 50k synthetic patient records using CTGAN, fit on a real 50k-record dataset. I split the real data into 40k train (used to fit CTGAN) and 10k test (held out). I want to share the synth set with a research partner so they can train a binary readmission classifier without ever seeing real PHI. How do I audit whether the synth set is good enough that their model will still perform on real patients?",
+  "files": [],
+  "expected_behavior": [
+    "Names the TSTR (Train-on-Synthetic, Test-on-Real) protocol as the primary utility metric and computes the utility ratio as TSTR / TRTR (not on synth alone)",
+    "Requires fitting at least two downstream model families (linear / logistic baseline and a tree-based model like RandomForest) because a synth set can favor one family over another",
+    "Reports a 95% confidence interval on the utility ratio via bootstrap on the held-out real test set, not just a point estimate"
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "skill": "auditing-synthetic-data-utility",
+  "scenario_id": "02-marginals-pass-correlations-collapse",
+  "scenario_kind": "edge-case",
+  "query": "My synthetic dataset passes every per-column marginal fidelity test — KS p-values all above 0.5 for continuous columns, total-variation distance under 0.02 for categoricals. But when I train a RandomForest on the synth set and score it on real held-out data, I get ROC-AUC 0.61, while the same model trained on real data scores 0.84 on the same real test set. The marginals look perfect. Why is utility so bad?",
+  "files": [],
+  "expected_behavior": [
+    "Diagnoses the failure as correlation collapse / joint-structure loss (the SDG preserves per-column marginals but not pairwise or higher-order structure) and recommends computing a pairwise-correlation Frobenius gap between real and synth correlation matrices",
+    "Refuses to certify the synth set as usable on the basis of marginal fidelity alone, naming that marginal fidelity is necessary but not sufficient for downstream-task utility",
+    "Recommends switching from a marginal-only / independent-column sampler to a joint generator (CTGAN, TVAE, copula-based SDV, or similar) that explicitly models pairwise structure"
+  ]
+}
