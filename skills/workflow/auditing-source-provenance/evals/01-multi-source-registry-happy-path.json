@@ -1,0 +1,12 @@
+{
+  "skill": "auditing-source-provenance",
+  "scenario_id": "01-multi-source-registry-happy-path",
+  "scenario_kind": "happy-path",
+  "query": "I'm building one incident corpus by merging AIID, OECD AIM, and AIAAIC into a single Parquet file. My ingest script just appends rows with a `source_name` column (e.g., 'AIID') and that's it. Audit my approach for source-provenance hygiene before I run it on the full data.",
+  "files": [],
+  "expected_behavior": [
+    "Identifies that `source_name` alone is insufficient provenance and names additional required fields (source_repo + source_ref / source_sha + pull_date + adapter_version + license)",
+    "Recommends attaching provenance at ingest time (per-source fetch function), NOT stamping it post-merge or at build time",
+    "Warns that downstream transforms (merge / dedupe / groupby) can drop the provenance column and recommends a CI gate that fails the build if any row lacks provenance"
+  ]
+}
