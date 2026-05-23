@@ -1,0 +1,12 @@
+{
+  "skill": "running-hyperparameter-sweep",
+  "scenario_id": "01-image-classifier-lr-wd-bs",
+  "scenario_kind": "happy-path",
+  "query": "I have a PyTorch image classifier and want to tune three hyperparameters — learning rate, weight decay, and batch size. My total compute budget is 64 GPU-hours. Walk me through setting up a sweep with Optuna, including the search space, sampler, pruner, and how to split the budget between the sweep and the final retrain.",
+  "files": [],
+  "expected_behavior": [
+    "Defines the search space with appropriate distributions: log-uniform (or equivalent multiplicative) for learning rate and weight decay, and categorical (powers of 2) for batch size — not uniform on the raw range",
+    "Recommends a Bayesian sampler such as TPE plus a pruning policy such as ASHA / Successive Halving / Hyperband / median for an expensive deep-learning trainable, and justifies the choice (not just grid or random by default)",
+    "Splits the compute budget so a meaningful fraction (e.g., 30–50%) is reserved for retraining the top candidate configs with multiple fresh seeds (seed stratification) before declaring a winner, instead of declaring the single-seed sweep best as the final answer"
+  ]
+}

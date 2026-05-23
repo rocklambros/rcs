@@ -1,0 +1,12 @@
+{
+  "skill": "scaffolding-pytorch-training-loop",
+  "scenario_id": "03-xgboost-tabular",
+  "scenario_kind": "anti-trigger",
+  "query": "I'm training an XGBoost binary classifier on tabular fraud data. Set up the training loop with AMP, GradScaler, and a cosine learning-rate scheduler for me.",
+  "files": [],
+  "expected_behavior": [
+    "Does NOT scaffold a PyTorch-style epoch loop with autocast / GradScaler / per-step LR scheduler around XGBoost; instead recognizes that XGBoost training is a single xgb.train(...) or .fit(...) call, not a Python-side epoch loop",
+    "Explains that AMP / GradScaler do not apply to XGBoost (no GPU tensor autocast in the same sense) and that XGBoost's learning rate (eta) is a single fixed hyperparameter, not a per-iteration schedule",
+    "Hands off to the correct XGBoost-native primitives — pin a seed (random_state), enable early_stopping_rounds, consider tree_method='hist' or 'gpu_hist' for speed, validate via cross-validation or a held-out set — and optionally points to a sibling skill (e.g., evaluating-binary-classifiers) for post-training metrics"
+  ]
+}

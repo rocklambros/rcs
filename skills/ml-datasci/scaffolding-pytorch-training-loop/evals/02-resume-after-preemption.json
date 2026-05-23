@@ -1,0 +1,12 @@
+{
+  "skill": "scaffolding-pytorch-training-loop",
+  "scenario_id": "02-resume-after-preemption",
+  "scenario_kind": "edge-case",
+  "query": "My PyTorch training was at epoch 45 of 200 when our SLURM job got preempted. I have a checkpoint at checkpoints/last.pt that I wrote with `torch.save(model.state_dict(), 'checkpoints/last.pt')`. How do I resume the run so it finishes the remaining 155 epochs the way it would have if it hadn't been preempted?",
+  "files": [],
+  "expected_behavior": [
+    "Identifies that saving only model.state_dict() is insufficient for true resume: the optimizer momentum, the LR scheduler step counter, the AMP scaler (if any), the epoch counter, the best-metric tracker, and the RNG states are all missing from the checkpoint",
+    "Explains the consequence of loading weights only — the run restarts from a new initialization (LR jumps back to the start of the schedule, momentum is zeroed, augmentation order differs because the RNG is reset), it does NOT actually resume",
+    "Recommends going forward saving the full state dict (model + optimizer + scheduler + scaler + epoch + best_metric + RNG states) via an atomic-write pattern (write .tmp then os.replace) and using a single `--resume-from` flag that restores all of those, so future preemptions can resume cleanly"
+  ]
+}
