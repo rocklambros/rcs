@@ -1,0 +1,12 @@
+{
+  "skill": "running-hyperparameter-sweep",
+  "scenario_id": "02-best-trial-is-trial-zero",
+  "scenario_kind": "edge-case",
+  "query": "I ran an Optuna study with 30 trials using the TPE sampler. The best trial turned out to be trial #0. Is that result valid? Should I ship the config from trial #0?",
+  "files": [],
+  "expected_behavior": [
+    "Flags that a TPE sampler's first trial is essentially a random sample from the prior (before TPE has any history to learn from), so a win at trial #0 means TPE never improved on the initial random draw, not that trial #0 is actually optimal",
+    "Enumerates the most likely root causes (too few trials before TPE converges, an essentially flat landscape where tuning does not help, a wrong optimization direction such as minimize-on-accuracy, or a search-space configuration bug) instead of just accepting the trial-0 config",
+    "Recommends a diagnostic before shipping — for example re-run with a random sampler on the same budget to see if random matches TPE (landscape flat), verify the direction matches the metric semantics, and only ship trial #0's config after the diagnostic clears it"
+  ]
+}

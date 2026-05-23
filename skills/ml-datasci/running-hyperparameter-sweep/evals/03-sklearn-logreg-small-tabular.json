@@ -1,0 +1,12 @@
+{
+  "skill": "running-hyperparameter-sweep",
+  "scenario_id": "03-sklearn-logreg-small-tabular",
+  "scenario_kind": "anti-trigger",
+  "query": "I'm fitting a sklearn LogisticRegression on a 1,000-row tabular classification dataset with 40 features and a 60/40 class split. Should I set up a full Optuna sweep over C, penalty, and solver?",
+  "files": [],
+  "expected_behavior": [
+    "Does NOT immediately scaffold a 50-trial Optuna sweep; instead recognizes that LogReg defaults are near-optimal at this scale and that a formal sweep is likely overkill",
+    "Names the underlying reason — at ~1,000 rows the cross-validation variance (seed-to-seed and fold-to-fold) is typically larger than the tuning-gain signal, so a formal sweep will be picking among configs whose differences are inside the noise band",
+    "Recommends a lighter alternative such as defaults plus a small manual variation grid (e.g., C in {0.1, 1.0, 10.0}, penalty in {l1, l2}), and/or hands off to a more relevant skill such as auditing-train-test-split, building-baseline-models, or evaluating-binary-classifiers before committing to a sweep"
+  ]
+}
