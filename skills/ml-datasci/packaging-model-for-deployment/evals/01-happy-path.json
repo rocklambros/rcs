@@ -1,0 +1,12 @@
+{
+  "skill": "packaging-model-for-deployment",
+  "scenario_id": "01-happy-path",
+  "scenario_kind": "happy-path",
+  "query": "I trained a sklearn RandomForestClassifier on customer churn data in a notebook. ROC-AUC is 0.87 on a held-out split. Now I need to deploy it behind a FastAPI endpoint that the product team will call. What should the deliverable to the platform team look like?",
+  "files": [],
+  "expected_behavior": [
+    "Requires the fitted preprocessing + model to be wrapped in a single Pipeline (or framework-equivalent) object before serialization, so the FastAPI handler does not re-implement preprocessing — naming training-serving skew as the risk",
+    "Requires a manifest.json that records at minimum the framework version (e.g. sklearn version), the Python version or a lockfile, the model version (SemVer), and the headline metric, so the on-disk artifact is self-describing",
+    "Requires a smoke test (≥ 1 golden input + expected output with tolerance) that loads the artifact FROM DISK (not from the in-memory training object) and is wired into CI before promotion"
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "skill": "packaging-model-for-deployment",
+  "scenario_id": "02-edge-case",
+  "scenario_kind": "edge-case",
+  "query": "My model has custom feature engineering done in several notebook cells before training — TF-IDF on a text description column, target encoding on two high-cardinality categoricals, and a log-transform on a count column. The final model is XGBoost. How do I package this for deployment?",
+  "files": [],
+  "expected_behavior": [
+    "Insists that the entire preprocessing pipeline (TF-IDF, target encoding, log-transform) be wrapped in one fitted sklearn Pipeline / ColumnTransformer (or framework analogue) so the deployment handler does not re-implement any preprocessing — naming training-serving skew",
+    "Flags the target-encoding step as a leakage hazard that must be fit on training-fold targets only, OR explicitly notes that target encoding is a leakage-sensitive transformer that must be fit inside cross-validation, not on the full data",
+    "Requires the smoke test to include at least one case exercising a rare / unseen categorical value (or otherwise verifies the encoders' fallback / out-of-vocabulary handling), since high-cardinality target encoding has obvious failure modes at the boundary"
+  ]
+}
