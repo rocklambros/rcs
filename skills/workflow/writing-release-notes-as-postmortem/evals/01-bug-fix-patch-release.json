@@ -1,0 +1,12 @@
+{
+  "skill": "writing-release-notes-as-postmortem",
+  "scenario_id": "01-bug-fix-patch-release",
+  "scenario_kind": "happy-path",
+  "query": "We are cutting v2.3.1 — a patch release that fixed 4 production regressions over the last two weeks (one critical login-idle-timeout bug, two major data-pipeline bugs, one cosmetic UI alignment issue). Help me write the release notes.",
+  "files": [],
+  "expected_behavior": [
+    "Produces per-fix entries that include all six required fields: bug ID, user-visible symptom, file/function location, root-cause class drawn from a taxonomy (e.g., off-by-one, race condition, schema drift), the test added to lock the fix in, and the commit SHA",
+    "Sorts fixes by severity descending (critical → major → minor → cosmetic) AND includes an executive-summary line with counts by severity, weighted severity, and a coverage delta (new tests added)",
+    "Strips marketing language (e.g., 'seamless', 'blazing', 'magical', 'transformative') from the notes and writes declarative engineering-flavored sentences instead, AND includes a 'regressions NOT yet fixed' section to surface known-but-deferred bugs"
+  ]
+}

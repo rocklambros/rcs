@@ -1,0 +1,12 @@
+{
+  "skill": "pre-registering-eval-study",
+  "scenario_id": "03-exploratory-data-analysis",
+  "scenario_kind": "anti-trigger",
+  "query": "I just got handed 50,000 rows of customer churn data. I have no specific hypothesis yet — I just want to look around and see what patterns are in there. Help me get started.",
+  "files": [],
+  "expected_behavior": [
+    "Does NOT engage the pre-registration workflow (does not produce a hypothesis lock, stopping rule, or power calc)",
+    "Explains that pure exploratory data analysis does not require pre-registration because no confirmatory or 'significant' claim is being made; the user is generating hypotheses, not testing them",
+    "Warns that if a specific hypothesis is found in this data and the user later wants to claim it as a confirmed finding, that hypothesis MUST be tested on a fresh, held-out, or new dataset to avoid HARKing — and at that point pre-registration applies"
+  ]
+}
