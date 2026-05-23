@@ -1,0 +1,12 @@
+{
+  "skill": "building-baseline-models",
+  "scenario_id": "01-happy-path",
+  "scenario_kind": "happy-path",
+  "query": "I'm about to train an XGBoost classifier on a binary task — credit-card default prediction, about 50k rows, 25 features, slight imbalance (positive rate around 0.18). What baselines should I add before reporting the XGBoost score?",
+  "files": [],
+  "expected_behavior": [
+    "Recommends a Dummy / chance baseline (e.g. DummyClassifier with strategy='stratified' or 'most_frequent'), not just complex models",
+    "Recommends a linear baseline — LogisticRegression (or equivalent) — as the second rung of the ladder",
+    "States that the baselines must be fit and scored on the SAME train/test split (or same CV folds) and SAME metric the user plans to use for XGBoost — i.e. the evaluation regime is locked across models"
+  ]
+}

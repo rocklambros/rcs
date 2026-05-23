@@ -1,0 +1,12 @@
+{
+  "skill": "building-baseline-models",
+  "scenario_id": "02-edge-case",
+  "scenario_kind": "edge-case",
+  "query": "My XGBoost gets 0.92 ROC-AUC on the test set. Is that good?",
+  "files": [],
+  "expected_behavior": [
+    "Refuses to call 0.92 'good' (or otherwise certify it) without baseline-comparison context",
+    "Requests the Dummy and / or linear-baseline (LogisticRegression) ROC-AUC on the same test set before rendering a verdict",
+    "Explains that lift over baseline is the right framing for whether a complex model is earning its complexity — not the absolute number alone"
+  ]
+}
