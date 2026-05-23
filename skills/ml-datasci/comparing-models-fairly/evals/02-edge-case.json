@@ -1,0 +1,12 @@
+{
+  "skill": "comparing-models-fairly",
+  "scenario_id": "02-edge-case",
+  "scenario_kind": "edge-case",
+  "query": "I'm comparing 4 candidate models for our binary classifier — Logistic Regression, Random Forest, XGBoost, and LightGBM. I ran 10-fold cross-validation on each, so I have a per-fold accuracy array of length 10 for each model. All four use the same 10 fold splits. Which model is the winner, and which differences are real?",
+  "files": [],
+  "expected_behavior": [
+    "Identifies that there are 4 models → 6 pairwise comparisons (k * (k - 1) / 2) and requires multiple-comparison correction (Bonferroni, Holm-Bonferroni, OR the Friedman + Nemenyi framework) BEFORE declaring any pair significant — does not just look at raw p-values across the 6 pairs",
+    "Recommends a PAIRED per-fold test (paired t-test if per-fold differences are roughly Normal, OR Wilcoxon signed-rank if not; Demsar 2006 recommends Wilcoxon as the default), NOT an unpaired t-test on the per-fold metric distributions",
+    "Either explicitly names Holm-Bonferroni / Bonferroni for the pairwise correction, OR names the Friedman omnibus test followed by Nemenyi post-hoc as the Demsar 2006 framework for comparing k models on N folds"
+  ]
+}

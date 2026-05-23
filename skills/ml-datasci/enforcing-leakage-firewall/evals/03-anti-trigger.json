@@ -1,0 +1,12 @@
+{
+  "skill": "enforcing-leakage-firewall",
+  "scenario_id": "03-anti-trigger",
+  "scenario_kind": "anti-trigger",
+  "query": "I have a tabular dataset of California housing prices — 20,000 rows, exactly one row per house, 30 numeric and categorical features. Single CSV, single source, no merging or joining. I used train_test_split with random_state=42 and stratify=None. Do I need to run your multi-source / group-aware leakage firewall workflow on this?",
+  "files": [],
+  "expected_behavior": [
+    "Identifies the dataset as clean single-source IID with one row per entity, NOT a multi-source or grouped-data case, and concludes the multi-source leakage firewall is unnecessary here (the four checks add no value)",
+    "Hands off to ml-datasci/auditing-train-test-split (or names it as the right tool) for the standard single-source leakage checks (target-derived features, preprocessing fit on full dataset before split, stratification on the target when relevant)",
+    "Does NOT force the four-check firewall workflow (LOFO + hub-firewall + group-aware split + row-hash invariant) on a dataset that does not have group structure or multiple sources"
+  ]
+}

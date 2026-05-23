@@ -1,0 +1,12 @@
+{
+  "skill": "enforcing-leakage-firewall",
+  "scenario_id": "02-edge-case",
+  "scenario_kind": "edge-case",
+  "query": "I'm training a recommender on customer purchase histories. The dataset has 50,000 customers and 1.2 million purchase events — so on average each customer has ~24 purchases. I used train_test_split(X, y, test_size=0.2, random_state=42) to do a random row-level split. Test recall@10 is 0.42, which looks reasonable for a recommender. Can I deploy it?",
+  "files": [],
+  "expected_behavior": [
+    "Identifies the group-leakage pattern immediately — customer_id repeats across the 1.2M rows, so a random row-level split puts the same customer in both train and test, inflating the test metric via in-customer history overlap",
+    "Recommends a group-aware split (GroupShuffleSplit, GroupKFold, OR LeaveOneGroupOut) keyed on customer_id so each customer appears in train OR test but not both, and predicts the realistic recall@10 will be materially lower than 0.42",
+    "Does NOT call the 0.42 number 'good enough' for deployment without first running the group-aware split — or explicitly states that the random-split number is misleading and must be replaced by the group-aware result for any deployment decision"
+  ]
+}

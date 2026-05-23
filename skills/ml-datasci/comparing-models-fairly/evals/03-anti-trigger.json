@@ -1,0 +1,12 @@
+{
+  "skill": "comparing-models-fairly",
+  "scenario_id": "03-anti-trigger",
+  "scenario_kind": "anti-trigger",
+  "query": "I trained a logistic regression model on customer churn. On the held-out test set, accuracy is 0.78 and ROC-AUC is 0.82. Can you tell me if this model is good enough to deploy?",
+  "files": [],
+  "expected_behavior": [
+    "Identifies that this is a SINGLE-model evaluation, NOT a comparison between two or more models — the paired tests in this skill require two or more models scored on the same test instances and none of that is present here",
+    "Hands off to ml-datasci/evaluating-binary-classifiers (or names it as the right tool) for the single-classifier scoring report (ROC, PR, calibration, threshold sweep, bootstrap CIs)",
+    "Does NOT force a paired model-comparison workflow (McNemar, paired-t, Wilcoxon, Friedman) onto a one-model report; may additionally recommend ml-datasci/building-baseline-models for the baseline that contextualizes the 0.78 accuracy"
+  ]
+}

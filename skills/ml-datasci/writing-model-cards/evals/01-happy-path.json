@@ -1,0 +1,12 @@
+{
+  "skill": "writing-model-cards",
+  "scenario_id": "01-happy-path",
+  "scenario_kind": "happy-path",
+  "query": "We're deploying a fraud-detection model to production next week. We have an EU AI Act high-risk classification and need a model card for compliance review. The model is a LightGBM classifier trained on 12.4 million historical credit-card transactions. Walk me through the model card we need to write.",
+  "files": [],
+  "expected_behavior": [
+    "Names BOTH 'intended use' AND 'out-of-scope use' as required sections — specifically requires the out-of-scope use enumeration (e.g. non-card transaction types, sole basis for criminal investigation), not just intended use alone",
+    "Requires subgroup-disaggregated metrics with 95% confidence intervals (per geographic region, transaction amount band, merchant category, OR similar named factors) — NOT just an aggregate ROC-AUC or accuracy number",
+    "Names concrete deployment-specific harms (e.g. false positive blocks legitimate transaction → customer harm; false negative misses fraud → loss; demographic disparity → discrimination / regulatory liability) — NOT boilerplate language like 'may have biases' or 'should be used responsibly'"
+  ]
+}
