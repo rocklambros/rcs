@@ -112,6 +112,7 @@ The `skills/<track>/<name>/SKILL.md` files follow the Anthropic Skills format an
 | [`diffing-instructor-vs-student-solution`](skills/teaching/diffing-instructor-vs-student-solution/) | teaching | Four-category diff (right-answer-wrong-reasoning / wrong-answer-one-misstep / legitimate-alternate-path / uncorrelated-error) with cascade recognition for formative grading | ✅ shipped | 11 |
 | [`writing-pentest-finding`](skills/security/writing-pentest-finding/) | security | Single pen-test finding to client-deliverable quality with CVSS v3.1 vector, repro, impact, remediation, evidence; chain-finding support | ✅ shipped | 11 |
 | [`authoring-plugin`](skills/claude-code-meta/authoring-plugin/) | claude-code-meta | Plugin authoring — `.claude-plugin/plugin.json` manifest, `marketplace.json` entry, auto-discovered vs. explicitly-registered artifacts, SemVer pin discipline, lifecycle metadata, pre-trust audit for every bundled hook + MCP server | ✅ shipped | 11 |
+| [`auditing-graphql-nullability`](skills/security/auditing-graphql-nullability/) | security | GraphQL SDL audit for over-permissive nullability — fields and arguments that should be non-null, root return types that swallow errors silently, and list-element nullability that propagates failures; per-finding field path + current SDL + recommended SDL + downstream consequence | ✅ shipped | 12 |
 | [`scaffolding-ai-policy-doc`](skills/security/scaffolding-ai-policy-doc/) | security | Org-wide AI Use Policy (acceptable / prohibited use, oversight tiers, vendor inventory, IR addendum, employee acknowledgement) anchored on actual current usage | ✅ shipped | 10 |
 | [`scaffolding-ctf-engagement`](skills/security/scaffolding-ctf-engagement/) | security | RoE + scope + severity rubric + finding template + PoC hygiene for paid CTF / pen-test / bug-bounty engagements against published scope | ✅ shipped | 10 |
 | [`running-cloud-ir-runbook`](skills/security/running-cloud-ir-runbook/) | security | Cloud IR runbook (AWS / GCP / Azure): triage, evidence preservation, containment, blast-radius, comms, eradication, recovery, lessons-learned | ✅ shipped | 10 |
@@ -120,7 +121,7 @@ The `skills/<track>/<name>/SKILL.md` files follow the Anthropic Skills format an
 | [`writing-graded-rubric`](skills/teaching/writing-graded-rubric/) | teaching | Criterion-referenced rubric authoring (4-6 criteria with observable-evidence proficiency bands; pre-registration enforced before submissions arrive) | ✅ shipped | 7 |
 | [`authoring-tool-hook`](skills/claude-code-meta/authoring-tool-hook/) | claude-code-meta | Claude Code hook authoring across all 8 events with stdin/stdout contracts, fail-open vs. fail-closed discipline, hook-as-elevated-permission-artifact security review, HTTP-egress timeout + caching, matcher-scoping | 🔨 drafting | 12 |
 
-_85 shipped (+ 2 drafting) of ~99 planned skills. See each track's README for the planned-skills roadmap; see [`docs/superpowers/plans/2026-05-23-rcs-batch-creation-plan.md`](docs/superpowers/plans/2026-05-23-rcs-batch-creation-plan.md) for the v2–v7 roadmap._
+_86 shipped (+ 2 drafting) of ~99 planned skills. See each track's README for the planned-skills roadmap; see [`docs/superpowers/plans/2026-05-23-rcs-batch-creation-plan.md`](docs/superpowers/plans/2026-05-23-rcs-batch-creation-plan.md) for the v2–v7 roadmap._
 
 ## Governance
 

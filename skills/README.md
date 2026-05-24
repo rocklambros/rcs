@@ -93,6 +93,7 @@ Sorted by Σ desc.
 | [`explaining-statistical-concept`](teaching/explaining-statistical-concept/) | teaching | 9 |
 | [`interpreting-vendor-questionnaire-skeptically`](security/interpreting-vendor-questionnaire-skeptically/) | security | 9 |
 | [`writing-graded-rubric`](teaching/writing-graded-rubric/) | teaching | 7 |
+| [`auditing-graphql-nullability`](security/auditing-graphql-nullability/) | security | 12 |
 
 ## Drafting
 
