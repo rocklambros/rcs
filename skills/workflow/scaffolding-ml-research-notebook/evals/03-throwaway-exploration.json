@@ -1,0 +1,12 @@
+{
+  "skill": "scaffolding-ml-research-notebook",
+  "scenario_id": "03-throwaway-exploration",
+  "scenario_kind": "anti-trigger",
+  "query": "I just want to compute a few quick correlation matrices on a CSV file and throw the notebook away in an hour. Scaffold the project layout.",
+  "files": [],
+  "expected_behavior": [
+    "Does NOT run the full 9-step scaffold for a throwaway 1-hour query",
+    "Explains that the scaffold overhead (pyproject, lockfile, src/ layout, tests, pre-commit) exceeds the benefit for genuine throwaway exploration",
+    "Suggests a lighter alternative — for example a single ad-hoc notebook with an inline seed call — and notes that if the work becomes a real project the user should come back to scaffold properly"
+  ]
+}

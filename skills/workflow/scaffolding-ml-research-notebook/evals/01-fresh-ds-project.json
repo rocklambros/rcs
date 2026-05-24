@@ -1,0 +1,12 @@
+{
+  "skill": "scaffolding-ml-research-notebook",
+  "scenario_id": "01-fresh-ds-project",
+  "scenario_kind": "happy-path",
+  "query": "I'm starting a new project to predict customer churn from a tabular dataset. Python 3.13, scikit-learn. The repo is empty. Walk me through the scaffold.",
+  "files": [],
+  "expected_behavior": [
+    "Specifies a pinned pyproject.toml (or equivalent) with requires-python pinned to 3.13 and direct dependencies pinned (e.g., ~= or ==) rather than unbounded",
+    "Includes a src/<pkg>/seed.py multi-library seed helper AND a starter notebook that imports and calls set_seed() in cell 1",
+    "Includes a .gitignore that ignores data/raw/ (and ideally data/processed/) so dataset files are not committed to git"
+  ]
+}

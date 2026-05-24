@@ -1,0 +1,35 @@
+# .pre-commit-config.yaml — used by scaffolding-ml-research-notebook
+# Substitute <pkg> in the local seed-check hook below.
+
+repos:
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.7.4
+    hooks:
+      - id: ruff
+        args: [--fix]
+      - id: ruff-format
+
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.13.0
+    hooks:
+      - id: mypy
+        files: ^src/
+        additional_dependencies: [pydantic, numpy]
+
+  - repo: https://github.com/kynan/nbstripout
+    rev: 0.7.1
+    hooks:
+      - id: nbstripout
+
+  - repo: local
+    hooks:
+      - id: notebook-has-seed-call
+        name: notebook-has-seed-call
+        description: |
+          Any new or modified .ipynb file under notebooks/ must call set_seed
+          somewhere in its content. Catches the "scattered per-cell np.random.seed"
+          anti-pattern documented in skills/workflow/enforcing-seed-hygiene/.
+        entry: bash -c 'for f in "$@"; do grep -q "set_seed(" "$f" || { echo "Missing set_seed() in $f"; exit 1; }; done' --
+        language: system
+        files: ^notebooks/.*\.ipynb$
+        pass_filenames: true

@@ -1,0 +1,12 @@
+{
+  "skill": "scaffolding-security-research-repo",
+  "scenario_id": "01-fresh-sec-research",
+  "scenario_kind": "happy-path",
+  "query": "I'm starting a public repo to release a tool that fuzzes LLM safety filters. Empty directory. Set me up properly. My security contact is security@rockcyber.com.",
+  "files": [],
+  "expected_behavior": [
+    "Produces or specifies a SECURITY.md routed to a real contact address AND a VDP.md (Vulnerability Disclosure Policy) with safe-harbor language for good-faith researchers",
+    "Produces or specifies a THREAT-MODEL.md starter (not blank) appropriate to an offensive / dual-use tool — covering misuse cases or dual-use posture",
+    "Wires gitleaks (and ideally semgrep) into pre-commit AND produces a security-specific .gitignore covering at minimum credential / secret patterns"
+  ]
+}

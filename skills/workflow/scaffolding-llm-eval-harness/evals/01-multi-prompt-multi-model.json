@@ -1,0 +1,12 @@
+{
+  "skill": "scaffolding-llm-eval-harness",
+  "scenario_id": "01-multi-prompt-multi-model",
+  "scenario_kind": "happy-path",
+  "query": "I want to evaluate three prompts across 200 jailbreak scenarios and 5 candidate models. My judge model is claude-opus-4-7. Set up the harness from scratch.",
+  "files": [],
+  "expected_behavior": [
+    "Scaffolds the harness with the five-field result-row contract — model_id (with revision pin), dataset_hash, prompt_version, judge_model, and the per-scenario result payload",
+    "Produces or specifies a versioned prompts/ directory (e.g., prompts/v0.1.0.txt) AND a scenarios/ directory with documented JSON schema, so prompt and scenario edits can be attributed across runs",
+    "Produces or specifies an eval_runner skeleton that iterates candidate_models × scenarios and emits results.jsonl rows carrying all five fields"
+  ]
+}

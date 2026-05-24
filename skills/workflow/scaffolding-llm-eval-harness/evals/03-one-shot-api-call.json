@@ -1,0 +1,12 @@
+{
+  "skill": "scaffolding-llm-eval-harness",
+  "scenario_id": "03-one-shot-api-call",
+  "scenario_kind": "anti-trigger",
+  "query": "I'm just making one Anthropic API call from a Python script to summarize a single document. Scaffold me an eval harness around it.",
+  "files": [],
+  "expected_behavior": [
+    "Does NOT scaffold the full 8-step LLM-eval harness for a one-shot single-prompt inference",
+    "Explains that a one-shot API call is inference, not an eval — the five-field harness contract (model_id pin / dataset_hash / prompt_version / judge_model / results.jsonl) is overhead without comparable runs to measure across",
+    "Suggests the lighter alternative — a minimal direct API-call snippet using the Anthropic SDK — and notes that a harness becomes valuable when there are multiple scenarios AND multiple candidate prompts/models requiring run-over-run comparability"
+  ]
+}

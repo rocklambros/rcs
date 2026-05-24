@@ -1,0 +1,12 @@
+{
+  "skill": "scaffolding-security-research-repo",
+  "scenario_id": "03-non-security-project",
+  "scenario_kind": "anti-trigger",
+  "query": "I'm starting a fresh project to train a fraud-detection classifier on tabular financial data. Empty directory. Set me up.",
+  "files": [],
+  "expected_behavior": [
+    "Does NOT run the security-research scaffold (SECURITY.md / VDP / threat-model) as the primary scaffold for an ML classifier project",
+    "Identifies that this is an ML / data-science project, not a security-research project, and hands off (or routes) to scaffolding-ml-research-notebook as the right scaffold",
+    "Optionally notes that some security-adjacent artifacts may be added later if the project enters production and needs them, but does not run the security scaffold blindly"
+  ]
+}

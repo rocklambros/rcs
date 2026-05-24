@@ -1,0 +1,12 @@
+{
+  "skill": "scaffolding-security-research-repo",
+  "scenario_id": "02-existing-repo-sec-adoption",
+  "scenario_kind": "edge-case",
+  "query": "I have an existing 3-year-old security tooling repo. It has source code, a README, a license, but no SECURITY.md, no VDP, no threat model, and no gitleaks. I want you to scaffold the security artifacts on top of it.",
+  "files": [],
+  "expected_behavior": [
+    "Refuses to run the full greenfield scaffold over the existing project (does NOT overwrite README, LICENSE, or existing structure without warning)",
+    "Explains the risk of bulk-scaffolding (overwrite of existing artifacts, conflict with existing license, missing baseline gitleaks scan of historical commits)",
+    "Suggests incremental adoption (add SECURITY.md, VDP.md, THREAT-MODEL.md, and pre-commit hooks individually; run a baseline gitleaks scan against history first) instead of running the full 10-step scaffold blindly"
+  ]
+}

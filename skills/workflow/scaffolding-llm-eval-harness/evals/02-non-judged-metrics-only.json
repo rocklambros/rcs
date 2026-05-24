@@ -1,0 +1,12 @@
+{
+  "skill": "scaffolding-llm-eval-harness",
+  "scenario_id": "02-non-judged-metrics-only",
+  "scenario_kind": "edge-case",
+  "query": "I want to evaluate one prompt across 50 multiple-choice scenarios. Grading is exact-match against the expected answer — no LLM judge needed. Set up the harness.",
+  "files": [],
+  "expected_behavior": [
+    "Scaffolds the harness with judge_model set to null (or its equivalent) — does NOT force an LLM-judge for an exact-match grading task",
+    "Still emits the other four required fields per result row (model_id with revision pin, dataset_hash, prompt_version, result_row) even though judge_model is null",
+    "Uses or specifies programmatic / exact-match grading in place of an LLM judge (e.g., a grader function inside eval_runner.py or a regex-based check) for the multiple-choice answers"
+  ]
+}
