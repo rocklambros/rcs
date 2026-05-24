@@ -1,0 +1,12 @@
+{
+  "skill": "scaffolding-grad-school-pset",
+  "scenario_id": "01-weekly-stats-pset",
+  "scenario_kind": "happy-path",
+  "query": "I have a graduate statistics pset due Friday. Pset 4 — compare blood pressure change between treatment and control (n=30 per group), then fit a regression of change on baseline plus group. Scaffold the notebook for me in Jupyter / Python.",
+  "files": [],
+  "expected_behavior": [
+    "Produces a notebook scaffold with an assumption-check section that comes BEFORE the test-running section (Shapiro per group and Levene's test for the two-sample comparison; residual diagnostics like residuals-vs-fitted, QQ-plot of residuals, and Cook's D for the regression)",
+    "Produces an effect-size + 95% confidence interval section that comes AFTER the test section, with Cohen's d (or equivalent) for the two-sample comparison and adjusted R-squared plus per-coefficient CIs for the regression — NOT just p-values",
+    "Includes a deterministic seed call (e.g., random.seed(42) and numpy.random.seed(42)) in the first code cell, before any imports or analysis"
+  ]
+}
