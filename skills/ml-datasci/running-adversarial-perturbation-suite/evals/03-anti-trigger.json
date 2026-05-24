@@ -1,0 +1,12 @@
+{
+  "skill": "running-adversarial-perturbation-suite",
+  "scenario_id": "03-anti-trigger",
+  "scenario_kind": "anti-trigger",
+  "query": "I want to test my GPT-4-based customer-service chatbot against adversarial attacks. Run an adversarial perturbation suite (FGSM / PGD / AutoAttack) against it.",
+  "files": [],
+  "expected_behavior": [
+    "Refuses to apply FGSM / PGD / AutoAttack to an LLM and explains that these attacks require continuous gradients over real-valued inputs (pixels, tabular features), which do not exist over discrete text tokens",
+    "Identifies the correct attack surface for an LLM as prompt injection / jailbreak / encoded-payload / instruction-override and explicitly names that the corpus-driven LLM eval toolkit is the right tool, not the gradient-based perturbation toolkit",
+    "Hands off to the LLM-specific skills (security/running-prompt-injection-eval, security/running-multiturn-attack-suite, or security/running-encoded-payload-suite) and recommends an authorized red-team RoE for production-facing testing"
+  ]
+}
