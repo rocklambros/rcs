@@ -27,6 +27,8 @@ This track encodes day-job disciplines: MCP pre-trust auditing, vulnerability tr
 | [`interpreting-vendor-questionnaire-skeptically`](interpreting-vendor-questionnaire-skeptically/) | Produces evidence-tied findings (hedges, missing artifacts, contradictions, staleness, AI overlay) on a vendor SIG / CAIQ / SOC 2 response — refuses to issue a go / no-go verdict. | Reviewing a vendor questionnaire response before contract signature, annual re-attestation, or onboarding an AI vendor. | 9 |
 | [`applying-secure-coding-rules`](applying-secure-coding-rules/) | Applies a user-supplied corpus (semgrep / SARIF / markdown / YAML / claude-secure-coding-rules-style repo) to a project — detects stack, computes applicable rules ∩ stack, produces a per-finding report with file/line/severity/fix, lists every skipped rule with reason, and refuses to fabricate rules from training memory | Reviewing a project against a specific team-supplied rule corpus, hardening a polyglot repo with partial coverage, or surfacing which corpus rules apply to which files (vs. inventing rules) | 15 |
 | [`auditing-graphql-nullability`](auditing-graphql-nullability/) | Audits a GraphQL schema for over-permissive nullability — fields and arguments that should be non-null, root return types that swallow errors silently, and list-element nullability that propagates failures; per-finding field path + current SDL + recommended SDL + downstream consequence | User provides a `.graphql` file, SDL snippet, or schema dump and asks for a nullability review, schema hardening assessment, or whether tightening / loosening `!` is safe before a schema change | 12 |
+| [`verifying-training-data-erasure`](verifying-training-data-erasure/) | Walks a DSR right-to-erasure verification across the four ML-pipeline stages (dataset, embeddings, model weights, inference cache) and produces a tamper-evident proof bundle. | When an org receives a GDPR Art 17 / CCPA / HIPAA erasure request that touches data already used in training or retrieval, or when an auditor asks for proof a deleted subject is gone from a deployed model. | 10 |
+| [`verifying-sigstore-signatures`](verifying-sigstore-signatures/) | Verifies a signed artifact against Sigstore (cosign signature, in-toto attestation, SLSA Build level) and emits a per-check verdict with the artifact's effective trust level. | When deploying a container into production, gating a CI pipeline on signed artifacts, re-verifying artifacts after a supply-chain advisory, or producing provenance evidence for a regulator. | 10 |
 
 ## Drafting skills
 
@@ -37,12 +39,10 @@ _No drafting skills in the security track. All v4 / v6 skills promoted to shippe
 | Skill | What it does | Σ | Status |
 |---|---|---|---|
 | `scaffolding-security-research-repo` | SECURITY.md, threat-model.md template, gitleaks/semgrep pre-commit, VDP, license | 13 | 📝 planned (shipped in v6-batch-5 under `workflow/scaffolding-security-research-repo`) |
-| `verifying-sigstore-signatures` | Cosign verification, in-toto policy check | 10 | 📝 planned |
 | `evaluating-jailbreak-judge-agreement` | Cohen's κ between LLM judges on jailbreak outcomes | 13 | 📝 planned |
-| `running-adversarial-perturbation-suite` | FGSM / PGD / AutoAttack for vision/tabular | 8 | 📝 planned |
-| `auditing-rlhf-reward-hacking` | Reward-model probing for goodharting | 7 | 📝 planned |
+| `running-adversarial-perturbation-suite` | FGSM / PGD / AutoAttack for vision/tabular | 8 | 📝 planned (shipped in v7-batch-4 under `ml-datasci/running-adversarial-perturbation-suite` — workflow is anchored on a trained model, not an engagement scope) |
+| `auditing-rlhf-reward-hacking` | Reward-model probing for goodharting | 7 | 📝 planned (shipped in v7-batch-4 under `ml-datasci/auditing-rlhf-reward-hacking` — workflow is anchored on a trained model, not an engagement scope) |
 | `scrubbing-PII-with-policy` | PII detection + redaction with user-supplied policy | 12 | 📝 planned |
-| `verifying-training-data-erasure` | DSR-proof workflow for AI: dataset → embeddings → fine-tune | 10 | 📝 planned |
 
 ## Cross-track references
 

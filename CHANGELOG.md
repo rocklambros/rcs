@@ -4,7 +4,80 @@ All notable changes to RCS are documented here. Per-skill changes use the skill'
 
 ## [Unreleased]
 
-_No unreleased changes — most recent release is `v6.0.2` below. Catalog is 100% shipped (zero drafting skills); ready for v7 authoring._
+_No unreleased changes — most recent release is `v7.0-phase1` below._
+
+## [v7.0-phase1] — 2026-05-23
+
+v7 (Bayesian + uncertainty + causal + fairness + interpretability + RAG specialty + adversarial-ML + RLHF + DP + training-data erasure + sigstore) shipped via 5 independent batch PRs (#34 v7-batch-1, #38 v7-batch-2, #36 v7-batch-3, #37 v7-batch-4, #35 v7-batch-5) authored in parallel sessions using the PRAGMATIC discipline. This release consolidates the per-batch changelog fragments and updates the user-facing catalogs in a single integration commit.
+
+**Net additions:** 15 skills authored across 5 batches (13 ml-datasci + 2 security). All 15 ship as `status: shipped` — first v7-cycle batch sweep with zero demotions. Cumulative skill count at HEAD: **103 shipped + 0 drafting** (vs. 88+0 at `v6.0.2`). All 9-rubric-per-skill scenarios (135 rubric items total) passed Sonnet-only PRAGMATIC validation.
+
+**Slug renames from plan:** Two planned slugs were lowercased at authoring time per `tools/lint_frontmatter.py` kebab-case enforcement: `analyzing-causal-DAG` → `analyzing-causal-dag` (v7-batch-1), `evaluating-OOD-detection` → `evaluating-ood-detection` (v7-batch-2). Cross-references in other v7 skills' See-also sections use the lowercase forms.
+
+**Fragment-naming anomaly:** The v7-batch-4 session wrote `skills/ml-datasci/shipped-fragments/batch-4.md` instead of the convention-matching `v7-batch-4.md`. This integration consolidated the file's content correctly and removed both possible filename forms.
+
+### v7-batch-1: Bayesian + uncertainty + causal — 2026-05-23
+
+Skills shipped:
+
+- `ml-datasci/running-bayesian-workflow` v0.1.0 — weakly-informative priors, prior-predictive check, NUTS sampling, five-check diagnostic gate (r_hat / ESS bulk / ESS tail / divergences / E-BFMI), posterior-predictive check, LOO comparison, CPU-pin determinism block (Σ 10, status: shipped)
+- `ml-datasci/building-conformal-prediction-set` v0.1.0 — split-conformal classification (softmax score), regression (absolute-residual), and CQR; finite-sample-corrected quantile (n+1)/n; coverage + set-size reporting; exchangeability red-flag checklist (Σ 11, status: shipped)
+- `ml-datasci/analyzing-causal-dag` v0.1.0 — node classification (confounder / mediator / collider / IV), backdoor criterion, adjustment-set screening, E-value sensitivity analysis, RCT anti-trigger (Σ 9, status: shipped)
+
+Eval methodology: Sonnet-only in-session validation per PRAGMATIC discipline. 9 subagent dispatches (3 scenarios × 3 skills), all returning 3/3 rubric pass against intent-matched scoring. Full 3-model (Haiku / Sonnet / Opus) validation deferred to a future re-run.
+
+Eval results: all 27/27 rubric items pass. No demotions.
+
+### v7-batch-2: fairness + interpretability + overfit — 2026-05-23
+
+Skills shipped:
+
+- `ml-datasci/auditing-model-fairness` v0.1.0 — multi-metric fairness audit (equal-opportunity, equalized-odds, demographic-parity, calibration-within-group, four-fifths rule, intersectional) with explicit Kleinberg-Mullainathan-Raghavan impossibility-trade-off naming; refuses single-metric verdicts and low-power group drops (Σ 12, status: shipped)
+- `ml-datasci/generating-shap-explanations` v0.1.0 — SHAP attribution workflow with explainer-per-model-class selection, stratified background sizing (≥ 5× n_features), per-instance waterfall + global summary + beeswarm, mandatory stability check across 3 background resamples; refuses SHAP on linear/logistic models (Σ 11, status: shipped)
+- `ml-datasci/auditing-deep-learning-overfit` v0.1.0 — 7-step diagnostic decision tree distinguishing classic overfit from plateau / shift / label-noise / underfit, with priority-ordered remediation (early stop → augment → dropout → weight decay → reduce capacity → more data); refuses the "add dropout" reflex without ruling out shift / label noise (Σ 12, status: shipped)
+- `ml-datasci/evaluating-ood-detection` v0.1.0 — OOD evaluation with REQUIRED near-OOD set + optional far-OOD set, AUROC + AUPR-out + FPR-at-95-TPR reported per OOD set separately, bootstrap CIs, method-selection table (MSP / energy / Mahalanobis / KNN / ODIN); refuses far-OOD-only evaluation and closed-world deployments (Σ 9, status: shipped)
+
+Eval methodology: Sonnet-only in-session validation per PRAGMATIC discipline. 36/36 rubric items pass across 12 scenarios (4 skills × 3 scenarios).
+
+### v7-batch-3: RAG specialty — 2026-05-23
+
+Skills shipped:
+
+- `ml-datasci/auditing-chunking-strategy` v0.1.0 — chunk_size × overlap sweep against a held-out QA set with source-span attribution, scored by answer-coverage@k (not bare recall@k), with splitter comparison at the best cell and a documented config comment to lock the choice (Σ 13, status: shipped)
+- `ml-datasci/auditing-embedding-drift` v0.1.0 — per-dim Jensen-Shannon divergence + centroid cosine distance + intra-cohort distance shift between baseline and comparison cohorts, with bootstrap 95% CIs and attribution to new content categories, upstream-data shift, or provider-side model re-versioning (Σ 11, status: shipped)
+- `ml-datasci/building-rag-eval-set` v0.1.0 — three-split RAG eval set (calibration + never-viewed held-out test + adversarial) with source-doc + source-span attribution on every non-absent-topic row, human-review gate on every Q-A (including LLM-drafted candidates), and dataset hash + SemVer locking (Σ 12, status: shipped)
+
+Eval methodology: Sonnet-only in-session validation per PRAGMATIC discipline. 27/27 rubric items pass across 9 scenarios.
+
+### v7-batch-4: adversarial-ML + RLHF + DP — 2026-05-23
+
+Skills shipped:
+
+- `ml-datasci/running-adversarial-perturbation-suite` v0.1.0 — FGSM / PGD-20 / AutoAttack-standard robustness suite under a declared threat model with tabular feasibility-filter and LLM anti-trigger handoff (Σ 8, status: shipped)
+- `ml-datasci/auditing-rlhf-reward-hacking` v0.1.0 — six-probe RLHF / DPO / RLAIF audit (length-bias, sycophancy, formatting, refusal-substitution, persuasion-over-correctness, reward-boundary exploitation) anchored on reward-vs-preference divergence (Σ 7, status: shipped)
+- `ml-datasci/applying-differential-privacy` v0.1.0 — DP workflow with threat-model declaration, (ε, δ) justification against n, mechanism selection, RDP composition accounting, and a canonical DP statement that explicitly names what the guarantee does NOT cover (Σ 8, status: shipped)
+
+Eval methodology: Sonnet-only in-session validation per PRAGMATIC discipline. 27/27 rubric items pass across 9 scenarios. Track-placement note: all three skills land in `ml-datasci/` (not `security/`) because the workflow is anchored on a trained model and an eval method, not on an authorized engagement scope.
+
+### v7-batch-5: training-data erasure + sigstore — 2026-05-23
+
+Skills shipped:
+
+- `security/verifying-training-data-erasure` v0.1.0 — DSR-proof workflow across dataset / embeddings / model weights / inference caches; produces a tamper-evident proof bundle with explicit residual-risk acknowledgement at the model-weight stage (Σ 10, status: shipped)
+- `security/verifying-sigstore-signatures` v0.1.0 — cosign + in-toto + SLSA Build-level verification with a four-check verdict (identity, signature, attestation, provenance level); refuses tag-only inputs and undefined-trust-policy requests (Σ 10, status: shipped)
+
+Eval methodology: Sonnet-only in-session validation per PRAGMATIC discipline. 18/18 rubric items pass across 6 scenarios.
+
+### Catalog updates
+
+- Root `README.md` skill-catalog table: 15 new rows for the v7-shipped skills; footer count updated 88+0 drafting → 103+0 drafting; reference to v7 roadmap line removed (v7 is now shipped, not pending)
+- `skills/README.md` cross-track index: heading updated `Shipped (through v6.0-phase1)` → `Shipped (through v7.0-phase1)`; 15 new rows appended
+- `skills/ml-datasci/README.md`: 12 new rows in the Shipped skills table; corresponding rows removed from the Planned skills tables under Statistical / mathematical reasoning, ML / DL hygiene, RAG / fine-tuning / MLOps, and Synthetic data + privacy sections
+- `skills/security/README.md`: 2 new rows in the Shipped skills table; `verifying-sigstore-signatures` and `verifying-training-data-erasure` removed from Planned; `running-adversarial-perturbation-suite` and `auditing-rlhf-reward-hacking` annotated as "shipped under `ml-datasci/`" in the Planned table since the v7 plan listed them under security but the actual track placement is ml-datasci
+
+### Methodology note
+
+Per PRAGMATIC discipline, all 15 skills were authored and Sonnet-validated within their authoring batch sessions; this integration commit only consolidates per-batch fragments into the user-facing catalogs and adds no new SKILL.md content. Full 3-model validation (Haiku + Sonnet + Opus) deferred to a future re-run via `tools.run_evals.py`, consistent with the PRAGMATIC discipline applied across v1-v6.
 
 ## [v6.0.2] — 2026-05-23
 

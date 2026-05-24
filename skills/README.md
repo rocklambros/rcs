@@ -2,7 +2,7 @@
 
 All RCS skills, organized first by audience track and then by ROI rank (Σ score from the v1 brainstorm).
 
-## Shipped (through v6.0-phase1)
+## Shipped (through v7.0-phase1)
 
 Sorted by Σ desc.
 
@@ -96,6 +96,21 @@ Sorted by Σ desc.
 | [`auditing-graphql-nullability`](security/auditing-graphql-nullability/) | security | 12 |
 | [`applying-secure-coding-rules`](security/applying-secure-coding-rules/) | security | 15 |
 | [`authoring-tool-hook`](claude-code-meta/authoring-tool-hook/) | claude-code-meta | 12 |
+| [`auditing-chunking-strategy`](ml-datasci/auditing-chunking-strategy/) | ml-datasci | 13 |
+| [`auditing-model-fairness`](ml-datasci/auditing-model-fairness/) | ml-datasci | 12 |
+| [`auditing-deep-learning-overfit`](ml-datasci/auditing-deep-learning-overfit/) | ml-datasci | 12 |
+| [`building-rag-eval-set`](ml-datasci/building-rag-eval-set/) | ml-datasci | 12 |
+| [`generating-shap-explanations`](ml-datasci/generating-shap-explanations/) | ml-datasci | 11 |
+| [`auditing-embedding-drift`](ml-datasci/auditing-embedding-drift/) | ml-datasci | 11 |
+| [`building-conformal-prediction-set`](ml-datasci/building-conformal-prediction-set/) | ml-datasci | 11 |
+| [`running-bayesian-workflow`](ml-datasci/running-bayesian-workflow/) | ml-datasci | 10 |
+| [`verifying-training-data-erasure`](security/verifying-training-data-erasure/) | security | 10 |
+| [`verifying-sigstore-signatures`](security/verifying-sigstore-signatures/) | security | 10 |
+| [`analyzing-causal-dag`](ml-datasci/analyzing-causal-dag/) | ml-datasci | 9 |
+| [`evaluating-ood-detection`](ml-datasci/evaluating-ood-detection/) | ml-datasci | 9 |
+| [`running-adversarial-perturbation-suite`](ml-datasci/running-adversarial-perturbation-suite/) | ml-datasci | 8 |
+| [`applying-differential-privacy`](ml-datasci/applying-differential-privacy/) | ml-datasci | 8 |
+| [`auditing-rlhf-reward-hacking`](ml-datasci/auditing-rlhf-reward-hacking/) | ml-datasci | 7 |
 
 ## Drafting
 
