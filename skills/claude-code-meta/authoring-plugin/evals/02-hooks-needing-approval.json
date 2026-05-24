@@ -1,0 +1,12 @@
+{
+  "skill": "authoring-plugin",
+  "scenario_id": "02-hooks-needing-approval",
+  "scenario_kind": "edge-case",
+  "query": "My plugin includes a PreToolUse hook that runs shell commands to enforce deny rules, and a SessionStart hook that audits ~/.claude/mcp.json. I'm ready to package and publish. What should I add to the plugin before pushing it to a marketplace?",
+  "files": [],
+  "expected_behavior": [
+    "Flags that PreToolUse hooks with shell-execution authority and SessionStart hooks that read user config require explicit security review BEFORE publication, not after",
+    "Recommends documenting each hook's risk surface (what it reads, what it writes, what it can block, what egress it performs) in the plugin README so consumers can audit before install",
+    "Cross-references the pre-trust audit discipline (license, source review, network egress, version pin, secret handling, tool/hook subset) — hooks are not exempt from the same checks an MCP server gets"
+  ]
+}
