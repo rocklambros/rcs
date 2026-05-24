@@ -18,7 +18,7 @@ description: >
   <Third-person, ≤ 1024 chars, includes WHAT the skill does and WHEN to trigger it.>
 ```
 
-**Third-person rule**: write "Walks a decision tree..." NOT "I can help you..." or "You can use this..." (per Anthropic best-practices doc; the description is injected into the system prompt and POV inconsistency causes discovery problems).
+**Third-person rule**: write "Walks a decision tree..." NOT "I can help you..." or "You can use this..." (per Anthropic best-practices doc. The description is injected into the system prompt and POV inconsistency causes discovery problems).
 
 ### RCS-required fields (lint-enforced)
 
@@ -47,27 +47,27 @@ last-updated: 2026-05-22              # ISO date YYYY-MM-DD
 | `drafting` | SKILL.md exists, evals incomplete or failing on one model | Public review | No |
 | `planned` | NO directory; listed only in track README | Roadmap visibility | No |
 
-## SKILL.md Layer-3 contract — required H2 sections in order
+## SKILL.md Layer-3 contract. Required H2 sections in order
 
-1. `## When to use` — explicit triggers (user requests, keywords, situations)
-2. `## When NOT to use` — anti-triggers (when Claude should skip or hand off)
-3. `## Quick start` — minimum-viable runnable example
-4. `## Inputs / Arguments / Flags` — every parameter (name, type, required/optional, default, allowed values, example)
-5. `## Workflow` — numbered steps; checklist if multi-step (per Anthropic best-practices)
-6. `## Outputs` — what the skill produces (format, location, conventions)
-7. `## Failure modes` — known pitfalls + how the skill catches them
-8. `## References` — bundled `reference/` files + external links (one level deep)
-9. `## Examples` — ≥ 2 real input/output pairs
-10. `## See also` — sibling skills (one level deep links)
-11. `## Status & version` — restates status + SemVer + last-updated
+1. `## When to use`. Explicit triggers (user requests, keywords, situations)
+2. `## When NOT to use`. Anti-triggers (when Claude should skip or hand off)
+3. `## Quick start`. Minimum-viable runnable example
+4. `## Inputs / Arguments / Flags`. Every parameter (name, type, required/optional, default, allowed values, example)
+5. `## Workflow`. Numbered steps. Checklist if multi-step (per Anthropic best-practices)
+6. `## Outputs`. What the skill produces (format, location, conventions)
+7. `## Failure modes`. Known pitfalls + how the skill catches them
+8. `## References`. Bundled `reference/` files + external links (one level deep)
+9. `## Examples`. ≥ 2 real input/output pairs
+10. `## See also`. Sibling skills (one level deep links)
+11. `## Status & version`. Restates status + SemVer + last-updated
 
-Body ≤ 500 lines. Longer content goes in `reference/` (no startup token cost; loaded on-demand).
+Body ≤ 500 lines. Longer content goes in `reference/` (no startup token cost. Loaded on-demand).
 
 ## File path rules
 
 - Forward slashes only (Unix-style, works on all platforms).
-- Reference links one level deep from SKILL.md — Claude may partially read transitively-linked files, missing content.
-- Bundle large reference material in `reference/`; bundle scripts in `scripts/`.
+- Reference links one level deep from SKILL.md. Claude may partially read transitively-linked files, missing content.
+- Bundle large reference material in `reference/`. Bundle scripts in `scripts/`.
 
 ## Eval requirements (see `eval-protocol.md` for details)
 
