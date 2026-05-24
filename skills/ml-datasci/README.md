@@ -78,11 +78,7 @@ _Shipped in v7-batch-4 (see Shipped skills table)._
 
 ### Scaffolding
 
-| Skill | What it does | Σ | Status |
-|---|---|---|---|
-| `scaffolding-ml-research-notebook` | uv/poetry + src/ + data/raw immutable + tests/ + claudedocs/ + seed util + pre-commit | 15 | 📝 planned |
-| `scaffolding-grad-school-pset` | Jupyter/RMarkdown template with stats discipline baked in | 12 | 📝 planned |
-| `scaffolding-llm-eval-harness` | model_id + dataset_hash + prompt_version + judge_model + results.jsonl | 14 | 📝 planned |
+_Three originally-planned scaffolding skills shipped in v6 under the `workflow/` track rather than `ml-datasci/`, because they apply to any project rather than ml-datasci specifically. See [`workflow/scaffolding-ml-research-notebook`](../workflow/scaffolding-ml-research-notebook/), [`workflow/scaffolding-grad-school-pset`](../workflow/scaffolding-grad-school-pset/), and [`workflow/scaffolding-llm-eval-harness`](../workflow/scaffolding-llm-eval-harness/)._
 
 ## Cross-track references
 

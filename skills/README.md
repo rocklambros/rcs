@@ -1,10 +1,10 @@
 # RCS Skills — Cross-Track Index
 
-All RCS skills, organized first by audience track and then by ROI rank (Σ score from the v1 brainstorm).
+All RCS skills, organized by ROI rank (Σ score from the v1 brainstorm) within each batch-shipping wave.
 
-## Shipped (through v7.0-phase1)
+## Shipped (through v7.0.3)
 
-Sorted by Σ desc.
+The table below is roughly Σ-sorted within each batch wave, then concatenated by ship-date. The strict Σ-desc order is recomputed at integration tags. To find the highest-Σ skills overall, see the top-10 teaser in the [root README](../README.md).
 
 | Skill | Track | Σ |
 |---|---|---|

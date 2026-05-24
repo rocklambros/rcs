@@ -9,8 +9,24 @@ Eval-driven development per the [Anthropic Skill best-practices](https://platfor
 | Scenarios per skill | Exactly 3 |
 | Scenario coverage | 1 happy-path + 1 edge-case + 1 anti-trigger |
 | Rubric items per scenario | Exactly 3 |
-| Model coverage | Haiku 4.5, Sonnet 4.6, Opus 4.7 |
+| Model coverage | Sonnet only (PRAGMATIC default) OR Haiku 4.5 + Sonnet 4.6 + Opus 4.7 (full harness) |
 | Judge model | Sonnet 4.6 (rotate in v2 to reduce same-family bias) |
+
+## Two flows
+
+RCS supports two flows for running evals against a skill. Both produce a pass / fail verdict against the same rubric items.
+
+### Flow A: PRAGMATIC (default, used for every skill shipped through v7.0.3)
+
+In-session, Sonnet-only. The parent Claude Code session dispatches one general-purpose subagent per scenario with `model: sonnet`. Each subagent reads the SKILL.md and answers the scenario's `query`. The parent session judges each completion against the 3 rubric items using intent-matched scoring.
+
+No `ANTHROPIC_API_KEY` required. Useful when authoring or iterating on a skill, when shipping a batch of skills together, or when the 3-model harness is overkill for the gap being closed.
+
+### Flow B: full 3-model harness (aspirational; run on a periodic sweep)
+
+Out-of-session, against all three Claude models via `tools/run_evals.py`. Requires `ANTHROPIC_API_KEY` with access to Haiku 4.5, Sonnet 4.6, and Opus 4.7. Produces a results JSON per model per skill.
+
+A skill that has passed Flow A but not yet Flow B ships at `status: shipped` and notes the methodology in its CHANGELOG entry. Flow B is the next-iteration target.
 
 ## Eval JSON schema
 
@@ -59,7 +75,7 @@ For each rubric item, the judge returns `pass: true|false` with a one-sentence r
 | Sonnet 4.6 | 3 of 3 | 3 of 3 | ≥ 2 of 3 |
 | Opus 4.7 | 3 of 3 | 3 of 3 | 3 of 3 |
 
-A skill earns `status: shipped` only when ALL pass thresholds are met across ALL 3 scenarios.
+A skill earns `status: shipped` when the Sonnet thresholds above are met (Flow A is sufficient). Full 3-model validation via Flow B is the aspirational follow-up; a skill that passes Sonnet but later fails Haiku or Opus on Flow B gets a `drafting` demotion and a follow-up patch release.
 
 ## CI gating
 

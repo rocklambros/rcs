@@ -4,7 +4,36 @@ All notable changes to RCS are documented here. Per-skill changes use the skill'
 
 ## [Unreleased]
 
-_No unreleased changes. Most recent release is `v7.0.2` below._
+_No unreleased changes. Most recent release is `v7.0.3` below._
+
+## [v7.0.3] — 2026-05-24
+
+Tier-2 documentation patch following `v7.0.2`. Closes the IMPORTANT findings from the v7.0.1 documentation audit. Zero new skills.
+
+### Added
+
+- **`CODE_OF_CONDUCT.md`.** The repository adopts the Contributor Covenant v2.1 verbatim from the canonical source at `contributor-covenant.org`. The `[INSERT CONTACT METHOD]` placeholder is set to `rock@rockcyber.com`, the same address `SECURITY.md` uses. `docs/governance.md`'s previous one-paragraph inline conduct text now points at this file
+- **`.github/ISSUE_TEMPLATE/skill-proposal.md`.** Template for the "open an issue first" step in `CONTRIBUTING.md`. Constrains proposals to include the gap evidence from at least two independent contexts, the nearest existing skill (so duplicates surface in triage), draft eval scenarios, and an estimated Σ
+- **`.github/ISSUE_TEMPLATE/bug-report.md`.** Severity-tiered template. Routes suspected security vulnerabilities to `SECURITY.md` (private channel) instead of letting them open public issues
+- **`.github/pull_request_template.md`.** Codifies the per-PR conventions previously living only in CONTRIBUTING prose: summary, files-changed list, eval results table, test plan checklist, reviewer-attention notes, and the no-AI-attribution confirmation
+
+### Fixed
+
+- **`skills/ml-datasci/README.md`** Planned-Scaffolding section incorrectly listed three skills as `📝 planned` that had shipped in v6 under the `workflow/` track (`scaffolding-ml-research-notebook`, `scaffolding-grad-school-pset`, `scaffolding-llm-eval-harness`). Replaced the table with an annotation explaining the cross-track placement
+- **`skills/README.md`** header claimed "Shipped (through v7.0-phase1)" while the table already contained the `writing-repo-documentation` row from v7.0.1. Updated to "Shipped (through v7.0.3)" and corrected the "Sorted by Σ desc" claim, which was false (the list is roughly Σ-sorted within each batch wave, then concatenated by ship date)
+- **`docs/governance.md`** documented a "loose" tag pattern (`v1`, `v1.1`, `v2`) that did not match the actual tags shipped (`v1.0.0-phase1`, `v6.0.2`, `v7.0-phase1`, etc.). Replaced with the actual two-pattern scheme: `vM.N-phaseK` for batch integrations, `vM.N.P` for single-skill or doc-only patches
+
+### Changed
+
+- **`CONTRIBUTING.md`** reworked the eval-runs section into two explicit flows. Flow A (PRAGMATIC, Sonnet-only, no API key required, default for every skill shipped through v7.0.3) leads; Flow B (full 3-model harness, aspirational, run on periodic sweeps) follows. Previous text presented Flow B as the only flow, which contradicted actual practice. Also added: pointer to `workflow/writing-repo-documentation` as the canonical SKILL.md writing guide, and the full eight-field frontmatter list (previously implied via `docs/conventions.md` without restatement)
+- **`docs/eval-protocol.md`** mirrors the two-flow rework. Pass thresholds updated to reflect that Sonnet thresholds alone are sufficient for `status: shipped`; Flow B is the next-iteration target
+- **`docs/conventions.md`** renamed "RCS custom fields (don't break Anthropic schema)" to "RCS-required fields (lint-enforced)". The previous phrasing wrongly suggested these fields were optional; the lint rejects skills that omit any of the six
+
+### Methodology note
+
+Each edit was authored against the `workflow/writing-repo-documentation` skill's discipline. The Contributor Covenant text was downloaded from `https://www.contributor-covenant.org/version/2/1/code_of_conduct/code_of_conduct.md` rather than reproduced from memory; the canonical source is the only correct version for adoption.
+
+Cumulative skill count at HEAD: **104 shipped + 0 drafting** (unchanged from `v7.0.2`).
 
 ## [v7.0.2] — 2026-05-24
 
