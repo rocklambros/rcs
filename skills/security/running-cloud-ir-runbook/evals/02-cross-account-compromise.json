@@ -1,0 +1,12 @@
+{
+  "skill": "running-cloud-ir-runbook",
+  "scenario_id": "02-cross-account-compromise",
+  "scenario_kind": "edge-case",
+  "query": "A customer report says an S3 bucket in our prod account (111122223333) named acme-customer-exports was publicly readable for about 72 hours starting 2026-05-20T00:00Z. The bucket contains an estimated 240,000 customer records (PII class — names, emails, partial billing addresses). S3 server-access logs show 18 unique source IPs downloaded objects during the window. The misconfiguration came from role/data-pipeline-prod which has cross-account trust into another AWS account we own (the analytics account 222233334444). Walk us through the IR runbook with the regulated-data-and-cross-account angle.",
+  "files": [],
+  "expected_behavior": [
+    "Treats has_regulated_data as TRUE and includes the regulator-notification path (engages the DPO / counsel for jurisdiction-specific notification timing such as GDPR 72h or sector-specific obligations) alongside the customer-notification path, while keeping the early external messaging factual (no speculation about specific records or actors)",
+    "Captures evidence covering both accounts — the prod account 111122223333 AND the trusted analytics account 222233334444 — because the cross-account trust expands the could-touch blast radius beyond the source account; CloudTrail in both accounts plus S3 server-access logs and the bucket policy history are preserved BEFORE remediation changes the bucket",
+    "Includes a Terraform / IaC drift remediation in the lessons-learned (the bucket-public-access misconfiguration came from a code path, not a one-off console change) AND a pre-merge guard / continuous-detection item to catch the regression class, each with a named owner, a deadline, and a verification step"
+  ]
+}

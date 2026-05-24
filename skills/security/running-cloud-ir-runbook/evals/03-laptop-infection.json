@@ -1,0 +1,12 @@
+{
+  "skill": "running-cloud-ir-runbook",
+  "scenario_id": "03-laptop-infection",
+  "scenario_kind": "anti-trigger",
+  "query": "An engineer's laptop got infected with what looks like commodity infostealer malware overnight. The EDR caught it and quarantined the process. The laptop has corporate SSO sessions for Okta, GitHub, and Slack but no cloud-CLI sessions and no AWS / GCP / Azure long-lived credentials on disk. Walk us through the cloud IR runbook.",
+  "files": [],
+  "expected_behavior": [
+    "Declines to walk the cloud IR runbook for this incident as the primary response, recognizing that an endpoint infection with no cloud-CLI sessions and no cloud long-lived credentials on disk does not have a cloud blast radius that the cloud IR runbook is designed for — and hands off to host / endpoint IR as the correct primary path",
+    "Identifies the small, real cloud-side hygiene work that IS warranted (rotate SSO session tokens, audit recent Okta/GitHub/Slack session activity for the user, check for any cloud console MFA bypass attempts) and limits the cloud-side response to that scope rather than running the full runbook against a non-cloud incident",
+    "Does NOT produce a full cloud IR runbook walk-through with evidence preservation of CloudTrail / Audit Logs, IAM containment commands, blast-radius assessment against cloud resources, or cloud-customer notification — those steps are not warranted because the incident did not cross into cloud identity / resource scope"
+  ]
+}
