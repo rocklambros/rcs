@@ -1,0 +1,12 @@
+{
+  "skill": "writing-graded-rubric",
+  "scenario_id": "01-prereg-applied-stats-capstone",
+  "scenario_kind": "happy-path",
+  "query": "I'm designing a grad-level applied stats course and need a criterion-referenced rubric for the final project — a 10-page applied analysis on a dataset of the student's choosing. The course learning objectives are: (a) frame a research question, (b) choose appropriate statistical methods, (c) check assumptions, (d) report effect sizes with uncertainty, (e) document reproducibly. Help me author the rubric BEFORE I see any submissions so I'm not tempted to drift the criteria.",
+  "files": [],
+  "expected_behavior": [
+    "Produces a criterion-referenced rubric with 4-6 named criteria (not 8+, not 2), each mapped to at least one of the named learning objectives, with no learning objective left uncovered.",
+    "Uses 3 or 4 or 5 proficiency bands per criterion where each band descriptor names OBSERVABLE evidence a grader could check in the submitted work (e.g., 'assumption checks performed and acted on') rather than vague descriptors like 'good methodology' or 'excellent analysis'.",
+    "Recommends or explicitly notes the pre-grading inter-grader calibration step (instructor + TA apply the rubric to a sample work together before any real grading begins) as part of deployment."
+  ]
+}
