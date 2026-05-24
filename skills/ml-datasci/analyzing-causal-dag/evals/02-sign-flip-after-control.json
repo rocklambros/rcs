@@ -1,0 +1,12 @@
+{
+  "skill": "analyzing-causal-dag",
+  "scenario_id": "02-sign-flip-after-control",
+  "scenario_kind": "edge-case",
+  "query": "I regressed outcome Y on treatment T and got a positive slope of +0.5. Then I added a control variable C to the regression and the slope flipped to -0.3. Which estimate is the correct causal effect of T on Y?",
+  "files": [],
+  "expected_behavior": [
+    "Refuses to declare one of the two estimates correct without first resolving the structural role of C (confounder, collider, or mediator) in the underlying causal DAG, and explains that the same data pattern is consistent with multiple DAGs that imply different correct estimates",
+    "Names at least three distinct structural scenarios for C — for example confounder (then adjusted is correct), collider (then unadjusted is correct), and mediator (then both are correct but estimate different estimands such as total vs direct effect) — and connects each to a different sign-flip outcome",
+    "Warns against reverse-engineering the DAG to match whichever sign feels more plausible, and instead requires committing to the DAG (temporal order, hypothesized edges) BEFORE letting the regression results pick the adjustment"
+  ]
+}
