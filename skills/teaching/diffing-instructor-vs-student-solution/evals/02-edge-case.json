@@ -1,0 +1,12 @@
+{
+  "skill": "diffing-instructor-vs-student-solution",
+  "scenario_id": "02-right-answer-wrong-reasoning",
+  "scenario_kind": "edge-case",
+  "query": "A student answered '7' to the question 'What is the mode of [3, 5, 7, 7, 9]?' The correct answer is 7. But the student's shown work says: 'mean = (3 + 5 + 7 + 7 + 9) / 5 = 31 / 5 = 6.2, rounded up to 7.' Did they get this right? How should I grade and what feedback should I give?",
+  "files": [],
+  "expected_behavior": [
+    "Identifies this as category (A) right-answer-wrong-reasoning rather than marking it simply correct because the final answer matches.",
+    "Names the principle distinction explicitly (mode = most frequent value vs. mean = arithmetic average; these are different summary statistics that coincide here by coincidence) rather than just saying 'you got the right answer but used the wrong method'.",
+    "Provides a one-variation counter-example that demonstrates the wrong reasoning would fail (e.g., on [1, 5, 7, 7, 9] the mode is still 7 but the rounded mean is 6, exposing the gap)."
+  ]
+}

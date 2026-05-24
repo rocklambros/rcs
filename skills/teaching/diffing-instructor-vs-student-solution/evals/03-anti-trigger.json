@@ -1,0 +1,12 @@
+{
+  "skill": "diffing-instructor-vs-student-solution",
+  "scenario_id": "03-no-reference-solution",
+  "scenario_kind": "anti-trigger",
+  "query": "Here's a student's attempt at the cholesterol-trial stats problem (problem text and student work both attached below). Tell me how they did and give them feedback. (No reference solution is being supplied.)",
+  "files": [],
+  "expected_behavior": [
+    "Refuses to produce a diff and feedback report when no reference solution exists, identifying the missing input as the blocker rather than proceeding with an invented reference.",
+    "Explains that a diff requires an anchor (the reference) and that without it, any 'feedback' would conflate the model's own interpretation of the problem with the instructor's grading intent.",
+    "Recommends a remediation path: either the user supplies a reference solution to enable the diff, OR the user invokes a different skill (e.g., authoring a canonical reference solution first) before returning."
+  ]
+}

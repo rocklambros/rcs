@@ -1,0 +1,12 @@
+{
+  "skill": "diffing-instructor-vs-student-solution",
+  "scenario_id": "01-cascading-paired-misclassification",
+  "scenario_kind": "happy-path",
+  "query": "Diff the reference and student solutions for this paired-cholesterol problem and give formative feedback. Problem: 24 patients, before/after cholesterol, α = 0.05, Shapiro on differences gives p = 0.018. Reference solution: identifies paired design → Shapiro on differences rejects Normality → runs Wilcoxon signed-rank → reports the result with effect size. Student attempt: treats the data as independent two-sample → runs Shapiro on each column separately (both pass) → runs a pooled two-sample t-test → reports the t-statistic and p-value. Audience tier: undergrad-intro. Grading mode: formative.",
+  "files": [],
+  "expected_behavior": [
+    "Classifies step 1 (design) as category (B) wrong-answer-right-reasoning-with-one-identifiable-misstep, where the student treated paired data as independent groups.",
+    "Marks the downstream steps (assumption check, test choice, report) as cascade from step 1 rather than as fresh independent errors, recognizing that the rest of the work correctly follows from the wrong starting decision.",
+    "Writes the feedback in student-facing voice that names the principle (e.g., 'design determines the test family before any numbers are computed' or 'paired data = same subjects measured twice'), not just the symptom ('you used the wrong test')."
+  ]
+}
