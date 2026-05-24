@@ -25,13 +25,12 @@ This track encodes day-job disciplines: MCP pre-trust auditing, vulnerability tr
 | [`running-cloud-ir-runbook`](running-cloud-ir-runbook/) | Cloud IR runbook: triage, evidence preservation, containment, blast-radius, comms, eradication, recovery, lessons-learned | A cloud security alert fires (GuardDuty / SCC / Defender), an IAM credential leak is suspected, or post-incident review is needed | 10 |
 | [`scaffolding-ai-policy-doc`](scaffolding-ai-policy-doc/) | Scaffolds an org-wide AI Use Policy (acceptable / prohibited use, oversight, IR, vendor inventory, acknowledgement) anchored on actual current usage. | Publishing a first AI policy for an org with real AI usage, ISO 42001 / NIST AI RMF / EU AI Act prep, or after a peer incident. | 10 |
 | [`interpreting-vendor-questionnaire-skeptically`](interpreting-vendor-questionnaire-skeptically/) | Produces evidence-tied findings (hedges, missing artifacts, contradictions, staleness, AI overlay) on a vendor SIG / CAIQ / SOC 2 response — refuses to issue a go / no-go verdict. | Reviewing a vendor questionnaire response before contract signature, annual re-attestation, or onboarding an AI vendor. | 9 |
+| [`applying-secure-coding-rules`](applying-secure-coding-rules/) | Applies a user-supplied corpus (semgrep / SARIF / markdown / YAML / claude-secure-coding-rules-style repo) to a project — detects stack, computes applicable rules ∩ stack, produces a per-finding report with file/line/severity/fix, lists every skipped rule with reason, and refuses to fabricate rules from training memory | Reviewing a project against a specific team-supplied rule corpus, hardening a polyglot repo with partial coverage, or surfacing which corpus rules apply to which files (vs. inventing rules) | 15 |
 | [`auditing-graphql-nullability`](auditing-graphql-nullability/) | Audits a GraphQL schema for over-permissive nullability — fields and arguments that should be non-null, root return types that swallow errors silently, and list-element nullability that propagates failures; per-finding field path + current SDL + recommended SDL + downstream consequence | User provides a `.graphql` file, SDL snippet, or schema dump and asks for a nullability review, schema hardening assessment, or whether tightening / loosening `!` is safe before a schema change | 12 |
 
 ## Drafting skills
 
-| Skill | What it does | Σ | Status |
-|---|---|---|---|
-| [`applying-secure-coding-rules`](applying-secure-coding-rules/) | Applies a user-supplied corpus (semgrep / SARIF / markdown / YAML / claude-secure-coding-rules) to a project, producing per-finding fixes and a skipped-rules report; refuses to fabricate rules from training memory | 15 | 🔨 drafting (2 of 3 eval scenarios failed materially during v4-batch-2 validation; anti-fabrication discipline empirically validated 3/3; see CHANGELOG for root-cause and promotion path) |
+_No drafting skills in the security track. All v4 / v6 skills promoted to shipped via the v6.0.2 promotion pass._
 
 ## Planned skills
 

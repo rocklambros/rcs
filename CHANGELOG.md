@@ -4,7 +4,56 @@ All notable changes to RCS are documented here. Per-skill changes use the skill'
 
 ## [Unreleased]
 
-_No unreleased changes — most recent integration is `v6.0.1` below._
+_No unreleased changes — most recent release is `v6.0.2` below. Catalog is 100% shipped (zero drafting skills); ready for v7 authoring._
+
+## [v6.0.2] — 2026-05-23
+
+Clean-finish release before v7. Promotes the two outstanding `drafting` skills to `shipped` after a Sonnet-only PRAGMATIC re-validation pass against re-authored skill bodies (v0.2.0 each). No new skill content; existing skill bodies edited per root-cause analysis in the original demotion notes.
+
+**Net change:** 2 promotions (drafting → shipped). Cumulative skill count at HEAD: **88 shipped + 0 drafting** (vs. 86+2 at `v6.0.1`). First time the catalog has zero drafting skills since the v4 cycle.
+
+### Promotion 1: `security/applying-secure-coding-rules` v0.1.0 → v0.2.0 (drafting → shipped)
+
+**Root cause of v0.1.0 demotion (v4-batch-2):** The validating Sonnet subagent had filesystem tool access and interpreted Step 1's "Verify a rule corpus is supplied" as "verify the corpus exists on the evaluator's local disk." When eval scenarios described corpus paths (`~/rules/`) and target paths (`./app/`) that did not physically exist on the validating machine, the subagent refused to proceed instead of producing illustrative output. Anti-fabrication discipline (refuse when no corpus is referenced at all) was empirically validated 3/3 from the start.
+
+**Fix (v0.2.0 — this release):** Clarified in SKILL.md Step 1 that *supplied* means "referenced by the user" (path, URL, repo, or inline description) — not "physically present on the responder's filesystem." Added an ILLUSTRATIVE-banner pattern: when the referenced corpus is not readable from the responder's session, proceed with an illustrative run labeled `ILLUSTRATIVE — corpus path not readable from this session` and identify which specific corpus content the user must surface for a definitive run. The refusal gate still fires for the no-corpus-at-all case. Added a corresponding line to the Workflow checklist so the distinction is foregrounded.
+
+**Re-eval results (Sonnet-only PRAGMATIC, v6.0.2 promotion pass):**
+
+| Scenario | Score | Threshold | v0.1.0 score |
+|---|---|---|---|
+| 01-python-fastapi-langchain-happy-path | 3/3 | 3/3 | 0/3 |
+| 02-polyglot-partial-coverage-edge-case | 3/3 | 3/3 | 2/3 |
+| 03-no-corpus-anti-trigger | 3/3 | ≥ 2/3 | 3/3 |
+
+All thresholds met. Skill ships as `status: shipped` v0.2.0.
+
+### Promotion 2: `claude-code-meta/authoring-tool-hook` v0.1.0 → v0.2.0 (drafting → shipped)
+
+**Root cause of v0.1.0 demotion (v6-batch-4):** Edge-case scenario (PreToolUse hook with HTTP egress to a policy server) scored 2/3. The skill body taught client-side caching of policy decisions in Step 5 (Example 2), but the Sonnet completion emphasized scoped matcher + timeout discipline + the fail-open vs. fail-closed decision without surfacing the caching guidance. Teaching content was correct; Workflow ordering did not surface caching early enough.
+
+**Fix (v0.2.0 — this release):** Promoted HTTP-egress handling to its own top-level Workflow step (new Step 4: "HTTP egress: timeout AND client-side cache (REQUIRED if applicable)"). Renumbered subsequent steps. Added a corresponding line to the Workflow checklist naming caching as REQUIRED — not optional — for HTTP-egress hooks. Updated Failure modes section with a new entry naming the "HTTP-egress hook with no cache" anti-pattern. Step 4 explains the timeout / TTL tuning relationship and frames both disciplines as jointly necessary, neither sufficient alone.
+
+**Re-eval results (Sonnet-only PRAGMATIC, v6.0.2 promotion pass):**
+
+| Scenario | Score | Threshold | v0.1.0 score |
+|---|---|---|---|
+| 01-pretooluse-gating-shell | 3/3 | 3/3 | 3/3 |
+| 02-hook-makes-http-call | 3/3 | 3/3 | 2/3 |
+| 03-statusline-config | 3/3 | ≥ 2/3 | 3/3 |
+
+All thresholds met. Skill ships as `status: shipped` v0.2.0.
+
+### Catalog updates
+
+- Root `README.md`: `authoring-tool-hook` row flipped 🔨 drafting → ✅ shipped; new row added for `applying-secure-coding-rules` (was missing from root catalog under drafting); count footer updated 86+2 drafting → 88+0 drafting
+- `skills/README.md` cross-track index: both skills moved from Drafting section to Shipped section; Drafting section now reads "No drafting skills"
+- `skills/security/README.md`: `applying-secure-coding-rules` row added to Shipped table at Σ 15; Drafting section now empty
+- `skills/claude-code-meta/README.md`: `authoring-tool-hook` row moved from Drafting to Shipped; Drafting section now empty
+
+### Methodology note
+
+Per PRAGMATIC discipline, the re-validation used the same eval scenarios authored for v0.1.0 (no rubric weakening to make the skills "pass"). Both skills passed every previously-failing rubric item against the re-authored body, confirming the root-cause analyses in the v4-batch-2 and v6-batch-4 changelog entries were correct. Full 3-model validation (Haiku + Sonnet + Opus) deferred to a future re-run via `tools.run_evals`, consistent with the PRAGMATIC discipline applied across v1-v6.
 
 ## [v6.0.1] — 2026-05-23
 

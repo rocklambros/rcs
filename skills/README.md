@@ -94,13 +94,12 @@ Sorted by Σ desc.
 | [`interpreting-vendor-questionnaire-skeptically`](security/interpreting-vendor-questionnaire-skeptically/) | security | 9 |
 | [`writing-graded-rubric`](teaching/writing-graded-rubric/) | teaching | 7 |
 | [`auditing-graphql-nullability`](security/auditing-graphql-nullability/) | security | 12 |
+| [`applying-secure-coding-rules`](security/applying-secure-coding-rules/) | security | 15 |
+| [`authoring-tool-hook`](claude-code-meta/authoring-tool-hook/) | claude-code-meta | 12 |
 
 ## Drafting
 
-| Skill | Track | Σ |
-|---|---|---|
-| [`applying-secure-coding-rules`](security/applying-secure-coding-rules/) | security | 15 |
-| [`authoring-tool-hook`](claude-code-meta/authoring-tool-hook/) | claude-code-meta | 12 |
+_No drafting skills. All previously-drafting skills promoted to shipped via the v6.0.2 promotion pass._
 
 ## By track
 
