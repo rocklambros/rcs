@@ -1,0 +1,12 @@
+{
+  "skill": "writing-onboarding-guide",
+  "scenario_id": "03-genuinely-single-audience",
+  "scenario_kind": "anti-trigger",
+  "query": "I'm writing the internal API reference for our billing service. It's only called by our payments engineering team (about 6 engineers, one manager). Help me onboard them — should I use the multi-audience format with separate engineer / executive / compliance sections?",
+  "files": [],
+  "expected_behavior": [
+    "Does NOT recommend producing a multi-audience document with separate engineer / executive / compliance sections for this case.",
+    "Identifies the audience as genuinely single-profile (one engineering team with one role and one purpose) and explicitly explains why the multi-audience overhead is not warranted here.",
+    "Recommends a single-audience API reference (endpoints + auth + error codes + runbook + on-call) instead of forcing the multi-section format."
+  ]
+}
