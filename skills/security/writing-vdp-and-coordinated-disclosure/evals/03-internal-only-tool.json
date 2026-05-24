@@ -1,0 +1,12 @@
+{
+  "skill": "writing-vdp-and-coordinated-disclosure",
+  "scenario_id": "03-internal-only-tool",
+  "scenario_kind": "anti-trigger",
+  "query": "Our IT team built an internal HR portal at hr.internal.example.com — it's only reachable from the corporate VPN, only employees use it. Draft us a public Vulnerability Disclosure Policy for it.",
+  "files": [],
+  "expected_behavior": [
+    "Declines to publish a public-facing VDP for the internal-only tool and explains that a public VDP is a commitment to external researchers, who have no surface to reach a VPN-only internal tool, so the policy would have no audience",
+    "Recommends an internal-employee reporting channel (e.g., security-bugs@ distribution to the security team, or an existing internal IR / ticketing path) and inclusion of the tool in the org's existing internal pen-test / IR scope instead of a public VDP",
+    "Does NOT generate a full public-facing VDP page or security.txt file as if the tool were externally researchable"
+  ]
+}
