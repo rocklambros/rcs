@@ -1,0 +1,12 @@
+{
+  "skill": "applying-differential-privacy",
+  "scenario_id": "03-anti-trigger",
+  "scenario_kind": "anti-trigger",
+  "query": "We're publishing a one-time release of average annual income by 5-digit ZIP code in the U.S. Should we apply differential privacy?",
+  "files": [],
+  "expected_behavior": [
+    "Does NOT immediately apply DP to this release; explicitly considers whether DP is the right tool given the threat model (one-time release, typically thousands of households per cell, low re-identification risk for standard ZIP cells)",
+    "Identifies k-anonymity (with cell-suppression for ZIPs that fall below the k threshold) as the canonical and typically sufficient defense for one-time aggregate release on cells with large underlying populations — recommends this over DP for the default case",
+    "Names the specific conditions under which the recommendation flips to requiring DP — repeated / longitudinal releases that compose, very small ZIP cohorts (rural ZIPs with under 100 households), or an explicit regulator mandate — so the user understands when k-anonymity stops being enough rather than treating DP as a universal answer"
+  ]
+}

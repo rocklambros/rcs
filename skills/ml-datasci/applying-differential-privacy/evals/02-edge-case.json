@@ -1,0 +1,12 @@
+{
+  "skill": "applying-differential-privacy",
+  "scenario_id": "02-edge-case",
+  "scenario_kind": "edge-case",
+  "query": "We're releasing 50 weekly dashboard tiles, each is a different aggregate over the same patient cohort of 8,000 people. Each individual query has noise added with epsilon = 0.5. Are we differentially private?",
+  "files": [],
+  "expected_behavior": [
+    "Flags that the bare per-query epsilon does NOT compose to (epsilon = 0.5)-DP for the full release — under basic composition, 50 queries each at epsilon = 0.5 give total epsilon = 25 (no meaningful guarantee); under advanced or RDP composition the total is smaller but still much larger than 0.5",
+    "Requires a single allocated budget across the entire query workload (not per-query allocation) and recommends using an RDP-based privacy-preserving query system (OpenDP / Tumult Analytics / Google's dp-accounting library) that tracks cumulative epsilon across all 50 queries against one declared budget",
+    "Refuses to certify the release as (epsilon = 0.5)-DP as stated, distinguishes per-query epsilon from the released-system epsilon, and recommends reframing the privacy guarantee in terms of the cumulative budget that all 50 queries together consume"
+  ]
+}
