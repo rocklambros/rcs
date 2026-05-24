@@ -1,0 +1,12 @@
+{
+  "skill": "generating-shap-explanations",
+  "scenario_id": "01-xgboost-diabetes",
+  "scenario_kind": "happy-path",
+  "query": "I have an XGBoost binary classifier predicting diabetes onset from 8 clinical features. Patient 42 was predicted positive — explain that specific prediction, and also tell me which features matter most globally.",
+  "files": [],
+  "expected_behavior": [
+    "Selects shap.TreeExplainer (the tree-specific explainer for XGBoost), not KernelExplainer or DeepExplainer",
+    "Distinguishes the two requests by recommending a per-instance waterfall (or equivalent local plot) for patient 42 AND a global summary (bar / beeswarm of mean(|SHAP|)) for overall importance",
+    "Names or specifies a background dataset (stratified sample, ≥ ~100 rows from train) as required input, rather than silently running with no background or with the entire training set"
+  ]
+}

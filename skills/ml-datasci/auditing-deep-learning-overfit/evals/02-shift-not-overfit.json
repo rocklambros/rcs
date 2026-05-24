@@ -1,0 +1,12 @@
+{
+  "skill": "auditing-deep-learning-overfit",
+  "scenario_id": "02-shift-not-overfit",
+  "scenario_kind": "edge-case",
+  "query": "BERT fine-tune for sentiment. Train set is balanced 50/50 positive/negative. Validation set is 90/10 positive/negative because it was scraped from a different time window. Train loss is down to 0.1, val loss is higher than expected but FLAT (not rising). My team wants to add dropout. Is the model overfit?",
+  "files": [],
+  "expected_behavior": [
+    "Identifies the train-vs-val class-balance mismatch (50/50 vs 90/10) and/or the different time window as a distribution shift rather than calling the gap overfit",
+    "Notes that the val loss is FLAT not rising, which is not the classic overfit signature, and uses this as part of the diagnosis",
+    "Does NOT recommend adding dropout (or any other regularizer targeting overfit) as the primary remediation; instead recommends addressing the distribution shift — e.g., reweighting, stratified evaluation, rebalancing, per-class metrics, or matching train to deployment distribution"
+  ]
+}

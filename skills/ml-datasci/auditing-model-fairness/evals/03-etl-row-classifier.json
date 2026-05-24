@@ -1,0 +1,12 @@
+{
+  "skill": "auditing-model-fairness",
+  "scenario_id": "03-etl-row-classifier",
+  "scenario_kind": "anti-trigger",
+  "query": "We have a binary classifier that flags malformed rows in our ETL pipeline — input is a database row, output is malformed/well-formed. Audit it for fairness.",
+  "files": [],
+  "expected_behavior": [
+    "Identifies that the prediction subject is a data row, not a person, and that no protected-attribute audit applies in the standard sense",
+    "Does NOT force the demographic-parity / equal-opportunity workflow onto this classifier",
+    "Suggests handing off to a general performance evaluation skill (e.g., evaluating-binary-classifiers) and/or notes that fairness becomes relevant only if downstream effects of misclassification disparately impact people, in which case the question moves to that downstream system"
+  ]
+}
