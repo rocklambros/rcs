@@ -1,0 +1,12 @@
+{
+  "skill": "auditing-graphql-nullability",
+  "scenario_id": "01-happy-path-basic-schema",
+  "scenario_kind": "happy-path",
+  "query": "Please audit this GraphQL schema for over-permissive nullability:\n\ntype Query {\n  user(id: ID!): User\n  users: [User]\n}\n\ntype User {\n  id: ID\n  email: String\n  orders: [Order]\n  profile: Profile\n}\n\ntype Order {\n  id: ID\n  total: Float\n  items: [OrderItem]\n}\n\ntype OrderItem {\n  id: ID\n  quantity: Int\n  product: Product\n}\n\ntype Product {\n  id: ID\n  name: String\n  price: Float\n}\n\ntype Profile {\n  bio: String\n  avatarUrl: String\n}",
+  "files": [],
+  "expected_behavior": [
+    "Identifies at least three specific nullable fields that should be non-null (e.g., User.id, User.email, Order.id, Product.id) and names the field paths explicitly.",
+    "Explains that nullable list elements ([User] vs [User!]!) and nullable root return types allow null to propagate silently to parent resolvers, swallowing errors rather than surfacing them.",
+    "Provides concrete SDL fix recommendations using the ! non-null marker for each violation identified, not generic advice."
+  ]
+}

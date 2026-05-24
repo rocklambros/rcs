@@ -1,0 +1,12 @@
+{
+  "skill": "auditing-graphql-nullability",
+  "scenario_id": "02-edge-intentional-nullable-union",
+  "scenario_kind": "edge-case",
+  "query": "Audit the nullability in this schema. I'm deliberately allowing null on some fields because this is a federated subgraph and some fields are resolved by other services:\n\ntype Query {\n  product(id: ID!): Product\n  searchProducts(query: String!): [Product!]!\n}\n\ntype Product {\n  id: ID!\n  name: String!\n  price: Float!\n  externalRating: Float\n  supplierInfo: SupplierInfo\n  tags: [String!]!\n}\n\ntype SupplierInfo {\n  supplierId: ID!\n  name: String\n  contactEmail: String\n}",
+  "files": [],
+  "expected_behavior": [
+    "Distinguishes between intentional nullable fields (externalRating, supplierInfo) that reflect federation/external-resolution semantics and genuinely risky nullable fields (SupplierInfo.name, SupplierInfo.contactEmail) that may lack justification.",
+    "Does NOT flag Product.id, Product.name, Product.price, or the [Product!]! list as violations, because those are already correctly non-null.",
+    "Asks or notes that SupplierInfo.contactEmail and SupplierInfo.name being nullable warrants explicit justification, and explains the consequence if those fields are silently null in client code."
+  ]
+}

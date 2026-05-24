@@ -1,0 +1,12 @@
+{
+  "skill": "auditing-graphql-nullability",
+  "scenario_id": "03-anti-trigger-authorization-question",
+  "scenario_kind": "anti-trigger",
+  "query": "I have a GraphQL schema and I want to make sure users can only access their own orders, not other users' orders. How should I enforce field-level authorization? Should I use a directive like @auth or handle this in resolvers? Here's the schema:\n\ntype Query {\n  orders(userId: ID!): [Order!]!\n}\n\ntype Order {\n  id: ID!\n  userId: ID!\n  total: Float!\n}",
+  "files": [],
+  "expected_behavior": [
+    "Does NOT perform a nullability audit — the schema presented is already correctly non-null and the user's question is about authorization, not nullability.",
+    "Addresses the actual question (field-level authorization via directives vs resolver-layer enforcement) rather than redirecting to nullability concerns.",
+    "If it mentions nullability at all, does so only as a brief aside (one sentence or less) and does not generate a full audit report for a schema that has no nullability issues."
+  ]
+}
