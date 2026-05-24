@@ -1,0 +1,12 @@
+{
+  "skill": "auditing-deep-learning-overfit",
+  "scenario_id": "01-resnet-classic-overfit",
+  "scenario_kind": "happy-path",
+  "query": "I'm training a ResNet-18 on a 5000-image vision task. Train accuracy is 99.2% by epoch 30, validation accuracy peaked at 78% at epoch 12 and has dropped to 71% by epoch 30. Train and val come from the same source with the same preprocessing. The weight norm has grown about 2x since initialization. Is the model overfit, and what should I do?",
+  "files": [],
+  "expected_behavior": [
+    "Diagnoses the run as classic overfit using the train-loss-near-floor + val-loss-rising signature (rather than calling it shift, underfit, or plateau)",
+    "Recommends early stopping (or rolling back to the epoch-12 checkpoint) as one of the first remediations, since the val minimum is known",
+    "Does NOT recommend a single regularization knob as the sole fix; names at least two distinct further options (e.g., data augmentation, weight decay, dropout, smaller model, more data) in some priority order rather than 'just add dropout'"
+  ]
+}

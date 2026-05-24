@@ -1,0 +1,12 @@
+{
+  "skill": "auditing-deep-learning-overfit",
+  "scenario_id": "03-xgboost-not-dl",
+  "scenario_kind": "anti-trigger",
+  "query": "My XGBoost classifier has 96% training accuracy and 78% test accuracy on a tabular fraud dataset. Audit it for overfit using the deep-learning overfit workflow.",
+  "files": [],
+  "expected_behavior": [
+    "Identifies XGBoost as classical / tree-ensemble ML, not a deep network, and does NOT apply the deep-learning-specific diagnostics (per-epoch loss curves, weight-norm trajectory, effective-rank) as the primary workflow",
+    "Recommends classical-ML evaluation approaches instead — at minimum names k-fold cross-validation, train-vs-test gap inspection, or the XGBoost-native early_stopping_rounds parameter",
+    "Suggests handing off to a more appropriate skill (e.g., evaluating-binary-classifiers or evaluating-multiclass-classifiers) rather than forcing the deep-learning overfit workflow onto a tree ensemble"
+  ]
+}
