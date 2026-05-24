@@ -1,0 +1,12 @@
+{
+  "skill": "running-cloud-ir-runbook",
+  "scenario_id": "01-guardduty-iam-leak",
+  "scenario_kind": "happy-path",
+  "query": "AWS GuardDuty just fired UnauthorizedAccess:IAMUser/MaliciousIPCaller.Custom against IAMUser/build-bot-prod from source IP 198.51.100.42 in account 123456789012, us-east-1. Alert window is 2026-05-23T14:00Z to 2026-05-23T16:30Z. No regulated data is in the touched scope. Walk us through the IR runbook.",
+  "files": [],
+  "expected_behavior": [
+    "Performs evidence preservation BEFORE containment — captures CloudTrail (± 4h around the alert window), VPC Flow Logs, IAM policy snapshots, and any S3 server-access logs into a separate evidence-destination account with hashing, BEFORE disabling the affected identity",
+    "Contains the build-bot-prod identity by disabling (not deleting) its access keys, attaching an explicit IR-DENY-ALL policy, and revoking any active assumed-role sessions; provides the specific AWS CLI commands (e.g., aws iam update-access-key --status Inactive, aws iam put-user-policy with a Deny-* document)",
+    "Produces a blast-radius assessment that distinguishes the could-touch set (effective permissions enumerated, e.g., via aws iam simulate-principal-policy or policy-sentry) from the did-touch set (what the captured CloudTrail actually shows the identity called in the window), and proceeds to eradication that looks for additional access paths the identity may have created (new keys, IAM policy mutations, Lambda/EventBridge persistence)"
+  ]
+}

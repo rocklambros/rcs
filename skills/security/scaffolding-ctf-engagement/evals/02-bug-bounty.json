@@ -1,0 +1,12 @@
+{
+  "skill": "scaffolding-ctf-engagement",
+  "scenario_id": "02-bug-bounty",
+  "scenario_kind": "edge-case",
+  "query": "I'm a solo bug-bounty hunter starting work against the example-corp HackerOne program. The program brief lists app.example.com, api.example.com, and the example-corp browser extension v3 as in-scope. I want to scaffold my own engagement-side workflow — RoE, finding template, severity rubric — so my submissions are clean. How should I set this up?",
+  "files": [],
+  "expected_behavior": [
+    "Identifies the authorization source as the HackerOne program rules (not a custom RoE with an authorizer signature), and recommends saving a dated snapshot of the program rules at engagement start because programs can change scope without notice",
+    "Uses the program's published severity / bounty table as the severity model rather than defaulting to plain CVSS v3.1 bands, OR maps CVSS v3.1 alongside the program's table; in-scope is limited to the three named assets verbatim with no inferred wildcards or sibling subdomains",
+    "Specifies PoC hygiene rules adapted for bug-bounty (canary-only data access where possible, no pivoting beyond the three named assets, no persistence, and tamper-evident logging) and produces a finding template aligned with HackerOne submission fields"
+  ]
+}
