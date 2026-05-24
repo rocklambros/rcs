@@ -1,0 +1,12 @@
+{
+  "skill": "scaffolding-grad-school-pset",
+  "scenario_id": "02-programming-pset",
+  "scenario_kind": "edge-case",
+  "query": "I have a graduate algorithms pset. Pset 2 — implement quicksort and merge sort in Python, then benchmark them empirically on random arrays of size 10, 100, 1000, and 10000. Plot a chart. Scaffold the notebook for me.",
+  "files": [],
+  "expected_behavior": [
+    "Recognizes this is a programming / algorithms pset, NOT a statistical-inference pset, and does NOT scaffold the full 6-section statistics structure (assumption-checks, effect-sizes, etc. would be inappropriate)",
+    "Proposes a lighter notebook structure appropriate for the actual task: implementation cells, benchmark cells, a timing-comparison chart, and a brief interpretation — without forcing inference machinery onto a non-inference task",
+    "Either declines to engage the full pset scaffold workflow OR explicitly adapts it, naming WHY the statistics sections are being dropped (no statistical-inference component)"
+  ]
+}

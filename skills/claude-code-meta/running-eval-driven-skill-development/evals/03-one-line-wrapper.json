@@ -1,0 +1,12 @@
+{
+  "skill": "running-eval-driven-skill-development",
+  "scenario_id": "03-one-line-wrapper",
+  "scenario_kind": "anti-trigger",
+  "query": "I am writing a skill that wraps two shell commands — `npm test` and `npm run lint` — into a single command that runs both sequentially. Should I run eval-driven development on it before shipping?",
+  "files": [],
+  "expected_behavior": [
+    "Identifies the proposed skill as a trivial one-line shell wrapper with no judgment surface (the skill either runs the two commands or it doesn't)",
+    "Declines to engage the full eval-driven workflow and explains that behavioral evals are overhead-justified only for skills that encode judgment, multi-step reasoning, or domain expertise",
+    "Recommends a lightweight alternative such as a smoke test, exit-code check, or simple manual run instead of writing 3 eval scenarios with 3 rubric items each"
+  ]
+}

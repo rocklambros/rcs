@@ -1,0 +1,12 @@
+{
+  "skill": "running-eval-driven-skill-development",
+  "scenario_id": "01-authoring-new-domain-skill",
+  "scenario_kind": "happy-path",
+  "query": "I want to write a new Claude Code skill that audits GraphQL schemas for over-permissive nullability. Walk me through the full eval-driven development process so I know the skill actually works before I ship it.",
+  "files": [],
+  "expected_behavior": [
+    "Instructs the user to author the 3 eval scenarios (happy-path, edge-case, anti-trigger) BEFORE writing the SKILL.md body, not after",
+    "Specifies that each eval scenario must have exactly 3 rubric items written as third-person checkable assertions (not subjective items like 'response is helpful')",
+    "Describes a verification step where a subagent is dispatched per scenario with the SKILL.md inlined as context, the completion is judged against the rubric, and the skill is shipped only if pass thresholds are met"
+  ]
+}

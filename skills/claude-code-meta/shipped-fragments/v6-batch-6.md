@@ -1,0 +1,1 @@
+| [`running-eval-driven-skill-development`](../running-eval-driven-skill-development/) | Walks the evals-first → body → dispatch-and-judge workflow for authoring a new Claude Code skill; refuses on trivial wrappers. | New skill, plugin skill, or marketplace skill that encodes judgment / multi-step reasoning / domain expertise. | 13 |

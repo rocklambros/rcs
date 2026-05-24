@@ -1,0 +1,12 @@
+{
+  "skill": "scaffolding-grad-school-pset",
+  "scenario_id": "03-research-notebook",
+  "scenario_kind": "anti-trigger",
+  "query": "I am starting a research project investigating whether a new ML embedding model performs better on legal-document retrieval than our current OpenAI baseline. This is an open-ended research investigation, not a graded assignment. Scaffold the notebook for me.",
+  "files": [],
+  "expected_behavior": [
+    "Identifies the artifact as a research notebook (open-ended investigation), NOT a graded problem set with a fixed question count and instructor rubric",
+    "Declines to engage the grad-school-pset scaffolding workflow and explains that pset scaffolding optimizes for graded-rubric discipline rather than research exploration / provenance / iteration",
+    "Recommends a research-notebook scaffold instead (or names a sibling skill like scaffolding-ml-research-notebook if applicable), and explains the difference in optimization target between the two"
+  ]
+}

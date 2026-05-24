@@ -1,0 +1,12 @@
+{
+  "skill": "running-eval-driven-skill-development",
+  "scenario_id": "02-evals-hard-to-define",
+  "scenario_kind": "edge-case",
+  "query": "I am writing a skill that helps with creative brainstorming. The output is genuinely open-ended — there is no single right answer, so I cannot write rubric items that check for a specific recommendation. Does eval-driven development still apply, and if so, how do I write the rubrics?",
+  "files": [],
+  "expected_behavior": [
+    "Acknowledges that outcome-based rubrics (checking for a specific recommendation) do not generalize to open-ended skills, but does NOT conclude that eval-driven development is therefore inapplicable",
+    "Proposes process-based rubric items that check structure and discipline rather than canonical correctness (examples: response asks at least one clarifying question; response produces at least N distinct ideas spanning multiple framings; response does NOT collapse to a single recommendation prematurely)",
+    "Distinguishes process rubrics from outcome rubrics explicitly and explains when each applies"
+  ]
+}
