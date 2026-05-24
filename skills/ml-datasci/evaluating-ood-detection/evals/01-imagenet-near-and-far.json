@@ -1,0 +1,12 @@
+{
+  "skill": "evaluating-ood-detection",
+  "scenario_id": "01-imagenet-near-and-far",
+  "scenario_kind": "happy-path",
+  "query": "I trained a ResNet-50 on a 10-class subset of ImageNet. I'm shipping it where some inputs will not belong to those 10 classes. I have a candidate OOD test set of 10 OTHER ImageNet classes plus a CIFAR-100 set. Help me evaluate an OOD detector for this deployment.",
+  "files": [],
+  "expected_behavior": [
+    "Identifies the 10-other-ImageNet-classes set as near-OOD and the CIFAR-100 set as far-OOD, and recommends evaluating and REPORTING the two separately rather than averaging or only reporting one",
+    "Recommends a method beyond max-softmax-probability (e.g., energy score, Mahalanobis on penultimate features, KNN distance, or ODIN) for the OOD score \u2014 does not stop at MSP as the proposed default",
+    "Names at least one OOD-specific evaluation metric beyond plain accuracy (AUROC, AUPR-out, or FPR-at-95-TPR) and applies it per OOD set rather than reporting only in-distribution test accuracy"
+  ]
+}

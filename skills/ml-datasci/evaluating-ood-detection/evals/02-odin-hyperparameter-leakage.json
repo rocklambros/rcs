@@ -1,0 +1,12 @@
+{
+  "skill": "evaluating-ood-detection",
+  "scenario_id": "02-odin-hyperparameter-leakage",
+  "scenario_kind": "edge-case",
+  "query": "I'm using ODIN for OOD detection. I picked the temperature T and the input perturbation epsilon by sweeping values and selecting the pair that maximized AUROC on my OOD test set. AUROC is 0.94. Is that good?",
+  "files": [],
+  "expected_behavior": [
+    "Identifies the hyperparameter-tuning-on-the-test-OOD-set as a leakage / overfitting concern that makes the 0.94 AUROC optimistically biased",
+    "Recommends a leakage-free alternative \u2014 e.g., splitting the OOD data into a tune half and a held-out test half, using the ODIN paper defaults, or switching to a method without OOD-set hyperparameters (energy, Mahalanobis)",
+    "Does NOT accept the 0.94 number at face value as the deployment-quality estimate without a leakage-corrected re-evaluation"
+  ]
+}

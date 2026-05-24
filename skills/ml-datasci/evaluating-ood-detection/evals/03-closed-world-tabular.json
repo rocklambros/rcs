@@ -1,0 +1,12 @@
+{
+  "skill": "evaluating-ood-detection",
+  "scenario_id": "03-closed-world-tabular",
+  "scenario_kind": "anti-trigger",
+  "query": "I have a tabular fraud classifier deployed against a fixed database schema. Every incoming record has the same set of columns and every record maps to one of 5 known fraud-type classes. Help me add OOD detection.",
+  "files": [],
+  "expected_behavior": [
+    "Identifies the deployment as closed-world (fixed schema, finite known classes) and does NOT immediately proceed to set up an OOD scoring method as if the deployment were open-world",
+    "Names a more appropriate alternative for this setting \u2014 such as training an explicit 'unknown' / 'other' class, a confidence-threshold abstain mechanism for low-margin predictions, or data-drift monitoring over time",
+    "Does NOT force the OOD evaluation workflow (AUROC on synthetic OOD samples, FPR-at-95-TPR, near/far OOD curation) onto a setting where there is no genuine novelty class to detect"
+  ]
+}
