@@ -1,0 +1,87 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "RAG eval-set Q-A row",
+  "description": "Schema for one row in golden.jsonl, calibration.jsonl, held-out.jsonl, or adversarial.jsonl. Produced by the building-rag-eval-set skill. Consumed by evaluating-rag-retrieval, auditing-chunking-strategy, auditing-embedding-drift, and any downstream RAG evaluation harness.",
+  "type": "object",
+  "required": ["id", "query", "answer", "kind", "difficulty", "split", "reviewed_by", "reviewed_at", "ground_truth_verified"],
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^qa-[0-9]{4,}$",
+      "description": "Stable ID for the row; never re-used even if the row is deleted."
+    },
+    "query": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Verbatim user question."
+    },
+    "answer": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Ground-truth answer text. For absent-topic rows, this is the expected refusal or 'not in corpus' response."
+    },
+    "kind": {
+      "type": "string",
+      "enum": ["factoid", "multi-hop", "synthesis", "absent-topic"],
+      "description": "Question type. factoid = single-fact lookup; multi-hop = requires combining 2+ facts; synthesis = requires summarization across multiple spans; absent-topic = answer is not in the corpus."
+    },
+    "difficulty": {
+      "type": "string",
+      "enum": ["easy", "medium", "hard"],
+      "description": "Difficulty band assigned by the reviewer."
+    },
+    "split": {
+      "type": "string",
+      "enum": ["calibration", "held-out", "adversarial"],
+      "description": "Which split this row belongs to. held-out rows MUST NOT be viewed during development."
+    },
+    "source_doc_id": {
+      "type": ["string", "null"],
+      "description": "Document ID of the primary source. Null only for absent-topic rows."
+    },
+    "source_spans": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["start_char", "end_char", "text"],
+        "additionalProperties": false,
+        "properties": {
+          "start_char": {"type": "integer", "minimum": 0},
+          "end_char": {"type": "integer", "minimum": 0},
+          "text": {"type": "string", "minLength": 1},
+          "source_doc_id": {"type": "string", "description": "If different from the row-level source_doc_id (multi-hop / synthesis case)."}
+        }
+      },
+      "default": [],
+      "description": "Character-offset spans inside the source documents that contain the answer evidence. Empty array only for absent-topic rows."
+    },
+    "reviewed_by": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Reviewer identifier; must match one of the reviewers list passed to the skill."
+    },
+    "reviewed_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 timestamp of the review."
+    },
+    "ground_truth_verified": {
+      "type": "boolean",
+      "description": "True only when the reviewer confirmed the answer text matches the source span. Rows with false MUST NOT enter the golden set."
+    },
+    "ambiguity_flag": {
+      "type": "boolean",
+      "default": false,
+      "description": "True if the query is ambiguous and multiple defensible answers exist. Ambiguous rows may enter calibration but NOT held-out test."
+    },
+    "drafted_by": {
+      "type": "string",
+      "description": "How the candidate Q-A was drafted: 'human', or 'llm:<model_id@revision>'."
+    },
+    "notes": {
+      "type": "string",
+      "description": "Free-text reviewer notes."
+    }
+  }
+}

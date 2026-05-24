@@ -1,0 +1,12 @@
+{
+  "skill": "building-rag-eval-set",
+  "scenario_id": "01-internal-hr-policy-greenfield",
+  "scenario_kind": "happy-path",
+  "query": "I'm building RAG over our internal HR policy documents. About 800 policy PDFs. We have no eval set right now; we test by asking ad-hoc questions in a chat window. Build me a proper eval set with about 100 Q-A pairs. We have two domain experts (Alice and Bob) who can review.",
+  "files": [],
+  "expected_behavior": [
+    "Produces three distinct splits (a development / calibration split, a held-out / test split that is not viewed during development, and an adversarial / stress split) rather than a single flat eval set",
+    "Requires every non-absent-topic Q-A row to carry source-document attribution and source spans, so downstream evaluation can separately attribute failures to retrieval versus generation",
+    "Includes a human-review step that captures reviewer identity and ground-truth verification for every Q-A (including LLM-drafted candidates) before any row enters the golden set, rather than allowing LLM-drafted Q-As directly into the eval"
+  ]
+}
