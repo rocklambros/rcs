@@ -1,0 +1,41 @@
+# pyproject-eval-template.toml — used by scaffolding-llm-eval-harness.
+
+[project]
+name = "<project_name>"
+version = "0.1.0"
+description = "LLM evaluation harness"
+readme = "README.md"
+requires-python = "==3.13.*"
+dependencies = [
+    "anthropic~=0.40",
+    # Uncomment if cross-provider:
+    # "openai~=1.50",
+    "jsonschema~=4.23",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest~=8.3",
+    "ruff~=0.7",
+    "mypy~=1.13",
+    "pre-commit~=4.0",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.ruff]
+line-length = 100
+target-version = "py313"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "W", "N", "UP"]
+
+[tool.mypy]
+python_version = "3.13"
+strict = true
+files = ["eval_runner.py", "judge.py", "compare.py"]
+
+[tool.pytest.ini_options]
+addopts = "-ra -q"
