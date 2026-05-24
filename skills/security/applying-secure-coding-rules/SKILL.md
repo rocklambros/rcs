@@ -11,8 +11,8 @@ description: >
   Python+FastAPI+LangChain or similar AI/ML app against a known rule corpus,
   hardening a polyglot repo with partial rule coverage, or surfacing which
   corpus rules apply to which files in the project.
-version: 0.1.0
-status: drafting
+version: 0.2.0
+status: shipped
 track: security
 audience: [security-eng, ml-engineer, backend-dev, skill-author]
 evidence:
@@ -74,7 +74,8 @@ Copy this checklist into the response and check items off as the application pro
 
 ```
 Secure-coding-rule application progress:
-- [ ] Verify a rule corpus is supplied — if not, STOP and request one
+- [ ] Verify a rule corpus is REFERENCED by the user (path, URL, repo, or inline description) — if not, STOP and request one
+- [ ] If the referenced corpus is not readable from this session, mark the run ILLUSTRATIVE and proceed against the named stack
 - [ ] Identify corpus format (semgrep / SARIF / markdown / YAML / custom repo)
 - [ ] Index the corpus: enumerate rules, capture per-rule applies_to metadata
 - [ ] Detect the target project's stack (language, framework, AI/ML stack, runtime)
@@ -93,6 +94,8 @@ If the user has NOT supplied a corpus, this skill refuses to proceed with rules 
 > *"This skill applies a user-supplied corpus of secure-coding rules. No corpus was provided. Please point at a rule pack (semgrep, SARIF), a rule repository (e.g., `claude-secure-coding-rules`), a markdown rule sheet, or a YAML rule file. I will not fabricate rules from training memory because the resulting recommendations would be unverifiable and may conflict with your team's policy."*
 
 This refusal is non-negotiable — see `reference/no-corpus-no-rules.md` for the rationale.
+
+**What "supplied" means.** A corpus is supplied when the user *names* it: a path (`~/rules/`, `./packs/python.yaml`), a URL (`https://github.com/<org>/secure-coding-rules`), a published pack id (`p/owasp-top-ten`), a repository name, or an inline description of the rule set. The skill does NOT require that the corpus exists on the responder's local filesystem. When the user provides a path the responder cannot read, proceed with an *illustrative* application: produce the per-rule report structure populated against the named stack, label the report `ILLUSTRATIVE — corpus path not readable from this session` at the top, and identify which specific corpus content the user must surface (rule ids, applies_to metadata, recent additions) for a definitive run. The only condition that triggers the refusal above is the user providing NO corpus reference at all.
 
 ### Step 2: Index the corpus
 
@@ -272,8 +275,8 @@ The skill does NOT produce a generic OWASP Top 10 walkthrough, does NOT invent r
 
 ## Status & version
 
-- Status: drafting
-- Version: 0.1.0
+- Status: shipped
+- Version: 0.2.0
 - Last-updated: 2026-05-23
 - Provenance: RCS v4 batch 2 — codifies the user-supplied-corpus pattern from Rock's `claude-secure-coding-rules` workflow, with explicit anti-fabrication discipline aligned to QC.1 (NIST SP 800-218) of the harness Quality Contract
-- Drafting reason: PRAGMATIC Sonnet-only eval validation hit the anti-trigger threshold cleanly (3/3, no-corpus refusal) but the happy-path and edge-case scenarios scored 0/3 and 2/3 respectively because the validating subagent over-applied Step 1's "verify a rule corpus is supplied" to mean "verify on disk" and refused to produce illustrative output when the described corpus/target paths were not physically present. Follow-up needed: either (a) clarify in Step 1 that user-described corpus/target inputs should be accepted at face value for hypothetical/illustrative runs, or (b) revise the eval scenarios to inline corpus content so the rule-application machinery runs against real files.
+- Validation note: v0.1.0 PRAGMATIC Sonnet-only eval hit anti-trigger 3/3 cleanly but happy-path and edge-case scored 0/3 and 2/3 because the validating subagent over-applied Step 1's "verify a rule corpus is supplied" to mean "verify on disk" and refused to produce illustrative output when the described corpus/target paths were not physically present. v0.2.0 (this version) clarifies in Step 1 that *supplied* means "referenced by the user" (path, URL, repo, or inline description) — not "physically present on the responder's filesystem" — and instructs an illustrative run with a clearly-labeled ILLUSTRATIVE banner when the corpus path is not readable. Anti-fabrication discipline (refuse when no corpus is referenced at all) is unchanged. Re-validated under PRAGMATIC for v6.0.2 promotion.

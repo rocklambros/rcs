@@ -10,8 +10,8 @@ description: >
   writing a hook script to gate tool calls, audit session starts, log
   conversations, or enforce a deny rule at runtime. Hands off to declarative
   settings for statusline, theme, or model configuration.
-version: 0.1.0
-status: drafting
+version: 0.2.0
+status: shipped
 track: claude-code-meta
 audience: [skill-author, security-eng, devops]
 evidence:
@@ -77,6 +77,7 @@ Hook authoring progress:
 - [ ] Script emits response per the event's contract (exit code + stdout JSON)
 - [ ] Registration in settings.json or plugin manifest with explicit event + matcher + command path
 - [ ] Failure mode chosen explicitly (fail-open vs fail-closed) and documented in the script header
+- [ ] If hook performs HTTP egress (or any out-of-process I/O): aggressive timeout AND client-side caching of the decision with bounded TTL — REQUIRED, not optional
 - [ ] Audit log: every decision logged with timestamp + tool + decision + reason
 - [ ] Source review: no unescaped shell interpolation, no eval, no unexpected side effects
 - [ ] Pinned: script path is absolute or repo-relative; not a moving target
@@ -193,19 +194,29 @@ Choose ONE explicitly and document at the top of the script:
 
 Never leave the failure mode ambiguous. A hook that crashes with no documented behavior is a hook whose policy is unknown.
 
-### Step 4 — Security review (hook = elevated artifact)
+### Step 4 — HTTP egress: timeout AND client-side cache (REQUIRED if applicable)
+
+Hooks fire on the hot path of every matched tool call. If the hook performs HTTP egress (central policy server, remote rule registry, audit-log sink), an unbounded or uncached HTTP round-trip will stall every Bash / Edit / Write the user issues. Two disciplines apply together, neither sufficient alone:
+
+- **Aggressive timeout** (≤ 500 ms typical for a policy gate; ≤ 2 s for richer enrichment). Pair the timeout with the explicit fail-open vs fail-closed choice from Step 3 — what does the hook do when the timeout fires? Security gates fail-closed (block on timeout); observability hooks fail-open (allow + log the gap).
+- **Client-side caching** of the policy decision with a bounded TTL (30-120 s typical). Key the cache on `(tool_name, hash(tool_input))` or a coarser bucket if the policy is stack-invariant. Caching is REQUIRED for any HTTP-egress hook: it is the only way the hot path stays sub-millisecond on cache hits. Timeout protects against the slow case; cache prevents the slow case from happening on every call.
+
+Timeout and cache TTL must be tuned together — too-short TTL means too many HTTP calls (defeats the cache); too-long TTL means stale policy decisions (defeats the gate). Document both numbers in the hook README and revisit when the policy-server SLA changes.
+
+If the hook does NOT make out-of-process calls, skip this step.
+
+### Step 5 — Security review (hook = elevated artifact)
 
 The hook script runs with the user's shell privileges. Treat it like any privileged binary:
 
 - **Source review**: no unescaped shell interpolation, no `eval`, no `exec`, no dynamic import based on hook input
 - **Pinning**: register the script by absolute path or repo-relative path; never a path that resolves via PATH (could be hijacked)
 - **Audit log**: write every decision (allow + block) to a log file the user can review
-- **No destructive side effects**: hook should observe + decide, not mutate state. Side effects (writing to user files, making HTTP calls) need explicit justification
-- **Timeout discipline**: if the hook can hang (HTTP call, lock acquisition), set an aggressive timeout and choose fail-open vs fail-closed for the timeout case
+- **No destructive side effects**: hook should observe + decide, not mutate state. Side effects (writing to user files, making HTTP calls) need explicit justification — and trigger Step 4 if HTTP is in the mix
 
-### Step 5 — Test
+### Step 6 — Test
 
-Trigger the gated case (e.g., `rm -rf /tmp/test` if the hook blocks `rm -rf /`) and confirm the block. Trigger an allowed case (e.g., `ls`) and confirm allow. Review the audit log; the decision rows must match what you observed.
+Trigger the gated case (e.g., `rm -rf /tmp/test` if the hook blocks `rm -rf /`) and confirm the block. Trigger an allowed case (e.g., `ls`) and confirm allow. Review the audit log; the decision rows must match what you observed. For HTTP-egress hooks, also test: policy-server slow (timeout fires correctly), policy-server unreachable (failure mode behaves as documented), repeated identical tool calls (second and subsequent calls served from cache, not HTTP).
 
 ## Outputs
 
@@ -228,7 +239,8 @@ Known pitfalls in hook authoring and how this skill catches them:
 
 - **Unscoped matcher.** `PreToolUse` with no `matcher` fires on every tool, including Read and Grep, slowing every interaction. Caught by: workflow checklist requires the smallest matcher that meets the need.
 - **Ambiguous failure mode.** Hook crashes with no documented behavior; user discovers the policy is silently disabled after an incident. Caught by: Step 3 requires explicit fail-open vs fail-closed with rationale.
-- **Hook hangs the session.** Hook makes an HTTP call with no timeout; policy server is slow; every Bash call stalls. Caught by: Step 4 timeout discipline + Step 3 timeout failure-mode choice.
+- **Hook hangs the session.** Hook makes an HTTP call with no timeout; policy server is slow; every Bash call stalls. Caught by: Step 4 explicit timeout + Step 3 failure-mode choice.
+- **HTTP-egress hook with no cache.** Hook has a timeout but no client-side cache, so every Bash invocation pays the HTTP round-trip; the session feels slow even when the policy server is healthy. Caught by: Step 4 requires both timeout AND cache; workflow checklist names caching as REQUIRED for HTTP-egress hooks.
 - **Path hijack.** Hook registered as `gate-bash.py` (relative, PATH-resolved); attacker drops a malicious `gate-bash.py` earlier in PATH. Caught by: Step 4 requires absolute or repo-relative path.
 - **No audit log.** Hook blocks a tool call; user has no record of why. Caught by: Step 4 requires audit-log writes for every decision.
 - **Hook script unpinned in plugin.** Plugin ships a hook script that gets overwritten by an `npm update` of the plugin's deps. Caught by: bundle the script inside the plugin repo, do not depend on an upstream package for the hook body.
@@ -272,7 +284,7 @@ Output: Skill answers that statusline is declarative configuration, not a hook. 
 
 ## Status & version
 
-- Status: drafting
-- Version: 0.1.0
+- Status: shipped
+- Version: 0.2.0
 - Last-updated: 2026-05-23
-- Validation note: PRAGMATIC Sonnet eval scored 3/3 happy-path, 2/3 edge-case (missed the client-side caching rubric for the HTTP-egress hook variant), 3/3 anti-trigger. The skill body teaches client-side caching with bounded TTL in Step 5 (Example 2), but the Sonnet completion of the eval scenario emphasized scoped matcher + timeout discipline without surfacing the caching guidance. Demoted from shipped pending a re-validation pass that confirms the caching guidance lands.
+- Validation note: v0.1.0 PRAGMATIC Sonnet eval scored 3/3 happy-path, 2/3 edge-case (missed the client-side caching rubric for the HTTP-egress hook variant), 3/3 anti-trigger. v0.2.0 reorders the Workflow to make HTTP-egress caching a top-level step (Step 4) and adds an explicit Workflow-checklist item naming caching as REQUIRED for HTTP-egress hooks. Re-validated under PRAGMATIC for v6.0.2 promotion.
