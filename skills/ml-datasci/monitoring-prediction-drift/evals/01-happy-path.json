@@ -1,0 +1,12 @@
+{
+  "skill": "monitoring-prediction-drift",
+  "scenario_id": "01-calibration-drift-stable-features",
+  "scenario_kind": "happy-path",
+  "query": "Our loan-default classifier has been in production for 9 months. Feature drift looks stable — PSI is under 0.1 on every input feature. But our finance team says actual default rates are running higher than the model predicts. Help me find what shifted. Loans take 30-90 days to mature before a default is observable. We have predictions logged with prediction_id, timestamp, and y_pred_proba, plus a labels table with prediction_id, label_timestamp, and y_true.",
+  "files": [],
+  "expected_behavior": [
+    "Names labeling-delay-aware window construction as a required first step — current evaluation window must end at least labeling_delay_days before today so labels are mature, not the literal most recent days",
+    "Recommends calibration diagnostics (reliability curve, calibration slope and intercept, and/or Brier score) rather than only AUC or accuracy to detect the under-prediction symptom the finance team observed",
+    "Recommends post-hoc recalibration (Platt or isotonic) on the recent labeled window before recommending a full model retrain, since stable inputs + miscalibrated outputs point to calibration drift not concept drift"
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "skill": "auditing-inference-latency-budget",
+  "scenario_id": "01-realtime-p99-breach",
+  "scenario_kind": "happy-path",
+  "query": "Our real-time fraud-scoring API has a 200ms P99 SLO and we're at 480ms P99 in production. Mean and P50 are healthy (around 80ms). The model hasn't changed in three months. We have per-stage timing logs with tokenize_ms, feature_lookup_ms, preprocess_ms, model_forward_ms, postprocess_ms, and total_ms columns, plus the request batch size. Help me find the cause.",
+  "files": [],
+  "expected_behavior": [
+    "Reports per-percentile latency (P50, P95, P99) rather than only mean, and frames the audit verdict against the stated 200ms P99 SLO rather than against the mean",
+    "Recommends per-stage decomposition of latency at the P99 level and a slow-versus-fast comparison (P95-P99 group versus P40-P50 group) to identify which stage is the dominant tail driver, rather than recommending a generic optimization without measurement",
+    "Names input-shape variance (batch size, sequence length, or fanout) as a likely tail-driver hypothesis given the P50-healthy P99-blown pattern, and recommends measuring the per-stage latency correlation with batch size before committing to a fix"
+  ]
+}
