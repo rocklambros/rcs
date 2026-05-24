@@ -1,0 +1,12 @@
+{
+  "skill": "auditing-embedding-drift",
+  "scenario_id": "03-static-benchmark-no-cohort",
+  "scenario_kind": "anti-trigger",
+  "query": "I'm using the MS-MARCO dataset to evaluate my RAG system. There is one snapshot of the dataset and I have embedded all of it once. Audit the embeddings for drift.",
+  "files": [],
+  "expected_behavior": [
+    "Identifies that drift analysis requires two distributions to compare (a baseline cohort and a comparison cohort across a time axis, source axis, model-version axis, or other meaningful dimension) and a single static snapshot has no such second cohort",
+    "Declines to compute drift metrics or to produce a drift report for the static single-cohort case rather than fabricating a comparison",
+    "Suggests an alternative skill or workflow that actually applies (one-shot retrieval evaluation, chunking-strategy audit, or any other approach that operates on a single dataset rather than requiring two cohorts)"
+  ]
+}

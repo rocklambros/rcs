@@ -1,0 +1,12 @@
+{
+  "skill": "auditing-chunking-strategy",
+  "scenario_id": "02-faq-tutorial-defaults",
+  "scenario_kind": "edge-case",
+  "query": "My RAG over 12,000 customer-support Q-A pairs uses chunk_size=1000, chunk_overlap=200 copied from the LangChain quickstart tutorial. The average Q-A pair is about 150 tokens. Should I sweep chunk sizes to optimize this?",
+  "files": [],
+  "expected_behavior": [
+    "Recognizes that each Q-A pair is a self-contained unit shorter than the chunk_size, so the splitter is effectively a no-op (almost every chunk is exactly one Q-A pair) and a sweep would not change the chunking behavior",
+    "Recommends either dropping the chunking layer entirely (one document per Q-A is already the right unit) or pinning a small chunk_size with overlap=0 documented as a no-op for this corpus shape",
+    "Does not force the user through a full multi-cell chunk_size × overlap sweep when the corpus structure pre-empts the chunking question"
+  ]
+}

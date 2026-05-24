@@ -1,0 +1,12 @@
+{
+  "skill": "building-rag-eval-set",
+  "scenario_id": "03-existing-benchmark-covers-domain",
+  "scenario_kind": "anti-trigger",
+  "query": "I want to evaluate my multi-hop question-answering system. Build me a custom eval set from scratch.",
+  "files": [],
+  "expected_behavior": [
+    "Identifies that multi-hop QA has established public benchmarks (HotPotQA, 2WikiMultiHopQA, MuSiQue, or similar) and recommends starting with one of those rather than building a custom eval set from scratch",
+    "Does not walk the full from-scratch eval-set construction workflow (coverage matrix, drafting, review, splits, hashing) for a domain that is already covered by a public benchmark",
+    "Optionally explains under what circumstance a custom multi-hop eval set IS justified (proprietary domain not represented in public benchmarks, domain-specific reasoning patterns not in public benchmarks), so the user can self-check whether the from-scratch path actually applies to them"
+  ]
+}

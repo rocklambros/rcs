@@ -1,0 +1,12 @@
+{
+  "skill": "building-rag-eval-set",
+  "scenario_id": "02-tiny-corpus-no-experts",
+  "scenario_kind": "edge-case",
+  "query": "I have a 30-document corpus of my personal markdown notes. I want to test a small RAG over it. There are no domain experts to review — it's just me. Build me an eval set.",
+  "files": [],
+  "expected_behavior": [
+    "Recognizes the small-scale + single-reviewer context and adapts (e.g., shrinks the target_size away from the 100-row default toward something proportionate, or notes that the formal three-split + multi-reviewer apparatus is overkill at this scale) rather than mechanically applying the full 100-Q-A + multi-reviewer template",
+    "Still requires source-document attribution and source spans for non-absent-topic Q-As, because that is what separates retrieval failures from generation failures regardless of corpus size",
+    "Does not invent or assume the existence of additional reviewers beyond the single self-reviewer the user has described"
+  ]
+}

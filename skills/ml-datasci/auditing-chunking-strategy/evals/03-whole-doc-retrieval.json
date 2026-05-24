@@ -1,0 +1,12 @@
+{
+  "skill": "auditing-chunking-strategy",
+  "scenario_id": "03-whole-doc-retrieval",
+  "scenario_kind": "anti-trigger",
+  "query": "My RAG over 800 product-spec PDFs retrieves the entire PDF for each query and stuffs it into the LLM context window. The model has a 200k context so this fits. Please audit my chunking strategy.",
+  "files": [],
+  "expected_behavior": [
+    "Identifies that the pipeline has no chunking step to audit because the document is the retrieval unit, and declines to walk a chunk-size sweep that would not apply",
+    "Suggests the audits that actually apply to a full-document-retrieval pipeline (prompt token budget, inference latency budget, or when to introduce chunking once the corpus crosses the context window) rather than forcing a chunking audit",
+    "Does not produce a chunk_size × overlap sweep table or recommend specific chunk_size and overlap numeric values for this whole-doc-retrieval pipeline"
+  ]
+}

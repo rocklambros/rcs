@@ -1,0 +1,12 @@
+{
+  "skill": "auditing-embedding-drift",
+  "scenario_id": "02-provider-reversioned-model",
+  "scenario_kind": "edge-case",
+  "query": "OpenAI re-versioned text-embedding-3-large last month and our retrieval got weird right after. We have 3000 embeddings computed before the update and 3000 computed after the update, on the same corpus and same chunking. Audit the drift and tell us what to do.",
+  "files": [],
+  "expected_behavior": [
+    "Identifies that the most likely drift signature here is broad drift across many dimensions with small per-dimension magnitude (the model-re-versioning pattern), rather than narrow drift concentrated in a few dimensions (which would suggest a content-category shift)",
+    "Recommends a confirming check that distinguishes model-re-versioning from content drift — for example, re-embedding a sample of the OLD documents with the CURRENT model and checking whether the embeddings match the originals",
+    "Recommends re-embedding the corpus with the new model version AND pinning the model revision (e.g., requesting a date-stamped or SHA-stamped model identifier in the embedding config) so the next provider re-version is detected at deploy time rather than discovered through retrieval decay"
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "skill": "auditing-embedding-drift",
+  "scenario_id": "01-six-month-retrieval-decay",
+  "scenario_kind": "happy-path",
+  "query": "My customer-support RAG retrieval has gotten worse over the last 6 months. Same code, same chunking config, same embedding model (text-embedding-3-large). Recall on a fixed eval set dropped from 0.84 to 0.71. I have approximately 5000 embeddings from month 1 (baseline) and 7000 embeddings from month 6 (comparison), with document metadata including category and ingestion_date. Audit for embedding drift.",
+  "files": [],
+  "expected_behavior": [
+    "Computes at least two distinct drift metrics across the baseline and comparison cohorts (for example: per-dimension JS or KL divergence, centroid cosine distance, or intra-cohort mean pairwise distance shift) rather than relying on a single metric",
+    "Bootstraps 95% confidence intervals on the drift metrics (or explicitly requires CIs / a noise calibration step) so that sample-size wobble is separated from real drift, and does not declare drift from a point estimate alone",
+    "Names a specific attribution hypothesis (new content category, upstream data shift, or embedding-model re-versioning) and ties the recommended action (re-embed, drift-aware reranking, category gating, or no action) to that attribution rather than recommending a generic 'just re-embed everything'"
+  ]
+}
