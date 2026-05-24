@@ -4,7 +4,29 @@ All notable changes to RCS are documented here. Per-skill changes use the skill'
 
 ## [Unreleased]
 
-_No unreleased changes. Most recent release is `v7.0.1` below._
+_No unreleased changes. Most recent release is `v7.0.2` below._
+
+## [v7.0.2] — 2026-05-24
+
+Documentation-blocker patch following `v7.0.1`. Applies the newly-shipped `workflow/writing-repo-documentation` skill to the repository's own front-page documentation. Three blocker-tier fixes; zero new skills.
+
+### Fixed
+
+- **`README.md` install loop clobbered existing symlinks.** The previous loop (`for skill in skills/*/*/; do ln -s ... "$HOME/.claude/skills/$name"; done`) had no guard for an existing target. Re-running the script or running against a populated `~/.claude/skills/` directory failed silently. The replacement loop guards with `[ -L "$target" ] || [ -e "$target" ]` and prints a `skip:` line for any name already present. The script is now idempotent.
+
+### Added
+
+- **`SECURITY.md`.** The repo ships `security/writing-vdp-and-coordinated-disclosure` as a skill but did not apply that discipline to itself. The new file documents the reporting channel (`rock@rockcyber.com`), scope (in / out), expected timeline (3 / 7 / 14-30 days for ack / triage / fix), safe-harbor language for good-faith research, credit policy, and an explicit "what this policy does not do" section.
+
+### Changed
+
+- **`README.md` restructured to the six-section spine** the `writing-repo-documentation` skill teaches: one-sentence what-and-why, a 30-second concrete example showing three skills auto-loading on a real query, install, a second example showing skill composition during ML project setup, a Concepts section defining `skill` / `track` / `Σ` / `status` / `eval` / `PRAGMATIC` inline, and a Where-to-go-next section linking the cross-track index, per-track READMEs, CONTRIBUTING, SECURITY, CHANGELOG, and the original design spec. The full 104-row catalog table moved out of the front page; a top-10-by-Σ teaser stays, with a pointer to `skills/README.md` for the rest. The previous "wall of API tables" anti-pattern is gone.
+
+### Methodology note
+
+Each new artifact in this release was authored against the `writing-repo-documentation` skill's discipline. The SECURITY.md draft was self-audited against the AI-slop pattern catalog before commit. The README restructure was checked against the six-section spine and the novice-to-advanced layering rules (run-before-define, one-concept-per-paragraph, explicit stopping points). No new SKILL.md files in this release means no eval changes; the existing 104 skills' tests remain green.
+
+Cumulative skill count at HEAD: **104 shipped + 0 drafting** (unchanged from `v7.0.1`).
 
 ## [v7.0.1] — 2026-05-24
 
