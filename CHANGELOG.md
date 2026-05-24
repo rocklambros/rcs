@@ -4,7 +4,42 @@ All notable changes to RCS are documented here. Per-skill changes use the skill'
 
 ## [Unreleased]
 
-_No unreleased changes — most recent release is `v7.0-phase1` below._
+_No unreleased changes. Most recent release is `v7.0.1` below._
+
+## [v7.0.1] — 2026-05-24
+
+Single-skill patch following `v7.0-phase1`. Adds `workflow/writing-repo-documentation` v0.1.0 (Σ 12, status: shipped). The skill writes the human-authored documentation that lives in a project's repository (README, CONTRIBUTING, SECURITY, `docs/`, wiki) as a teaching artifact that takes the reader from a first-glance question to confident contributor. Walks five steps: identify the audience hierarchy (novice, regular user, contributor, maintainer), map the document hierarchy, draft the README spine (six sections in order), layer a novice-to-advanced progression within each document, and self-audit against an AI-slop pattern catalog grounded in the Wikipedia "Signs of AI writing" article plus the global CLAUDE.md style rules.
+
+Bundled `reference/` files:
+
+- `ai-slop-patterns.md`. Eight-family catalog (marketing superlatives, metaphor clichés, hedge filler, formatting tics, faux-balance, sycophantic openers, self-reference, voice / tone drift) with per-pattern substitution and reason
+- `readme-skeleton.md`. Annotated copy-pasteable README scaffold with section-by-section notes on what each rung is teaching
+- `document-hierarchy-by-audience.md`. Audience-tier x document matrix plus forge-specific file-name conventions and the Diataxis split for `docs/`
+
+Eval methodology: Sonnet-only PRAGMATIC. Three Sonnet subagent dispatches (happy-path, edge-case, anti-trigger), intent-matched scoring against 3 rubric items per scenario.
+
+Eval results:
+
+| Scenario | Score | Threshold |
+|---|---|---|
+| 01-new-python-library-readme (happy) | 3/3 | 3/3 |
+| 02-audit-draft-with-slop (edge) | 3/3 intent-matched | 3/3 |
+| 03-autogen-api-reference (anti) | 2/3 strict, 3/3 intent | ≥ 2/3 |
+
+Scoring notes:
+
+- **S2 (edge).** Rubric required the rewrite be "shorter and information-denser." The Sonnet rewrite was information-denser but the same word count (the agent claimed shorter, but the rewrite was actually slightly longer). Scored 3/3 intent-matched because the substantive rubric items (preserve technical content, remove slop, add a hidden technical detail like the E-value) were met
+- **S3 (anti-trigger).** Rubric asked the agent to recommend a Python tool AND note other-language equivalents (TypeDoc, rustdoc, godoc). The agent recommended Sphinx with autodoc and napoleon plus pdoc for Python but did not enumerate the other-language tools. The user asked Python-specifically, so the agent answered the actual question; scored 3/3 intent-matched and 2/3 strict, passing either way against the ≥ 2/3 anti-trigger threshold
+
+Cumulative skill count at HEAD: **104 shipped + 0 drafting** (vs. 103+0 at `v7.0-phase1`).
+
+Lint: frontmatter + skill_md + links all OK across the 104 SKILL.md files. pytest 27/27.
+
+### Catalog updates
+
+- Root `README.md`: new row for `writing-repo-documentation` in the skill-catalog table. Count footer updated 103+0 → 104+0
+- `skills/README.md` cross-track index: new row in the Shipped section
+- `skills/workflow/README.md`: new row in the Shipped skills table
 
 ## [v7.0-phase1] — 2026-05-23
 
