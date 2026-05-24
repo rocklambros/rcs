@@ -1,0 +1,12 @@
+{
+  "skill": "building-conformal-prediction-set",
+  "scenario_id": "01-xgboost-90pct-classification",
+  "scenario_kind": "happy-path",
+  "query": "I trained an XGBoost multi-class classifier on 10,000 rows for a hospital readmission risk task with four severity classes. I need 90% prediction sets so each test point produces a set of class labels that contains the true label at least 90% of the time. Walk me through setting this up end-to-end and explain how I verify it actually works.",
+  "files": [],
+  "expected_behavior": [
+    "Recommends three disjoint splits — train, calibration, and test — where the model is fit only on train, the conformal quantile is computed on calibration, and the test set is used only to verify empirical coverage",
+    "Specifies a nonconformity score appropriate for a probabilistic classifier (such as 1 minus the predicted probability of the true class) and computes the calibration quantile at a level adjusted by the finite-sample correction (n+1)/n rather than the bare 1 - alpha quantile",
+    "Requires reporting both the empirical coverage on the held-out test set (expected to fall near 0.9) and the average set size, because a set that contains every class trivially achieves the coverage target without being useful"
+  ]
+}

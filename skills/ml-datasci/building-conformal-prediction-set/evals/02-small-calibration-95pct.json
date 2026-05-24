@@ -1,0 +1,12 @@
+{
+  "skill": "building-conformal-prediction-set",
+  "scenario_id": "02-small-calibration-95pct",
+  "scenario_kind": "edge-case",
+  "query": "I want 95% prediction intervals (alpha = 0.05) around a regression model that predicts patient hospital length-of-stay. The full dataset is small — I can carve off at most 150 rows as a calibration set. Is split conformal still viable here, and what should I worry about?",
+  "files": [],
+  "expected_behavior": [
+    "Recognizes that a 150-point calibration set at alpha = 0.05 leaves only a handful of points in the tail above the conformal quantile, making the quantile estimate noisy and the resulting interval width unstable across different calibration draws",
+    "Offers at least one concrete mitigation — for example dropping the coverage target to 90% so the quantile sits on more tail points, switching to jackknife+ or cross-conformal that reuses data more efficiently, or collecting more calibration data — instead of silently producing a 95% interval at the requested sample size",
+    "Does NOT claim that split conformal at n_cal = 150 with alpha = 0.05 produces a stable 95% interval without naming the variance / imprecision issue"
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "skill": "building-conformal-prediction-set",
+  "scenario_id": "03-point-prediction-no-coverage-need",
+  "scenario_kind": "anti-trigger",
+  "query": "I'm building a regression model to predict next-day internal electricity demand for capacity planning. Downstream consumers only use the point estimate, and the grid-operator team handles uncertainty separately at the system level. There is no contractual requirement on me to deliver a coverage guarantee. Should I wrap this with split conformal prediction anyway as best practice?",
+  "files": [],
+  "expected_behavior": [
+    "Does NOT recommend wrapping the model in split conformal prediction for this scenario; recognizes that conformal adds setup, a third data split, and ongoing recalibration work that has no payoff when no downstream coverage requirement exists",
+    "Suggests a lighter-weight alternative such as standard regression diagnostics (RMSE / MAE, residual plots, cross-validation) or hands off to a frequentist regression-evaluation workflow, rather than adding a coverage layer no consumer is asking for",
+    "Names at least one concrete condition that would flip the recommendation back toward conformal, such as a future downstream consumer requiring 'the actual value falls inside the reported interval at least X% of the time' as part of a contract or service level"
+  ]
+}
