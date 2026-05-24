@@ -1,0 +1,12 @@
+{
+  "skill": "verifying-sigstore-signatures",
+  "scenario_id": "02-attestation-digest-mismatch",
+  "scenario_kind": "edge-case",
+  "query": "We ran `cosign verify` on ghcr.io/example/svc@sha256:aaa111... and it returned OK. We then ran `cosign verify-attestation --type slsaprovenance` and that also returned OK. But our security lead says she pasted the decoded predicate into a notepad and the predicate's `subject.digest` field references a DIFFERENT digest (sha256:bbb222...) than the artifact we are deploying. Trust policy: any subject under `https://github.com/example/`, minimum SLSA L2. Is the artifact verified or not, and what is going on?",
+  "files": [],
+  "expected_behavior": [
+    "Issues a FAILED verdict on the overall verification — does not call this artifact verified despite cosign verify and verify-attestation both returning OK in isolation",
+    "Names the root cause as a digest mismatch between the verified artifact and the attestation's subject.digest field — the attestation is attached to (or claims provenance for) a different artifact than the one being deployed",
+    "Recommends either re-running the build pipeline so the attestation is regenerated for the actual artifact digest, OR investigating whether an attacker swapped the attestation envelope onto the wrong artifact — not deploying under the current state"
+  ]
+}
