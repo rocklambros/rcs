@@ -1,0 +1,12 @@
+{
+  "skill": "running-adversarial-perturbation-suite",
+  "scenario_id": "01-happy-path",
+  "scenario_kind": "happy-path",
+  "query": "I trained a ResNet-50 on CIFAR-10 and clean test accuracy is 94.3%. A regulator is asking for an adversarial robustness number under L-infinity epsilon = 8/255. Walk me through what to run and what to report.",
+  "files": [],
+  "expected_behavior": [
+    "Names the canonical attack stack as FGSM (weak baseline) + PGD-20 (mid-effort) + AutoAttack-standard (the canonical benchmark / leaderboard number), in that order of increasing strength",
+    "Requires an explicit threat-model declaration that specifies the norm (Linf), the epsilon value WITH UNITS (8/255 for [0,1]-scaled pixels), white-box vs black-box, and untargeted vs targeted — before any attack runs",
+    "Specifies that robust accuracy must be reported as a fraction of clean accuracy on the SAME attacked subset (not the full test set), and that the report must include the strict monotone sanity check robust_acc(AutoAttack) ≤ robust_acc(PGD-20) ≤ robust_acc(FGSM)"
+  ]
+}

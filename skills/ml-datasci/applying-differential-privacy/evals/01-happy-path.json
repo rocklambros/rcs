@@ -1,0 +1,12 @@
+{
+  "skill": "applying-differential-privacy",
+  "scenario_id": "01-happy-path",
+  "scenario_kind": "happy-path",
+  "query": "We're fine-tuning a clinical NLP model on 100,000 patient discharge summaries using DP-SGD. Compliance wants 'differential privacy.' What epsilon and delta do we use, and how do we actually get there with PyTorch?",
+  "files": [],
+  "expected_behavior": [
+    "Requires the threat model to be declared (membership inference on the fine-tuned model is the typical answer for this scenario) and justifies the epsilon choice (typically epsilon in the range 0.5 to 3.0 for HIPAA-equivalent membership-inference resistance) against that threat model rather than defaulting to an unjustified value",
+    "Sets delta sized correctly for n = 100,000 — delta in the range of 1e-6 to 1e-7 (the rule delta should be at most 1 / (n × poly-log-n) implies delta near 1e-7 for n = 100K) — and explicitly rejects sloppy delta choices like delta = 1e-3 with this dataset size",
+    "Prescribes DP-SGD with the Opacus library (or equivalent), names the three required knobs (L2 per-example gradient clipping bound C, noise multiplier sigma, Poisson subsampling rate q = batch_size / n), and requires using an RDP (Renyi DP) accountant to track cumulative epsilon across training steps and stop training when the budget is exhausted"
+  ]
+}

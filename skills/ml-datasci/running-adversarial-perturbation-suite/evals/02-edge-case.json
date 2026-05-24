@@ -1,0 +1,12 @@
+{
+  "skill": "running-adversarial-perturbation-suite",
+  "scenario_id": "02-edge-case",
+  "scenario_kind": "edge-case",
+  "query": "I ran PGD-20 against my XGBoost fraud classifier (14 features: 8 continuous, 6 one-hot categoricals). PGD-20 reports a robust accuracy of 12%. The model goes to production this week. Is that the number I report?",
+  "files": [],
+  "expected_behavior": [
+    "Flags that the bare 12% PGD-20 robust accuracy is misleading for tabular data because PGD on one-hot categorical columns produces continuous outputs (e.g., 0.37) that are not real-world feasible inputs — the unfiltered number overstates actual deployment risk",
+    "Requires a domain-feasibility filter (categorical features must stay on the original one-hot encoding, continuous features must stay in their valid range / integer / monotone constraints) and a SEPARATE feasibility-filtered robust accuracy number reported alongside the unfiltered number",
+    "Recommends also running AutoAttack-standard (not just PGD-20) before reporting any production-claimed robustness number, since AutoAttack catches gradient-masking and weak-attack-strength failure modes that PGD alone does not"
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "skill": "auditing-rlhf-reward-hacking",
+  "scenario_id": "03-anti-trigger",
+  "scenario_kind": "anti-trigger",
+  "query": "I just fine-tuned GPT-2 on a 50K-example instruction dataset using standard supervised fine-tuning (cross-entropy on labeled examples). Audit it for reward hacking.",
+  "files": [],
+  "expected_behavior": [
+    "Refuses the reward-hacking framing as not applicable to a pure SFT (supervised fine-tuning) model and explains that reward hacking is specifically the failure mode where a policy games a LEARNED REWARD MODEL — SFT has no reward model, so there is nothing to hack",
+    "Names the failure modes that ARE relevant to SFT instead — train-vs-test gap, dataset leakage / contamination, distribution shift, stylistic over-fitting to corpus quirks, catastrophic forgetting of base capabilities — and distinguishes these from reward hacking",
+    "Hands off to the right sibling skills — ml-datasci/running-eval-before-after-finetune for general before/after evaluation discipline, and ml-datasci/auditing-sft-dataset for SFT-corpus quality checks — rather than running the reward-hacking probes on a model where they cannot apply"
+  ]
+}
