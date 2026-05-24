@@ -1,0 +1,12 @@
+{
+  "skill": "explaining-statistical-concept",
+  "scenario_id": "03-ambiguous-audience-tier",
+  "scenario_kind": "anti-trigger",
+  "query": "Explain the central limit theorem.",
+  "files": [],
+  "expected_behavior": [
+    "Refuses to produce a generic 'all-audiences' explanation of the central limit theorem because the audience tier is unspecified and ambiguous.",
+    "Explains briefly why tier matters (a high-school-tier explanation of CLT and a grad-tier explanation are unrecognizable as the same topic; choosing the wrong tier wastes the explanation), rather than just complaining about missing input.",
+    "Asks one focused disambiguation question to identify the tier (high-school / undergrad-intro / undergrad-advanced / grad / practitioner) before proceeding, rather than defaulting silently to one tier and proceeding."
+  ]
+}
