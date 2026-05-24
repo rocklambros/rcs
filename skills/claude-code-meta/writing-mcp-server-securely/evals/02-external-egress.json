@@ -1,0 +1,12 @@
+{
+  "skill": "writing-mcp-server-securely",
+  "scenario_id": "02-external-egress",
+  "scenario_kind": "edge-case",
+  "query": "My MCP server needs to call the GitHub REST API to fetch issue and PR data. The auth is a personal access token. How do I design the egress and secret handling so it'll pass an auditor's review?",
+  "files": [],
+  "expected_behavior": [
+    "Recommends documenting the exact egress target (api.github.com) explicitly in both the README and an auditable manifest field so consumers can verify before install",
+    "Recommends consuming the token via an environment variable (not a hardcoded value, not a config file checked into the repo) and never logging or echoing the token in any code path, including error messages",
+    "Recommends requesting the least-privilege OAuth scope or fine-grained personal access token (e.g., read-only repo + issues scopes) rather than a full-access classic PAT"
+  ]
+}

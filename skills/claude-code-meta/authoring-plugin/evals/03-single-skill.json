@@ -1,0 +1,12 @@
+{
+  "skill": "authoring-plugin",
+  "scenario_id": "03-single-skill",
+  "scenario_kind": "anti-trigger",
+  "query": "I just wrote one skill — auditing-graphql-schemas — and I want to share it with my team. Should I package it as a plugin?",
+  "files": [],
+  "expected_behavior": [
+    "Does NOT walk the plugin authoring workflow (manifest, marketplace.json, multi-artifact layout) for a single-skill case",
+    "Hands off to the skill-authoring discipline (authoring-skill) and explains that a single SKILL.md can be shared as a symlink, a git repo, or a copy without plugin packaging overhead",
+    "Explains that plugin packaging earns its overhead when bundling 2+ artifact types (skills + commands + agents + hooks + MCP servers) or when marketplace distribution / lifecycle management is needed"
+  ]
+}

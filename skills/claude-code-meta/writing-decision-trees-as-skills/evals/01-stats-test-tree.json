@@ -1,0 +1,12 @@
+{
+  "skill": "writing-decision-trees-as-skills",
+  "scenario_id": "01-stats-test-tree",
+  "scenario_kind": "happy-path",
+  "query": "I have a written decision tree for picking a statistical test — 1 vs 2+ groups, paired vs independent, parametric vs non-parametric, equal vs unequal variance. The tree has about 15 leaf actions (each is a specific test recommendation). I want to package it as a skill that walks the tree deterministically rather than asking Claude to use judgment. Walk me through it.",
+  "files": [],
+  "expected_behavior": [
+    "Recommends extracting each predicate (paired? normal? equal-variance?) as a numbered step in the Workflow section, with the matching branch action stated explicitly per predicate value — so the SKILL.md mirrors the tree structure visibly",
+    "Names the walk-the-tree discipline as the binding contract — the skill must check predicates in the documented order and commit to the matching leaf action, not let Claude shortcut to a leaf based on the user's framing or a different framing of the same data",
+    "Recommends documenting per-predicate preconditions (which data the predicate requires — e.g., 'requires Shapiro-Wilk result before evaluating normality predicate') so the skill knows when it cannot evaluate a predicate and must request input rather than guess"
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "skill": "writing-deny-allow-rules",
+  "scenario_id": "03-trivial-allowlist",
+  "scenario_kind": "anti-trigger",
+  "query": "I just want to always allow `ls` without being prompted. Should I write a rule file for it?",
+  "files": [],
+  "expected_behavior": [
+    "Does NOT recommend writing a .claude/rules/*.md file for a single trivial allowlist entry",
+    "Recommends the settings.json permissions block instead — e.g., adding `Bash(ls *)` to the permissions.allow array in ~/.claude/settings.json or .claude/settings.local.json",
+    "Explains that rule files earn their overhead when the matcher is complex, the rationale needs to be auditable, or the same logic needs to be reused across projects; simple per-tool allowlists belong in settings.json"
+  ]
+}

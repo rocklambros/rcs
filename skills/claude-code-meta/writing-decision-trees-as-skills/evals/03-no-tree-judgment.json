@@ -1,0 +1,12 @@
+{
+  "skill": "writing-decision-trees-as-skills",
+  "scenario_id": "03-no-tree-judgment",
+  "scenario_kind": "anti-trigger",
+  "query": "I want a skill that reviews a research paper for novelty — whether the contribution is actually new versus a known re-statement. Can you help me package my novelty-review approach as a walk-the-tree skill?",
+  "files": [],
+  "expected_behavior": [
+    "Does NOT recommend packaging open-judgment novelty review as a walk-the-tree skill",
+    "Recommends a brainstorming-style, premortem-style, or framework-as-input skill instead (e.g., something patterned on running-adversarial-premortem or auditing-mathematical-claims) where judgment is the explicit deliverable rather than a leaf in a tree",
+    "Explains that walk-the-tree discipline only fits when the predicates are objectively checkable and the leaf actions are deterministic — novelty review is neither, because the predicate ('is this novel?') is the entire question"
+  ]
+}

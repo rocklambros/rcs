@@ -1,0 +1,12 @@
+{
+  "skill": "authoring-plugin",
+  "scenario_id": "01-bundling-five-skills",
+  "scenario_kind": "happy-path",
+  "query": "I have 5 skills I've written for ML-DS workflows (selecting-loss-function, auditing-train-test-split, building-baseline-models, plus 2 more). I also have 2 slash commands and 1 subagent definition I want to ship together. Walk me through bundling them into a Claude Code plugin I can publish to a marketplace.",
+  "files": [],
+  "expected_behavior": [
+    "Recommends creating a .claude-plugin/plugin.json manifest with required fields (name, version, description) and a separate marketplace.json entry for distribution",
+    "Names the standard plugin directory layout — skills/, commands/, agents/, hooks/ — and explains that each artifact type is auto-discovered when placed in its named subdirectory",
+    "Calls out version pinning (SemVer per the plugin AND per any bundled MCP servers) and a license file as required for marketplace publication"
+  ]
+}

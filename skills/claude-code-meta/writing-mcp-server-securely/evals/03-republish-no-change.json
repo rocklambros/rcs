@@ -1,0 +1,12 @@
+{
+  "skill": "writing-mcp-server-securely",
+  "scenario_id": "03-republish-no-change",
+  "scenario_kind": "anti-trigger",
+  "query": "I'm republishing my MCP server with no behavior changes — just bumping the version because the upstream package I depend on had a security update. Do I need to redo the whole authoring workflow?",
+  "files": [],
+  "expected_behavior": [
+    "Does NOT walk the full authoring workflow (license declaration, six-check design pass, tool-subset declaration) from scratch for a no-behavior-change republish",
+    "Recommends a CHANGELOG entry naming the upstream-dependency bump and a SemVer PATCH bump (e.g., 0.2.1 → 0.2.2) for a non-breaking dependency update",
+    "Notes that even a no-behavior-change republish should re-run the six-check audit (license, source, egress, version pin, secret handling, tool subset) because the upstream dependency change could have shifted any of those properties"
+  ]
+}

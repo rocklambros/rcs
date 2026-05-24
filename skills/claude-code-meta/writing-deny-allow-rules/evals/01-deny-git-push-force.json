@@ -1,0 +1,12 @@
+{
+  "skill": "writing-deny-allow-rules",
+  "scenario_id": "01-deny-git-push-force",
+  "scenario_kind": "happy-path",
+  "query": "I want a rule that denies any `git push --force` (or `-f`) targeting the main or master branch, across all my projects. Walk me through writing it as a rule file rather than burying it in settings.json.",
+  "files": [],
+  "expected_behavior": [
+    "Recommends a .claude/rules/<rule-slug>.md file (user scope for cross-project coverage) and shows the file structure — matcher pattern, decision (deny), severity, and a rationale section explaining WHY the rule exists",
+    "Writes a matcher that catches both --force and -f variants on main and master (e.g., a Bash regex or a structured matcher covering `git push (--force|-f).*\\b(main|master)\\b`), not a brittle exact-string match",
+    "Cross-references the relationship between declarative rules and PreToolUse hooks — rules describe WHAT is allowed/denied; hooks (or the built-in rule evaluator) enforce them at runtime"
+  ]
+}

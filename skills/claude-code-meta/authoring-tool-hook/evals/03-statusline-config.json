@@ -1,0 +1,12 @@
+{
+  "skill": "authoring-tool-hook",
+  "scenario_id": "03-statusline-config",
+  "scenario_kind": "anti-trigger",
+  "query": "Help me write a hook that changes my Claude Code statusline to show the current branch and the model name.",
+  "files": [],
+  "expected_behavior": [
+    "Does NOT engage the hook authoring workflow (script structure, event registration, security review) for a statusline configuration request",
+    "Recommends configuring the statusline through the settings.json statusLine field (or the /statusline-setup skill) — statusline is declarative configuration, not an event-driven hook",
+    "Explains that hooks fire on runtime events (PreToolUse, PostToolUse, SessionStart, Stop) and are the wrong artifact for UI / display customization"
+  ]
+}
