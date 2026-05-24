@@ -1,0 +1,12 @@
+{
+  "skill": "auditing-rlhf-reward-hacking",
+  "scenario_id": "02-edge-case",
+  "scenario_kind": "edge-case",
+  "query": "We ran the audit. Aggregate reward-model win-rate is 73%, held-out-preference win-rate is 71% — only a 2-point divergence. All six per-probe verdicts came back clean. Are we safe to promote?",
+  "files": [],
+  "expected_behavior": [
+    "Confirms the 2-point aggregate divergence is within the clean band but explicitly cautions that aggregate metrics can hide localized reward hacking at the boundary of the prompt distribution — a small aggregate divergence does not guarantee a clean model on every cluster",
+    "Recommends running the reward-boundary exploitation probe (Step 9) — bucketing prompts by reward-delta percentile, filtering for top-quartile reward-gain with non-positive preference-gain, and clustering the resulting exploit prompts — to find local exploit hotspots that the aggregate metric averages away",
+    "Names that the final promotion decision should consider per-cluster verdict separately from the aggregate verdict, and that even a clean aggregate audit may warrant re-tuning if a deployment-relevant cluster (e.g., a high-value or safety-critical prompt category) shows local exploitation"
+  ]
+}
