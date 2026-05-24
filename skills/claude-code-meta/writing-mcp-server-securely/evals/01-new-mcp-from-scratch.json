@@ -1,0 +1,12 @@
+{
+  "skill": "writing-mcp-server-securely",
+  "scenario_id": "01-new-mcp-from-scratch",
+  "scenario_kind": "happy-path",
+  "query": "I want to write a new MCP server in Python that wraps our internal incident-database API. It'll expose tools like search_incidents, get_incident, and list_recent. What do I need to bake in from day one so it'll pass a pre-trust audit when someone installs it?",
+  "files": [],
+  "expected_behavior": [
+    "Recommends declaring an SPDX license in pyproject.toml AND committing a matching LICENSE file at the repo root before the first publish",
+    "Names the six-check pre-trust audit (license, source review, network egress, version pin, secret handling, tool subset) and frames each check as a design constraint to bake in BEFORE first publish, not after",
+    "Recommends an explicit tool-subset declaration — only the three named tools (search_incidents, get_incident, list_recent), no over-broad catch-alls, no eval-style dynamic dispatch"
+  ]
+}
