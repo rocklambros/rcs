@@ -4,7 +4,15 @@ All notable changes to RCS are documented here. Per-skill changes use the skill'
 
 ## [Unreleased]
 
-_No unreleased changes — most recent integration is `v6.0-phase1` below._
+_No unreleased changes — most recent integration is `v6.0.1` below._
+
+## [v6.0.1] — 2026-05-23
+
+Single-skill patch following `v6.0-phase1`. Adds `security/auditing-graphql-nullability` v0.1.0 (Σ 12, status: shipped) — GraphQL SDL audit for over-permissive nullability with per-finding field path + current SDL + recommended SDL + downstream consequence; refuses to engage on authorization / rate-limit / query-complexity questions where no schema is present.
+
+The skill was authored out-of-band during the v6 cycle (separate from the six numbered authoring batches) and surfaced as an untracked working-tree directory after the `v6.0-phase1` integration commit. The author ran the full PRAGMATIC three-scenario Sonnet eval before authoring stopped (results captured in the skill's `evals/eval-results.json`), with all three scenarios passing at 3/3 against intent-matched rubrics; the skill ships as `shipped` on that evidence.
+
+Cumulative skill count at HEAD: **86 shipped + 2 drafting** (vs. 85+2 at `v6.0-phase1`).
 
 ## [v6.0-phase1] — 2026-05-23
 
