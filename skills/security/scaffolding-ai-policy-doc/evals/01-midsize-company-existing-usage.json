@@ -1,0 +1,12 @@
+{
+  "skill": "scaffolding-ai-policy-doc",
+  "scenario_id": "01-midsize-company-existing-usage",
+  "scenario_kind": "happy-path",
+  "query": "We're a 400-person B2B SaaS company. Half the engineering team uses GitHub Copilot Business daily. Marketing pastes draft copy into consumer ChatGPT and Gemini. Sales has started using consumer ChatGPT to summarize call transcripts that include customer names and account IDs. Legal is panicking. Our data classes include customer PII, source code (tier 1-3), and internal financials. We are starting EU AI Act preparation. Draft us a full AI Use Policy.",
+  "files": [],
+  "expected_behavior": [
+    "Distinguishes tools by exact deployment tier — names GitHub Copilot Business separately from consumer Copilot, distinguishes consumer ChatGPT from ChatGPT Enterprise (or recommends migrating to ChatGPT Enterprise / Claude Team with no-train commitments) — rather than treating tool families as monolithic",
+    "Produces concrete acceptable-use and prohibited-use rules tied to specific data classes (e.g., prohibits customer PII paste into consumer-tier tools; permits tier-≤2 source code in Copilot Business; permits public marketing copy in Gemini but prohibits customer-data paste) rather than abstract principles",
+    "Includes a vendor inventory mechanism pre-populated with the three current tools, an AI-incident trigger covering the sales-team consumer-ChatGPT customer-data paste case, and an explicit employee-acknowledgement workflow plus a pre-publish gate naming counsel and HR sign-off"
+  ]
+}
