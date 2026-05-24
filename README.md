@@ -68,7 +68,7 @@ The vocabulary used throughout this repo, defined inline:
 
 - **Skill.** A single `SKILL.md` markdown file with frontmatter and 11 required sections. Claude reads the frontmatter description to decide whether to invoke the skill on a given turn. If invoked, it reads the body and follows the workflow inside.
 - **Track.** One of five audience-driven directories under `skills/`: `security/`, `ml-datasci/`, `workflow/`, `teaching/`, `claude-code-meta/`. A skill lives in the track that matches its primary audience.
-- **Σ (sigma) score.** A 1-to-20 estimate of return-on-investment when this skill was first triaged for inclusion, computed from how often the gap appears in real projects times the cost of getting it wrong. Higher Σ means higher expected impact for more readers.
+- **Σ (sigma) score.** A 1-to-20 priority estimate assigned at triage time. Σ approximates *frequency × cost-of-getting-it-wrong*: how often the gap the skill closes appears in real practice, multiplied by how badly things go when the gap is missed. Both factors are scored 1-5, the product lands in 1-25, and the result is rounded into the 1-20 catalog range. A Σ 20 skill closes a gap that hits every project in its audience and produces a catastrophic failure if missed (`enforcing-seed-hygiene` is one). A Σ 7 skill closes a specialty gap with a recoverable cost (`auditing-rlhf-reward-hacking` is one). The number is a sort key, not a quality score: a Σ 7 skill is not worse than a Σ 17 skill, it is more specialized. Read [`docs/explanation/sigma-score.md`](docs/explanation/sigma-score.md) for the full scoring rubric, the band structure (17-20 / 13-16 / 9-12 / 7-8), and what Σ does and does not tell you about whether a skill applies to YOUR project.
 - **Status.** Each skill is one of three: `shipped` (full body, 3 passing evals, ready to use), `drafting` (body exists, evals incomplete or failing on one model), or `planned` (listed in a track README, no directory yet). Today the catalog is 100% shipped: 104 shipped, 0 drafting.
 - **Eval.** Three JSON scenarios per skill (`evals/01-happy-path.json`, `02-edge-case.json`, `03-anti-trigger.json`) that test whether a model invoking the skill actually produces the expected behavior. The anti-trigger checks that the skill refuses or hands off when it should not engage.
 - **PRAGMATIC.** The discipline used to author and validate every RCS skill released so far. Instead of running evals against all three Claude models (Haiku, Sonnet, Opus) per release, PRAGMATIC validates only against Sonnet in-session via subagent dispatch. The full 3-model harness in `tools/run_evals.py` is available but optional. The trade favors fast iteration over exhaustive coverage. The rationale is captured in each skill's CHANGELOG entry.
@@ -89,7 +89,7 @@ You are reading the root document. Depending on what you came for:
 
 ## Top 10 skills by Σ
 
-A teaser. The full 104-row catalog lives in [`skills/README.md`](skills/README.md).
+A teaser of the highest-priority skills. The full 104-row catalog lives in [`skills/README.md`](skills/README.md), sorted alphabetically by slug for direct lookup. The Σ column below is the per-skill priority score defined in the Concepts section above. For the full scoring methodology see [`docs/explanation/sigma-score.md`](docs/explanation/sigma-score.md).
 
 | Skill | Track | What it does | Σ |
 |---|---|---|---|
