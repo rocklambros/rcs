@@ -1,0 +1,12 @@
+{
+  "skill": "scaffolding-ai-policy-doc",
+  "scenario_id": "02-startup-no-formal-governance",
+  "scenario_kind": "edge-case",
+  "query": "We're a 25-person seed-stage startup with no formal security, GRC, or HR function. Our engineers all use Cursor with the Claude API plugged in. Our founders use ChatGPT for everything (investor decks, hiring screens, even drafting offer letters). A potential enterprise customer is asking for our AI use policy as part of vendor onboarding. We need something real — but we don't have lawyers on staff. Draft the policy.",
+  "files": [],
+  "expected_behavior": [
+    "Produces a policy proportionate to a 25-person startup — does NOT mandate enterprise-style governance bodies (full GRC committee, dedicated AI risk officer, multi-stakeholder review boards) that the org cannot staff, and acknowledges that the policy will need re-scaling as the org grows",
+    "Flags the founder-ChatGPT-for-hiring-and-offer-letters use case as a high-impact-regulated decision class that requires human-in-the-loop, accountable-human review, and likely additional employment-law review — does not silently bless it",
+    "Recommends counsel review (even via fractional / outside counsel) before publishing safe-harbor and acknowledgement language, given the org lacks in-house legal — does NOT bypass legal review just because the org is small or pressured by a customer deadline"
+  ]
+}

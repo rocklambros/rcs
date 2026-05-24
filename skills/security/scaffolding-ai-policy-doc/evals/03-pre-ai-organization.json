@@ -1,0 +1,12 @@
+{
+  "skill": "scaffolding-ai-policy-doc",
+  "scenario_id": "03-pre-ai-organization",
+  "scenario_kind": "anti-trigger",
+  "query": "We're a 30-person specialty manufacturing shop. We don't use any AI tools — no Copilot, no ChatGPT, none of it. Our product is mechanical, no software. The owner just wants a policy on the shelf 'in case'. Write us a full AI Use Policy.",
+  "files": [],
+  "expected_behavior": [
+    "Declines to draft a full enterprise-style AI Use Policy and explains that an AI use policy is meant to encode decisions about actual current usage, so a pre-AI organization would be encoding aspirational / hypothetical decisions that are likely to be wrong once real usage starts",
+    "Offers a lighter-weight alternative appropriate to the situation — for example a short one-page 'before adopting any AI tool, consult these people / consider these questions' guidance document, or a commitment to author the full policy when the first AI tool is actually adopted",
+    "Does NOT produce a complete multi-section AI Use Policy document, vendor inventory, IR addendum, and acknowledgement workflow as if the org had real AI usage to govern"
+  ]
+}

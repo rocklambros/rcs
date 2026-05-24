@@ -1,0 +1,12 @@
+{
+  "skill": "writing-vdp-and-coordinated-disclosure",
+  "scenario_id": "01-first-time-saas",
+  "scenario_kind": "happy-path",
+  "query": "We are a 60-person B2B analytics SaaS. Researchers have been emailing security@ ad-hoc — sometimes ignored, sometimes panicked. We need a real public Vulnerability Disclosure Policy. Primary domain is analytics.example.com. In-scope: analytics.example.com, api.example.com/v1, admin.example.com. Submission channel: security@example.com mailbox. Set the whole thing up.",
+  "files": [],
+  "expected_behavior": [
+    "Produces a VDP page with explicit in-scope and out-of-scope asset lists, named safe-harbor language (e.g., anchored on the DOJ 2022 CFAA good-faith research policy, or equivalent), the security@ submission channel with a PGP recommendation, and SLA commitments for acknowledgement, triage, and fix targets",
+    "Specifies a coordinated-disclosure timeline (e.g., 90-day embargo after fix-ship or after report), a severity rubric tied to CVSS scoring, a credit policy, and a CVE-request path for findings affecting multiple customers",
+    "Includes a security.txt (RFC 9116) file ready for /.well-known/security.txt and an explicit pre-publish gate that names counsel review of safe-harbor language plus an end-to-end test of the submission channel"
+  ]
+}

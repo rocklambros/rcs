@@ -1,0 +1,12 @@
+{
+  "skill": "interpreting-vendor-questionnaire-skeptically",
+  "scenario_id": "01-soc2-thin-evidence",
+  "scenario_kind": "happy-path",
+  "query": "Here is a vendor's SIG Lite response and their SOC 2 Type 2 report (period 2025-04-01 to 2026-03-31, opinion dated 2026-04-22). They are a SaaS analytics vendor and they will be ingesting our customer financial transactions. Their SIG answers include 'We use industry-standard encryption', 'We have a documented incident response policy (available on request)', 'We perform annual penetration tests', 'We have a SOC 2 attestation', and 'No customer data is used for AI / ML training'. The SOC 2 narrative is strong but has 3 exceptions listed in the testing summary. Read this skeptically.",
+  "files": [],
+  "expected_behavior": [
+    "Flags hedge wording and missing-artifact issues — explicitly identifies 'industry-standard encryption' as a hedge requiring algorithm / key-length / key-management specifics, identifies the 'incident response policy available on request' as a missing artifact that should be provided rather than promised, and asks for the most recent pen-test summary",
+    "Surfaces the SOC 2 report's listed exceptions as findings (not silently ignored), explicitly flags that the 'no customer data for AI training' claim should be verified in the master agreement / DPA and not relied on from a SIG free-text answer, and treats the customer-financial-records data class as material",
+    "Produces a structured findings report tied to the response and refuses to issue a go / no-go verdict — explicitly states the output is findings for a risk owner to act on, not an approval decision"
+  ]
+}
