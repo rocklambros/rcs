@@ -1,0 +1,12 @@
+{
+  "skill": "auditing-inference-latency-budget",
+  "scenario_id": "03-nightly-batch-job",
+  "scenario_kind": "anti-trigger",
+  "query": "Our nightly batch model run is taking 6 hours and we want to make it faster. Can you audit its latency budget and tell us what's slow?",
+  "files": [],
+  "expected_behavior": [
+    "Identifies this as a batch or offline workload where per-request latency percentiles and a latency SLO do not apply, rather than forcing a P50 or P99 framework onto a nightly batch job",
+    "Recommends the appropriate batch-job analysis instead — total wall-clock attribution by stage, throughput (records per second), parallelism utilization, and I/O versus CPU versus GPU bottleneck identification — rather than P95 or P99 of per-request latency",
+    "Explains that the user request is misframed as a latency-budget question but that a batch wall-clock attribution would still be the right thing to do, so the user is not refused outright but redirected to the right framing"
+  ]
+}

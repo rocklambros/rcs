@@ -1,0 +1,12 @@
+{
+  "skill": "auditing-inference-latency-budget",
+  "scenario_id": "02-input-shape-variance-llm",
+  "scenario_kind": "edge-case",
+  "query": "Our LLM-based document classifier has a 1.5 second P99 SLO and we're at 4.2 seconds P99 in production. Our average input is only 500 tokens. We already tried switching to a faster model and the breach is unchanged. Why is P99 so bad when typical inputs are small, and why didn't a faster model help?",
+  "files": [],
+  "expected_behavior": [
+    "Identifies input-shape variance (a long-tail of input lengths) as a likely cause given that the average is healthy but P99 is blown and a model swap did not help, and recommends measuring the input-length distribution (p50, p95, p99 of sequence length) before recommending a fix",
+    "Explains that switching to a faster model of the same architecture family does not fix tail latency driven by sequence length because both models pay the same per-token cost in the long-input regime, so the bottleneck is the input distribution not the model speed",
+    "Recommends concrete options that target the tail rather than the median — for example routing long-input requests to a separate tier with a different SLO, truncation or chunking with explicit quality-cost trade-off noted, or moving to a sub-quadratic-attention architecture — rather than another generic 'use a faster model' suggestion"
+  ]
+}
