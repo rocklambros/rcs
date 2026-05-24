@@ -1,0 +1,12 @@
+{
+  "skill": "writing-onboarding-guide",
+  "scenario_id": "01-cross-functional-service-launch",
+  "scenario_kind": "happy-path",
+  "query": "We just launched our internal RAG-over-incident-corpus service. I need an onboarding doc for the cross-functional launch — backend engineers will integrate it from their triage pipelines, ML scientists will validate retrieval quality, and our VP of Engineering signs off on the launch. One document for all three. Help me write it.",
+  "files": [],
+  "expected_behavior": [
+    "Produces a single document with explicitly separate per-audience sections (engineer, scientist, executive) rather than collapsing into one generic-voice narrative.",
+    "Each per-audience section opens with a value sentence that names what THIS audience will do with the system (not 'this section describes the API').",
+    "Includes a front-loaded TL;DR (owner, channel, status, what-it-is-NOT) plus an explicit out-of-scope statement that names concrete misuses to prevent."
+  ]
+}

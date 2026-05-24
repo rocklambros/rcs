@@ -1,0 +1,12 @@
+{
+  "skill": "explaining-statistical-concept",
+  "scenario_id": "01-p-value-to-junior-analyst",
+  "scenario_kind": "happy-path",
+  "query": "Explain the p-value to a junior analyst on my team. They just finished an intro stats course but rarely use it day-to-day. They mostly work with A/B test results from our product experimentation platform. Keep it appropriate for a practitioner who needs to discuss results with PMs.",
+  "files": [],
+  "expected_behavior": [
+    "Opens with a probe of the learner's current mental model (e.g., 'before I explain, what is your current intuition for what a p-value tells you?') rather than launching straight into a textbook recitation.",
+    "Explicitly names and corrects the canonical misconception ('the probability the null is true' or equivalent inversion of the conditional probability) — does not gloss over it, addresses it by surface form.",
+    "Includes a check-for-understanding question whose right answer requires APPLYING the conditional-probability framing to a new situation (e.g., 'if your A/B test shows p = 0.04, can you tell your PM there is a 96% chance the treatment is better?'), not just repeating the explanation back."
+  ]
+}

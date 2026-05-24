@@ -1,0 +1,12 @@
+{
+  "skill": "writing-graded-rubric",
+  "scenario_id": "02-fix-vague-rubric-with-grader-disagreement",
+  "scenario_kind": "edge-case",
+  "query": "Our existing essay rubric has 8 criteria with band descriptors like 'good,' 'excellent,' 'satisfactory,' and 'needs improvement.' Two TAs grade the same essay independently and consistently disagree by 1-2 bands per criterion across 10 essays. The students are starting to appeal. Help me fix the rubric so the disagreement drops.",
+  "files": [],
+  "expected_behavior": [
+    "Diagnoses the root causes — 8 criteria is above the 4-6 sweet spot (graders cannot hold all of them in working memory) AND the band descriptors ('good,' 'excellent,' 'satisfactory') do not name observable evidence so two graders interpret them differently.",
+    "Recommends collapsing the 8 criteria to 4-5 that map to the assignment's learning objectives without overlap, NOT just rewording the existing 8.",
+    "Rewrites at least one band descriptor with observable evidence appropriate to the essay artifact (e.g., for an argument criterion: 'thesis stated and defended with ≥ 2 supporting points each backed by a cited source' rather than 'excellent argument')."
+  ]
+}

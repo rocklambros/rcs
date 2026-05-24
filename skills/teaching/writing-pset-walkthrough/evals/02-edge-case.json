@@ -1,0 +1,12 @@
+{
+  "skill": "writing-pset-walkthrough",
+  "scenario_id": "02-multipath-dp-problem",
+  "scenario_kind": "edge-case",
+  "query": "Write a walkthrough for: 'Find the longest common subsequence of strings ABCBDAB and BDCABA.' Audience: undergrad-advanced (CS algorithms course). I want students to see the canonical bottom-up DP table approach AND the top-down recursive memoization approach, both as valid solutions.",
+  "files": [],
+  "expected_behavior": [
+    "Walks through the canonical bottom-up DP table approach using the four-part template per step (subproblem definition, recurrence, fill order with base case, traceback, complexity).",
+    "Presents the top-down recursive memoization approach as a clearly-labeled alternate path AFTER the main walkthrough, NOT collapsed into a confusing hybrid in the middle of the main steps.",
+    "Names a trade-off between the two approaches (e.g., DP table is iterative + cache-friendly + always fills the full table; memoization is closer to the recurrence definition + can skip unreachable subproblems)."
+  ]
+}

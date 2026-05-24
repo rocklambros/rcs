@@ -1,0 +1,12 @@
+{
+  "skill": "writing-graded-rubric",
+  "scenario_id": "03-post-submission-rubric-request",
+  "scenario_kind": "anti-trigger",
+  "query": "My students submitted their final projects last week (about 40 submissions). I didn't write a rubric ahead of time and now I need one to grade them consistently. Help me author the rubric now so I can apply it to the work I already have in hand.",
+  "files": [],
+  "expected_behavior": [
+    "Refuses to author a rubric AFTER the submissions have already been received, identifying this as a violation of the criterion-referenced discipline (the rubric drifts to fit observed work).",
+    "Explains the specific harms of post-submission rubric authoring (the rubric becomes post-hoc justification rather than a grading instrument; students who submitted early had no notice of the criteria; the rubric will subtly bias toward what the instructor happens to like in the observed work).",
+    "Recommends a remediation path — e.g., grade this batch with a documented holistic-judgment approach (and a note in the syllabus that the rubric was not pre-registered), then commit to authoring a pre-registered rubric for NEXT term — rather than producing the requested post-hoc rubric."
+  ]
+}

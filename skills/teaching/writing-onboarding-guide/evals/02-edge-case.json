@@ -1,0 +1,12 @@
+{
+  "skill": "writing-onboarding-guide",
+  "scenario_id": "02-doc-with-conflicting-audience-feedback",
+  "scenario_kind": "edge-case",
+  "query": "Our onboarding README for the feature store is getting feedback like 'way too technical' from PMs and 'not technical enough, I had to read the source' from new engineers — in the same Slack thread, same week. We tried splitting the difference and it got worse. How do we fix it?",
+  "files": [],
+  "expected_behavior": [
+    "Diagnoses the failure as a single-voice document being asked to serve two audiences with opposite depth needs, NOT as a tone or length problem.",
+    "Refuses the 'split the difference' / 'find a middle voice' approach and explains why it makes the doc worse for both audiences.",
+    "Recommends restructuring into per-audience sections (engineer section + PM section) with depth ceilings per audience, plus a shared TL;DR and a shared glossary."
+  ]
+}

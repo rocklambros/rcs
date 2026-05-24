@@ -1,0 +1,12 @@
+{
+  "skill": "explaining-statistical-concept",
+  "scenario_id": "02-grad-student-ci-upgrade",
+  "scenario_kind": "edge-case",
+  "query": "A grad student in my lab says 'I know what a confidence interval is from intro stats but my thesis advisor says I am explaining it wrong in chapter 3.' They are about to defend. Help them upgrade their understanding of the 95% CI so they can rephrase the chapter correctly. Audience: grad-level statistics.",
+  "files": [],
+  "expected_behavior": [
+    "Identifies and names the canonical CI misconception (the Bayesian-flavored 'true value has a 95% probability of being in this specific interval' framing applied to a frequentist CI) — addresses it head-on rather than glossing.",
+    "Restates the 95% CI as a property of the procedure (95% coverage across repeated sampling), not a property of any single computed interval, with vocabulary appropriate for the grad-level audience tier (does not over-explain basics; does not patronize).",
+    "Provides a defensible rephrasing the student can use in their thesis (e.g., 'the 95% confidence interval was [a, b]' or 'using a procedure with 95% coverage' instead of 'we are 95% confident that the true value lies in [a, b]')."
+  ]
+}

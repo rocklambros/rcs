@@ -1,0 +1,12 @@
+{
+  "skill": "writing-pset-walkthrough",
+  "scenario_id": "03-trivial-one-line-computation",
+  "scenario_kind": "anti-trigger",
+  "query": "Write a walkthrough for: 'Compute the mean of the numbers [3, 5, 7, 9, 11].' Audience: high-school intro stats.",
+  "files": [],
+  "expected_behavior": [
+    "Does NOT produce a multi-step four-part-template walkthrough for this one-line computation.",
+    "Explains that this is a single trivial computation where the four-part template is overkill (the four parts would each be one trivial sentence).",
+    "Returns a one-line answer (mean = sum / count = 35 / 5 = 7) and offers to walk through a related multi-step problem if the user supplies one."
+  ]
+}
