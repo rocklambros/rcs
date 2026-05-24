@@ -22,7 +22,7 @@ In-session, Sonnet-only. The parent Claude Code session dispatches one general-p
 
 No `ANTHROPIC_API_KEY` required. Useful when authoring or iterating on a skill, when shipping a batch of skills together, or when the 3-model harness is overkill for the gap being closed.
 
-### Flow B: full 3-model harness (aspirational; run on a periodic sweep)
+### Flow B: full 3-model harness (aspirational. Run on a periodic sweep)
 
 Out-of-session, against all three Claude models via `tools/run_evals.py`. Requires `ANTHROPIC_API_KEY` with access to Haiku 4.5, Sonnet 4.6, and Opus 4.7. Produces a results JSON per model per skill.
 
@@ -49,12 +49,12 @@ Each eval file at `skills/<track>/<skill>/evals/0[1-3]-<scenario-id>.json`:
 
 Field semantics:
 
-- `skill` — the skill slug (matches the directory name)
-- `scenario_id` — `0[1-3]-<short-descriptive>`; matches the filename stem
-- `scenario_kind` — `happy-path` | `edge-case` | `anti-trigger`
-- `query` — verbatim user prompt
-- `files` — optional list of file paths Claude should reference (relative to skill dir)
-- `expected_behavior` — exactly 3 checkable rubric items, written as third-person assertions about the response
+- `skill`. The skill slug (matches the directory name)
+- `scenario_id`. `0[1-3]-<short-descriptive>`. Matches the filename stem
+- `scenario_kind`. `happy-path` | `edge-case` | `anti-trigger`
+- `query`. Verbatim user prompt
+- `files`. Optional list of file paths Claude should reference (relative to skill dir)
+- `expected_behavior`. Exactly 3 checkable rubric items, written as third-person assertions about the response
 
 ## Judge prompt structure
 
@@ -65,7 +65,7 @@ The judge (Sonnet 4.6) receives:
 3. The candidate model's completion
 4. The 3 rubric items
 
-For each rubric item, the judge returns `pass: true|false` with a one-sentence rationale. The judge prompt enforces strict literal interpretation — partial credit is `false`.
+For each rubric item, the judge returns `pass: true|false` with a one-sentence rationale. The judge prompt enforces strict literal interpretation. Partial credit is `false`.
 
 ## Pass thresholds (with 3 rubric items per scenario)
 
@@ -75,15 +75,15 @@ For each rubric item, the judge returns `pass: true|false` with a one-sentence r
 | Sonnet 4.6 | 3 of 3 | 3 of 3 | ≥ 2 of 3 |
 | Opus 4.7 | 3 of 3 | 3 of 3 | 3 of 3 |
 
-A skill earns `status: shipped` when the Sonnet thresholds above are met (Flow A is sufficient). Full 3-model validation via Flow B is the aspirational follow-up; a skill that passes Sonnet but later fails Haiku or Opus on Flow B gets a `drafting` demotion and a follow-up patch release.
+A skill earns `status: shipped` when the Sonnet thresholds above are met (Flow A is sufficient). Full 3-model validation via Flow B is the aspirational follow-up. A skill that passes Sonnet but later fails Haiku or Opus on Flow B gets a `drafting` demotion and a follow-up patch release.
 
 ## CI gating
 
 `.github/workflows/eval-suite.yml`:
 
-- On PR with skill changes: run evals for the changed skill across all 3 models; block merge if thresholds not met
-- Nightly: full sweep across all `status: shipped` skills; failures filed as GitHub issues with result JSONs attached
-- Public forks without `ANTHROPIC_API_KEY` skip-and-warn (documented opt-out); main repo hard-fails
+- On PR with skill changes: run evals for the changed skill across all 3 models. Block merge if thresholds not met
+- Nightly: full sweep across all `status: shipped` skills. Failures filed as GitHub issues with result JSONs attached
+- Public forks without `ANTHROPIC_API_KEY` skip-and-warn (documented opt-out). Main repo hard-fails
 
 ## Local execution
 

@@ -4,7 +4,43 @@ All notable changes to RCS are documented here. Per-skill changes use the skill'
 
 ## [Unreleased]
 
-_No unreleased changes. Most recent release is `v7.0.3` below._
+_No unreleased changes. Most recent release is `v7.0.4` below._
+
+## [v7.0.4] — 2026-05-24
+
+Tier-3 documentation patch following `v7.0.3`. Closes the NICE-TO-HAVE findings from the v7.0.1 audit. Builds out the Diataxis layer of `docs/` and runs an automated AI-slop sweep across the existing top-level documentation. Zero new skills.
+
+Branch name is `feature/v8.0-docs-overhaul` for historical reasons (it was scoped at audit time as a v8 effort). The actual release tag is `v7.0.4` per the patch-tag convention in `docs/governance.md`: docs-only releases stay in the `vM.N.P` patch sequence and do not bump the integration version.
+
+### Added
+
+- **`docs/tutorials/getting-started.md`** (~ 140 lines). One walked-through introduction from "never installed a skill" to "saw one fire on a real question and saw the contrast without it," in roughly ten minutes. Targets the novice tier explicitly
+- **`docs/how-to/install-and-invoke-a-skill.md`** (~ 100 lines). Recipe for the regular user: install one or all skills, verify load, trigger by question, compose multiple, uninstall, update, troubleshoot
+- **`docs/how-to/contribute-a-skill.md`** (~ 130 lines). Recipe for the contributor: the eight-step process from issue proposal to merged PR, expanded from `CONTRIBUTING.md`
+- **`docs/how-to/audit-your-docs-for-ai-slop.md`** (~ 100 lines). Recipe for anyone with a docs project who wants to apply the `workflow/writing-repo-documentation` discipline to their own README and surrounding pages. Includes a self-contained Python sweep script
+- **`docs/explanation/what-is-a-skill.md`** (~ 130 lines). Concept page: what a skill is, what a skill is not, why skills exist, how Claude finds and applies them, how the format differs from prompts and tools and slash commands
+- **`docs/explanation/sigma-score.md`** (~ 110 lines). Concept page: what the Σ number in every catalog row means, how it was computed, what it does not tell you, and the band structure (17-20 / 13-16 / 9-12 / 7-8)
+- **`docs/explanation/pragmatic-discipline.md`** (~ 130 lines). Concept page: what PRAGMATIC is, why it exists as a separate flow from the 3-model harness, what it sacrifices, and when to use the full harness instead
+
+### Changed
+
+- **AI-slop sweep across 11 top-level docs.** Em-dashes in prose: **74 → 0** (every em-dash outside code blocks and YAML frontmatter substituted with a period and the next sentence capitalized). Prose semicolons: **108 → 58** (the 58 remaining live inside markdown table cells in the track READMEs, where they reproduce skill-description frontmatter content verbatim from the source SKILL.md files; substituting them at the catalog level would create drift from the source. A future v8.x sweep across the 104 SKILL.md frontmatter descriptions can close the gap at the source)
+- **`README.md` "Where to go next" section** now links the new `docs/tutorials/`, `docs/how-to/`, and `docs/explanation/` pages, completing the cross-link discipline the `workflow/writing-repo-documentation` skill mandates
+
+### Methodology note
+
+The AI-slop sweep used a Python script that preserves YAML frontmatter, fenced code blocks, and markdown table cells. The script source is published in `docs/how-to/audit-your-docs-for-ai-slop.md` so any downstream user can apply the same discipline to their own project. Each substitution was reviewed via `git diff` before commit. No semantic content was deleted; only the slop-shaped wrapping around the content was rewritten.
+
+Each new doc was authored against the `workflow/writing-repo-documentation` skill's discipline: one concept per paragraph, concrete-before-abstract, explicit stopping points, named failure modes, cross-linked to neighbors. The teaching/README.md serves as the style anchor; the new docs target the same slop-signal-zero bar.
+
+### Outstanding (deferred to v8.x)
+
+- 58 prose semicolons in track README table cells (need to fix at the SKILL.md frontmatter source)
+- `.github/workflows/eval-suite.yml` requires `ANTHROPIC_API_KEY`; this release does not verify the secret is set on the repo. A no-op CI workflow is a latent maintenance debt. Confirm the secret or remove the workflow in a follow-up
+
+Cumulative skill count at HEAD: **104 shipped + 0 drafting** (unchanged from `v7.0.3`).
+
+Lint: 104 SKILL.md frontmatter + body all OK. pytest: 27/27.
 
 ## [v7.0.3] — 2026-05-24
 

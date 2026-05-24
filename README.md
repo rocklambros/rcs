@@ -58,27 +58,30 @@ The 30-second example used three skills loaded by Claude on its own. Skills also
 
 > I'm starting a new ML project to classify whether a patient will be readmitted within 30 days. Set up the project.
 
-Claude loads `workflow/scaffolding-ml-research-notebook` and creates the project layout: pinned environment (`uv` lockfile), `src/` package, `data/raw` and `data/processed` split, `tests/`, a starter notebook. Inside the starter notebook's first cell, `workflow/enforcing-seed-hygiene` adds the multi-library seed block (`numpy`, `random`, the relevant ML framework) and the CPU-pin block that prevents cross-platform sampler drift. Before Claude lets you train anything, `ml-datasci/auditing-train-test-split` runs the leakage check and refuses to proceed if the same patient ID appears in both train and test (a real failure mode for hospital data; this is also why we have an `auditing-data-quality` skill that runs alongside).
+Claude loads `workflow/scaffolding-ml-research-notebook` and creates the project layout: pinned environment (`uv` lockfile), `src/` package, `data/raw` and `data/processed` split, `tests/`, a starter notebook. Inside the starter notebook's first cell, `workflow/enforcing-seed-hygiene` adds the multi-library seed block (`numpy`, `random`, the relevant ML framework) and the CPU-pin block that prevents cross-platform sampler drift. Before Claude lets you train anything, `ml-datasci/auditing-train-test-split` runs the leakage check and refuses to proceed if the same patient ID appears in both train and test (a real failure mode for hospital data. This is also why we have an `auditing-data-quality` skill that runs alongside).
 
-The skills know about each other. Each one's `See also` section links the natural next steps. You stay in the flow; the disciplines compose without you stitching them together yourself.
+The skills know about each other. Each one's `See also` section links the natural next steps. You stay in the flow. The disciplines compose without you stitching them together yourself.
 
 ## Concepts
 
 The vocabulary used throughout this repo, defined inline:
 
-- **Skill.** A single `SKILL.md` markdown file with frontmatter and 11 required sections. Claude reads the frontmatter description to decide whether to invoke the skill on a given turn; if invoked, it reads the body and follows the workflow inside.
+- **Skill.** A single `SKILL.md` markdown file with frontmatter and 11 required sections. Claude reads the frontmatter description to decide whether to invoke the skill on a given turn. If invoked, it reads the body and follows the workflow inside.
 - **Track.** One of five audience-driven directories under `skills/`: `security/`, `ml-datasci/`, `workflow/`, `teaching/`, `claude-code-meta/`. A skill lives in the track that matches its primary audience.
 - **Σ (sigma) score.** A 1-to-20 estimate of return-on-investment when this skill was first triaged for inclusion, computed from how often the gap appears in real projects times the cost of getting it wrong. Higher Σ means higher expected impact for more readers.
 - **Status.** Each skill is one of three: `shipped` (full body, 3 passing evals, ready to use), `drafting` (body exists, evals incomplete or failing on one model), or `planned` (listed in a track README, no directory yet). Today the catalog is 100% shipped: 104 shipped, 0 drafting.
 - **Eval.** Three JSON scenarios per skill (`evals/01-happy-path.json`, `02-edge-case.json`, `03-anti-trigger.json`) that test whether a model invoking the skill actually produces the expected behavior. The anti-trigger checks that the skill refuses or hands off when it should not engage.
-- **PRAGMATIC.** The discipline used to author and validate every RCS skill released so far. Instead of running evals against all three Claude models (Haiku, Sonnet, Opus) per release, PRAGMATIC validates only against Sonnet in-session via subagent dispatch. The full 3-model harness in `tools/run_evals.py` is available but optional. The trade favors fast iteration over exhaustive coverage; the rationale is captured in each skill's CHANGELOG entry.
+- **PRAGMATIC.** The discipline used to author and validate every RCS skill released so far. Instead of running evals against all three Claude models (Haiku, Sonnet, Opus) per release, PRAGMATIC validates only against Sonnet in-session via subagent dispatch. The full 3-model harness in `tools/run_evals.py` is available but optional. The trade favors fast iteration over exhaustive coverage. The rationale is captured in each skill's CHANGELOG entry.
 
 ## Where to go next
 
 You are reading the root document. Depending on what you came for:
 
-- **You want to browse the full catalog.** See [`skills/README.md`](skills/README.md) for the cross-track index, sorted by Σ.
+- **You want a walked-through introduction.** Read [`docs/tutorials/getting-started.md`](docs/tutorials/getting-started.md). Install one skill, see it fire, see the difference, in about ten minutes.
+- **You want to browse the full catalog.** See [`skills/README.md`](skills/README.md) for the cross-track index.
 - **You want skills for your role.** Open the relevant track README: [`security/`](skills/security/), [`ml-datasci/`](skills/ml-datasci/), [`workflow/`](skills/workflow/), [`teaching/`](skills/teaching/), [`claude-code-meta/`](skills/claude-code-meta/).
+- **You want a how-to recipe.** [`docs/how-to/install-and-invoke-a-skill.md`](docs/how-to/install-and-invoke-a-skill.md), [`docs/how-to/contribute-a-skill.md`](docs/how-to/contribute-a-skill.md), and [`docs/how-to/audit-your-docs-for-ai-slop.md`](docs/how-to/audit-your-docs-for-ai-slop.md).
+- **You want to understand the concepts.** [`docs/explanation/what-is-a-skill.md`](docs/explanation/what-is-a-skill.md), [`docs/explanation/sigma-score.md`](docs/explanation/sigma-score.md), [`docs/explanation/pragmatic-discipline.md`](docs/explanation/pragmatic-discipline.md).
 - **You want to contribute a new skill.** See [`CONTRIBUTING.md`](CONTRIBUTING.md). Read [`docs/conventions.md`](docs/conventions.md) and [`docs/eval-protocol.md`](docs/eval-protocol.md) before opening a PR.
 - **You want to report a vulnerability.** See [`SECURITY.md`](SECURITY.md). Do not file a public issue for security problems.
 - **You want to know what changed in a release.** See [`CHANGELOG.md`](CHANGELOG.md). Per-skill SemVer plus repo-level integration tags.

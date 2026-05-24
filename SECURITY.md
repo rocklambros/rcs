@@ -32,7 +32,7 @@ Encrypted email is supported. Request the public PGP key in your first message.
 **Out of scope:**
 
 - Bugs in Claude itself, Claude Code, Copilot CLI, Gemini CLI, or any model behavior unrelated to the contents of this repo. Report those to the respective vendor
-- Bugs in user code that copy-pastes from a `reference/*.py` example without adapting it (these are integration mistakes; the reference files document themselves as patterns to adapt)
+- Bugs in user code that copy-pastes from a `reference/*.py` example without adapting it (these are integration mistakes. The reference files document themselves as patterns to adapt)
 - Disagreements with a skill's recommendation that do not constitute a safety bug. Open a regular issue or PR for those
 - AI attribution in commits or PR descriptions. That is a policy violation, not a security bug. See `CONTRIBUTING.md`
 
@@ -63,14 +63,14 @@ If you are unsure whether a given activity is in scope, ask first via the email 
 
 ## Credit
 
-Reporters are credited in `CHANGELOG.md` for the release that fixes the issue, with the wording the reporter prefers. Anonymous credit is offered by default; named credit is on request. There is no monetary bounty.
+Reporters are credited in `CHANGELOG.md` for the release that fixes the issue, with the wording the reporter prefers. Anonymous credit is offered by default. Named credit is on request. There is no monetary bounty.
 
 ## What this policy does not do
 
 This policy is one piece of the disclosure machinery. It does not:
 
 - Bind Anthropic, GitHub, or any other third party
-- Guarantee a fix will land at any specific date beyond the targets above; reality intrudes on plans
+- Guarantee a fix will land at any specific date beyond the targets above. Reality intrudes on plans
 - Substitute for professional security assessment of any deployed system that uses this repository
 
 For the underlying discipline that informed this policy, see [`skills/security/writing-vdp-and-coordinated-disclosure`](skills/security/writing-vdp-and-coordinated-disclosure/) which encodes the full VDP authoring workflow.
