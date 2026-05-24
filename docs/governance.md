@@ -8,7 +8,12 @@ Each skill has its own SemVer in `frontmatter.version`:
 - **MINOR** (`x.1.x` → `x.2.0`): new optional argument, new examples, refined wording, additional reference files, new scenario added to evals.
 - **PATCH** (`x.x.1` → `x.x.2`): typos, lint fixes, eval rubric clarifications that don't change pass/fail behavior.
 
-Repo-level tags are loose: `v1`, `v1.1`, `v2` mark batch releases that correspond to spec phases. They are NOT SemVer at the repo level.
+Repo-level tags follow two patterns:
+
+- **Integration tags** `vM.N-phaseK` (for example `v7.0-phase1`). Shipped after a batch of skills merges via independent per-batch PRs and the catalog is consolidated in a single integration commit. The phase number corresponds to the spec phase that batch served.
+- **Patch tags** `vM.N.P` (for example `v6.0.1`, `v6.0.2`, `v7.0.1`, `v7.0.2`, `v7.0.3`). Shipped for single-skill releases or documentation-only patches that follow an integration tag.
+
+Neither pattern is SemVer at the repo level. They are ordering tags. The per-skill SemVer in each `SKILL.md` frontmatter is the contract that downstream consumers should pin against; the repo-level tag tells you when a group of changes shipped together.
 
 ## Deprecation policy
 
@@ -32,4 +37,4 @@ Per CONTRIBUTING.md, no AI attribution is permitted anywhere in the repo. Mainta
 
 ## Code of conduct
 
-Contributors are expected to engage respectfully. Disagreement on technical merit is welcome; ad hominem is not. Maintainers may close issues and PRs that violate this norm without further discussion.
+See [`CODE_OF_CONDUCT.md`](../CODE_OF_CONDUCT.md) at the repo root. The repository adopts the Contributor Covenant v2.1; enforcement contact is `rock@rockcyber.com`.

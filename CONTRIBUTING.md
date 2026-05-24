@@ -28,9 +28,11 @@ Each scenario has exactly 3 checkable `expected_behavior` rubric items in v1.
 
 ### 3. Write SKILL.md against the Layer-3 documentation contract
 
-Required H2 sections in this order: `When to use`, `When NOT to use`, `Quick start`, `Inputs / Arguments / Flags`, `Workflow`, `Outputs`, `Failure modes`, `References`, `Examples`, `See also`, `Status & version`. See `docs/conventions.md`.
+Required frontmatter fields (all eight enforced by `tools/lint_frontmatter.py`): `name`, `description`, `version`, `status`, `track`, `audience`, `evidence`, `last-updated`. See [`docs/conventions.md`](docs/conventions.md) for the full spec.
 
-Body ≤ 500 lines. Longer content goes in `reference/` files (loaded on-demand, no startup token cost).
+Required H2 sections in this order: `When to use`, `When NOT to use`, `Quick start`, `Inputs / Arguments / Flags`, `Workflow`, `Outputs`, `Failure modes`, `References`, `Examples`, `See also`, `Status & version`. Body ≤ 500 lines. Longer content goes in `reference/` files (loaded on-demand, no startup token cost).
+
+For prose discipline (avoiding AI-slop patterns such as em-dashes, semicolons in prose, marketing superlatives, and metaphor clichés), use the [`workflow/writing-repo-documentation`](skills/workflow/writing-repo-documentation/) skill. Its `reference/ai-slop-patterns.md` catalog is the canonical reference for what to avoid and what to substitute. The skill's six-section spine and novice-to-advanced layering rules apply directly to SKILL.md bodies as well.
 
 ### 4. Run lint locally
 
@@ -42,7 +44,15 @@ uv run python -m tools.lint_links skills/<track>/<skill>/
 
 ### 5. Run evals locally
 
-You need `ANTHROPIC_API_KEY` set with access to Haiku 4.5, Sonnet 4.6, and Opus 4.7.
+RCS supports two eval flows. The PRAGMATIC flow has shipped every skill released so far; the 3-model flow is the aspirational gold standard for the next-iteration validation.
+
+**Flow A: PRAGMATIC (default, Sonnet-only, no API key required).** Dispatch one general-purpose subagent per eval scenario (3 subagents per skill) from inside Claude Code, with `model: sonnet`. Each subagent reads `SKILL.md` and answers the scenario's `query`. The parent session judges each completion against the scenario's 3 rubric items using intent-matched scoring. PRAGMATIC is appropriate when authoring a single skill, batch-shipping methodology-only skills, or iterating on an existing skill. Sonnet thresholds:
+
+- happy-path: 3 of 3
+- edge-case: 3 of 3
+- anti-trigger: ≥ 2 of 3
+
+**Flow B: full 3-model harness (requires `ANTHROPIC_API_KEY`).** Run the external harness against Haiku 4.5, Sonnet 4.6, and Opus 4.7:
 
 ```bash
 uv run python -m tools.run_evals skills/<track>/<skill>/
@@ -53,6 +63,8 @@ Pass thresholds (per `docs/eval-protocol.md`):
 - Haiku 4.5: ≥ 2 of 3 rubric items on each scenario, all 3 scenarios
 - Sonnet 4.6: 3 of 3 on happy-path AND edge-case; ≥ 2 of 3 on anti-trigger
 - Opus 4.7: 3 of 3 on all 3 scenarios
+
+A skill that has passed Flow A but not yet Flow B ships at `status: shipped` and notes the methodology in its CHANGELOG entry. The full 3-model validation is run when convenient (typically a quarterly sweep), and any regressions trigger a follow-up patch release.
 
 ### 6. Update track README + root README catalog
 
@@ -78,7 +90,7 @@ Invocation per batch session:
 /superpowers:writing-skills create batch <N> at docs/superpowers/plans/2026-05-23-rcs-batch-creation-plan.md using PRAGMATIC
 ```
 
-For single-skill PRs, follow the standard 7-step workflow above (eval-first, full 3-model validation if `ANTHROPIC_API_KEY` is available).
+For single-skill PRs, follow the 7-step workflow above. Flow A (PRAGMATIC Sonnet-only) is the default and is sufficient for the initial release; Flow B (full 3-model harness) is the aspirational follow-up.
 
 ## No AI attribution
 

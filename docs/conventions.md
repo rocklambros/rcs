@@ -20,11 +20,13 @@ description: >
 
 **Third-person rule**: write "Walks a decision tree..." NOT "I can help you..." or "You can use this..." (per Anthropic best-practices doc; the description is injected into the system prompt and POV inconsistency causes discovery problems).
 
-### RCS custom fields (don't break Anthropic schema)
+### RCS-required fields (lint-enforced)
+
+These six fields are required by `tools/lint_frontmatter.py`. A missing or malformed field fails the lint and blocks the PR.
 
 ```yaml
 version: 0.1.0                       # SemVer per skill
-status: shipped                       # shipped | drafting | planned
+status: shipped                       # shipped | drafting | planned | deprecated
 track: ml-datasci                     # security | ml-datasci | workflow | teaching | claude-code-meta
 audience:                             # list of tags
   - data-scientist
@@ -34,7 +36,7 @@ audience:                             # list of tags
 evidence:                             # repos where the gap appeared (provenance)
   - DU-MSDSAI-4441-Final
   - llm-safety-alignment-study
-last-updated: 2026-05-22              # ISO date
+last-updated: 2026-05-22              # ISO date YYYY-MM-DD
 ```
 
 ## Status semantics
@@ -71,4 +73,5 @@ Body ≤ 500 lines. Longer content goes in `reference/` (no startup token cost; 
 
 - Exactly 3 scenarios per skill in v1: happy-path, edge-case, anti-trigger.
 - Exactly 3 rubric items per scenario.
-- Sonnet 4.6 judges Haiku/Sonnet/Opus completions against the rubric.
+- **Default flow (PRAGMATIC):** Sonnet judges Sonnet via in-session subagent dispatch. No API key required. Used for every skill shipped through v7.0.3.
+- **Aspirational flow (3-model harness):** Sonnet judges Haiku, Sonnet, and Opus completions via the external `tools/run_evals.py` harness. Requires `ANTHROPIC_API_KEY`. Run during periodic re-validation sweeps.
