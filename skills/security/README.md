@@ -19,6 +19,12 @@ This track encodes day-job disciplines: MCP pre-trust auditing, vulnerability tr
 | [`running-multiturn-attack-suite`](running-multiturn-attack-suite/) | Runs a multi-turn attack suite — escalation, state-poisoning, retrieval-injection, role-drift, context-overflow, tool-state-abuse — with per-script session isolation, per-turn state snapshots (token count, citations, tool calls, summarization-event detection), per-turn (advanced/landed/rolled-back/stalled/inconclusive) AND per-script (passed/blocked/partial/inconclusive) outcome classes, cross-script pattern analysis, and turn-by-turn repro per finding; refuses on single-turn-only targets where multi-turn semantics do not apply | Conversational chatbot, agentic system with memory or summarization, retrieval-augmented system where poisoned context lingers, or any target where one turn alone is insufficient to land the attack | 12 |
 | [`running-encoded-payload-suite`](running-encoded-payload-suite/) | Runs an encoded-payload filter-bypass audit — base64, hex, ROT13, URL encoding, Unicode confusables, zero-width, RTL override, leetspeak, language-switch, tokenizer-boundary tricks — with mandatory filter-presence sanity check, mandatory plain-text baseline, exclusion of never-blocked payloads from the gap matrix, per-encoding bypass-rate aggregation (NOT raw counts), and systematic-class findings (not per-payload duplicates); refuses against base models with no safety filter to bypass | Production safety-filter audit, pre-deployment regression suite gating a filter update, bug-bounty targeting filter-bypass via encoding, or defense-in-depth assessment of a multi-layer safety stack | 12 |
 | [`threat-modeling-agentic-systems`](threat-modeling-agentic-systems/) | Threat-modeling walk for autonomous agents and multi-agent systems (tool-using agent, planner-executor loop, multi-step workflow, multi-agent collaboration) using a user-supplied catalog (MAESTRO, MITRE ATLAS, OWASP Agentic Security Initiative, or custom); extends LLM-app threat modeling with agent-specific boundaries (planner↔executor, memory↔next-turn, tool-result↔next-prompt, agent↔agent) and adds agentic concerns (excessive agency, goal hijacking, memory poisoning, runaway loops, tool composition, multi-agent cascade); mandatory runaway-loop / blast-radius subsection; methodology only — never ships a bundled catalog | The user is designing, reviewing, or shipping an autonomous agent that plans, calls tools, persists state across turns, or coordinates with other agents; producing a threat register against an agentic catalog the user supplies; reviewing an agent before deployment, audit, or compliance sign-off | 11 |
+| [`writing-vdp-and-coordinated-disclosure`](writing-vdp-and-coordinated-disclosure/) | Drafts a public VDP + security.txt + coordinated-disclosure runbook for an org that ships software externally. | Standing up a first-time VDP, adding a public VDP alongside a private bounty, or meeting CISA BOD 20-01 / ISO 29147 / EU CRA Article 11 requirements. | 12 |
+| [`writing-pentest-finding`](writing-pentest-finding/) | Single pen-test finding to client-deliverable quality with CVSS v3.1 vector, repro, impact, remediation, evidence | A vulnerability has been confirmed in an authorized engagement and needs a defensible write-up (or chain finding) | 11 |
+| [`scaffolding-ctf-engagement`](scaffolding-ctf-engagement/) | RoE + scope + severity rubric + finding template + PoC hygiene for paid CTF / pen-test / bug-bounty | Before starting a paid pen-test, internal CTF, or bug-bounty submission against published scope | 10 |
+| [`running-cloud-ir-runbook`](running-cloud-ir-runbook/) | Cloud IR runbook: triage, evidence preservation, containment, blast-radius, comms, eradication, recovery, lessons-learned | A cloud security alert fires (GuardDuty / SCC / Defender), an IAM credential leak is suspected, or post-incident review is needed | 10 |
+| [`scaffolding-ai-policy-doc`](scaffolding-ai-policy-doc/) | Scaffolds an org-wide AI Use Policy (acceptable / prohibited use, oversight, IR, vendor inventory, acknowledgement) anchored on actual current usage. | Publishing a first AI policy for an org with real AI usage, ISO 42001 / NIST AI RMF / EU AI Act prep, or after a peer incident. | 10 |
+| [`interpreting-vendor-questionnaire-skeptically`](interpreting-vendor-questionnaire-skeptically/) | Produces evidence-tied findings (hedges, missing artifacts, contradictions, staleness, AI overlay) on a vendor SIG / CAIQ / SOC 2 response — refuses to issue a go / no-go verdict. | Reviewing a vendor questionnaire response before contract signature, annual re-attestation, or onboarding an AI vendor. | 9 |
 
 ## Drafting skills
 
@@ -30,19 +36,13 @@ This track encodes day-job disciplines: MCP pre-trust auditing, vulnerability tr
 
 | Skill | What it does | Σ | Status |
 |---|---|---|---|
-| `scaffolding-CTF-engagement` | Engagement scope, rules of engagement, finding template, severity rubric | 10 | 📝 planned |
-| `writing-pentest-finding` | CVSS scoring walk, repro steps, remediation pattern | 11 | 📝 planned |
-| `running-cloud-IR-runbook` | Triage → evidence collection → comms → lessons-learned | 10 | 📝 planned |
-| `writing-vdp-and-coordinated-disclosure` | Vulnerability disclosure policy template + coordinated-disclosure timeline | 12 | 📝 planned |
-| `scaffolding-security-research-repo` | SECURITY.md, threat-model.md template, gitleaks/semgrep pre-commit, VDP, license | 13 | 📝 planned |
+| `scaffolding-security-research-repo` | SECURITY.md, threat-model.md template, gitleaks/semgrep pre-commit, VDP, license | 13 | 📝 planned (shipped in v6-batch-5 under `workflow/scaffolding-security-research-repo`) |
 | `verifying-sigstore-signatures` | Cosign verification, in-toto policy check | 10 | 📝 planned |
 | `evaluating-jailbreak-judge-agreement` | Cohen's κ between LLM judges on jailbreak outcomes | 13 | 📝 planned |
 | `running-adversarial-perturbation-suite` | FGSM / PGD / AutoAttack for vision/tabular | 8 | 📝 planned |
 | `auditing-rlhf-reward-hacking` | Reward-model probing for goodharting | 7 | 📝 planned |
 | `scrubbing-PII-with-policy` | PII detection + redaction with user-supplied policy | 12 | 📝 planned |
 | `verifying-training-data-erasure` | DSR-proof workflow for AI: dataset → embeddings → fine-tune | 10 | 📝 planned |
-| `interpreting-vendor-questionnaire-skeptically` | Skeptical pass over vendor security questionnaires | 9 | 📝 planned |
-| `scaffolding-ai-policy-doc` | AI use policy template | 10 | 📝 planned |
 
 ## Cross-track references
 

@@ -2,22 +2,21 @@
 
 For instructors, TAs, course-prep workflows. Pedagogy patterns and grading discipline.
 
-This track ships **no skills in v1**. The structure is pre-allocated; v2+ will populate it.
-
 ## Shipped skills
 
-_None in v1._
+| Skill | What it does | When to use | Σ |
+|---|---|---|---|
+| [`writing-onboarding-guide`](writing-onboarding-guide/) | Writes a multi-audience onboarding doc with per-audience sections (engineer / scientist / executive / etc.), each with an audience-specific value-sentence opener and a depth ceiling matched to that role's decision | Use when shipping a new system / tool / library / dataset / model to a heterogeneous launch audience, or when an existing onboarding doc gets conflicting feedback from different cohorts in the same week | 12 |
+| [`writing-pset-walkthrough`](writing-pset-walkthrough/) | Writes a multi-step problem-set walkthrough where each step uses a four-part template: What it's asking · Why this works · What the result tells us · Gotcha (from the catalog of observed student errors) | Use when a non-trivial multi-step problem needs a walkthrough that teaches pattern recognition rather than a bare answer key, or when answer keys "do not transfer" to exam variations | 11 |
+| [`diffing-instructor-vs-student-solution`](diffing-instructor-vs-student-solution/) | Produces a step-by-step diff between a reference solution and a student attempt, classifies each step into (A) right-answer-wrong-reasoning, (B) wrong-answer-right-reasoning-with-one-misstep, (C) legitimate-alternate-path, or (D) uncorrelated-error, with cascade recognition | Use when grading a multi-step attempt with formative feedback, when a student asks "where did I go wrong" against a reference, or when an automated grader returned wrong-answer and the question is WHY | 11 |
+| [`explaining-statistical-concept`](explaining-statistical-concept/) | Explains one stats concept (p-value, CI, CLT, etc.) to one audience tier via Socratic 5-part structure (probe → targeted explanation naming the misconception → concrete → check-for-understanding → bridge) | Use when a learner asks "what is X" / "explain X" on a stats concept and one explicit audience tier (high-school / undergrad-intro / undergrad-advanced / grad / practitioner) can be specified | 9 |
+| [`writing-graded-rubric`](writing-graded-rubric/) | Authors a criterion-referenced rubric with 4-6 criteria and observable-evidence proficiency bands (novice / developing / proficient / advanced), pre-registered before submissions arrive | Use when grading open-ended student work with no canonical answer, when an existing rubric is producing inter-grader disagreement, or when peer grading needs a structure non-experts can apply | 7 |
 
 ## Planned skills
 
-| Skill | What it does | Σ | Status |
-|---|---|---|---|
-| `explaining-statistical-concept` | Socratic, audience-tier (high-school / undergrad / grad / practitioner) | 9 | 📝 planned |
-| `writing-graded-rubric` | Criterion-referenced rubric with proficiency bands | 7 | 📝 planned |
-| `writing-pset-walkthrough` | "What it's asking / Why this works / What the result tells us / Gotcha" template | 11 | 📝 planned |
-| `diffing-instructor-vs-student-solution` | Side-by-side diff with feedback on common errors | 11 | 📝 planned |
-| `writing-onboarding-guide` | Multi-audience onboarding (engineer / scientist / executive) | 12 | 📝 planned |
+_All v1-planned teaching skills shipped in v6-batch-3._
 
 ## Cross-track references
 
-- Most teaching skills wrap a corresponding `ml-datasci/` or `workflow/` skill — e.g., `explaining-statistical-concept` for `selecting-statistical-test`. Build the wrapped skill first.
+- Three skills (`writing-pset-walkthrough`, `diffing-instructor-vs-student-solution`, `explaining-statistical-concept`) explicitly cross-reference `ml-datasci/` siblings (`selecting-statistical-test`, `checking-test-assumptions`, `reporting-effect-sizes`) so the teaching skills compose with the underlying stats discipline rather than duplicating it.
+- `writing-onboarding-guide` has broad cross-track applicability (engineering / science / executive / security / auditor onboarding) and is the highest-Σ skill in the track.

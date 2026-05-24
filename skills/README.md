@@ -2,7 +2,7 @@
 
 All RCS skills, organized first by audience track and then by ROI rank (Σ score from the v1 brainstorm).
 
-## Shipped (v4.0-phase1 + v5.0-phase1)
+## Shipped (through v6.0-phase1)
 
 Sorted by Σ desc.
 
@@ -73,19 +73,40 @@ Sorted by Σ desc.
 | [`writing-finetune-spec-sheet`](ml-datasci/writing-finetune-spec-sheet/) | ml-datasci | 10 |
 | [`auditing-synthetic-data-leakage`](ml-datasci/auditing-synthetic-data-leakage/) | ml-datasci | 10 |
 | [`building-canary-rollout`](ml-datasci/building-canary-rollout/) | ml-datasci | 9 |
+| [`scaffolding-ml-research-notebook`](workflow/scaffolding-ml-research-notebook/) | workflow | 15 |
+| [`writing-mcp-server-securely`](claude-code-meta/writing-mcp-server-securely/) | claude-code-meta | 14 |
+| [`scaffolding-llm-eval-harness`](workflow/scaffolding-llm-eval-harness/) | workflow | 14 |
+| [`writing-deny-allow-rules`](claude-code-meta/writing-deny-allow-rules/) | claude-code-meta | 13 |
+| [`writing-decision-trees-as-skills`](claude-code-meta/writing-decision-trees-as-skills/) | claude-code-meta | 13 |
+| [`scaffolding-security-research-repo`](workflow/scaffolding-security-research-repo/) | workflow | 13 |
+| [`running-eval-driven-skill-development`](claude-code-meta/running-eval-driven-skill-development/) | claude-code-meta | 13 |
+| [`writing-vdp-and-coordinated-disclosure`](security/writing-vdp-and-coordinated-disclosure/) | security | 12 |
+| [`writing-onboarding-guide`](teaching/writing-onboarding-guide/) | teaching | 12 |
+| [`scaffolding-grad-school-pset`](workflow/scaffolding-grad-school-pset/) | workflow | 12 |
+| [`writing-pset-walkthrough`](teaching/writing-pset-walkthrough/) | teaching | 11 |
+| [`diffing-instructor-vs-student-solution`](teaching/diffing-instructor-vs-student-solution/) | teaching | 11 |
+| [`writing-pentest-finding`](security/writing-pentest-finding/) | security | 11 |
+| [`authoring-plugin`](claude-code-meta/authoring-plugin/) | claude-code-meta | 11 |
+| [`scaffolding-ai-policy-doc`](security/scaffolding-ai-policy-doc/) | security | 10 |
+| [`scaffolding-ctf-engagement`](security/scaffolding-ctf-engagement/) | security | 10 |
+| [`running-cloud-ir-runbook`](security/running-cloud-ir-runbook/) | security | 10 |
+| [`explaining-statistical-concept`](teaching/explaining-statistical-concept/) | teaching | 9 |
+| [`interpreting-vendor-questionnaire-skeptically`](security/interpreting-vendor-questionnaire-skeptically/) | security | 9 |
+| [`writing-graded-rubric`](teaching/writing-graded-rubric/) | teaching | 7 |
 
 ## Drafting
 
 | Skill | Track | Σ |
 |---|---|---|
 | [`applying-secure-coding-rules`](security/applying-secure-coding-rules/) | security | 15 |
+| [`authoring-tool-hook`](claude-code-meta/authoring-tool-hook/) | claude-code-meta | 12 |
 
 ## By track
 
 - **[security/](security/)** — Security engineers, AI red-teamers, GRC, vuln triage, MCP pre-trust, pen-test discipline.
 - **[ml-datasci/](ml-datasci/)** — Data scientists, ML engineers, stats students, applied ML.
 - **[workflow/](workflow/)** — Cross-cutting hygiene and research discipline for both audiences.
-- **[teaching/](teaching/)** — Pedagogy patterns, rubrics, pset walkthroughs (no v1 skills; structure pre-allocated).
+- **[teaching/](teaching/)** — Pedagogy patterns, rubrics, pset walkthroughs, onboarding-guide authoring, instructor-vs-student diffs.
 - **[claude-code-meta/](claude-code-meta/)** — Skill / plugin / hook / MCP / rule authoring meta.
 
 ## Status legend

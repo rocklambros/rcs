@@ -1,1 +1,0 @@
-| [`scaffolding-grad-school-pset`](../scaffolding-grad-school-pset/) | Scaffolds a graded statistics pset notebook with the 6-section discipline baked in (audit → assumption-check → test → effect-size + CI → interpretation). | Starting a new graduate-school stats / quant-methods pset or take-home data-analysis exam. | 12 |

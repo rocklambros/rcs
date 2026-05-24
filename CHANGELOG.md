@@ -4,7 +4,142 @@ All notable changes to RCS are documented here. Per-skill changes use the skill'
 
 ## [Unreleased]
 
-_No unreleased changes — most recent integration is `v4.0-phase1 + v5.0-phase1` below._
+_No unreleased changes — most recent integration is `v6.0-phase1` below._
+
+## [v6.0-phase1] — 2026-05-23
+
+v6 (governance + pentest/IR + teaching + claude-code authoring meta + scaffolding + eval-driven dev) shipped via 6 independent batch PRs (#28 v6-batch-1, #27 v6-batch-2, #30 v6-batch-3, #29 v6-batch-4, #31 v6-batch-5, #26 v6-batch-6) authored in parallel sessions using the PRAGMATIC discipline. This release consolidates the per-batch changelog fragments and updates the user-facing catalogs in a single integration commit.
+
+**Net additions:** 21 skills authored across 6 batches (6 security + 5 teaching + 5 claude-code-meta + 5 workflow). 20 ship as `status: shipped`; 1 (`claude-code-meta/authoring-tool-hook`) ships as `status: drafting` per PRAGMATIC step 6 because the edge-case scenario scored 2/3 — see v6-batch-4 notes below. Cumulative skill count at HEAD: 85 shipped + 2 drafting (vs. 65 shipped + 1 drafting at the v4+v5 integration). The `teaching/` track moves from 0 → 5 shipped (first time the track is populated).
+
+**Slug renames from plan:** Five planned slugs were renamed at authoring time because the frontmatter linter rejects the `claude` reserved word: `writing-claude-code-plugin` → `authoring-plugin`, `writing-claude-code-hook` → `authoring-tool-hook` (this integration), plus the v1-batch-5 precedent (`writing-claude-code-skill` → `authoring-skill`, `auditing-claude-md-hierarchy` → `auditing-instruction-hierarchy`). Two v6-batch-2 slugs lowercased for the kebab-case rule: `scaffolding-CTF-engagement` → `scaffolding-ctf-engagement`, `running-cloud-IR-runbook` → `running-cloud-ir-runbook`.
+
+### v6-batch-1: governance methodologies — 2026-05-23
+
+Skills shipped:
+
+- `security/writing-vdp-and-coordinated-disclosure` v0.1.0 — public VDP page + security.txt (RFC 9116) + coordinated-disclosure runbook + severity rubric (CVSS v4.0) + researcher email templates + pre-publish gate (Σ 12, status: shipped)
+- `security/scaffolding-ai-policy-doc` v0.1.0 — org-wide AI Use Policy (acceptable / prohibited use, oversight tiers, vendor inventory, IR addendum, employee acknowledgement) anchored on actual current usage (Σ 10, status: shipped)
+- `security/interpreting-vendor-questionnaire-skeptically` v0.1.0 — per-answer claim · evidence · gap walk + hedge-word scan + missing-artifact scan + contradiction scan + staleness check + AI-specific overlay + follow-up questions, with explicit non-verdict (Σ 9, status: shipped)
+
+Eval methodology: Sonnet-only in-session validation per PRAGMATIC discipline. Each scenario dispatched to a fresh general-purpose subagent (model: sonnet) with the SKILL.md inlined as system context; completion judged against the 3 rubric items by the parent session. Full 3-model validation (Haiku + Sonnet + Opus) deferred to a future re-run via `tools.run_evals`.
+
+Eval results (rubric items passed / 3):
+
+| Skill | happy-path | edge-case | anti-trigger |
+|---|---|---|---|
+| writing-vdp-and-coordinated-disclosure | 3/3 | 3/3 | 3/3 |
+| scaffolding-ai-policy-doc | 3/3 | 3/3 | 3/3 |
+| interpreting-vendor-questionnaire-skeptically | 3/3 | 3/3 | 3/3 |
+
+All 27/27 rubric items passed. All three skills clear PRAGMATIC Sonnet thresholds (happy 3/3, edge 3/3, anti ≥ 2/3) and ship as `status: shipped`.
+
+Notes: No `reference/` files bundled in this batch — SKILL.md bodies inline the schemas, templates, and rubrics the workflows produce. A v0.2 enhancement may extract expanded reference templates (VDP boilerplate, AI-policy boilerplate, findings-report template, hedge-word checklist).
+
+### v6-batch-2: pentest + IR runbooks — 2026-05-23
+
+Skills shipped:
+- `security/scaffolding-ctf-engagement` v0.1.0 — RoE + scope + severity rubric + finding template + PoC hygiene for paid CTF / pen-test / bug-bounty engagements (Σ 10, status: shipped)
+- `security/writing-pentest-finding` v0.1.0 — single pen-test finding to client-deliverable quality with CVSS v3.1 vector, reproduction, impact, remediation, evidence; chain-finding support (Σ 11, status: shipped)
+- `security/running-cloud-ir-runbook` v0.1.0 — cloud IR runbook for AWS / GCP / Azure: triage, evidence preservation, containment, blast-radius assessment, comms, eradication, recovery, lessons-learned (Σ 10, status: shipped)
+
+Eval methodology: Sonnet-only in-session validation per PRAGMATIC discipline. 9 scenarios total (3 skills × 3 scenarios each) dispatched as parallel general-purpose subagents with model=sonnet, system context = skill body + bundled reference files, user message = scenario.query. Each completion judged by the parent session against the 3 rubric items per scenario.
+
+Results: all 9 scenarios passed at 3/3. Sonnet thresholds (happy-path 3/3, edge-case 3/3, anti-trigger ≥ 2/3) met on every scenario. All three skills keep `status: shipped`.
+
+Notes:
+- Slugs normalized to lowercase-kebab per `docs/conventions.md`: plan listed `scaffolding-CTF-engagement` and `running-cloud-IR-runbook`; shipped as `scaffolding-ctf-engagement` and `running-cloud-ir-runbook`.
+- Full 3-model validation (Haiku + Sonnet + Opus) deferred to a future re-run, consistent with PRAGMATIC.
+- This batch ran sequentially in a single session (no parallel batches) — used a feature branch in the existing repo rather than a worktree, per operator preference for single-session work.
+
+### v6-batch-3: Teaching / pedagogy — 2026-05-23
+
+Establishes the `teaching/` track (previously zero shipped skills in v1-v5) with 5 skills authored via PRAGMATIC discipline.
+
+Skills shipped:
+
+- `teaching/writing-onboarding-guide` v0.1.0 — multi-audience onboarding-doc authoring (per-audience sections, depth ceilings, shared glossary) (Σ 12, status: shipped)
+- `teaching/writing-pset-walkthrough` v0.1.0 — four-part walkthrough template (What-asking · Why-works · Result · Gotcha) with gotcha-catalog discipline (Σ 11, status: shipped)
+- `teaching/diffing-instructor-vs-student-solution` v0.1.0 — four-category diff (right-answer-wrong-reasoning / wrong-answer-one-misstep / legitimate-alternate-path / uncorrelated-error) with cascade recognition (Σ 11, status: shipped)
+- `teaching/explaining-statistical-concept` v0.1.0 — Socratic 5-part explanation structure (probe → targeted-explanation-naming-misconception → concrete → application-check → bridge) (Σ 9, status: shipped)
+- `teaching/writing-graded-rubric` v0.1.0 — criterion-referenced rubric authoring (4-6 criteria with observable-evidence proficiency bands; pre-registration enforced) (Σ 7, status: shipped)
+
+Eval methodology: Sonnet-only in-session validation per PRAGMATIC discipline (15 Sonnet dispatches across 5 skills × 3 scenarios). Full 3-model validation (Haiku + Sonnet + Opus) deferred to a future re-run.
+
+Eval results:
+
+- `writing-onboarding-guide`: 3/3 happy + 3/3 edge + 3/3 anti
+- `writing-pset-walkthrough`: 3/3 happy + 3/3 edge + 3/3 anti
+- `diffing-instructor-vs-student-solution`: 3/3 happy + 3/3 edge + 3/3 anti
+- `explaining-statistical-concept`: 3/3 happy + 3/3 edge + 2/3 anti (passed at the ≥ 2/3 anti-trigger threshold; one rubric item judged as marginal because the subagent's refusal was terse and did not fully elaborate why audience-tier mismatch wastes the explanation)
+- `writing-graded-rubric`: 3/3 happy + 3/3 edge + 3/3 anti
+
+All 5 skills pass PRAGMATIC Sonnet thresholds (happy 3/3, edge 3/3, anti ≥ 2/3) and retain `status: shipped`.
+
+Notes:
+
+- This batch establishes the `teaching/` track, which had zero shipped skills through v1-v5.
+- Three skills (`writing-pset-walkthrough`, `diffing-instructor-vs-student-solution`, `explaining-statistical-concept`) explicitly cross-reference `ml-datasci/` siblings (`selecting-statistical-test`, `checking-test-assumptions`, `reporting-effect-sizes`) so the teaching skills compose with the underlying stats discipline rather than duplicating it.
+- The `writing-onboarding-guide` skill is the only one in this batch with broad cross-track applicability (engineering / science / executive / security / auditor onboarding) and is the highest-Σ skill in the batch.
+
+### v6-batch-4: claude-code authoring meta — 2026-05-23
+
+Skills shipped:
+- `claude-code-meta/authoring-plugin` v0.1.0 — plugin authoring workflow: `.claude-plugin/plugin.json` manifest with required fields; `marketplace.json` entry pinning `source` to a SemVer tag or SHA; auto-discovered `skills/` + `commands/` + `agents/` vs. explicitly-registered `hooks/` + `rules/` + `mcpServers`; SemVer pin discipline; lifecycle metadata for `post_install` / `pre_uninstall` / `post_update` as elevated-permission artifacts; requirement to run the six-check pre-trust audit on every bundled hook and MCP server before publication. (Σ 11, status: shipped). Slug renamed from `writing-claude-code-plugin` because the linter rejects the `claude` reserved word.
+- `claude-code-meta/writing-mcp-server-securely` v0.1.0 — MCP server authoring with the six pre-trust checks baked in as design constraints from day one (SPDX license, source-review-friendly code, documented egress, version pinning + lockfile + SemVer release, env-var-only secrets with no logging, fixed tools/list with no dynamic registration). Includes a pre-publish self-audit checklist mirroring the consumer-side `auditing-mcp-server-pre-trust`. (Σ 14, status: shipped)
+- `claude-code-meta/authoring-tool-hook` v0.1.0 — Claude Code hook authoring across all 8 events with per-event stdin payload schemas and stdout response contracts; fail-open vs. fail-closed discipline; hook-as-elevated-permission-artifact security review; HTTP-egress timeout + caching discipline; matcher-scoping discipline. (Σ 12, status: drafting — see Notes). Slug renamed from `writing-claude-code-hook`.
+- `claude-code-meta/writing-deny-allow-rules` v0.1.0 — `.claude/rules/*.md` authoring with one rule per file, frontmatter contract, matcher-variant discipline (catches `--force` AND `-f` AND `--force-with-lease`), multi-file composition, documented precedence model, rule-vs-hook and rule-vs-CLAUDE.md distinctions. (Σ 13, status: shipped)
+- `claude-code-meta/writing-decision-trees-as-skills` v0.1.0 — meta skill converting existing decision-tree expertise into deterministic walk-the-tree skills: numbered-step predicates, explicit branches, per-predicate preconditions, anti-shortcut clause, explicit cycle-handling. (Σ 13, status: shipped)
+
+Eval methodology: Sonnet-only in-session validation per PRAGMATIC discipline. 15 dispatches (5 skills × 3 scenarios). Total rubric items scored: 45.
+
+Eval results:
+- `authoring-plugin`: happy 3/3, edge 3/3, anti 3/3 — pass all thresholds (`shipped`)
+- `writing-mcp-server-securely`: happy 3/3, edge 3/3, anti 3/3 — pass all thresholds (`shipped`)
+- `authoring-tool-hook`: happy 3/3, edge 2/3, anti 3/3 — edge-case threshold (3/3) missed; demoted to `drafting`
+- `writing-deny-allow-rules`: happy 3/3, edge 3/3, anti 3/3 — pass all thresholds (`shipped`)
+- `writing-decision-trees-as-skills`: happy 3/3, edge 3/3, anti 3/3 — pass all thresholds (`shipped`)
+
+Full 3-model (Haiku / Sonnet / Opus) validation deferred to a future re-run.
+
+Notes:
+- Two slug renames because the frontmatter linter rejects the `claude` reserved word: `writing-claude-code-plugin` → `authoring-plugin`; `writing-claude-code-hook` → `authoring-tool-hook`. Same precedent as v1-batch-5 (`authoring-skill`, `auditing-instruction-hierarchy`).
+- `authoring-tool-hook` shipped as `drafting` because the Sonnet edge-case scored 2/3 (PreToolUse hook with HTTP egress to a policy server). The skill body teaches client-side caching in Step 5 Example 2; the Sonnet completion surfaced scoped matcher + timeout + fail-open/closed decision but did not foreground the caching pattern. Teaching content is correct; Workflow ordering does not surface caching early enough. Re-validation should reorder Workflow steps to put caching alongside the timeout choice, or add an explicit caching rubric. Promotion deferred to a follow-up.
+- Side effect to surface: the Sonnet subagent running the `writing-deny-allow-rules` Scenario 2 wrote 4 rule files to `~/.claude/rules/` during the simulated walk (`deny-ssh-key-writes.md`, `deny-etc-writes-broad.md`, `allow-etc-cron-writes.md`, `deny-force-push-on-main.md`). Files were left in place per the harness rule against unconfirmed writes outside the working directory — review and remove if not desired.
+
+### v6-batch-5: scaffolding — 2026-05-23
+
+Skills shipped:
+
+- `workflow/scaffolding-ml-research-notebook` v0.1.0 — greenfield ML/DS project scaffold: pinned env, src/, seed helper, data/raw split, tests, pre-commit, starter notebook (Σ 15, status: shipped)
+- `workflow/scaffolding-security-research-repo` v0.1.0 — greenfield security-research scaffold: SECURITY.md, VDP.md (safe-harbor), THREAT-MODEL.md template per project_kind, gitleaks + semgrep pre-commit, Apache-2.0 default license, security ISSUE_TEMPLATE (Σ 13, status: shipped)
+- `workflow/scaffolding-llm-eval-harness` v0.1.0 — LLM-eval harness scaffold with the five-field result-row contract (model_id with revision pin, dataset_hash, prompt_version, judge_model, results.jsonl) (Σ 14, status: shipped)
+
+Eval methodology: Sonnet-only in-session validation per PRAGMATIC discipline. Each skill ran 3 scenarios (happy-path, edge-case, anti-trigger), one Sonnet subagent per scenario, judged by intent. Full 3-model validation deferred to a future re-run.
+
+Eval results:
+
+- scaffolding-ml-research-notebook: happy 3/3, edge 3/3, anti 3/3
+- scaffolding-security-research-repo: happy 3/3, edge 3/3, anti 3/3
+- scaffolding-llm-eval-harness: happy 3/3, edge 3/3, anti 3/3
+
+All three skills passed all thresholds and ship with status: shipped.
+
+Notes: All 3 skills are siblings of one another (the "When NOT to use" of each links to the other two). Together they cover the three greenfield-scaffolding shapes Rock's evidence corpus has surfaced — ML/DS notebooks, security-research repos, LLM-eval harnesses.
+
+### v6-batch-6: eval-driven dev + grad-school scaffolding — 2026-05-23
+
+Skills shipped:
+- `claude-code-meta/running-eval-driven-skill-development` v0.1.0 — walks the evals-first → body → dispatch-and-judge workflow for authoring a new Claude Code skill per Anthropic best-practices; refuses on trivial one-line wrappers (Σ 13, status: shipped)
+- `workflow/scaffolding-grad-school-pset` v0.1.0 — scaffolds a graded statistics pset notebook (Jupyter / RMarkdown / Quarto) with the 6-section discipline baked in: header+seed+imports → data audit → assumption-checks (BEFORE tests) → tests → effect-sizes + 95% CIs → interpretation with direction sentence; refuses on programming-only psets and research notebooks (Σ 12, status: shipped)
+
+Eval methodology: Sonnet-only in-session validation per PRAGMATIC discipline. 6 dispatches total (2 skills × 3 scenarios). All scenarios scored 3/3 against intent-matched rubrics. Full 3-model validation (Haiku + Sonnet + Opus) deferred to a future re-run.
+
+Eval results:
+- `running-eval-driven-skill-development` 01 happy-path: 3/3 · 02 edge-case (process rubrics for open-ended skills): 3/3 · 03 anti-trigger (one-line wrapper): 3/3
+- `scaffolding-grad-school-pset` 01 happy-path (BP comparison + regression): 3/3 · 02 edge-case (programming-only algorithms pset): 3/3 · 03 anti-trigger (research notebook): 3/3
+
+Notes: no deviations or calibration corrections. Both skills' anti-triggers held — scenario 03 of skill 1 correctly recommended a smoke test instead of evals; scenario 03 of skill 2 correctly handed off to `scaffolding-ml-research-notebook` (now shipped in v6-batch-5).
 
 ## [v4.0-phase1 + v5.0-phase1] — 2026-05-23
 
