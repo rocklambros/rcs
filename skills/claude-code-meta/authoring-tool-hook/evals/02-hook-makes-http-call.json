@@ -1,0 +1,12 @@
+{
+  "skill": "authoring-tool-hook",
+  "scenario_id": "02-hook-makes-http-call",
+  "scenario_kind": "edge-case",
+  "query": "My PreToolUse hook needs to check a central policy server over HTTP before allowing a tool call. What do I need to handle so it doesn't break my Claude Code session when the policy server is down or slow?",
+  "files": [],
+  "expected_behavior": [
+    "Recommends documenting the egress target in the hook's README and bounding the HTTP call with an aggressive timeout so a slow or unreachable policy server cannot stall every tool invocation",
+    "Names the explicit fail-open vs fail-closed decision and frames the choice in terms of the hook's purpose — security gates typically fail-closed (block on policy-server unreachable), observability or logging hooks typically fail-open (allow on policy-server unreachable, log the gap)",
+    "Recommends client-side caching of the policy decision with a bounded TTL so the hot path does not make an HTTP call on every tool invocation"
+  ]
+}

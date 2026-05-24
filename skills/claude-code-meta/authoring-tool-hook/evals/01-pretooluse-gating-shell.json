@@ -1,0 +1,12 @@
+{
+  "skill": "authoring-tool-hook",
+  "scenario_id": "01-pretooluse-gating-shell",
+  "scenario_kind": "happy-path",
+  "query": "I want to write a PreToolUse hook that intercepts every Bash invocation and blocks commands that match a deny list (rm -rf /, git push --force on main, dangerously-skip-permissions). Walk me through writing and registering it.",
+  "files": [],
+  "expected_behavior": [
+    "Describes a hook script that reads the tool call payload (JSON on stdin) and emits a structured response (JSON on stdout with allow/block plus reason), and explains the exit-code or stdout contract used to gate the call",
+    "Recommends registering the hook in settings.json (or a plugin manifest) with event=PreToolUse and a matcher that scopes it to the Bash tool — not unscoped on every tool",
+    "Calls out that the hook itself runs with the user's privileges and must be source-reviewed, audit-logged, and pinned just like any elevated-permission artifact"
+  ]
+}
