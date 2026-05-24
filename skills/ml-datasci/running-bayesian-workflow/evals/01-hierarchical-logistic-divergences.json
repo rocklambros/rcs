@@ -1,0 +1,12 @@
+{
+  "skill": "running-bayesian-workflow",
+  "scenario_id": "01-hierarchical-logistic-divergences",
+  "scenario_kind": "happy-path",
+  "query": "I'm fitting a hierarchical logistic regression in PyMC. The data is 30 clinical trial sites with about 50 patients per site and a binary outcome. The default sampler reports 47 divergences out of 8000 draws. The site-level random-intercept SD has prior HalfNormal(100). Walk me through diagnosing and fixing this.",
+  "files": [],
+  "expected_behavior": [
+    "Identifies the HalfNormal(100) prior on the site-level SD as the likely root cause of the funnel divergences and recommends tightening it to a weakly-informative prior such as HalfNormal(1) or HalfStudentT(3, 0, 1)",
+    "Recommends a non-centered re-parameterization of the site intercepts (alpha[i] = mu + sigma * alpha_raw[i] with alpha_raw[i] ~ Normal(0, 1)) and/or raising target_accept to roughly 0.95 to handle the hierarchical funnel",
+    "Requires checking the diagnostic gate — r_hat, ESS bulk and tail, and divergences — and refuses to interpret the posterior until divergences are essentially zero and r_hat is at or below 1.01"
+  ]
+}

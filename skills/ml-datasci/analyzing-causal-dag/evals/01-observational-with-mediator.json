@@ -1,0 +1,12 @@
+{
+  "skill": "analyzing-causal-dag",
+  "scenario_id": "01-observational-with-mediator",
+  "scenario_kind": "happy-path",
+  "query": "I have observational data on 4,000 patients. I want to know whether drug X causes lower blood pressure Y. Patient age and severity at admission are correlated with both the prescription decision and the eventual blood pressure. I also have a medication-adherence measurement taken AFTER prescription. Which variables should I adjust for if I want the total effect of drug X on Y?",
+  "files": [],
+  "expected_behavior": [
+    "Classifies age and severity as confounders (parents of both treatment and outcome) and includes them in the adjustment set",
+    "Classifies medication adherence as a mediator (on the causal path from treatment to outcome) and EXCLUDES it from the adjustment set when estimating the total effect, noting that conditioning on a mediator would shrink or block part of the causal effect being estimated",
+    "States the unverifiable assumption that the chosen adjustment set is sufficient (no unmeasured confounding of T and Y) and recommends at least one sensitivity-analysis step such as an E-value or tipping-point analysis"
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "skill": "analyzing-causal-dag",
+  "scenario_id": "03-randomized-controlled-trial",
+  "scenario_kind": "anti-trigger",
+  "query": "I ran a randomized controlled trial. 500 patients were assigned at random to drug X (T = 1) or placebo (T = 0), and outcome Y was measured 30 days later. The mean Y in the treated arm is 8.2 lower than in the placebo arm with 95% CI [5.1, 11.3]. Should I be drawing a DAG and adjusting for age and severity to get the causal effect?",
+  "files": [],
+  "expected_behavior": [
+    "Does NOT require building a DAG with confounder adjustment for the primary effect estimate; recognizes that randomization at the assignment step breaks every backdoor path from treatment to outcome, including paths through age, severity, and any unmeasured confounder",
+    "Reports that the unadjusted intent-to-treat difference and its confidence interval already form the unbiased causal effect estimate for this design, and notes that baseline-covariate adjustment in an RCT can tighten precision but does not change identification",
+    "Warns against adjusting for POST-randomization variables (such as adherence or dropout) in a way that would reintroduce mediator-bias or collider-bias risks similar to those in observational studies"
+  ]
+}
