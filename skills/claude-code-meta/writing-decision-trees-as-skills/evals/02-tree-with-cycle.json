@@ -1,0 +1,12 @@
+{
+  "skill": "writing-decision-trees-as-skills",
+  "scenario_id": "02-tree-with-cycle",
+  "scenario_kind": "edge-case",
+  "query": "My decision tree has a back-edge: after running the recommended test, if the result is inconclusive (e.g., p between 0.05 and 0.10), I want the user to go back to an earlier predicate (collect more data, re-check assumptions) and walk forward again. Can I still package this as a deterministic walk-the-tree skill?",
+  "files": [],
+  "expected_behavior": [
+    "Identifies that a back-edge breaks the strict tree model — the graph is now a DAG with a loop or a state machine — and the naive walk-the-tree discipline does not apply unchanged",
+    "Recommends one of the three documented options to handle the cycle: (a) enrich the state per visit so each iteration carries new context like an iteration counter (b) convert the walk into an explicit state machine with named states and transitions or (c) cap the maximum number of revisits with an explicit fail-safe that requests human input on cap-hit",
+    "Cross-references brainstorming or premortem skills for cases where the cycle reflects genuine open-ended judgment that cannot be encoded as a deterministic walk regardless of state enrichment"
+  ]
+}
