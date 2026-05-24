@@ -1,0 +1,12 @@
+{
+  "skill": "writing-deny-allow-rules",
+  "scenario_id": "02-complex-path-glob",
+  "scenario_kind": "edge-case",
+  "query": "I want to deny writes everywhere under ~/.ssh and everywhere under /etc EXCEPT writes under /etc/cron.d (which I do want to allow). Reads to ~/.ssh and /etc should still be allowed. How do I express this in rule files?",
+  "files": [],
+  "expected_behavior": [
+    "Recommends splitting the policy across multiple single-purpose rule files (one rule per file) rather than packing complex conditional logic into a single rule, so each rule is independently reviewable",
+    "Names the precedence model — more-specific rules win over less-specific ones; user-scope vs project-scope vs plugin-scope precedence — so the allow-rule for /etc/cron.d can override the broader deny-rule for /etc",
+    "Recommends that each rule explicitly state its full matcher (tool name, path pattern, action) so a reviewer can audit one rule file without reading the surrounding rule set"
+  ]
+}
