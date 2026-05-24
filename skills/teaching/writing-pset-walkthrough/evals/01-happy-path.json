@@ -1,0 +1,12 @@
+{
+  "skill": "writing-pset-walkthrough",
+  "scenario_id": "01-paired-non-normal-stats-pset",
+  "scenario_kind": "happy-path",
+  "query": "Write a walkthrough for this undergrad-intro stats problem: 'A clinical trial of 24 patients tests whether a new drug lowers cholesterol. Before/after differences have Shapiro-Wilk p = 0.018. Choose and run the appropriate test at α = 0.05.' Include the gating assumption check and the choice of test.",
+  "files": [],
+  "expected_behavior": [
+    "Produces a multi-step walkthrough where each step uses the four-part template (What it's asking / Why this works / What the result tells us / Gotcha), not a bare answer key.",
+    "Identifies the design as paired (within-subject before/after on the same 24 patients) and recommends the Wilcoxon signed-rank test (NOT the paired t-test), citing the Shapiro-Wilk rejection of Normality as the gating reason.",
+    "Includes at least one named gotcha that targets the predictable failure mode (e.g., students confusing two columns for two groups, or running Shapiro on each column instead of on the differences)."
+  ]
+}
