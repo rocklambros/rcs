@@ -4,7 +4,20 @@ All notable changes to RCS are documented here. Per-skill changes use the skill'
 
 ## [Unreleased]
 
-_No unreleased changes. Most recent release is `v7.0.4` below._
+_No unreleased changes. Most recent release is `v7.0.5` below._
+
+## [v7.0.5] — 2026-05-24
+
+Catalog-affordance patch following `v7.0.4`. Two user-facing changes; zero new skills.
+
+### Changed
+
+- **`README.md` Σ explanation expanded.** The previous Concepts entry was a one-sentence definition. The new entry walks the actual scoring (frequency × cost, both 1-5, product rounded into the 1-20 catalog range), names two anchor skills (`enforcing-seed-hygiene` at Σ 20, `auditing-rlhf-reward-hacking` at Σ 7), warns explicitly that Σ is a sort key not a quality score, and links to [`docs/explanation/sigma-score.md`](docs/explanation/sigma-score.md) for the full rubric and band structure. The top-10-by-Σ section now points to the same page for methodology.
+- **`skills/README.md` re-sorted alphabetically by slug.** The previous order was "roughly Σ-sorted within batch wave, concatenated by ship-date" which made direct-lookup slow (a reader who knew the slug had to scan 104 rows in a non-obvious order). Alphabetical is the standard catalog affordance for a name-keyed index. Σ remains as a reference column, not the sort key. Highest-Σ skills are reachable via the top-10 teaser in the root README, and per-track READMEs remain the natural entry point for exploration by audience.
+
+Cumulative skill count at HEAD: **104 shipped + 0 drafting** (unchanged from `v7.0.4`).
+
+Lint: 104 SKILL.md frontmatter + body all OK. pytest: 27/27.
 
 ## [v7.0.4] — 2026-05-24
 
