@@ -1,0 +1,12 @@
+{
+  "skill": "writing-repo-documentation",
+  "scenario_id": "02-audit-draft-with-slop",
+  "scenario_kind": "edge-case",
+  "query": "Audit this draft README opening paragraph and rewrite it. It is supposed to introduce causalgraph, a Python library for causal-effect estimation from observational data via DAG-based adjustment. Here is the draft:\n\n**causalgraph** is a powerful and comprehensive solution that empowers data scientists to seamlessly delve into the rich tapestry of causal inference. In this ever-evolving landscape of observational studies, our cutting-edge library leverages state-of-the-art DAG algorithms — providing a robust framework for navigating the complexities of confounding. Let's dive in!\n\nWalk me through the specific problems with this paragraph and produce a clean rewrite that preserves the actual technical content.",
+  "files": [],
+  "expected_behavior": [
+    "Identifies at least four of the slop patterns by named family or category (marketing superlative, metaphor cliché, em-dash, sycophantic opener) and points to the specific phrases that match each pattern, not just generic 'this is too marketing-y' feedback",
+    "Provides a concrete rewrite of the paragraph that preserves the project's actual technical content (causal-effect estimation, observational data, DAG-based adjustment) while removing the slop language; the rewrite is shorter and information-denser than the original, not just a different style of fluff",
+    "Names at least one substantive technical addition the original was hiding behind the slop, such as the limitation of observational designs (cannot adjust for unmeasured confounders) or a sensitivity tool (E-value) that the rewrite makes visible to the reader"
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "skill": "writing-repo-documentation",
+  "scenario_id": "01-new-python-library-readme",
+  "scenario_kind": "happy-path",
+  "query": "I am open-sourcing causalgraph, a small Python library that estimates causal effects from observational data via DAG-based adjustment. The audience is data scientists, most of whom have not used a causal-inference library before. Write the README that takes a reader from never-heard-of-this to fitting a model in five minutes, and then deeper into understanding the assumptions. Aim for a structure I can apply to other libraries too.",
+  "files": [],
+  "expected_behavior": [
+    "Opens the README with a one-or-two-sentence description of what the project IS and why a reader should care, then places a concrete runnable example (install + import + minimal call + visible expected output) BEFORE introducing any abstract concept or vocabulary the reader has not already met",
+    "Structures the README with explicit novice-to-advanced rungs the reader can stop at — for example a first minimal example, a second example that introduces one more concept, a short Concepts section that defines the vocabulary inline only when about to be needed, and a Where-to-go-next section linking to deeper material rather than inlining it",
+    "Produces prose that avoids the slop patterns the skill flags: no em-dashes in narrative, no semicolons in prose, no marketing superlatives such as 'comprehensive', 'robust', 'seamless', 'powerful', 'state-of-the-art', no metaphor clichés such as 'delve into', 'rich tapestry', 'ever-evolving landscape', and no sycophantic openers such as 'Let us dive in'"
+  ]
+}

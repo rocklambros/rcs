@@ -1,0 +1,12 @@
+{
+  "skill": "writing-repo-documentation",
+  "scenario_id": "03-autogen-api-reference",
+  "scenario_kind": "anti-trigger",
+  "query": "I have a Python library with type hints and docstrings on every public function. Use your documentation skill to write the full API reference page — one section per function, with the signature, the docstring rendered as prose, the parameter table, and the return type. Output it in Markdown so I can drop it into docs/api-reference.md.",
+  "files": [],
+  "expected_behavior": [
+    "Does NOT attempt to hand-write the API reference content from scratch; recognizes that this is auto-generation work whose source of truth is the source code, not the prose, and that human-authored project documentation is a different category of task",
+    "Recommends a specific tool appropriate for the Python ecosystem (such as Sphinx with the autodoc and napoleon extensions, or pdoc) and notes that other languages have their own equivalents (TypeDoc for TypeScript, rustdoc for Rust, godoc for Go), instead of producing prose API documentation",
+    "Explains the distinction between auto-generated reference documentation and the human-authored documentation this skill DOES cover (README, tutorials, how-to guides, conceptual explanations), and offers to help with that other category of work if the user has that as a need"
+  ]
+}
