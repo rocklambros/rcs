@@ -1,0 +1,36 @@
+# .pre-commit-config.yaml — used by scaffolding-security-research-repo.
+
+repos:
+  - repo: https://github.com/gitleaks/gitleaks
+    rev: v8.21.2
+    hooks:
+      - id: gitleaks
+        # Blocks any commit that introduces a recognized secret pattern.
+        # Override with `git commit --no-verify` ONLY after confirming
+        # the match is a false positive AND it is not actually a secret.
+
+  - repo: https://github.com/returntocorp/semgrep
+    rev: v1.95.0
+    hooks:
+      - id: semgrep
+        args:
+          - "--config=p/security-audit"
+          - "--config=p/secrets"
+          - "--error"
+          - "--metrics=off"
+
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.7.4
+    hooks:
+      - id: ruff
+        args: [--fix]
+      - id: ruff-format
+
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: detect-private-key
+      - id: check-added-large-files
+        args: ["--maxkb=500"]
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
