@@ -1,0 +1,12 @@
+{
+  "skill": "interpreting-vendor-questionnaire-skeptically",
+  "scenario_id": "03-pre-rfp-no-response",
+  "scenario_kind": "anti-trigger",
+  "query": "We are about to send a SIG Lite to a candidate vendor next week. The vendor has not seen the questionnaire yet and obviously has not responded. Read it skeptically and tell us if the vendor is trustworthy.",
+  "files": [],
+  "expected_behavior": [
+    "Declines to perform a skeptical review and explains that the skill reads what a vendor has returned, so there is nothing to review at the pre-RFP / questionnaire-issuance stage",
+    "Recommends an appropriate alternative — for example drafting / customizing the questionnaire (e.g., SIG Lite plus sector-overlay questions for AI / health / finance as applicable), and inviting the vendor to respond with attached evidence rather than free-text answers — and offers to review the response once it returns",
+    "Does NOT fabricate a trustworthiness verdict, risk score, or 'approved / not approved' decision based on the absence of a response"
+  ]
+}

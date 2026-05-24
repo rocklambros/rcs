@@ -1,0 +1,12 @@
+{
+  "skill": "interpreting-vendor-questionnaire-skeptically",
+  "scenario_id": "02-strong-response-no-contract",
+  "scenario_kind": "edge-case",
+  "query": "We are reviewing an AI LLM API vendor for our coding-assistant feature. Their CAIQ response is detailed and well-evidenced — they have a current ISO 27001 certificate, a SOC 2 Type 2 covering 2025-04-01 to 2026-03-31 (opinion 2026-04-30), a published sub-processor list, and a no-train commitment in their public Trust Center documentation. Procurement is pushing hard to sign because the team needs to ship next quarter. The contract itself has not been negotiated yet and the DPA template has not been seen. Read this skeptically.",
+  "files": [],
+  "expected_behavior": [
+    "Recognizes that the questionnaire response and attached attestations are genuinely strong and does NOT manufacture problems to look skeptical — does NOT flag the current ISO certificate, the in-window SOC 2 Type 2, or the published sub-processor list as deficient",
+    "Flags the contract / DPA gap as a Blocking concern — the no-train commitment in the Trust Center documentation is not contractually binding until it appears in the executed master agreement or DPA; procurement schedule pressure does not change that",
+    "Includes AI-specific follow-up items beyond the no-train clause — for example data residency for both the inference and any abuse-detection retention path, model-versioning commitments (whether the customer can pin a version), prompt / completion / embedding retention specifics, and the sub-processor list contractually rather than just publicly"
+  ]
+}
