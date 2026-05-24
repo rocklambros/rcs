@@ -1,0 +1,12 @@
+{
+  "skill": "running-bayesian-workflow",
+  "scenario_id": "02-cross-platform-posterior-drift",
+  "scenario_kind": "edge-case",
+  "query": "Same PyMC model, same seed (2026), same code, same data file. On my Mac laptop the posterior mean for treatment_effect is +0.42 with 89% HDI [0.18, 0.65]. On our Linux GPU server it's +0.31 with 89% HDI [0.09, 0.55]. Diagnostics on both runs look clean — r_hat < 1.01 everywhere, no divergences. Why are the posteriors different?",
+  "files": [],
+  "expected_behavior": [
+    "Identifies that a shared random seed alone is insufficient for cross-platform reproducibility of NUTS / HMC samplers because multi-threaded BLAS, MKL, and platform-specific RNG paths change the order of floating-point operations and the mass-matrix adaptation",
+    "Recommends pinning to CPU and single-threaded BLAS via environment variables such as OMP_NUM_THREADS=1, MKL_NUM_THREADS=1, and (for NumPyro / JAX backends) JAX_PLATFORM_NAME=cpu set before importing the modeling library",
+    "Recognizes that even with clean diagnostics the cross-platform drift is not a sampling-noise issue but a determinism-discipline gap, and points toward a seed-hygiene / determinism workflow rather than re-tuning priors or target_accept"
+  ]
+}

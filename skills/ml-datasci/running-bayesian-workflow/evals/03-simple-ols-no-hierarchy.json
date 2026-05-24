@@ -1,0 +1,12 @@
+{
+  "skill": "running-bayesian-workflow",
+  "scenario_id": "03-simple-ols-no-hierarchy",
+  "scenario_kind": "anti-trigger",
+  "query": "I have a 50,000-row tabular dataset of house prices. I want to regress sale price on three predictors: square footage, number of bedrooms, and a numeric zip-code score. No hierarchy, no prior information from any other study, and the only quantity I care about is the slope on square footage. Should I fit this in PyMC with NUTS so I get a proper posterior, instead of running sklearn LinearRegression?",
+  "files": [],
+  "expected_behavior": [
+    "Does NOT recommend running the full Bayesian / NUTS workflow for this problem; recognizes that single-level OLS on 50k rows with no hierarchy and no prior information gains essentially nothing from a Bayesian fit",
+    "Recommends a frequentist linear-regression path (sklearn / statsmodels OLS) and notes that standard errors / confidence intervals already provide the uncertainty quantification the user needs for a single slope coefficient",
+    "Names at least one concrete condition under which switching back to Bayesian would be the right call (e.g., hierarchical / multilevel structure such as varying intercepts by zip code, encoded prior information from a prior study, or posterior intervals on a derived predictive quantity)"
+  ]
+}
