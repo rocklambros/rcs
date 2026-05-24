@@ -9,6 +9,11 @@ __pycache__/
 
 # Eval results (regenerated per run; not committed)
 skills/**/evals/results-*.json
+skills/**/evals/eval-results*.json
+
+# Eval-produced artifacts at repo root (Sonnet subagents demonstrating a skill sometimes
+# write real notebooks / scripts to cwd; reproducible from SKILL.md + scenario, don't track)
+/*.ipynb
 
 # Secrets and local environment overrides (never commit)
 .env
