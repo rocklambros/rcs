@@ -1,0 +1,12 @@
+{
+  "skill": "generating-shap-explanations",
+  "scenario_id": "02-tiny-background-instability",
+  "scenario_kind": "edge-case",
+  "query": "I ran shap.DeepExplainer on my 30-feature neural network using a 50-row background sample, but every time I re-run it the top-5 features come out in a different order. Is the model unreliable?",
+  "files": [],
+  "expected_behavior": [
+    "Identifies the 50-row background as undersized for a 30-feature model (or names a background-size rule of thumb such as ≥ 5–10 × n_features) as the cause of the rank instability",
+    "Distinguishes attribution instability (a SHAP setup problem) from model unreliability (a separate question) — does NOT conclude the model itself is broken",
+    "Recommends increasing the background to a substantially larger stratified sample (e.g., 200+ rows) and/or running an explicit stability check across multiple background resamples before publishing the attributions"
+  ]
+}

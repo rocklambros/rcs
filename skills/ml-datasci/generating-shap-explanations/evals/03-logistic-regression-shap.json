@@ -1,0 +1,12 @@
+{
+  "skill": "generating-shap-explanations",
+  "scenario_id": "03-logistic-regression-shap",
+  "scenario_kind": "anti-trigger",
+  "query": "Run SHAP on my logistic regression model for credit scoring. I want SHAP values for every applicant.",
+  "files": [],
+  "expected_behavior": [
+    "Does NOT recommend running shap.KernelExplainer or any other SHAP variant on the logistic regression as a routine workflow",
+    "Explains that for linear / logistic models the per-instance attribution is available in closed form (coefficient × (feature_value − background_mean) or equivalent), so SHAP would just approximate the closed form with sampling noise",
+    "Hands the user the closed-form approach (read coefficients × deviation from a chosen background mean) instead of producing SHAP values, OR explicitly redirects to that simpler path before proceeding"
+  ]
+}
