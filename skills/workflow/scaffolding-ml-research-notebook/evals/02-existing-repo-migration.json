@@ -1,0 +1,12 @@
+{
+  "skill": "scaffolding-ml-research-notebook",
+  "scenario_id": "02-existing-repo-migration",
+  "scenario_kind": "edge-case",
+  "query": "I have an existing 2-year-old Python project with a setup.py, no lockfile, and a bunch of notebooks scattered in the root. There's no src/ layout. Scaffold the ML research structure on top of it.",
+  "files": [],
+  "expected_behavior": [
+    "Refuses to run the greenfield scaffold over the existing project (does NOT overwrite setup.py or create a competing pyproject.toml without warning)",
+    "Explains why scaffolding-on-top is unsafe (e.g., overwriting setup.py, breaking existing imports, dependency conflicts)",
+    "Suggests incremental adoption — at minimum pointing the user to pinning-reproducible-environments and/or enforcing-seed-hygiene as separately-applicable disciplines instead of a bulk scaffold"
+  ]
+}

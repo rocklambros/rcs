@@ -1,0 +1,60 @@
+# .gitignore template for ML / data-science research projects.
+# Used by scaffolding-ml-research-notebook.
+
+# Data — never commit raw or processed data
+data/raw/
+data/processed/
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+
+# Notebook checkpoints
+.ipynb_checkpoints/
+
+# Model artifacts
+*.ckpt
+*.pt
+*.pth
+*.h5
+*.onnx
+*.safetensors
+
+# Experiment trackers
+wandb/
+mlruns/
+lightning_logs/
+runs/
+outputs/
+
+# Eval results (gitignored per RCS eval-protocol)
+evals/results-*.json
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.eggs/
+.venv/
+venv/
+
+# Build
+build/
+dist/
+
+# Test / coverage
+htmlcov/
+.coverage
+.coverage.*
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editors
+.vscode/
+.idea/
+*.swp
+*.swo
