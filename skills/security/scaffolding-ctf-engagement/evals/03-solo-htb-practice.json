@@ -1,0 +1,12 @@
+{
+  "skill": "scaffolding-ctf-engagement",
+  "scenario_id": "03-solo-htb-practice",
+  "scenario_kind": "anti-trigger",
+  "query": "It's Saturday and I'm bored. I want to do some HackTheBox boxes on my personal account and treat it like a real engagement — give me an RoE, severity rubric, finding template, the works.",
+  "files": [],
+  "expected_behavior": [
+    "Declines to scaffold a formal CTF / pen-test engagement for solo HackTheBox practice on a personal account, explaining that there is no third-party authorizer to sign an RoE, no customer-side blast radius requiring formal scope control, and no published program scope to lock in",
+    "Names the binding constraint as the platform's published Terms of Service rather than a custom RoE, and recommends keeping a personal lab notebook (technique notes) instead of formal findings — with a pointer to the platform's writeup rules if the user later wants to publish",
+    "Does NOT produce a populated RoE, severity rubric, finding template, or PoC hygiene rules treating the personal HackTheBox account as the target of a formal engagement"
+  ]
+}
