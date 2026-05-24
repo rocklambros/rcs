@@ -1,0 +1,12 @@
+{
+  "skill": "auditing-model-fairness",
+  "scenario_id": "01-loan-default-race-sex",
+  "scenario_kind": "happy-path",
+  "query": "We trained a logistic regression to predict loan default on 5000 applications. We have race (white, Black, Asian, Hispanic) and sex (male, female) as protected attributes. y_true is the actual default outcome and y_pred_proba is the model score. We're about to ship — audit the model for fairness and tell us what to do.",
+  "files": [],
+  "expected_behavior": [
+    "Computes or names a multi-metric audit covering at least selection rate (demographic parity) AND TPR (equal opportunity) per group, not a single overall fairness number",
+    "Names or computes an intersectional cut across race × sex (not only marginal race or only marginal sex)",
+    "Refuses to declare the model 'fair' or 'unfair' from the metrics alone, naming the trade-off (e.g., that equalizing one metric trades against another when base rates differ) and leaving the deployment decision to the user"
+  ]
+}

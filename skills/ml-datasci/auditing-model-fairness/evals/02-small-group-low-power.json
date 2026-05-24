@@ -1,0 +1,12 @@
+{
+  "skill": "auditing-model-fairness",
+  "scenario_id": "02-small-group-low-power",
+  "scenario_kind": "edge-case",
+  "query": "Healthcare triage classifier on 500 patients. Race breakdown: white 320, Black 95, Asian 67, Native American 18. We need a fairness audit before deployment. Run it.",
+  "files": [],
+  "expected_behavior": [
+    "Flags the Native-American group (n=18) as low-power / wide CI / uninformative point estimate rather than computing a confident per-group verdict on it",
+    "Does NOT silently drop the small group from the report; the group is named and its sample-size limitation is explicit",
+    "Recommends one of: collecting more data, stratified sampling, or holding a deployment decision until the small-group CI can be tightened — instead of issuing a ship verdict on the current evidence"
+  ]
+}
