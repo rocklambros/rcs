@@ -4,13 +4,139 @@ All notable changes to RCS are documented here. Per-skill changes use the skill'
 
 ## [Unreleased]
 
-### Changed
+_No unreleased changes — most recent integration is `v4.0-phase1 + v5.0-phase1` below._
+
+## [v4.0-phase1 + v5.0-phase1] — 2026-05-23
+
+v4 (security suite + AI red-team) and v5 (MLOps + fine-tuning + synthetic data) shipped via 9 independent batch PRs authored in parallel sessions using the PRAGMATIC discipline. This release consolidates the per-batch changelog fragments from both versions and updates the user-facing catalogs in a single integration commit (v4-integration and v5-integration combined because the v4 fragments were stranded — never integrated separately, matching the v2+v3 precedent). v4-batch-5 (PII scrubbing + jailbreak-judge agreement, 2 planned skills) was not authored in this cycle and remains on the v4 roadmap for a future batch.
+
+**Net additions:** 24 skills authored across 9 batches (10 v4 + 14 v5). 23 ship as `status: shipped`; 1 (`security/applying-secure-coding-rules`) ships as `status: drafting` per PRAGMATIC step 6 because 2 of 3 eval scenarios failed materially (root cause documented inline below — eval-design and skill-content fix options identified for a follow-up promotion). Cumulative skill count at HEAD: 65 shipped + 1 drafting (vs. 42 shipped at the previous integration).
+
+### v4-batch-1: AppSec triage + SBOM — 2026-05-23
+
+Skills shipped:
+
+- `security/triaging-vulnerability-findings` v0.1.0 — SARIF triage pipeline (parse → dedupe across tools → reachability → EPSS → rank → suppress-with-rationale → PR comment). Refuses silent suppression. (Σ 14, status: shipped)
+- `security/generating-sbom` v0.1.0 — CycloneDX / SPDX SBOM generation from any stack via syft (default) + per-ecosystem fallbacks (cyclonedx-py, cdxgen, cyclonedx-gomod, etc.). Software components only — explicitly scoped to NOT cover AI-BOM (CycloneDX 1.7 AI extension), which is deferred to a planned writing-aibom skill. (Σ 12, status: shipped)
+- `security/auditing-transitive-vulnerabilities` v0.1.0 — Dependency-graph CVE audit consuming SBOM or lockfile. Walks dep-path, enriches with EPSS, runs reachability check (callgraph or import-only), ranks by `severity × reachability × (1 + EPSS) / log10(depth + 1)`, and recommends upgrade / override / replace / suppress-with-rationale-and-expiry. (Σ 13, status: shipped)
+
+Eval methodology: Sonnet-only in-session validation per PRAGMATIC discipline. Each of the 9 scenarios (3 skills × 3 scenarios) was dispatched to a general-purpose subagent with `model: sonnet`, system context = the SKILL.md file, user message = scenario.query. Rubric items judged against intent (not literal phrasing). All 9 scenarios passed at 3/3. Full 3-model validation (Haiku + Sonnet + Opus) deferred to a future re-run.
+
+Notes:
+
+- All three skills cross-reference one another: SBOM is the natural input to transitive-vuln audit; triage applies to SAST/DAST findings while transitive-vuln-audit applies to SCA findings. Together they cover the dominant appsec triage cluster.
+- The `generating-sbom` skill explicitly carves out AI-BOM as out of scope; a `writing-aibom` skill is planned for a later batch when CycloneDX 1.7's AI extension matures.
+- Suppression discipline is consistent across all three skills: NO silent suppression. Every suppression carries inline rationale + (for transitive-vulns) expiry + reviewer.
+
+### v4-batch-2: secure-coding rule application — 2026-05-23
+
+Skills shipped:
+- `security/applying-secure-coding-rules` v0.1.0 — applies a user-supplied corpus (semgrep / SARIF / markdown / YAML / `claude-secure-coding-rules`-style repo) to a target project, surfacing applicable findings, skipped rules with reasons, and conflicts; refuses to fabricate rules from training memory when no corpus is supplied (Σ 15, status: drafting)
+
+Eval methodology: PRAGMATIC Sonnet-only in-session validation. Three subagent dispatches against the three eval scenarios (happy-path, edge-case, anti-trigger).
+
+Eval results (intent-based scoring):
+- 01-python-fastapi-langchain-happy-path: 0/3 (threshold 3/3 — FAIL)
+- 02-polyglot-partial-coverage-edge-case: 2/3 (threshold 3/3 — FAIL; passed gap-identification + tfsec/Checkov recommendation rubric items)
+- 03-no-corpus-anti-trigger: 3/3 (threshold ≥2/3 — PASS, clean refusal of fabrication with all five accepted corpus formats and the four-part rationale enumerated)
+
+Notes:
+- Status demoted to `drafting` per PRAGMATIC step 6 because two scenarios failed materially.
+- Root cause analysis: the validating Sonnet subagent had filesystem tool access and interpreted the SKILL.md Step 1 ("Verify a rule corpus is supplied — if not, STOP and request one") as "verify the corpus exists on disk." When the eval scenarios described corpus paths (e.g., `~/rules/`) and target paths (e.g., `./app/`) that did not physically exist on the validating machine, the subagent refused to proceed instead of producing illustrative output. The skill's anti-fabrication discipline (the most important behavior) works correctly — anti-trigger scored 3/3.
+- Follow-up options for promotion to `shipped`:
+  1. Clarify in SKILL.md Step 1 that user-described corpus/target inputs should be accepted at face value for hypothetical/illustrative runs (skill-content fix).
+  2. Revise the eval scenarios to inline corpus content directly in the `query` string so the rule-application machinery runs against real (eval-provided) files (eval-design fix).
+  3. Run the full 3-model validation (Haiku + Sonnet + Opus) with a richer scenario harness once option 1 or 2 is in.
+- Anti-fabrication discipline is the most important property of this skill and is empirically validated.
+
+Full 3-model validation deferred to a future re-run.
+
+### v4-batch-3: threat modeling — 2026-05-23
+
+Skills shipped:
+- `security/threat-modeling-llm-app` v0.1.0 — STRIDE-style threat-modeling walk over LLM applications (chatbot, RAG, summarizer, content-generation pipeline) against a user-supplied catalog (OWASP LLM Top 10, MITRE ATLAS, MAESTRO, custom); inventories components and five canonical LLM-app boundaries, maps catalog items to STRIDE categories, produces an auditable register with likelihood / impact / mitigation / owner per row; methodology only, no bundled catalogs (Σ 13, status: shipped)
+- `security/threat-modeling-agentic-systems` v0.1.0 — extends LLM-app threat modeling with agentic boundaries (planner↔executor, memory↔next-turn, tool-result↔next-prompt, agent↔agent, identity blast radius) and agent-concern tagging (EA / GH / MP / RL / TC / MAC); mandatory runaway-loop / blast-radius subsection and data-plane vs control-plane mitigation tagging; methodology only, no bundled catalogs (Σ 11, status: shipped)
+
+Eval methodology: Sonnet-only in-session validation per PRAGMATIC discipline. 6 dispatches (3 scenarios × 2 skills); all scored 3/3 against intent for every scenario including the anti-triggers. Full 3-model (Haiku / Sonnet / Opus) validation deferred to a future re-run.
+
+Notes: Both skills are deliberately methodology-only — they refuse to invent a catalog if the user does not supply one, per the public-skills-repo design (no bundled NIST / MITRE / OWASP / EU-AI-Act content in v1). The agentic skill cross-references the LLM-app sibling and the anti-trigger eval verifies the handoff works cleanly. No eval failures or calibration corrections; both skills retained `status: shipped`.
+
+### v4-batch-4: AI red-team — 2026-05-23
+
+Skills shipped:
+- `security/scaffolding-red-team-engagement` v0.1.0 — produces signed RoE + in-scope/out-of-scope inventory + kill-switch protocol + tamper-evident append-only logging + coordinated-disclosure reporting template before any attack traffic flows; refuses solo personal jailbreak experiments (Σ 12, status: shipped)
+- `security/running-prompt-injection-eval` v0.1.0 — generic single-turn injection harness consuming a user-supplied JSONL corpus (no bundled catalog); 7-step workflow with mandatory pre-flight + dry-run + four-class outcome classification (blocked / passed / partial / inconclusive, with 429s and 5xx classified as inconclusive NOT blocked) + per-class false-negative analysis against expected_blocking_classes; refuses without RoE, without corpus, or against unauthorized production (Σ 13, status: shipped)
+- `security/running-multiturn-attack-suite` v0.1.0 — multi-turn attack harness with per-script session isolation, per-turn state snapshots (token count drift, retrieval citations, tool calls, summarization-event detection), per-turn 5-class + per-script 4-class outcome system, branch-not-taken disambiguated from blocked, cross-script pattern analysis, and per-finding turn-by-turn repro; refuses on single-turn-only targets (Σ 12, status: shipped)
+- `security/running-encoded-payload-suite` v0.1.0 — encoded-payload filter-bypass audit across base64 / hex / ROT13 / URL / unicode-confusables / zero-width / RTL-override / leetspeak / language-switch / tokenizer-boundary; mandatory filter-presence sanity check + plain-text baseline (excludes never-blocked payloads from gap matrix to prevent inflation); per-encoding bypass-rate aggregation with systematic-class findings (not per-payload duplicates); refuses against no-filter base-model deployments (Σ 12, status: shipped)
+
+Eval methodology: Sonnet-only in-session validation per PRAGMATIC discipline. 12 dispatches (3 scenarios × 4 skills); all scored 3/3 against intent. Full 3-model (Haiku / Sonnet / Opus) validation deferred to a future re-run.
+
+Notes: All four skills retained `status: shipped` after eval validation. No corpus is bundled with any skill — per the public-skills-repo "no framework catalogs in v1" discipline, every skill is corpus-as-input. The four skills compose deliberately: `scaffolding-red-team-engagement` is a prerequisite for the three runner skills; the three runners reference each other for the off-suite cases (single-turn target → injection-eval; encoded inside multi-turn → encoded-payload-suite). One eval JSON write was initially blocked by the `eval()` security regex (innocuous "running-prompt-injection-eval (and ..." parens triggered the negative-lookbehind); reworded to avoid the literal `eval (` pattern.
+
+### v5-batch-1: deployment — 2026-05-23
+
+Skills shipped:
+- `ml-datasci/packaging-model-for-deployment` v0.1.0 — packages a trained model as a versioned artifact + input/output schema + manifest + smoke test, refusing to certify deploy-ready without a smoke test that round-trips through the saved artifact (Σ 12, status: shipped)
+- `ml-datasci/building-canary-rollout` v0.1.0 — staged traffic split with pre-committed business + technical + per-cohort guardrail thresholds and a deterministic auto-rollback trigger wired before the first flip (Σ 9, status: shipped)
+- `ml-datasci/building-rollback-plan` v0.1.0 — versioned artifact store + deterministic triggers + oncall decision authority + named control-plane reversal mechanism + state reconciliation + smoke-test re-entry gate (Σ 10, status: shipped)
+
+Eval methodology: Sonnet-only in-session validation per PRAGMATIC discipline. 9 general-purpose subagent dispatches (3 skills × 3 scenarios). All 9 scenarios scored 3/3 on the intent-matched rubric. Pass thresholds (happy: 3/3, edge: 3/3, anti: ≥ 2/3) met for every skill. Full 3-model (Haiku + Sonnet + Opus) validation deferred to a future re-run.
+
+Notes: no failures, no deviations, no calibration corrections. All three skills retain `status: shipped`. Lint sweep clean (`tools.lint_frontmatter`, `tools.lint_skill_md`, `tools.lint_links` all OK). Full test suite passes (27/27).
+
+### v5-batch-2: drift monitoring — 2026-05-23
+
+Skills shipped:
+- `ml-datasci/monitoring-data-drift` v0.1.0 — per-feature data-drift monitor with PSI / KS for continuous, Jensen-Shannon / chi-squared for categoricals; mandatory baseline-noise calibration against empirical reference-window subwindows (rejects hard-coded industry bands as the only threshold); per-cohort attribution; root-cause hypothesis hierarchy (instrumentation bug → cohort-mix shift → real population drift) before any retraining recommendation; refuses pre-deployment systems with no live inference traffic (Σ 11, status: shipped)
+- `ml-datasci/monitoring-prediction-drift` v0.1.0 — prediction-side drift monitor with labeling-delay-aware evaluation windows; calibration diagnostics (reliability curve, slope and intercept, Brier score); per-segment AUC / F1 / calibration with bootstrap 95% CI to catch Simpson's-paradox cases where global metric is stable but a segment has eroded; cause hierarchy ordered cheapest-first (calibration drift → score shift → segment erosion → concept drift) so Platt / isotonic recalibration is recommended before retraining when calibration alone has moved; refuses pre-deployment systems with no live predictions (Σ 11, status: shipped)
+- `ml-datasci/auditing-inference-latency-budget` v0.1.0 — real-time inference latency audit against a stated SLO; per-stage P50 / P95 / P99 decomposition (tokenize / feature_lookup / preprocess / model_forward / postprocess / serialize / network); slow-vs-fast comparison (P95-P99 vs P40-P50) for tail-driver attribution; input-shape correlation analysis (sequence length, batch size, fanout); five-class tail-cause hypothesis menu (input-shape variance / cold-start / contention / external dependency / cache miss); optimization ranking by (ms saved at P99) / (engineering hours) with quality-risk and reversibility noted; refuses to recommend fixes without measured attribution and refuses batch / offline workloads where latency SLO does not apply (Σ 10, status: shipped)
+
+Eval methodology: Sonnet-only in-session validation per PRAGMATIC discipline. 9 dispatches (3 scenarios × 3 skills); all 27 rubric items scored 3/3 against intent. Full 3-model (Haiku / Sonnet / Opus) validation deferred to a future re-run.
+
+Notes: All three skills retained `status: shipped` after eval validation. The three skills compose deliberately: `monitoring-data-drift` and `monitoring-prediction-drift` are paired sides of the same drift-monitoring problem (input vs. output), and the prediction-drift skill cross-references the data-drift skill for segment-restricted PSI when global PSI looks clean but a segment has eroded. `auditing-inference-latency-budget` is the production-side latency-quality counterpart to those two; the trio covers the three primary post-deployment monitoring axes (data, prediction, latency). All three skills reuse the baseline-noise-calibration discipline introduced in `monitoring-data-drift` so the threshold-setting pattern is consistent across the suite. No threshold or metric is bundled as a "framework catalog"; every threshold is calibrated against the user's own reference window.
+
+### v5-batch-3: training pipeline scaffolding — 2026-05-23
+
+Skills shipped:
+
+- `ml-datasci/scaffolding-pytorch-training-loop` v0.1.0 — Production-grade PyTorch training-loop scaffold. Wires deterministic seeding (Python / NumPy / PyTorch CPU+CUDA / cuDNN deterministic + DataLoader `worker_init_fn`), AMP via `autocast` + `GradScaler` (fp16 path) or bf16-AMP (no scaler), gradient clipping with `scaler.unscale_` ordering, configurable LR scheduler (cosine / onecycle / step / plateau), early stopping on a monitor metric, and an atomic-write full-state checkpoint that survives SIGTERM preemption. The checkpoint contract includes model + optimizer + scheduler + AMP scaler + epoch + best_metric + RNG states for Python / NumPy / torch / torch.cuda — so `--resume-from` actually continues training rather than restarting from a different initialization. W&B init uses `resume="allow"` with a config-hash run_id for crash recovery. Refuses to scaffold around sklearn / xgboost / lightgbm and skips on toy MNIST-tier throwaway scripts. (Σ 12, status: shipped)
+
+- `ml-datasci/running-hyperparameter-sweep` v0.1.0 — Disciplined Optuna / Ray Tune sweep. Forces an explicit train / val / test firewall (sweep on val only; test locked until the single-shot final eval). Search-space distribution table picks log-uniform for multiplicative hyperparameters (lr, weight_decay) and categorical-on-powers-of-2 for batch size and hidden units. Sampler matrix (TPE / random sanity baseline / CMA-ES / grid) and pruner matrix (ASHA / median / Hyperband / none) with a default ASHA-η=3, `min_resource=5` epochs to avoid pruning on early-epoch metric noise. Budget split: 60% sweep / 40% retrain by default, with the retrain budget spent on seed-stratified (≥ 3 seeds) re-runs of the top-K configs — winner declared only after seed-mean ± SD across the stratified runs, and flagged if not statistically separable. Boundary alarms catch best-trial-is-trial-0, best-params-on-search-space-boundary, and sweep-overfit-val-set patterns. Refuses to engage on sklearn LogReg / NB / k-NN at sub-10k-row scale where defaults are near-optimal and CV variance exceeds tuning gain. (Σ 12, status: shipped)
+
+Eval methodology: Sonnet-only in-session validation per PRAGMATIC discipline. Each of the 6 scenarios (2 skills × 3 scenarios) was dispatched to a general-purpose subagent with `model: sonnet`, system context = the SKILL.md body inlined (subagent reads the file directly + bundled reference files), user message = scenario.query. Rubric items judged against intent (not literal phrasing). Full 3-model validation (Haiku + Sonnet + Opus) deferred to a future re-run.
+
+Notes:
+
+- Both skills cross-reference one another: `running-hyperparameter-sweep` wraps `scaffolding-pytorch-training-loop` as the trainable each trial executes, and the seed-stratified retrain depends on the loop's seed-pin discipline.
+- Both skills cross-reference `workflow/enforcing-seed-hygiene` (shipped in v1-batch-1) as the foundational seed discipline.
+- The PyTorch loop deliberately excludes distributed training (DDP / FSDP / DeepSpeed) — that scaffold is a separate skill class. Single-process loop only.
+- The sweep skill carves out NAS (architecture search) as out of scope; only hyperparameter optimization.
+
+### v5-batch-4: fine-tuning audits — 2026-05-23
+
+Skills shipped:
+- `ml-datasci/auditing-sft-dataset` v0.1.0 — pre-training audit of an SFT corpus across 7 dimensions (schema / chat-template conformance / length / exact + MinHash duplicate detection / 13-gram leakage / PII against user-supplied policy / label-quality sample). Quarantine-not-silent-drop discipline, eval-set one-directional protection (drop train rows, never eval rows), and re-runnable-gate framing. No PII catalog bundled — policy is user-supplied; default minimum policy (email / phone / SSN-like / IP / Luhn-checked card numbers) is flag-only. (Σ 11, status: shipped)
+- `ml-datasci/running-eval-before-after-finetune` v0.1.0 — paired before/after eval with metric-family-driven test selection (McNemar with exact / continuity / mid-p variants for paired-binary, paired-t or Wilcoxon signed-rank auto-selected on Shapiro for paired-continuous, Cochran's Q / Friedman for paired-multi-checkpoint), required effect size + 95% CI per test family, power-check at observed discordance / variance with `underpowered-inconclusive` verdict distinct from `certified-no-difference`. Composes with `reporting-effect-sizes` and `checking-test-assumptions`. (Σ 12, status: shipped)
+- `ml-datasci/writing-finetune-spec-sheet` v0.1.0 — 7-section spec sheet enforcement: immutable revision SHA (refuses tag names), audit manifest link, training recipe with seeds + hyperparameters + hardware, paired eval evidence link (refuses single-number metric reports), non-empty limitations, license-stack reconciliation with explicit conflict surfacing, and intended-use + out-of-scope-use (both required, out-of-scope carries equal weight). Audience-driven strictness: `regulated` blocks on missing audit / eval; `public` warns; `internal` is the default. (Σ 10, status: shipped)
+
+Eval methodology: Sonnet-only in-session validation per PRAGMATIC discipline. 9 dispatches (3 scenarios × 3 skills); all 9 scored 3/3 against the rubric intent on the first pass. Full 3-model (Haiku / Sonnet / Opus) validation deferred to a future re-run.
+
+Notes: All three skills retained `status: shipped` after eval validation. The skills compose deliberately: `auditing-sft-dataset` is a documented prerequisite for `running-eval-before-after-finetune` (held-out eval required), and both feed `writing-finetune-spec-sheet` (which cites the audit manifest in Section 2 and the paired eval report in Section 4). One eval JSON write was initially blocked by the `eval()` security regex (innocuous "single-number eval ('73% final accuracy')" parens triggered the negative-lookbehind on the literal `eval (` pattern); reworded to use "single-number metric report" instead. Per the public-skills-repo "no framework catalogs in v1" discipline, this batch ships no bundled PII catalog, no bundled chat-template registry beyond the per-template conformance ruleset in `reference/`, and no bundled license-compatibility matrix — all three are inputs the operator supplies.
+
+### v5-batch-5: synthetic data + privacy — 2026-05-23
+
+Skills shipped:
+- `ml-datasci/auditing-synthetic-data-utility` v0.1.0 — TSTR / TRTS / TRTR / TSTS utility audit for tabular SDG output (CTGAN / TVAE / SDV / Synthpop / Gretel) with bootstrap 95% CI on the utility ratio, per-marginal KS / Wasserstein, pairwise-correlation Frobenius gap, and use-as-real / use-with-caveats / reject verdict; refuses without a held-out REAL test set and refuses to lead with marginal-only fidelity (Σ 11, status: shipped)
+- `ml-datasci/auditing-synthetic-data-leakage` v0.1.0 — empirical privacy audit for tabular synthetic data via shadow-model membership-inference attack (MIA) with bootstrap CI, DCR / NNDR distance audits, exact / near-duplicate detection, per-attribute disclosure (entropy reduction under attack), and a publish / publish-with-DP / restrict / withhold verdict tiered by sensitivity class (PHI / PII / financial / customer / public); refuses to substitute utility or k-anonymity-on-synth for MIA, and refuses to decide release on MIA AUC point estimate alone — CI upper bound is the operative number on sensitive-data classes (Σ 10, status: shipped)
+- `ml-datasci/building-data-dictionary-with-consent-class` v0.1.0 — per-field data dictionary with consent class (collected / inferred / derived / public / synthetic), lawful basis per (field, purpose) pair, DSR scope per right per regulatory regime, Article-9 sensitive-attribute flagging, lineage / propagated_to cascade map (catches the deleting-the-user-but-leaving-the-embedding failure class), and orphan-field detection for GDPR Article 5 data minimization; refuses to classify as "public" without documented source URL + timestamp and refuses to skip the inferred / derived classes (Σ 11, status: shipped)
+
+Eval methodology: Sonnet-only in-session validation per PRAGMATIC discipline. 9 dispatches (3 scenarios × 3 skills); all scored 3/3 against intent. Full 3-model (Haiku / Sonnet / Opus) validation deferred to a future re-run.
+
+Notes: All three skills retained `status: shipped` after eval validation. The three compose deliberately as a synthetic-data + privacy triad: `auditing-synthetic-data-utility` and `auditing-synthetic-data-leakage` are designated siblings (each names the other in the `When NOT to use` hand-off, because utility and privacy trade off and a release decision needs both); `building-data-dictionary-with-consent-class` is the upstream classifier that names every field about a user and their downstream copies, including any consent_class = synthetic fields that then hand off to `auditing-synthetic-data-leakage`. No catalogs bundled — per the v1 public-skills-repo discipline, every skill is methodology + decision rubric, not framework catalog (no GDPR text corpus, no SDV API enumeration, no UCI dataset list). The three skills cross-link to `auditing-train-test-split`, `building-baseline-models`, `evaluating-binary-classifiers`, `evaluating-regression-models`, and `workflow/auditing-data-quality` as required pre-steps or downstream tools.
+
+### Other changes consolidated in this integration
 
 - `workflow/auditing-context-window-pressure` v0.1.0 → v0.1.1: Step 7 + Quick start + Outputs + Failure modes restructured to make file-offload (move 1) and subagent-summary (move 2) MANDATORY before `/compact` / `/clear` / CLAUDE.md trim. Sonnet happy-path re-eval scored 3/3 (was 2/3 at v0.1.0). Status promoted `drafting` → `shipped`. Stale cross-references to renamed `auditing-claude-md-hierarchy` corrected to `auditing-instruction-hierarchy`.
-- Cumulative skill count at HEAD: 42 shipped + 0 drafting (was 18 shipped after the v1 integration + post-tag context-window-pressure promotion; this integration adds the 24 skills from v2 batches 1-4 and v3 batches 1-4).
-
-### Added
-
 - `.gitignore`: ignore project-local `.claude/` directory (per-machine Claude Code state).
 
 ## [v2.0-phase1 + v3.0-phase1] — 2026-05-23

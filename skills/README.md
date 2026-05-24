@@ -2,7 +2,7 @@
 
 All RCS skills, organized first by audience track and then by ROI rank (Σ score from the v1 brainstorm).
 
-## Shipped (v2.0-phase1 + v3.0-phase1)
+## Shipped (v4.0-phase1 + v5.0-phase1)
 
 Sorted by Σ desc.
 
@@ -44,12 +44,41 @@ Sorted by Σ desc.
 | [`evaluating-rag-retrieval`](ml-datasci/evaluating-rag-retrieval/) | ml-datasci | 14 |
 | [`profiling-llm-cost`](ml-datasci/profiling-llm-cost/) | ml-datasci | 14 |
 | [`recommending-model-tier`](ml-datasci/recommending-model-tier/) | ml-datasci | 14 |
+| [`triaging-vulnerability-findings`](security/triaging-vulnerability-findings/) | security | 14 |
 | [`auditing-notebook-narrative`](workflow/auditing-notebook-narrative/) | workflow | 13 |
 | [`validating-schema-evolution`](workflow/validating-schema-evolution/) | workflow | 13 |
 | [`auditing-mathematical-claims`](workflow/auditing-mathematical-claims/) | workflow | 13 |
 | [`running-power-analysis`](ml-datasci/running-power-analysis/) | ml-datasci | 13 |
 | [`writing-model-cards`](ml-datasci/writing-model-cards/) | ml-datasci | 13 |
 | [`selecting-embedding-model`](ml-datasci/selecting-embedding-model/) | ml-datasci | 13 |
+| [`auditing-transitive-vulnerabilities`](security/auditing-transitive-vulnerabilities/) | security | 13 |
+| [`threat-modeling-llm-app`](security/threat-modeling-llm-app/) | security | 13 |
+| [`running-prompt-injection-eval`](security/running-prompt-injection-eval/) | security | 13 |
+| [`packaging-model-for-deployment`](ml-datasci/packaging-model-for-deployment/) | ml-datasci | 12 |
+| [`scaffolding-pytorch-training-loop`](ml-datasci/scaffolding-pytorch-training-loop/) | ml-datasci | 12 |
+| [`running-hyperparameter-sweep`](ml-datasci/running-hyperparameter-sweep/) | ml-datasci | 12 |
+| [`running-eval-before-after-finetune`](ml-datasci/running-eval-before-after-finetune/) | ml-datasci | 12 |
+| [`generating-sbom`](security/generating-sbom/) | security | 12 |
+| [`scaffolding-red-team-engagement`](security/scaffolding-red-team-engagement/) | security | 12 |
+| [`running-multiturn-attack-suite`](security/running-multiturn-attack-suite/) | security | 12 |
+| [`running-encoded-payload-suite`](security/running-encoded-payload-suite/) | security | 12 |
+| [`monitoring-data-drift`](ml-datasci/monitoring-data-drift/) | ml-datasci | 11 |
+| [`monitoring-prediction-drift`](ml-datasci/monitoring-prediction-drift/) | ml-datasci | 11 |
+| [`auditing-sft-dataset`](ml-datasci/auditing-sft-dataset/) | ml-datasci | 11 |
+| [`auditing-synthetic-data-utility`](ml-datasci/auditing-synthetic-data-utility/) | ml-datasci | 11 |
+| [`building-data-dictionary-with-consent-class`](ml-datasci/building-data-dictionary-with-consent-class/) | ml-datasci | 11 |
+| [`threat-modeling-agentic-systems`](security/threat-modeling-agentic-systems/) | security | 11 |
+| [`building-rollback-plan`](ml-datasci/building-rollback-plan/) | ml-datasci | 10 |
+| [`auditing-inference-latency-budget`](ml-datasci/auditing-inference-latency-budget/) | ml-datasci | 10 |
+| [`writing-finetune-spec-sheet`](ml-datasci/writing-finetune-spec-sheet/) | ml-datasci | 10 |
+| [`auditing-synthetic-data-leakage`](ml-datasci/auditing-synthetic-data-leakage/) | ml-datasci | 10 |
+| [`building-canary-rollout`](ml-datasci/building-canary-rollout/) | ml-datasci | 9 |
+
+## Drafting
+
+| Skill | Track | Σ |
+|---|---|---|
+| [`applying-secure-coding-rules`](security/applying-secure-coding-rules/) | security | 15 |
 
 ## By track
 
