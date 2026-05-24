@@ -1,0 +1,12 @@
+{
+  "skill": "auditing-chunking-strategy",
+  "scenario_id": "01-legal-corpus-boundary-failures",
+  "scenario_kind": "happy-path",
+  "query": "My RAG over a 5,000-document legal corpus uses RecursiveCharacterTextSplitter with chunk_size=512, chunk_overlap=50, and text-embedding-3-large. Recent QA spot-checks show it misses answers that span multiple paragraphs (the answer's subject is in one chunk, the predicate is in the next). I have a held-out QA set with source_span attribution for 80 queries. Audit the chunking strategy and recommend changes.",
+  "files": [],
+  "expected_behavior": [
+    "Walks a chunk_size × overlap sweep across a grid of multiple sizes (e.g., {400, 800, 1200, 2000} or similar) and multiple overlaps, rather than recommending a single new size by intuition",
+    "Scores cells using answer-coverage (or equivalent boundary-sensitive metric that measures whether the retrieved chunk contains the source_span), not bare recall@k alone, and names answer-coverage as the primary metric to optimize",
+    "Recommends a structure-aware splitter (paragraph-aware, semantic, or section-aware) over RecursiveCharacterTextSplitter for this long-form legal corpus, and explains why fixed-token splitting fails on multi-paragraph answers"
+  ]
+}
