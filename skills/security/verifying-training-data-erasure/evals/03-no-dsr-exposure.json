@@ -1,0 +1,12 @@
+{
+  "skill": "verifying-training-data-erasure",
+  "scenario_id": "03-no-dsr-exposure",
+  "scenario_kind": "anti-trigger",
+  "query": "We received a DSR from a user. Our model is the off-the-shelf gpt-4o-mini through the OpenAI API — we never fine-tuned it on any user content, we never built a retrieval store on user content, and we do not cache prompts or completions on our side. Should we run this verification workflow and issue a proof bundle so the auditor has something on file?",
+  "files": [],
+  "expected_behavior": [
+    "Does NOT walk the four-stage verification or issue a proof bundle — recognizes that none of the pipeline stages carry subject-derived artifacts in this setup",
+    "Returns a non-applicability response (a one-line or short statement of non-applicability the operator can retain in the DSR case file), not a partial or empty proof bundle",
+    "Notes that DSR obligations for the base-model provider's training data sit with the upstream provider (OpenAI) and route to their published process, rather than being something the operator can verify"
+  ]
+}

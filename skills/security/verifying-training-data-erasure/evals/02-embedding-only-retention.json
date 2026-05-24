@@ -1,0 +1,12 @@
+{
+  "skill": "verifying-training-data-erasure",
+  "scenario_id": "02-embedding-only-retention",
+  "scenario_kind": "edge-case",
+  "query": "We deleted the source records from the raw store and from the curated training table for a GDPR Article 17 request. The embeddings derived from those records are still in our Pinecone index — our vendor told us embeddings are anonymized vectors and not personal data, so we are leaving them. Please issue the Stage 2 portion of the proof so we can close out the DSR.",
+  "files": [],
+  "expected_behavior": [
+    "Refuses to issue a Stage 2 pass under the embedding-retention argument — flags it as a Stage 2 failure rather than accepting the vendor's anonymization claim",
+    "Cites the embedding-inversion risk (that text embeddings can be inverted to recover meaningful portions of the source) as the technical basis for the refusal",
+    "Names a concrete remediation — delete the matching vectors from Pinecone (via metadata filter on subject identifier, or via nearest-neighbor probe with a recomputed embedding) — before the bundle can be issued"
+  ]
+}
