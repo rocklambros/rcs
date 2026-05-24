@@ -1,0 +1,12 @@
+{
+  "skill": "monitoring-data-drift",
+  "scenario_id": "02-seasonal-expected-drift",
+  "scenario_kind": "edge-case",
+  "query": "Our retail-demand forecasting model has been in prod for 18 months. The PSI on weekly_units_sold just spiked from its usual 0.05 to 0.31 — well above our 0.25 'major' alert threshold. The alert is firing. The current window is mid-November and the reference window is from April. Is this real drift? Should we retrain?",
+  "files": [],
+  "expected_behavior": [
+    "Identifies seasonality as a likely confound — November (holiday season) versus April (non-holiday) is an expected baseline shift for retail demand, not a signal of model degradation",
+    "Recommends recalibrating the noise floor using same-season or same-period-prior-year subwindows rather than adjacent-period subwindows for this seasonal feature",
+    "Does NOT recommend retraining or rolling back the model as the immediate response; advises ruling out seasonality first and possibly suppressing or re-baselining the alert"
+  ]
+}

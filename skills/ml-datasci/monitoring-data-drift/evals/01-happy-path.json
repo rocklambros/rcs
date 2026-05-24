@@ -1,0 +1,12 @@
+{
+  "skill": "monitoring-data-drift",
+  "scenario_id": "01-post-deploy-audit-credit-risk",
+  "scenario_kind": "happy-path",
+  "query": "Our credit-risk model has been in production for 6 months. AUC has dropped from 0.83 to 0.74 over the last quarter. We don't have drift monitoring set up yet. Help me build a per-feature drift monitor and find what shifted. We have the original training set as a reference baseline and 14 days of recent inference logs as the current window. Features include applicant_income (continuous), employment_tenure_months (continuous), loan_purpose (categorical), and credit_score_band (ordinal).",
+  "files": [],
+  "expected_behavior": [
+    "Recommends per-feature drift metrics matched to feature type — PSI (or KS) for continuous features and Jensen-Shannon (or chi-squared) for the categorical loan_purpose, instead of one global metric across all features",
+    "Names baseline-noise calibration (computing the drift metric across multiple reference subwindows) as a required step before setting alert thresholds, rather than hard-coding a fixed PSI band like 0.1 or 0.25",
+    "Frames the AUC drop investigation as requiring root-cause attribution across at least three hypothesis classes (instrumentation bug, cohort-mix shift, real population drift) before recommending retraining"
+  ]
+}

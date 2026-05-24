@@ -1,0 +1,12 @@
+{
+  "skill": "monitoring-data-drift",
+  "scenario_id": "03-pre-deployment",
+  "scenario_kind": "anti-trigger",
+  "query": "We're about to deploy a new fraud-detection model to production next week. Can you set up data-drift monitoring for it now, before launch, so we catch any problems immediately on day one?",
+  "files": [],
+  "expected_behavior": [
+    "Identifies the system as pre-deployment with no live inference traffic yet, and explains that drift monitoring requires a current window of live data to compare against a reference distribution",
+    "Hands off the pre-deployment work to different skills — for example, train/test split auditing for leakage or data-quality auditing for the inputs — rather than forcing the drift workflow onto a pre-deployment system",
+    "Provides a forward-looking minimum-viable pre-deployment checklist (instrument feature logging from day one, define what the reference window will be, pre-stage the drift-monitor code) so the team can return once 2-4 weeks of live traffic has accumulated"
+  ]
+}
