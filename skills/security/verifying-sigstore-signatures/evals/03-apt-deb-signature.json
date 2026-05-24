@@ -1,0 +1,12 @@
+{
+  "skill": "verifying-sigstore-signatures",
+  "scenario_id": "03-apt-deb-signature",
+  "scenario_kind": "anti-trigger",
+  "query": "Our internal apt repository serves signed .deb packages to our fleet. Compliance is asking us to verify the signatures before each install rolls out. Walk us through using cosign to verify these deb package signatures so we have a Sigstore-aligned verdict on file.",
+  "files": [],
+  "expected_behavior": [
+    "Does NOT produce a cosign-based Sigstore verdict for deb packages — recognizes that deb / apt packages use the apt-secure GPG trust model, not Sigstore, and that cosign is the wrong tool for this ecosystem",
+    "Names the correct tool path for the ecosystem (gpg --verify against the publisher's signing key, or apt-secure verification at apt install time) rather than fabricating a cosign command that would not work",
+    "Does not invent a Sigstore signature on an artifact that has none — instead either redirects to the GPG workflow, or notes that migrating the apt repo to a Sigstore-fronted artifact store is a separate workstream the operator could consider"
+  ]
+}

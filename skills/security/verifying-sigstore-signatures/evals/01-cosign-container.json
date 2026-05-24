@@ -1,0 +1,12 @@
+{
+  "skill": "verifying-sigstore-signatures",
+  "scenario_id": "01-cosign-container",
+  "scenario_kind": "happy-path",
+  "query": "We are about to deploy ghcr.io/example/api-server@sha256:abc123def456 to prod. The image was built by our GitHub Actions reusable-workflow setup that uses slsa-framework/slsa-github-generator. Our trust policy is: signer subject must start with `https://github.com/example/api-server/.github/workflows/`, OIDC issuer must be `https://token.actions.githubusercontent.com`, minimum SLSA Build L3, attestation is required. Walk us through the verification — what commands do we run and how do we read the verdict?",
+  "files": [],
+  "expected_behavior": [
+    "Walks the four checks in order — identity (cert subject + OIDC issuer), signature (cosign verify with Rekor inclusion), attestation (cosign verify-attestation with --type slsaprovenance), and SLSA Build level mapping — rather than collapsing to a single cosign command",
+    "Provides concrete cosign commands that include BOTH --certificate-identity-regexp AND --certificate-oidc-issuer flags (not cosign verify with default identity, which would be a verification fiction), AND references the @sha256: digest form rather than a :tag",
+    "Explains the SLSA L3 mapping criteria — that L3 requires the build platform (not the producer's workflow) to generate the predicate and isolate the build environment — and ties the verdict to the slsa-github-generator builder identity as the L3-conformant builder"
+  ]
+}

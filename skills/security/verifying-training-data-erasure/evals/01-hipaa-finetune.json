@@ -1,0 +1,12 @@
+{
+  "skill": "verifying-training-data-erasure",
+  "scenario_id": "01-hipaa-finetune",
+  "scenario_kind": "happy-path",
+  "query": "We just received a HIPAA right-to-amend request from a patient whose clinical notes were used in fine-tuning our clinical-notes summarization model six months ago. The fine-tune corpus came from our EHR. The notes also live in a pgvector store that powers a RAG sidecar to the same model. We need a documented proof bundle the privacy officer can attach to the request file. Walk us through the verification — do not skip any stage of the ML pipeline. Treat the patient identifier as already hashed for purposes of this discussion.",
+  "files": [],
+  "expected_behavior": [
+    "Walks all four pipeline stages (raw/curated dataset, embeddings/vector store, model weights, inference cache) — does not skip the model-weight stage or the cache stage",
+    "Names a model-weight erasure strategy explicitly (retrain-from-clean OR model-deprecation OR machine-unlearning-with-caveat) and treats machine-unlearning as not audit-grade in 2026 if it is named",
+    "Addresses backups, replicas, or disaster-recovery copies of the affected stores (Stage 5) — either tombstone-on-restore, rotation-window expiry, or equivalent — rather than declaring the bundle complete after Stages 1-4"
+  ]
+}
