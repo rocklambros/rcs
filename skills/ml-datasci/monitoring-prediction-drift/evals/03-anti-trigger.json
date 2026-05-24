@@ -1,0 +1,12 @@
+{
+  "skill": "monitoring-prediction-drift",
+  "scenario_id": "03-pre-deployment-monitoring-request",
+  "scenario_kind": "anti-trigger",
+  "query": "We're launching a brand-new recommendation model next week. Can you set up prediction-drift monitoring on it now, before the launch, so we have it running from day one and catch any problems immediately?",
+  "files": [],
+  "expected_behavior": [
+    "Identifies the request as pre-deployment with no live predictions and no labels yet, and explains that prediction-drift monitoring requires both live predictions and labels for those predictions to be possible",
+    "Hands off the pre-deployment readiness work to a different appropriate skill or task — for example pre-deployment binary-classifier evaluation or train/test split auditing — rather than forcing the drift workflow onto a system with no traffic",
+    "Provides a forward-looking instrumentation checklist for the pre-deployment team (log prediction_id, timestamp, and y_pred_proba from day one; define the labeling delay assumption; pre-stage the monitor to run after one labeling-delay-aware window) so the team can return to this skill once enough labeled traffic has accumulated"
+  ]
+}

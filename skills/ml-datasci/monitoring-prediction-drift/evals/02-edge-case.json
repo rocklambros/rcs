@@ -1,0 +1,12 @@
+{
+  "skill": "monitoring-prediction-drift",
+  "scenario_id": "02-segment-erosion-stable-global",
+  "scenario_kind": "edge-case",
+  "query": "Our customer-churn classifier has stable global AUC (0.81 this quarter versus 0.80 last year) and stable PSI on every input feature. But our customer-success team is convinced our enterprise customer segment has gotten much harder to predict in the last six months. They have anecdotes but no data. Is the enterprise segment really degrading, or is this just confirmation bias?",
+  "files": [],
+  "expected_behavior": [
+    "Names this as a Simpson's-paradox candidate where a stable global metric can hide segment-level erosion, and recommends per-segment evaluation rather than dismissing the team's concern based on the stable global metric",
+    "Recommends bootstrap confidence intervals on the per-segment metrics (AUC, F1, calibration slope) so the analysis distinguishes a real segment erosion from a noisy thin slice rather than reporting bare per-segment numbers",
+    "Recommends comparing each segment's current CI to its reference CI for the same segment (overlap or no overlap), rather than comparing the enterprise segment's AUC to the SMB segment's AUC as the basis for declaring decay"
+  ]
+}
