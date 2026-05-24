@@ -136,8 +136,9 @@ The `skills/<track>/<name>/SKILL.md` files follow the Anthropic Skills format an
 | [`running-adversarial-perturbation-suite`](skills/ml-datasci/running-adversarial-perturbation-suite/) | ml-datasci | FGSM + PGD-20 + AutoAttack-standard suite under declared threat model with tabular feasibility-filter and LLM anti-trigger handoff | ✅ shipped | 8 |
 | [`applying-differential-privacy`](skills/ml-datasci/applying-differential-privacy/) | ml-datasci | DP workflow — threat model + (ε, δ) justification + mechanism selection + RDP composition accounting + canonical DP statement naming what's NOT covered | ✅ shipped | 8 |
 | [`auditing-rlhf-reward-hacking`](skills/ml-datasci/auditing-rlhf-reward-hacking/) | ml-datasci | Six-probe RLHF / DPO / RLAIF audit anchored on reward-vs-preference divergence; alignment-tax measurement; boundary-exploit gallery for human inspection | ✅ shipped | 7 |
+| [`writing-repo-documentation`](skills/workflow/writing-repo-documentation/) | workflow | Writes a project's human-authored documentation (README, CONTRIBUTING, SECURITY, docs/, wiki) as a teaching artifact. Audience hierarchy, six-section README spine, novice-to-advanced layering, self-audit against an 8-family AI-slop pattern catalog | ✅ shipped | 12 |
 
-_103 shipped (0 drafting) of ~99 planned skills. See each track's README for the planned-skills roadmap; see [`docs/superpowers/plans/2026-05-23-rcs-batch-creation-plan.md`](docs/superpowers/plans/2026-05-23-rcs-batch-creation-plan.md) for the historical batch-authoring plan. The catalog is 100% shipped — zero drafting skills as of `v7.0-phase1`._
+_104 shipped (0 drafting) of ~99 planned skills. See each track's README for the planned-skills roadmap; see [`docs/superpowers/plans/2026-05-23-rcs-batch-creation-plan.md`](docs/superpowers/plans/2026-05-23-rcs-batch-creation-plan.md) for the historical batch-authoring plan. The catalog is 100% shipped: zero drafting skills as of `v7.0.1`._
 
 ## Governance
 

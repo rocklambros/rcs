@@ -111,6 +111,7 @@ Sorted by Σ desc.
 | [`running-adversarial-perturbation-suite`](ml-datasci/running-adversarial-perturbation-suite/) | ml-datasci | 8 |
 | [`applying-differential-privacy`](ml-datasci/applying-differential-privacy/) | ml-datasci | 8 |
 | [`auditing-rlhf-reward-hacking`](ml-datasci/auditing-rlhf-reward-hacking/) | ml-datasci | 7 |
+| [`writing-repo-documentation`](workflow/writing-repo-documentation/) | workflow | 12 |
 
 ## Drafting
 
