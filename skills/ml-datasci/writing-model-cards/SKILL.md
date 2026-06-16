@@ -1,20 +1,21 @@
 ---
 name: writing-model-cards
 description: >
-  Authors a deployment-ready model card per Mitchell et al. 2019 plus the
-  AIBOM-compliant additions for AI supply-chain traceability: intended use +
-  out-of-scope use, training data provenance with source + license + collection
-  date, evaluation data and metrics with confidence intervals across
-  subgroups, known limitations and ethical considerations, harms analysis,
-  license + version + maintainer + last-updated, and (AIBOM) model dependencies
-  with versions + hashes. Triggers when a model is moving toward production
-  deployment, when a compliance review (EU AI Act, NIST AI RMF, ISO/IEC 23894)
-  asks for documentation, when an open-weights model is being released, or when
-  a customer / regulator / auditor requests a model card. Refuses to author a
-  model card for a research prototype that is explicitly not headed for
-  deployment (the format is overkill and the harms analysis is speculative
-  without a deployment context).
-version: 0.1.0
+  Authors a deployment-ready model card per Mitchell et al. 2019 plus AIBOM
+  additions for AI supply-chain traceability: intended and out-of-scope use,
+  training and evaluation data provenance with source, license, and collection
+  date, metrics with confidence intervals across subgroups, known limitations,
+  ethical considerations and harms, license, version, maintainer, and model
+  dependencies with versions and hashes. Also emits a CycloneDX AIBOM JSON
+  companion and verifies it scores 100% on the genai-security-project
+  aibom-generator evaluator, fetching the evaluator's required
+  fields dynamically at runtime so the card stays compliant as that repo
+  changes. Triggers when a model moves toward production, when a compliance
+  review (EU AI Act, NIST AI RMF, ISO/IEC 23894) asks for documentation, when
+  an open-weights model is released, when an AIBOM is requested, or when a
+  customer, regulator, or auditor requests a model card. Refuses for a research
+  prototype not headed for deployment, where the format is overkill.
+version: 0.2.0
 status: shipped
 track: ml-datasci
 audience:
@@ -26,7 +27,7 @@ evidence:
   - llm-safety-alignment-study
   - ai-security-framework-crosswalk
   - multiturn-injection-detection
-last-updated: 2026-05-23
+last-updated: 2026-06-15
 ---
 
 # Writing Model Cards
@@ -105,7 +106,21 @@ Model card progress:
 - [ ] 8. Section 8: Ethical considerations, caveats, and recommendations
 - [ ] 9. AIBOM addendum: dependencies with versions and hashes
 - [ ] 10. Sign-off: maintainer, review date, next-review date
+- [ ] 11. AIBOM 100% compliance: emit a CycloneDX AIBOM JSON companion and verify it scores 100% on the live evaluator
 ```
+
+### Step 11: AIBOM 100% compliance
+
+Every model card ships with a CycloneDX AIBOM JSON companion that scores 100% on the genai-security-project aibom-generator completeness evaluator. The evaluator's required fields change as that public repo evolves, so the requirements are fetched at runtime, never hard-coded. Run the bundled engine as a validator loop (scaffold, fill real values, score, fix gaps, repeat until 100%):
+
+```bash
+python3 scripts/aibom_compliance.py requirements              # live required fields + weights
+python3 scripts/aibom_compliance.py scaffold model.aibom.json # maximal structure at every live jsonpath
+# replace every <FILL:...> with real content from the markdown card above
+python3 scripts/aibom_compliance.py score model.aibom.json    # exits 0 only at 100% with no penalty
+```
+
+The evaluator measures structural completeness, not truthfulness. A scaffold full of placeholders scores 100 and is worthless. Replace every placeholder with the model's real values before the card is submitted. See `reference/aibom-100-compliance.md` for the scoring model, the dynamic-lookup rationale, and the security note on running the evaluator's scorer.
 
 ### Section 2: Intended use + out-of-scope use
 
@@ -161,6 +176,7 @@ A markdown model card with this structure:
 8. **Ethical considerations, caveats, recommendations** — concrete harms + mitigations
 9. **AIBOM addendum** — dependencies + versions + hashes + training-data hash + model artifact hash
 10. **Sign-off** — maintainer + review date + next review date + change log link
+11. **CycloneDX AIBOM JSON companion**: `model.aibom.json`, verified at 100% on the live genai-security-project aibom-generator completeness evaluator
 
 ## Failure modes
 
@@ -173,10 +189,15 @@ Known anti-patterns and how this skill catches them:
 - **No AIBOM / no dependency versions** — caught by section 9; supply-chain traceability is now table stakes for production AI.
 - **"Will update later" placeholders** — caught by step 0 deployment-context check; if the card is for production, all sections are required.
 - **Authoring a card for a throwaway research notebook** — caught by `When NOT to use` and step 0.
+- **AIBOM JSON below 100% on the evaluator** — caught by step 11; the `score` command exits non-zero and lists every missing field until the AIBOM is complete against the live registry.
+- **Hard-coded AIBOM field list that drifts when the evaluator changes** — caught by step 11; the engine clones the public repo at run time and reads the live registry, so it never hard-codes the requirements.
 
 ## References
 
 - `reference/model-card-template.md` — the full eight-section + AIBOM template ready to copy-paste-fill
+- `reference/aibom-100-compliance.md`: making the AIBOM JSON companion score 100% on the live evaluator, with requirements fetched dynamically
+- `scripts/aibom_compliance.py`: runtime engine that fetches live requirements, scaffolds a maximal AIBOM, and scores it with the evaluator's own scorer
+- [genai-security-project/aibom-generator](https://github.com/genai-security-project/aibom-generator): the AIBOM completeness evaluator this skill targets
 - [Mitchell et al. 2019 *Model Cards for Model Reporting* (FAT* 2019)](https://doi.org/10.1145/3287560.3287596) — original model-card format
 - [Gebru et al. 2018 *Datasheets for Datasets*](https://arxiv.org/abs/1803.09010) — sibling format for dataset documentation; cross-link from sections 5 + 6
 - [EU AI Act Article 11 — Technical documentation for high-risk AI](https://eur-lex.europa.eu/eli/reg/2024/1689/oj) — compliance reference
@@ -216,6 +237,6 @@ Output: Skill identifies this as a throwaway research / pedagogy artifact with n
 ## Status & version
 
 - Status: shipped
-- Version: 0.1.0
-- Last-updated: 2026-05-23
-- Provenance: authored per `docs/superpowers/plans/2026-05-23-rcs-batch-creation-plan.md` (v3-batch-2, skill 3) via PRAGMATIC discipline
+- Version: 0.2.0
+- Last-updated: 2026-06-15
+- Provenance: authored per `docs/superpowers/plans/2026-05-23-rcs-batch-creation-plan.md` (v3-batch-2, skill 3) via PRAGMATIC discipline. v0.2.0 adds the AIBOM 100% compliance engine (`scripts/aibom_compliance.py`, `reference/aibom-100-compliance.md`) verified against the live genai-security-project aibom-generator scorer.
