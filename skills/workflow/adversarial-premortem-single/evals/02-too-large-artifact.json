@@ -1,5 +1,5 @@
 {
-  "skill": "running-adversarial-premortem",
+  "skill": "adversarial-premortem-single",
   "scenario_id": "02-too-large-artifact",
   "scenario_kind": "edge-case",
   "query": "Here is our company's 14,000-line agent-platform architecture spec. Please run a full premortem.",

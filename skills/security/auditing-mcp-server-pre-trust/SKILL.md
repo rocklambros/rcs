@@ -153,7 +153,7 @@ Output: Skill begins audit, immediately fails Check 1 (no LICENSE file in repo r
 
 - `security/auditing-pinned-dependencies` — broader supply-chain audit pattern
 - `claude-code-meta/writing-mcp-server-securely` — the authoring side of this skill (planned)
-- `workflow/running-adversarial-premortem` — for high-stakes MCP integration decisions
+- `workflow/adversarial-premortem-single` — for high-stakes MCP integration decisions
 
 ## Status & version
 

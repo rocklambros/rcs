@@ -157,7 +157,7 @@ Output: Skill confirms catalog. Notes that the user-input boundary is internal (
 - `security/threat-modeling-agentic-systems` — sibling skill for autonomous-agent designs (tool use + planning + multi-turn state)
 - `security/auditing-mcp-server-pre-trust` — for any MCP servers integrated into the LLM app
 - `security/auditing-pinned-dependencies` — supply-chain layer for the LLM app's runtime
-- `workflow/running-adversarial-premortem` — complementary failure-mode discovery for the design as a whole
+- `workflow/adversarial-premortem-single` — complementary failure-mode discovery for the design as a whole
 
 ## Status & version
 

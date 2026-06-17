@@ -1,0 +1,12 @@
+{
+  "skill": "adversarial-premortem-complete",
+  "scenario_id": "03-single-bug-anti-trigger",
+  "scenario_kind": "anti-trigger",
+  "query": "Can you check my Python loop for off-by-one errors? Here it is: for i in range(len(arr)): print(arr[i+1])",
+  "files": [],
+  "expected_behavior": [
+    "Does NOT spawn the multi-subagent premortem or produce per-round findings tables and a remediation plan for a single off-by-one loop",
+    "Addresses the off-by-one directly (arr[i+1] reads one past the end on the final iteration) or hands off to a debugging / code-review approach",
+    "Explains that the multi-subagent premortem is for high-stakes designs with multiple plausible failure modes, and may point to adversarial-premortem-single for a structured single-pass review of a larger artifact"
+  ]
+}

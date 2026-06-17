@@ -236,13 +236,13 @@ Recommends state-enrichment for this case because the back-edge has a clear sema
 
 Input: *"Help me package my novelty-review approach (deciding if a paper's contribution is actually new) as a walk-the-tree skill."*
 
-Output: Skill answers no — novelty review is open-judgment. The predicate "is this novel?" is the entire question, not a step in a tree. There is no objectively checkable yes/no question that resolves the decision; novelty depends on context, audience, and the reviewer's reading of related work. Hands off to `workflow/running-adversarial-premortem` (which structures judgment without forcing a tree) or recommends a brainstorming-style skill where the reviewer's judgment is the deliverable. Notes that walk-the-tree discipline only fits when predicates are objectively checkable and leaf actions are deterministic — novelty review is neither.
+Output: Skill answers no — novelty review is open-judgment. The predicate "is this novel?" is the entire question, not a step in a tree. There is no objectively checkable yes/no question that resolves the decision; novelty depends on context, audience, and the reviewer's reading of related work. Hands off to `workflow/adversarial-premortem-single` (which structures judgment without forcing a tree) or recommends a brainstorming-style skill where the reviewer's judgment is the deliverable. Notes that walk-the-tree discipline only fits when predicates are objectively checkable and leaf actions are deterministic — novelty review is neither.
 
 ## See also
 
 - `claude-code-meta/authoring-skill` — general skill-authoring discipline (run alongside this one)
 - `claude-code-meta/writing-deny-allow-rules` — for single-rule policy, not a tree
-- `workflow/running-adversarial-premortem` — for open-judgment domains that resist tree encoding
+- `workflow/adversarial-premortem-single` — for open-judgment domains that resist tree encoding
 - `workflow/auditing-mathematical-claims` — sibling discipline that structures audit without a tree
 
 ## Status & version

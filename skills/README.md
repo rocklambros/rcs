@@ -2,12 +2,14 @@
 
 Every RCS skill, sorted alphabetically by slug. The Σ column shows the priority score defined in the [root README's Concepts section](../README.md#concepts). For the highest-Σ skills, see the [top-10 teaser in the root README](../README.md#top-10-skills-by-σ). For a track-specific view, open the relevant track README (linked under "By track" below).
 
-## Shipped (through v7.0.5)
+## Shipped (through v7.0.6)
 
 Alphabetical by slug. The Σ column is for reference, not ordering. A reader who knows the slug can find it by scanning the first column. A reader exploring by track should use the per-track READMEs.
 
 | Skill | Track | Σ |
 |---|---|---|
+| [`adversarial-premortem-complete`](workflow/adversarial-premortem-complete/) | workflow | 16 |
+| [`adversarial-premortem-single`](workflow/adversarial-premortem-single/) | workflow | 17 |
 | [`analyzing-causal-dag`](ml-datasci/analyzing-causal-dag/) | ml-datasci | 9 |
 | [`analyzing-regression-diagnostics`](ml-datasci/analyzing-regression-diagnostics/) | ml-datasci | 14 |
 | [`applying-differential-privacy`](ml-datasci/applying-differential-privacy/) | ml-datasci | 8 |
@@ -70,7 +72,6 @@ Alphabetical by slug. The Σ column is for reference, not ordering. A reader who
 | [`recommending-model-tier`](ml-datasci/recommending-model-tier/) | ml-datasci | 14 |
 | [`reporting-effect-sizes`](ml-datasci/reporting-effect-sizes/) | ml-datasci | 19 |
 | [`running-adversarial-perturbation-suite`](ml-datasci/running-adversarial-perturbation-suite/) | ml-datasci | 8 |
-| [`running-adversarial-premortem`](workflow/running-adversarial-premortem/) | workflow | 17 |
 | [`running-bayesian-workflow`](ml-datasci/running-bayesian-workflow/) | ml-datasci | 10 |
 | [`running-chollet-ratio-check`](ml-datasci/running-chollet-ratio-check/) | ml-datasci | 16 |
 | [`running-cloud-ir-runbook`](security/running-cloud-ir-runbook/) | security | 10 |

@@ -25,6 +25,6 @@ _All v1-planned claude-code-meta skills shipped in v6-batch-4 and v6-batch-6. No
 
 ## Cross-track references
 
-- Skill-authoring discipline pairs with `workflow/auditing-context-window-pressure` (cache hygiene) and `workflow/running-adversarial-premortem` (premortem your skill before shipping).
+- Skill-authoring discipline pairs with `workflow/auditing-context-window-pressure` (cache hygiene) and `workflow/adversarial-premortem-single` (premortem your skill before shipping).
 - For security-critical skills (MCP servers, hooks that wield permissions), see `security/auditing-mcp-server-pre-trust` and the publisher-side `claude-code-meta/writing-mcp-server-securely`.
 - `authoring-plugin` is the bundling discipline. The four per-artifact authoring skills (`writing-mcp-server-securely`, `authoring-tool-hook`, `writing-deny-allow-rules`, `writing-decision-trees-as-skills`) cover the artifacts a plugin can ship; `running-eval-driven-skill-development` is the test-first wrapper that complements `authoring-skill`.

@@ -1,5 +1,5 @@
 ---
-name: running-adversarial-premortem
+name: adversarial-premortem-single
 description: >
   Runs a structured multi-round adversarial premortem on a spec, plan, design, paper,
   proof, or codebase. Assumes the artifact has already failed six months out, works
@@ -7,8 +7,9 @@ description: >
   confidence band, and emits a prioritized remediation plan. Use when the cost of
   being wrong is high — AI security designs, ML system architecture, mathematical
   proofs, agentic-system designs, or any high-stakes plan where surfacing failure
-  modes you would otherwise miss is the goal.
-version: 0.1.0
+  modes you would otherwise miss is the goal. For the multi-subagent team version
+  with six independent perspectives running in parallel, use adversarial-premortem-complete.
+version: 0.2.0
 status: shipped
 track: workflow
 audience: [security-eng, ai-security, ml-engineer, data-scientist, skill-author]
@@ -16,10 +17,10 @@ evidence:
   - ATACE
   - incident-rank-validation
   - TRACT
-last-updated: 2026-05-23
+last-updated: 2026-06-17
 ---
 
-# Running an Adversarial Premortem
+# Adversarial Premortem (Single-Session)
 
 ## When to use
 
@@ -38,6 +39,7 @@ Skip this skill and hand off to a different one when:
 - The user wants a brainstorm for new ideas → use brainstorming (this skill is the inverse: it assumes the idea exists and stress-tests it)
 - The artifact has not been written yet → run brainstorming or planning first, then return for premortem
 - The artifact is a small bug fix or one-line change where premortem overhead exceeds blast radius
+- You want the comprehensive multi-subagent red-team (six independent perspectives, parallel subagents, up to five rounds) → use `workflow/adversarial-premortem-complete`
 
 ## Quick start
 
@@ -153,6 +155,7 @@ Output: Skill refuses to engage premortem. Explains that premortem is for high-s
 
 ## See also
 
+- `workflow/adversarial-premortem-complete` — the multi-subagent team version (six independent perspectives, parallel subagents, up to five rounds) when one session's depth is not enough
 - `workflow/pre-registering-eval-study` — the prospective version of this skill
 - `workflow/auditing-mathematical-claims` — narrower variant focused on proof claims
 - `workflow/writing-successor-primers` — pairs well after premortem identifies areas a successor needs to know
@@ -160,6 +163,6 @@ Output: Skill refuses to engage premortem. Explains that premortem is for high-s
 ## Status & version
 
 - Status: shipped
-- Version: 0.1.0
-- Last-updated: 2026-05-23
-- Provenance: migrated from `~/.claude/skills/adversarial-premortem.skill` (zip-encoded); reformatted to Layer-3 contract
+- Version: 0.2.0
+- Last-updated: 2026-06-17
+- Provenance: migrated from `~/.claude/skills/adversarial-premortem.skill` (zip-encoded); reformatted to Layer-3 contract. Renamed from `running-adversarial-premortem` to `adversarial-premortem-single` to differentiate from the multi-subagent `adversarial-premortem-complete`.

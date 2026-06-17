@@ -230,7 +230,7 @@ Output: Skill answers no — this is project-specific tooling, not a portable, r
 ## See also
 
 - `claude-code-meta/auditing-instruction-hierarchy` — audit the CLAUDE.md hierarchy your new skill will run under
-- `workflow/running-adversarial-premortem` — premortem your skill before shipping (especially for high-stakes domains)
+- `workflow/adversarial-premortem-single` — premortem your skill before shipping (especially for high-stakes domains)
 - `workflow/auditing-context-window-pressure` — verify your skill doesn't bloat the cached prefix
 
 ## Status & version

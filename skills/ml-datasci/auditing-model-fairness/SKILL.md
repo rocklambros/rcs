@@ -186,7 +186,7 @@ Output: Skill identifies no human subject in the prediction (rows are data, not 
 - `ml-datasci/evaluating-binary-classifiers` — general performance evaluation; fairness audit sits on top
 - `ml-datasci/comparing-models-fairly` — paired comparison of two models; useful when comparing a fairness-mitigated model vs the original
 - `ml-datasci/enforcing-leakage-firewall` — catches protected-attribute proxies leaking into the feature set
-- `workflow/running-adversarial-premortem` — high-stakes deployment decisions
+- `workflow/adversarial-premortem-single` — high-stakes deployment decisions
 
 ## Status & version
 

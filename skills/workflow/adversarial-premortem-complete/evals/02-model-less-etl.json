@@ -1,0 +1,12 @@
+{
+  "skill": "adversarial-premortem-complete",
+  "scenario_id": "02-model-less-etl",
+  "scenario_kind": "edge-case",
+  "query": "Premortem this nightly batch ETL job that dedupes a customer table. It is plain SQL plus a Python wrapper on a cron schedule. There is no model, no online serving, and no agent.",
+  "files": [],
+  "expected_behavior": [
+    "Engages the premortem but explicitly states which perspectives have little anchored to attack on a model-less batch job (for example ML Engineer, Red Teamer, Governance) and why, rather than forcing all six full lenses",
+    "Concentrates the applicable perspectives on the real artifact (Data Scientist on dedupe correctness and idempotency, MLOps/SRE on rollback, scheduling, and partial-failure recovery)",
+    "Does NOT fabricate findings about nonexistent components such as a model, online serving, or an agent in order to fill out all six perspectives"
+  ]
+}

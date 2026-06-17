@@ -237,7 +237,7 @@ Output: Skill REFUSES to write SECURITY.md with the placeholder address. Explain
 - `workflow/scaffolding-llm-eval-harness` — sibling: greenfield for LLM-eval pipelines
 - `security/scaffolding-red-team-engagement` — RoE for a specific paid engagement (different concern — engagement, not repo)
 - `security/auditing-pinned-dependencies` — audit that the scaffolded repo stays supply-chain-clean over time
-- `workflow/running-adversarial-premortem` — pairs well after the threat model is filled in
+- `workflow/adversarial-premortem-single` — pairs well after the threat model is filled in
 
 ## Status & version
 

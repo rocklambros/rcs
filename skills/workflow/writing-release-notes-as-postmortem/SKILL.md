@@ -159,7 +159,7 @@ Output: skill declines to apply postmortem structure. Explains that v0.1.0 has n
 ## See also
 
 - `workflow/writing-successor-primers` — pairs naturally; the primer carries founding principles, the postmortem-style notes carry the regression history
-- `workflow/running-adversarial-premortem` — the prospective counterpart; premortem finds the failure modes, postmortem-style notes document the ones that escaped to production
+- `workflow/adversarial-premortem-single` — the prospective counterpart; premortem finds the failure modes, postmortem-style notes document the ones that escaped to production
 - `security/triaging-vulnerability-findings` (planned v4-batch-1) — feeds severity classifications into Step 3 when the release is security-driven
 
 ## Status & version
