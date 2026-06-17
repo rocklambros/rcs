@@ -1,0 +1,12 @@
+{
+  "skill": "adversarial-premortem-complete",
+  "scenario_id": "01-rag-agent-system",
+  "scenario_kind": "happy-path",
+  "query": "Here is the spec and code for our RAG-backed customer-support agent: a retriever over our ticket history, a prompt template, three tools (refund issuer, account lookup, escalation), an eval set, and a Dockerfile + deploy config. Red-team it before we ship. What breaks?",
+  "files": [],
+  "expected_behavior": [
+    "Orchestrates multiple independent perspectives (the six lenses or a clearly named subset) reading the artifacts rather than producing a single undifferentiated analysis pass, and launches them to run in parallel",
+    "Anchors each finding to a specific artifact element (a tool, prompt, retriever, eval set, or deploy-config passage) and gives each finding both an impact severity and a confidence band, not a bare list of worries",
+    "Produces a prioritized remediation plan ordered by expected cost reduction (impact weighted by confidence), and routes any low-probability high-impact finding to a tail-risk or dropped ledger instead of deleting it"
+  ]
+}

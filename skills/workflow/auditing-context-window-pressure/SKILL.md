@@ -201,7 +201,7 @@ Output: Skill explains the audit is for long-running, multi-turn Claude Code ses
 
 - `claude-code-meta/auditing-instruction-hierarchy` — the CLAUDE.md half of context pressure
 - `claude-code-meta/authoring-skill` — skills load on demand and reduce cached-prefix pressure compared to inline rules
-- `workflow/running-adversarial-premortem` — premortem long-running workflows before they bloat
+- `workflow/adversarial-premortem-single` — premortem long-running workflows before they bloat
 
 ## Status & version
 

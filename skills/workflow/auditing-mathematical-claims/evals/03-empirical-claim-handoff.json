@@ -6,7 +6,7 @@
   "files": [],
   "expected_behavior": [
     "Identifies the claim as empirical (a benchmark accuracy / measurement), not a formal mathematical statement, and declines to engage the math-claim four-field audit template on it",
-    "Hands off to the appropriate alternative — running-adversarial-premortem (which covers methodology-failure modes such as eval bias, test-set leakage, multiple-hypothesis testing, base-rate cherry-picking) — rather than producing a forced math-style row",
+    "Hands off to the appropriate alternative — adversarial-premortem-single (which covers methodology-failure modes such as eval bias, test-set leakage, multiple-hypothesis testing, base-rate cherry-picking) — rather than producing a forced math-style row",
     "Explains the boundary between the two skill types: empirical / measurement claims belong in the premortem, formal mathematical statements (theorems, lemmas, bounds) belong in the math-claim audit"
   ]
 }

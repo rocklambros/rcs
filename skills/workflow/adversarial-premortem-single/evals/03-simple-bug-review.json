@@ -1,5 +1,5 @@
 {
-  "skill": "running-adversarial-premortem",
+  "skill": "adversarial-premortem-single",
   "scenario_id": "03-simple-bug-review",
   "scenario_kind": "anti-trigger",
   "query": "Can you check my Python loop for off-by-one errors? Here it is: for i in range(len(arr)): print(arr[i+1])",

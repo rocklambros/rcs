@@ -16,7 +16,7 @@ audience: [skill-author, ml-engineer, data-scientist, ai-security, security-eng]
 evidence:
   - ATACE
   - incident-rank-validation
-  - running-adversarial-premortem
+  - adversarial-premortem-single
 last-updated: 2026-05-23
 ---
 
@@ -32,14 +32,14 @@ Trigger this skill when the user asks for or implies one of:
 - A safety / security / regulatory argument depends on a formal upper-bound, lower-bound, or convergence claim
 - Phrases like "audit the math", "are these claims tight?", "is the proof airtight?", "what assumptions am I sneaking in?", "stress-test this theorem"
 
-This skill is the narrower, mathematics-focused sibling of `workflow/running-adversarial-premortem`. Premortem covers any high-stakes artifact (designs, plans, code, papers); this skill specializes on the *formal mathematics* portion.
+This skill is the narrower, mathematics-focused sibling of `workflow/adversarial-premortem-single`. Premortem covers any high-stakes artifact (designs, plans, code, papers); this skill specializes on the *formal mathematics* portion.
 
 ## When NOT to use
 
 Skip this skill and hand off when:
 
-- The claim is **empirical**, not formal — "our system reduces error by 12% on the benchmark" — that is a measurement / methodology audit, route to `workflow/running-adversarial-premortem` (round 1 covers methodology failure)
-- The artifact is a **whole system / plan / spec** with the math as one component — run `workflow/running-adversarial-premortem` first, then invoke this skill on the math portion specifically
+- The claim is **empirical**, not formal — "our system reduces error by 12% on the benchmark" — that is a measurement / methodology audit, route to `workflow/adversarial-premortem-single` (round 1 covers methodology failure)
+- The artifact is a **whole system / plan / spec** with the math as one component — run `workflow/adversarial-premortem-single` first, then invoke this skill on the math portion specifically
 - The user wants help **constructing** the proof, not auditing a finished one — that is a different (planned) skill `workflow/constructing-formal-proofs`
 - The math is **already peer-reviewed** in a top venue and the user wants a literature review — different concern
 
@@ -155,7 +155,7 @@ A markdown report:
 ## Failure modes
 
 - **Math-audit theater** — walking the table without actual mathematical engagement (filling Concern with "the proof might be wrong" with no specifics). Caught by: the **Strongest counter** field requires steel-manning the author; you cannot fill it without engaging with the claim's actual structure.
-- **Empirical-and-math conflation** — auditing an empirical claim ("on benchmark X we score Y") as if it were a math claim. Caught by: When-NOT-to-use routes empirical claims to `workflow/running-adversarial-premortem`; the math audit declines to engage and explains why.
+- **Empirical-and-math conflation** — auditing an empirical claim ("on benchmark X we score Y") as if it were a math claim. Caught by: When-NOT-to-use routes empirical claims to `workflow/adversarial-premortem-single`; the math audit declines to engage and explains why.
 - **Implicit-assumption blind spots** — auditing only the statement and not the assumptions the statement depends on. Caught by: Step 2 enumerates implicit-assumption families (norm, measure, domain, smoothness, finiteness, operation preservation, boundary, constants) explicitly.
 - **Counterexample-as-disproof without verification** — claiming a counterexample exists without checking it satisfies the claim's premises. Caught by: the remediation `Disprove` requires the counterexample to be exhibited explicitly, not asserted.
 - **Notation-pedantry overflow** — auditing every notational ambiguity at the same priority as substantive concerns. Caught by: Step 4 prioritization formula (Severity weight dominates); notation issues typically score Severity ≤ 2.
@@ -239,11 +239,11 @@ Remediation: report C explicitly with its dependence on (d, κ, hyperparameters)
 
 Input: "Our system achieved 87.3% accuracy on the GLUE benchmark, a 2.1% improvement over the previous state of the art. Audit this claim."
 
-Output: This is an **empirical** claim, not a formal-math claim. The skill declines to engage and hands off to `workflow/running-adversarial-premortem`. The premortem skill covers methodology-failure (eval bias, test-set leakage, multiple-hypothesis fishing, base-rate cherry-picking) which is the right toolset for an empirical-claim audit. The skill names what would have to be different for the math-audit template to apply (e.g., if the user had a formal theorem about the algorithm's optimality, that theorem could be math-audited; the benchmark score itself cannot).
+Output: This is an **empirical** claim, not a formal-math claim. The skill declines to engage and hands off to `workflow/adversarial-premortem-single`. The premortem skill covers methodology-failure (eval bias, test-set leakage, multiple-hypothesis fishing, base-rate cherry-picking) which is the right toolset for an empirical-claim audit. The skill names what would have to be different for the math-audit template to apply (e.g., if the user had a formal theorem about the algorithm's optimality, that theorem could be math-audited; the benchmark score itself cannot).
 
 ## See also
 
-- `workflow/running-adversarial-premortem` — the broader artifact-audit skill; this one is the math-specialization
+- `workflow/adversarial-premortem-single` — the broader artifact-audit skill; this one is the math-specialization
 - `ml-datasci/checking-test-assumptions` — for the statistical-claim variant focused on hypothesis-test gating
 - `ml-datasci/analyzing-regression-diagnostics` — for the regression-claim variant focused on inferential validity
 - `ml-datasci/reporting-effect-sizes` — for the reporting side of empirical claims that ultimately need formal-math support

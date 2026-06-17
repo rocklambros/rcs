@@ -4,7 +4,25 @@ All notable changes to RCS are documented here. Per-skill changes use the skill'
 
 ## [Unreleased]
 
-_No unreleased changes. Most recent release is `v7.0.5` below._
+_No unreleased changes. Most recent release is `v7.0.6` below._
+
+## [v7.0.6] — 2026-06-17
+
+Premortem split, a reviewer-stance pass, and the AIBOM model-card work. One skill added, one renamed.
+
+### Added
+
+- **`workflow/adversarial-premortem-complete`** (Σ 16, v0.1.0). Multi-subagent adversarial premortem: orchestrates six independent perspectives (Red Teamer, Data Scientist, ML Engineer, Security Architect, MLOps/SRE, Governance/Risk) as parallel subagents across up to five rounds, cross-attacks each finding, adjudicates posterior confidence bands, applies a drop rule with a tail-risk carve-out, and emits a prioritized remediation plan. Ported from `~/.claude/skills/adversarial-premortem.skill` and reformatted to the Layer-3 contract with three reference files and three evals.
+
+### Changed
+
+- **`workflow/running-adversarial-premortem` renamed to `workflow/adversarial-premortem-single`** (v0.1.0 → v0.2.0). Differentiates the single-session multi-round premortem from the new multi-subagent `adversarial-premortem-complete`. All in-repo cross-references and eval `skill` fields were updated. This is a hard rename, not a deprecation-with-tombstone, because the skill is three weeks old and the catalog is solo-maintained. Downstream references to the old slug must update.
+- **Reviewer-stance section added to 52 review/audit/grade skills.** Each gained a `## Reviewer stance` section directing an expert senior-developer stance tied to the language(s) and frameworks of the artifact under review. Per-skill versions are unchanged in this pass; a before/after probe found no measurable rubric lift, so the section is kept on house-style-consistency grounds.
+- **`ml-datasci/writing-model-cards`** AIBOM 100% completeness compliance work merged (CycloneDX AIBOM companion plus the `aibom_compliance.py` evaluator script and reference).
+
+Cumulative skill count at HEAD: **105 shipped + 0 drafting**.
+
+Lint: 105 SKILL.md frontmatter + body + links all OK. pytest: 27/27.
 
 ## [v7.0.5] — 2026-05-24
 

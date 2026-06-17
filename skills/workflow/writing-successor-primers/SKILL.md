@@ -153,7 +153,7 @@ Output: skill declines. Explains that a primer is for projects with founding pri
 ## See also
 
 - `workflow/writing-release-notes-as-postmortem` — pairs naturally; the primer plus a postmortem-style release-note backlog gives a successor history + current-state in two artifacts
-- `workflow/running-adversarial-premortem` — produces the defense-in-depth-false-confidence list the primer's Step 4 needs
+- `workflow/adversarial-premortem-single` — produces the defense-in-depth-false-confidence list the primer's Step 4 needs
 - `claude-code-meta/writing-claude-code-skill` (planned) — primers for skills follow this same shape
 
 ## Status & version

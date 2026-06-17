@@ -162,7 +162,7 @@ Output: skill declines to engage. Explains EDA does not need pre-registration be
 
 ## See also
 
-- `workflow/running-adversarial-premortem` — the retrospective failure-mode analysis; pre-registration is the prospective counterpart
+- `workflow/adversarial-premortem-single` — the retrospective failure-mode analysis; pre-registration is the prospective counterpart
 - `ml-datasci/selecting-statistical-test` — the decision tree for Step 3's test choice
 - `ml-datasci/checking-test-assumptions` — runs the assumption gate cited in Step 3
 - `ml-datasci/running-power-analysis` (planned v2-batch-4) — deep dive on the power calc in Step 4

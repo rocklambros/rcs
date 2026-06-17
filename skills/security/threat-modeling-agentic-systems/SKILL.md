@@ -177,7 +177,7 @@ Output: Skill confirms catalog. Notes the system is on the boundary between LLM-
 - `security/threat-modeling-llm-app` — sibling for single-turn LLM apps (no agentic loop)
 - `security/auditing-mcp-server-pre-trust` — applies when agent tools are exposed via MCP
 - `security/auditing-pinned-dependencies` — supply-chain hardening of the agent's runtime stack
-- `workflow/running-adversarial-premortem` — complementary failure-mode discovery for the agent design
+- `workflow/adversarial-premortem-single` — complementary failure-mode discovery for the agent design
 
 ## Status & version
 

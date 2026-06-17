@@ -6,7 +6,7 @@
   "files": [],
   "expected_behavior": [
     "Does NOT recommend packaging open-judgment novelty review as a walk-the-tree skill",
-    "Recommends a brainstorming-style, premortem-style, or framework-as-input skill instead (e.g., something patterned on running-adversarial-premortem or auditing-mathematical-claims) where judgment is the explicit deliverable rather than a leaf in a tree",
+    "Recommends a brainstorming-style, premortem-style, or framework-as-input skill instead (e.g., something patterned on adversarial-premortem-single or auditing-mathematical-claims) where judgment is the explicit deliverable rather than a leaf in a tree",
     "Explains that walk-the-tree discipline only fits when the predicates are objectively checkable and the leaf actions are deterministic — novelty review is neither, because the predicate ('is this novel?') is the entire question"
   ]
 }

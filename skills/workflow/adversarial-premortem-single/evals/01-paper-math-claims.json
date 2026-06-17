@@ -1,5 +1,5 @@
 {
-  "skill": "running-adversarial-premortem",
+  "skill": "adversarial-premortem-single",
   "scenario_id": "01-paper-math-claims",
   "scenario_kind": "happy-path",
   "query": "I just finished a paper claiming that all transformer attention heads are equivalent for short sequences (length ≤ 8). Theorem 1 proves this by showing isomorphism. Theorem 2 derives a polynomial bound on the equivalence gap. Can you premortem the math claims?",
