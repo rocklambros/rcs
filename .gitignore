@@ -35,3 +35,6 @@ Thumbs.db
 
 # Project-local Claude Code state (per-machine, not for sharing)
 .claude/
+
+# Private skills (per-machine, not for sharing)
+skills/teaching/brutal-grader/
