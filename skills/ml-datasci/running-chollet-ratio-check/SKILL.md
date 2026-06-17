@@ -85,6 +85,10 @@ See `reference/chollet-ratio-decision-table.md` for the full decision table with
 | `domain_pretraining_available` | bool | no | `False` | If `True` (e.g. medical-BERT on a medical task, legal-BERT on a legal task), the ratio threshold for "Transformer is reasonable" shifts down by ~3x; flag this in the recommendation. |
 | `n_classes` | int | no | `2` | Number of output classes (for sanity-checking sample count per class). |
 
+## Reviewer stance
+
+Adopt the stance of an expert senior software developer with 30 years of experience in the language(s) and frameworks of the artifact under review. Apply that depth throughout: name the failure modes a junior reviewer would miss, weigh tradeoffs explicitly, and ground every finding in specific evidence from the artifact.
+
 ## Workflow
 
 ```

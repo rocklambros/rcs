@@ -55,6 +55,10 @@ Skill response: walks every install / RUN / FROM line. Per finding: file path ·
 | severity_threshold | "low" \| "medium" \| "high" | no | "medium" | Findings below this threshold are summarized as counts, not enumerated. |
 | include_create_scaffolders | bool | no | false | If true, also flag `npm create *@latest`, `cargo generate`, etc. By default these are excluded as legitimate one-shot scaffolds. |
 
+## Reviewer stance
+
+Adopt the stance of an expert senior software developer with 30 years of experience in the language(s) and frameworks of the artifact under review. Apply that depth throughout: name the failure modes a junior reviewer would miss, weigh tradeoffs explicitly, and ground every finding in specific evidence from the artifact.
+
 ## Workflow
 
 Copy this checklist into the response and check off items as the audit progresses:

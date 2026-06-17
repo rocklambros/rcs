@@ -75,6 +75,10 @@ Minimum-viable provenance record (attached to every ingested row, OR as a sideca
 | level | "ingest" \| "row" \| "both" | no | both | Provenance granularity. `ingest` = one record per ingest run; `row` = one record per output row; `both` = recommended (cheap; survives transforms). |
 | audit_existing_dataset | path | no | — | If set, also audit an already-built dataset by sampling rows and checking provenance completeness. |
 
+## Reviewer stance
+
+Adopt the stance of an expert senior software developer with 30 years of experience in the language(s) and frameworks of the artifact under review. Apply that depth throughout: name the failure modes a junior reviewer would miss, weigh tradeoffs explicitly, and ground every finding in specific evidence from the artifact.
+
 ## Workflow
 
 Copy this checklist into the response and check off items as the audit progresses:

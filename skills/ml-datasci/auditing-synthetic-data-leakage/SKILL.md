@@ -74,6 +74,10 @@ See `reference/mia-shadow-protocol.md` for the full attack recipe and `reference
 | `n_bootstrap` | int | no | `200` | Bootstrap resamples for 95% CI on MIA AUC and DCR ratio. |
 | `epsilon_dup` | float | no | `0.01` | Near-duplicate threshold (fraction of feature-space diameter) for Stage 1. |
 
+## Reviewer stance
+
+Adopt the stance of an expert senior software developer with 30 years of experience in the language(s) and frameworks of the artifact under review. Apply that depth throughout: name the failure modes a junior reviewer would miss, weigh tradeoffs explicitly, and ground every finding in specific evidence from the artifact.
+
 ## Workflow
 
 Copy this checklist into the response and check items off as each step completes:

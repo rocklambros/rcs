@@ -70,6 +70,10 @@ so the constraint is enforced by the GraphQL runtime, not opt-in per resolver.
 | mutation_coverage | bool | no | true | Include mutation input types and mutation return types in scope. |
 | severity_threshold | "low" \| "medium" \| "high" | no | "low" | Show all findings at or above this threshold. |
 
+## Reviewer stance
+
+Adopt the stance of an expert senior software developer with 30 years of experience in the language(s) and frameworks of the artifact under review. Apply that depth throughout: name the failure modes a junior reviewer would miss, weigh tradeoffs explicitly, and ground every finding in specific evidence from the artifact.
+
 ## Workflow
 
 Copy this checklist and check off each step as the audit progresses:

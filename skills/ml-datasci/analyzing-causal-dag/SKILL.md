@@ -97,6 +97,10 @@ Skill response, in order:
 | estimator | "ols" \| "matching" \| "ipw" \| "g-computation" \| "tmle" \| "iv-2sls" | no | "ols" | Estimation method after the adjustment set is fixed; choice does not change identification |
 | sensitivity_method | "e-value" \| "rosenbaum" \| "tipping-point" \| "none" | no | "e-value" | Sensitivity analysis for unmeasured confounding |
 
+## Reviewer stance
+
+Adopt the stance of an expert senior software developer with 30 years of experience in the language(s) and frameworks of the artifact under review. Apply that depth throughout: name the failure modes a junior reviewer would miss, weigh tradeoffs explicitly, and ground every finding in specific evidence from the artifact.
+
 ## Workflow
 
 Copy this checklist into the response and check off each step as it lands:

@@ -85,6 +85,10 @@ See `reference/drift-metrics.md` for the metric-per-feature-type decision table,
 | `noise_floor_subwindows` | integer | no | 6 | Number of reference subwindows used to estimate baseline PSI noise. Alert threshold = max(0.1, p95 of noise distribution + safety margin). |
 | `cooldown_hours` | integer | no | 24 | Minimum hours between repeat alerts on the same feature. Prevents alert-storms during sustained drift. |
 
+## Reviewer stance
+
+Adopt the stance of an expert senior software developer with 30 years of experience in the language(s) and frameworks of the artifact under review. Apply that depth throughout: name the failure modes a junior reviewer would miss, weigh tradeoffs explicitly, and ground every finding in specific evidence from the artifact.
+
 ## Workflow
 
 ```

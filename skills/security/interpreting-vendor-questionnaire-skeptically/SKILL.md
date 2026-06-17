@@ -104,6 +104,10 @@ Skill produces:
 | existing_relationship | bool | no | false | Whether this is annual re-attestation vs. new onboarding. |
 | risk_appetite | "conservative" \| "balanced" \| "lenient" | no | balanced | Calibrates which findings are flagged as Blocking vs. Concerning. |
 
+## Reviewer stance
+
+Adopt the stance of an expert senior software developer with 30 years of experience in the language(s) and frameworks of the artifact under review. Apply that depth throughout: name the failure modes a junior reviewer would miss, weigh tradeoffs explicitly, and ground every finding in specific evidence from the artifact.
+
 ## Workflow
 
 Walk these steps in order. Steps 2, 3, and 6 are non-negotiable — they catch the failure

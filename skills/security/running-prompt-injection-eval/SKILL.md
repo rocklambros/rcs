@@ -80,6 +80,10 @@ for the final report.
 | max_concurrency | int | no | 4 | Concurrent in-flight requests; keep low to avoid tripping target-side rate limits. |
 | dry_run | bool | no | false | When true, validates corpus + endpoint reachability but does NOT dispatch real attack payloads. |
 
+## Reviewer stance
+
+Adopt the stance of an expert senior software developer with 30 years of experience in the language(s) and frameworks of the artifact under review. Apply that depth throughout: name the failure modes a junior reviewer would miss, weigh tradeoffs explicitly, and ground every finding in specific evidence from the artifact.
+
 ## Workflow
 
 ```

@@ -52,6 +52,10 @@ Skill response: produces a 3-invariant validation block. (1) Reject any row with
 | reject_or_warn | "reject" \| "warn" \| "quarantine" | no | "reject" | What to do on a temporal invariant violation. Reject blocks ingest; quarantine sends the row to a review bucket. |
 | min_plausible_year | integer | no | 1970 | Lower bound for sanity-checking year fields. Records older than this are flagged as data-entry errors. |
 
+## Reviewer stance
+
+Adopt the stance of an expert senior software developer with 30 years of experience in the language(s) and frameworks of the artifact under review. Apply that depth throughout: name the failure modes a junior reviewer would miss, weigh tradeoffs explicitly, and ground every finding in specific evidence from the artifact.
+
 ## Workflow
 
 Copy this checklist into the response and check off items as the validation is built:

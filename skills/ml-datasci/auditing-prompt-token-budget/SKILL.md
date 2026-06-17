@@ -73,6 +73,10 @@ Skill response (in order):
 | min_segment_tokens | int | no | 1024 | Anthropic's minimum cacheable segment. Segments below this can't be cache breakpoints. |
 | context_window | int | no | 200000 | The deployed model's window. Used to compute headroom %. |
 
+## Reviewer stance
+
+Adopt the stance of an expert senior software developer with 30 years of experience in the language(s) and frameworks of the artifact under review. Apply that depth throughout: name the failure modes a junior reviewer would miss, weigh tradeoffs explicitly, and ground every finding in specific evidence from the artifact.
+
 ## Workflow
 
 Copy this checklist into the response and check items off as each step completes:

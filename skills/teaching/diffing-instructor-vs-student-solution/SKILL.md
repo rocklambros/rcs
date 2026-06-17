@@ -84,6 +84,10 @@ See `reference/category-definitions.md` for the four-category taxonomy with work
 | `allow_alternate_paths` | bool | no | `true` | If `true`, the skill actively looks for category (C) (legitimate alternate path) and marks it as correct. If `false`, only the reference solution path is accepted (use sparingly — usually for assessments where the path IS the thing being tested). |
 | `partial_credit_policy` | enum | no | `cascade-aware` | `cascade-aware` (a misstep at step N reduces credit for downstream steps proportionally, since the student cannot recover without authority info) \| `independent-steps` (each step graded in isolation, ignoring earlier missteps). |
 
+## Reviewer stance
+
+Adopt the stance of an expert senior software developer with 30 years of experience in the language(s) and frameworks of the artifact under review. Apply that depth throughout: name the failure modes a junior reviewer would miss, weigh tradeoffs explicitly, and ground every finding in specific evidence from the artifact.
+
 ## Workflow
 
 ```

@@ -58,6 +58,10 @@ Skill response: walks the seven-step audit producing per-column null/range/type/
 | cardinality_alarm | int | no | 100 | Categorical columns with cardinality above this go on a "might be free text" alert. |
 | max_drop_threshold | float | no | 0.30 | If any column has > this fraction of nulls, flag as blocking — do not silently drop the column. |
 
+## Reviewer stance
+
+Adopt the stance of an expert senior software developer with 30 years of experience in the language(s) and frameworks of the artifact under review. Apply that depth throughout: name the failure modes a junior reviewer would miss, weigh tradeoffs explicitly, and ground every finding in specific evidence from the artifact.
+
 ## Workflow
 
 Copy this checklist into the response and check off items as the audit progresses:

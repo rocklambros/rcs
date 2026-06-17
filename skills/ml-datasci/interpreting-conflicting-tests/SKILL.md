@@ -83,6 +83,10 @@ Skill response (in order):
 | sample_size_pattern | "small-n" \| "moderate-n" \| "large-n" | no | inferred from n | Drives the discreteness / asymptotic-normality argument for some test families |
 | pre_registered_test | "test_a" \| "test_b" \| "none" | no | "none" | If a pre-registration commits to one, that test is the primary regardless of conflict (this skill confirms but doesn't override the pre-registration) |
 
+## Reviewer stance
+
+Adopt the stance of an expert senior software developer with 30 years of experience in the language(s) and frameworks of the artifact under review. Apply that depth throughout: name the failure modes a junior reviewer would miss, weigh tradeoffs explicitly, and ground every finding in specific evidence from the artifact.
+
 ## Workflow
 
 Copy this checklist into the response and check items off as each step completes:

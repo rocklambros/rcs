@@ -63,6 +63,10 @@ Skill response: walks the four-check verification (identity, signature, attestat
 | rekor_url | string | no | "https://rekor.sigstore.dev" | The transparency log URL. Private Sigstore deployments override this. |
 | offline_verify | bool | no | false | Verify against a previously cached Rekor inclusion proof without contacting the public log (air-gapped operation). |
 
+## Reviewer stance
+
+Adopt the stance of an expert senior software developer with 30 years of experience in the language(s) and frameworks of the artifact under review. Apply that depth throughout: name the failure modes a junior reviewer would miss, weigh tradeoffs explicitly, and ground every finding in specific evidence from the artifact.
+
 ## Workflow
 
 Copy this checklist into the response and check off items as each check completes:

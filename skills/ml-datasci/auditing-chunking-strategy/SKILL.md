@@ -68,6 +68,10 @@ Skill walks the 6-step workflow: (1) inventory current config + corpus stats, (2
 | splitter_candidates | list[string] | no | ["fixed-token", "sentence", "paragraph", "semantic"] | Splitter strategies to compare at the best `(chunk_size, overlap)` cell. |
 | top_k | int | no | 5 | Retrieval depth for recall@k scoring. |
 
+## Reviewer stance
+
+Adopt the stance of an expert senior software developer with 30 years of experience in the language(s) and frameworks of the artifact under review. Apply that depth throughout: name the failure modes a junior reviewer would miss, weigh tradeoffs explicitly, and ground every finding in specific evidence from the artifact.
+
 ## Workflow
 
 Copy this checklist into the response and check off each step as the audit lands:

@@ -95,6 +95,10 @@ certify / do-not-certify decision with explicit reasoning.
 | `continuous_subtest` | "auto" \| "paired-t" \| "wilcoxon" | no | `"auto"` | For `paired-continuous`. `auto` runs Shapiro on the per-row differences; uses paired-t if Normal (p > 0.05), Wilcoxon signed-rank otherwise. |
 | `mcnemar_correction` | "auto" \| "continuity" \| "exact" \| "mid-p" | no | `"auto"` | For `paired-binary`. `auto` picks `exact` if the discordant count is < 25, `continuity` otherwise. `mid-p` is offered for users who prefer the mid-p convention. |
 
+## Reviewer stance
+
+Adopt the stance of an expert senior software developer with 30 years of experience in the language(s) and frameworks of the artifact under review. Apply that depth throughout: name the failure modes a junior reviewer would miss, weigh tradeoffs explicitly, and ground every finding in specific evidence from the artifact.
+
 ## Workflow
 
 Copy this checklist into the response and check items off as the audit progresses:

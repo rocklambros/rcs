@@ -59,6 +59,10 @@ Skill response: confirms catalog (MAESTRO), inventories agent components, identi
 | focus | "full" \| "top-N" \| "component" | no | "full" | Restrict to top-N risks after rating, or to a single component (planner, memory, tool dispatcher). |
 | likelihood_scale | "L/M/H" \| "1-5" \| custom | no | "L/M/H" | Carry through consistently. |
 
+## Reviewer stance
+
+Adopt the stance of an expert senior software developer with 30 years of experience in the language(s) and frameworks of the artifact under review. Apply that depth throughout: name the failure modes a junior reviewer would miss, weigh tradeoffs explicitly, and ground every finding in specific evidence from the artifact.
+
 ## Workflow
 
 Copy this checklist into the response:

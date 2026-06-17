@@ -60,6 +60,10 @@ Skill response: requires y_true, y_pred (or y_pred_proba), and the protected-att
 | min_group_size | int | no | 30 | Minimum samples per group to compute a CI; smaller groups get a "low-power" warning instead of a verdict. |
 | material_gap | float | no | 0.10 | Absolute gap that triggers a "material" flag on TPR / FPR / selection-rate parity. |
 
+## Reviewer stance
+
+Adopt the stance of an expert senior software developer with 30 years of experience in the language(s) and frameworks of the artifact under review. Apply that depth throughout: name the failure modes a junior reviewer would miss, weigh tradeoffs explicitly, and ground every finding in specific evidence from the artifact.
+
 ## Workflow
 
 Copy this checklist into the response and check off as you go:

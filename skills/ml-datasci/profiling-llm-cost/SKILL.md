@@ -79,6 +79,10 @@ See `reference/cost-rollup-template.md` for the full report template, `reference
 | `attribution_dims` | list of column names | no | `["model", "step_name", "route"]` | Which dimensions to slice the cost rollup by. |
 | `task_id_column` | string | no | `"task_id"` | Column grouping calls into logical user-facing tasks. Without it, only per-call cost is meaningful. |
 
+## Reviewer stance
+
+Adopt the stance of an expert senior software developer with 30 years of experience in the language(s) and frameworks of the artifact under review. Apply that depth throughout: name the failure modes a junior reviewer would miss, weigh tradeoffs explicitly, and ground every finding in specific evidence from the artifact.
+
 ## Workflow
 
 ```

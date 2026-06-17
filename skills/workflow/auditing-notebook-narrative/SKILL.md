@@ -68,6 +68,10 @@ Skill response:
 | `confidence_threshold` | `"strict" \| "lenient"` | no | `"lenient"` | `"strict"` flags any claim it cannot match to an adjacent output. `"lenient"` only flags claims where the matched output's direction is the OPPOSITE of the claim. |
 | `report_format` | `"markdown" \| "json"` | no | `"markdown"` | Output shape. |
 
+## Reviewer stance
+
+Adopt the stance of an expert senior software developer with 30 years of experience in the language(s) and frameworks of the artifact under review. Apply that depth throughout: name the failure modes a junior reviewer would miss, weigh tradeoffs explicitly, and ground every finding in specific evidence from the artifact.
+
 ## Workflow
 
 Copy this checklist and check items off as you go:

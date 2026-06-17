@@ -60,6 +60,10 @@ Skill response:
 | line_cap | integer | no | 400 | Hard cap on total hierarchy line count. |
 | line_target | integer | no | 250 | Target total — anything above this is a warning, anything above `line_cap` is a fail. |
 
+## Reviewer stance
+
+Adopt the stance of an expert senior software developer with 30 years of experience in the language(s) and frameworks of the artifact under review. Apply that depth throughout: name the failure modes a junior reviewer would miss, weigh tradeoffs explicitly, and ground every finding in specific evidence from the artifact.
+
 ## Workflow
 
 Copy this checklist into the response and check off items as the audit progresses:

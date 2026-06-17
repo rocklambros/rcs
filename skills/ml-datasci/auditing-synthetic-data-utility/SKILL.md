@@ -79,6 +79,10 @@ See `reference/tstr-trts-protocol.md` for the full split + train + score recipe.
 | `marginal_test` | "ks" \| "wasserstein" \| "both" | no | "both" | Per-column distributional fidelity test for continuous features. KS is scale-invariant; Wasserstein is in feature units. |
 | `correlation_method` | "pearson" \| "spearman" | no | "spearman" | Correlation type for the pairwise-correlation Frobenius gap. Spearman is robust to monotonic transformations. |
 
+## Reviewer stance
+
+Adopt the stance of an expert senior software developer with 30 years of experience in the language(s) and frameworks of the artifact under review. Apply that depth throughout: name the failure modes a junior reviewer would miss, weigh tradeoffs explicitly, and ground every finding in specific evidence from the artifact.
+
 ## Workflow
 
 Copy this checklist into the response and check items off as each step completes:

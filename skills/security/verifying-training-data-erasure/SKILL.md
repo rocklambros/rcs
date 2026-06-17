@@ -65,6 +65,10 @@ Skill response: walks the four-stage verification (dataset → embeddings → mo
 | retain_proof_until | ISO date | no | regulation default | When the proof bundle itself can be deleted. GDPR: 3 years post-erasure. HIPAA: 6 years. CCPA: 24 months. |
 | model_weight_strategy | string | no | "retrain-from-clean" | One of `retrain-from-clean`, `model-deprecation`, `machine-unlearning-with-caveat`. The third is documented but flagged as not audit-grade in 2026. |
 
+## Reviewer stance
+
+Adopt the stance of an expert senior software developer with 30 years of experience in the language(s) and frameworks of the artifact under review. Apply that depth throughout: name the failure modes a junior reviewer would miss, weigh tradeoffs explicitly, and ground every finding in specific evidence from the artifact.
+
 ## Workflow
 
 Copy this checklist into the response and check off items as each stage's verification completes:
