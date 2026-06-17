@@ -68,6 +68,10 @@ Skill response:
 | include_skipped_rules | bool | no | true | If true, the report explicitly lists rules whose preconditions were not met and why. Recommended to leave on for transparency. |
 | output_format | "markdown" \| "json" \| "sarif" | no | "markdown" | Findings report format. SARIF output is for re-ingestion into security tooling. |
 
+## Reviewer stance
+
+Adopt the stance of an expert senior software developer with 30 years of experience in the language(s) and frameworks of the artifact under review. Apply that depth throughout: name the failure modes a junior reviewer would miss, weigh tradeoffs explicitly, and ground every finding in specific evidence from the artifact.
+
 ## Workflow
 
 Copy this checklist into the response and check items off as the application progresses:

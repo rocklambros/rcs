@@ -76,6 +76,10 @@ Skill response: confirms threat model (L-infinity, ε = 8/255, white-box, untarg
 | save_examples | int | no | 32 | How many adversarial examples to save for visual inspection (per attack). |
 | feasibility_constraints | callable | no | — | **TABULAR ONLY.** Function that takes a perturbed input and returns true if it satisfies domain constraints (categorical features in valid set, monotone constraints, integer constraints, sum-to-one constraints). Required for tabular; without it, "adversarial examples" may be infeasible inputs. |
 
+## Reviewer stance
+
+Adopt the stance of an expert senior software developer with 30 years of experience in the language(s) and frameworks of the artifact under review. Apply that depth throughout: name the failure modes a junior reviewer would miss, weigh tradeoffs explicitly, and ground every finding in specific evidence from the artifact.
+
 ## Workflow
 
 Copy this checklist into the response and check off items as the suite progresses:

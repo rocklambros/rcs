@@ -73,6 +73,10 @@ Skill response: requests the eight required inputs (base checkpoint, post-tuned 
 | human_comparison_budget | int | no | 0 | If > 0, the budget for human pairwise preference comparisons (gold-standard divergence check). Strongly recommended for production promotions. |
 | length_normalization | bool | no | true | If true, length-controlled win-rate is also computed (Dubois et al. AlpacaEval 2.0 LC). Detects verbosity gaming. |
 
+## Reviewer stance
+
+Adopt the stance of an expert senior software developer with 30 years of experience in the language(s) and frameworks of the artifact under review. Apply that depth throughout: name the failure modes a junior reviewer would miss, weigh tradeoffs explicitly, and ground every finding in specific evidence from the artifact.
+
 ## Workflow
 
 Copy this checklist into the response and check off items as each probe completes:

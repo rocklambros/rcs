@@ -91,6 +91,10 @@ See `reference/multiclass-eval-checklist.md` for the full report template and `r
 | `cost_matrix` | array-like of shape `(n_classes, n_classes)` | no | uniform | Optional `K x K` cost matrix `C[i, j]` = cost of predicting `j` when truth is `i`. Drives weighted-F1 vs macro-F1 selection per `reference/aggregation-choice.md`. |
 | `n_bootstrap` | int | no | `1000` | Bootstrap resamples for 95% CI on macro-F1 and per-class F1. Stratify by class. |
 
+## Reviewer stance
+
+Adopt the stance of an expert senior software developer with 30 years of experience in the language(s) and frameworks of the artifact under review. Apply that depth throughout: name the failure modes a junior reviewer would miss, weigh tradeoffs explicitly, and ground every finding in specific evidence from the artifact.
+
 ## Workflow
 
 Copy this checklist into the response and check items off as the evaluation progresses.

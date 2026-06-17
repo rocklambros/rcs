@@ -62,6 +62,10 @@ Skill response: walks (1) method selection — for a softmax classifier with no 
 | target_tpr | float | no | 0.95 | TPR (in-distribution recall) the threshold is calibrated to hit; used for FPR-at-95-TPR reporting. |
 | n_bootstrap | int | no | 1000 | Bootstrap samples for AUROC CI. |
 
+## Reviewer stance
+
+Adopt the stance of an expert senior software developer with 30 years of experience in the language(s) and frameworks of the artifact under review. Apply that depth throughout: name the failure modes a junior reviewer would miss, weigh tradeoffs explicitly, and ground every finding in specific evidence from the artifact.
+
 ## Workflow
 
 ```

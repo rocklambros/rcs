@@ -86,6 +86,10 @@ See `reference/comparison-tests-decision-table.md` for the full selector.
 | `correction` | str | conditional | `holm` | Required when `len(predictions_per_model) >= 3`. One of `bonferroni`, `holm` (Holm-Bonferroni), `none` (only with explicit justification). |
 | `paired_fold_test` | str | no | `auto` | When comparing CV results: `t` (paired t), `wilcoxon` (signed-rank), or `auto` (pick by Shapiro on the per-fold differences). |
 
+## Reviewer stance
+
+Adopt the stance of an expert senior software developer with 30 years of experience in the language(s) and frameworks of the artifact under review. Apply that depth throughout: name the failure modes a junior reviewer would miss, weigh tradeoffs explicitly, and ground every finding in specific evidence from the artifact.
+
 ## Workflow
 
 ```

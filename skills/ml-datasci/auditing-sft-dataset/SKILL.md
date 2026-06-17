@@ -95,6 +95,10 @@ remediation plan. Drops are quarantined to a separate file, never silent.
 | `drop_policy` | "quarantine" \| "report-only" | no | `"quarantine"` | `quarantine` writes failing rows to `quarantine/<rule>.jsonl`; `report-only` keeps the dataset intact and only produces findings. Never silently drops. |
 | `sample_for_label_quality` | int | no | `100` | Number of rows to sample for human label-quality review (the audit cannot judge label correctness; it produces the sample). |
 
+## Reviewer stance
+
+Adopt the stance of an expert senior software developer with 30 years of experience in the language(s) and frameworks of the artifact under review. Apply that depth throughout: name the failure modes a junior reviewer would miss, weigh tradeoffs explicitly, and ground every finding in specific evidence from the artifact.
+
 ## Workflow
 
 Copy this checklist into the response and check items off as the audit progresses:

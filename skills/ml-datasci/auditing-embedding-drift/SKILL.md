@@ -69,6 +69,10 @@ Skill walks the 6-step workflow: (1) define baseline cohort (first month of prod
 | top_n | int | no | 20 | Number of most-drifted dimensions and documents to surface in the report. |
 | visualization | bool | no | true | Whether to render UMAP / t-SNE of the two cohorts and per-dim histograms for the top-shifted dims. |
 
+## Reviewer stance
+
+Adopt the stance of an expert senior software developer with 30 years of experience in the language(s) and frameworks of the artifact under review. Apply that depth throughout: name the failure modes a junior reviewer would miss, weigh tradeoffs explicitly, and ground every finding in specific evidence from the artifact.
+
 ## Workflow
 
 Copy this checklist into the response and check off each step as the audit lands:

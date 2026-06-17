@@ -83,6 +83,10 @@ See `reference/rag-eval-checklist.md` for the full report template, `reference/g
 | `judge_model` | string | no | `"sonnet-4-6"` | LLM judge model for faithfulness and answer-relevance scoring. Pin and document. |
 | `n_bootstrap` | int | no | `1000` | Bootstrap resamples for 95% CI on each metric. |
 
+## Reviewer stance
+
+Adopt the stance of an expert senior software developer with 30 years of experience in the language(s) and frameworks of the artifact under review. Apply that depth throughout: name the failure modes a junior reviewer would miss, weigh tradeoffs explicitly, and ground every finding in specific evidence from the artifact.
+
 ## Workflow
 
 Copy this checklist into the response and check off as the evaluation progresses:

@@ -58,6 +58,10 @@ Skill response: walks the four-field audit template per claim — Location (Theo
 | max_claims | integer | no | 10 | Cap on the number of claims audited per pass; prevents noise when a paper has 40+ small lemmas. |
 | confidence_format | "calibrated" \| "binary" \| "qualitative" | no | "calibrated" | Severity / Likelihood / Detectability format. |
 
+## Reviewer stance
+
+Adopt the stance of an expert senior software developer with 30 years of experience in the language(s) and frameworks of the artifact under review. Apply that depth throughout: name the failure modes a junior reviewer would miss, weigh tradeoffs explicitly, and ground every finding in specific evidence from the artifact.
+
 ## Workflow
 
 Copy this checklist into the response and check items off as the audit progresses:

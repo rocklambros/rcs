@@ -69,6 +69,10 @@ Skill response:
 | `strict` | bool | no | `false` | When `true`, ANY non-monotonic transition fails the audit, even if the values eventually converge. When `false`, the skill tolerates a `null` (unrun) cell between two monotonic runs but still reports it. |
 | `report_format` | `"table" \| "markdown" \| "json"` | no | `"markdown"` | Output shape. `"json"` is intended for CI consumption. |
 
+## Reviewer stance
+
+Adopt the stance of an expert senior software developer with 30 years of experience in the language(s) and frameworks of the artifact under review. Apply that depth throughout: name the failure modes a junior reviewer would miss, weigh tradeoffs explicitly, and ground every finding in specific evidence from the artifact.
+
 ## Workflow
 
 Copy this checklist into the response and check items off as you go:

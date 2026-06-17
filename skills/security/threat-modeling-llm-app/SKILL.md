@@ -56,6 +56,10 @@ Skill response: confirms the catalog source, inventories components and trust bo
 | focus | "full" \| "top-N" \| "component" | no | "full" | "full" = every catalog item × every boundary; "top-N" = produce only the top-N highest-risk rows after rating; "component" = restrict to one named component (e.g., the RAG retriever). |
 | likelihood_scale | "L/M/H" \| "1-5" \| custom | no | "L/M/H" | Scale used for likelihood and impact in the register. Carry through consistently. |
 
+## Reviewer stance
+
+Adopt the stance of an expert senior software developer with 30 years of experience in the language(s) and frameworks of the artifact under review. Apply that depth throughout: name the failure modes a junior reviewer would miss, weigh tradeoffs explicitly, and ground every finding in specific evidence from the artifact.
+
 ## Workflow
 
 Copy this checklist into the response and check off as each step completes:

@@ -58,6 +58,10 @@ Skill response: walks the four-check audit (leakage / stratification / group-awa
 | time_column | string or null | required if data_shape is time-series or panel | — | The column identifying the time index. |
 | preprocessing_order | string | no | — | Did the user fit imputation / normalization on the **full** dataset before splitting? If so, that's leakage. |
 
+## Reviewer stance
+
+Adopt the stance of an expert senior software developer with 30 years of experience in the language(s) and frameworks of the artifact under review. Apply that depth throughout: name the failure modes a junior reviewer would miss, weigh tradeoffs explicitly, and ground every finding in specific evidence from the artifact.
+
 ## Workflow
 
 Copy this checklist into the response and check items off as each check completes:

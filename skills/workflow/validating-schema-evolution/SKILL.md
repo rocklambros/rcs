@@ -74,6 +74,10 @@ Migration script scaffold: see `migrate_users_v3_to_v4.sql`
 | store | "postgres" \| "mysql" \| "sqlite" \| "bigquery" \| "snowflake" \| "parquet" \| "api" | no | postgres | Which store the migration script should target. Drives the SQL dialect. |
 | allow_breaking | bool | no | false | If true, the skill produces a destructive migration. If false (default), breaking changes are flagged and the script refuses to drop. |
 
+## Reviewer stance
+
+Adopt the stance of an expert senior software developer with 30 years of experience in the language(s) and frameworks of the artifact under review. Apply that depth throughout: name the failure modes a junior reviewer would miss, weigh tradeoffs explicitly, and ground every finding in specific evidence from the artifact.
+
 ## Workflow
 
 Copy this checklist into the response and check off items as the validation progresses:

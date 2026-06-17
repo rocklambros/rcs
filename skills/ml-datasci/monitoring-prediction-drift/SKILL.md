@@ -84,6 +84,10 @@ See `reference/calibration-diagnostics.md` for the full reliability-curve / slop
 | `segments` | list of column names | no | none | Per-cohort dimensions (region, channel, product line) for per-segment erosion tracking. |
 | `calibration_method` | "platt" \| "isotonic" | no | "platt" | If recalibration is recommended, which method to apply on the live post-deployment data. |
 
+## Reviewer stance
+
+Adopt the stance of an expert senior software developer with 30 years of experience in the language(s) and frameworks of the artifact under review. Apply that depth throughout: name the failure modes a junior reviewer would miss, weigh tradeoffs explicitly, and ground every finding in specific evidence from the artifact.
+
 ## Workflow
 
 ```

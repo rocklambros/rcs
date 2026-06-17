@@ -93,6 +93,10 @@ See `reference/latency-decomposition.md` for the per-stage decomposition recipe 
 | `cold_start_window_min` | integer | no | 5 | Minutes after a deploy / scale-up event during which "cold-start" latency is excluded from steady-state SLO assessment. |
 | `compare_to_baseline` | bool | no | false | If a prior latency log exists, run regression check vs. that baseline. |
 
+## Reviewer stance
+
+Adopt the stance of an expert senior software developer with 30 years of experience in the language(s) and frameworks of the artifact under review. Apply that depth throughout: name the failure modes a junior reviewer would miss, weigh tradeoffs explicitly, and ground every finding in specific evidence from the artifact.
+
 ## Workflow
 
 ```

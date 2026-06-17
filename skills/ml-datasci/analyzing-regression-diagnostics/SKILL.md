@@ -62,6 +62,10 @@ Skill response: walks the 6-step diagnostic checklist (linearity, residual Norma
 | time_index | column name | no | — | If present, run Durbin-Watson and inspect residual autocorrelation (only meaningful for time-ordered data). |
 | influential_action | "report-both" \| "drop-and-justify" \| "keep" | no | "report-both" | What to do if Cook's D flags a point — the default forces reporting both with and without the point, never silent removal. |
 
+## Reviewer stance
+
+Adopt the stance of an expert senior software developer with 30 years of experience in the language(s) and frameworks of the artifact under review. Apply that depth throughout: name the failure modes a junior reviewer would miss, weigh tradeoffs explicitly, and ground every finding in specific evidence from the artifact.
+
 ## Workflow
 
 Copy this checklist into the response and check items off as each diagnostic runs:

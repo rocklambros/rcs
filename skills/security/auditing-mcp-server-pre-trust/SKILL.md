@@ -50,6 +50,10 @@ Skill response: walks the six checks (license, source, network, version, secret,
 | install_scope | "user" \| "project" \| "plugin" | no | "user" | Where the MCP will be registered. Affects blast radius assessment. |
 | permission_level | "default" \| "elevated" | no | "default" | Whether the MCP would run with default Claude Code permissions or elevated. |
 
+## Reviewer stance
+
+Adopt the stance of an expert senior software developer with 30 years of experience in the language(s) and frameworks of the artifact under review. Apply that depth throughout: name the failure modes a junior reviewer would miss, weigh tradeoffs explicitly, and ground every finding in specific evidence from the artifact.
+
 ## Workflow
 
 Copy this checklist into the response and check off items as each check completes:
