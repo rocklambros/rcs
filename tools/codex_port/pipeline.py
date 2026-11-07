@@ -152,6 +152,17 @@ def check_skill(entry: SkillEntry, manifest: Manifest, today: str) -> CheckRepor
         except (TransformError, InstallError) as exc:
             return CheckReport(name, CheckStatus.INVALID, str(exc))
         info = _profile_info(entry, manifest, prepared.source_sha256)
+        # Patch and validation problems come first: a broken patch matters
+        # more than whether the skill happens to be installed yet.
+        patch = find_patch(name, manifest.data_dirs)
+        if patch is not None:
+            result = check_patch(prepared.stage, patch)
+            if not result.ok:
+                return CheckReport(name, CheckStatus.PATCH_FAILS, f"patch {patch.name} does not apply: {result.output}", info)
+            apply_patch(prepared.stage, patch)
+        errors = validate_skill(prepared.stage, manifest.codex_home)
+        if errors:
+            return CheckReport(name, CheckStatus.INVALID, " | ".join(errors), info)
         decision = gate(target)
         if decision is Gate.ABSENT:
             return CheckReport(name, CheckStatus.NOT_INSTALLED, "not installed, run build", info)
@@ -168,15 +179,6 @@ def check_skill(entry: SkillEntry, manifest: Manifest, today: str) -> CheckRepor
         sidecar = prepared.installed_sidecar
         if sidecar is None or sidecar.source_sha256 != prepared.source_sha256:
             return CheckReport(name, CheckStatus.STALE_SOURCE, "source changed since the last build", info)
-        patch = find_patch(name, manifest.data_dirs)
-        if patch is not None:
-            result = check_patch(prepared.stage, patch)
-            if not result.ok:
-                return CheckReport(name, CheckStatus.PATCH_FAILS, f"patch {patch.name} does not apply: {result.output}", info)
-            apply_patch(prepared.stage, patch)
-        errors = validate_skill(prepared.stage, manifest.codex_home)
-        if errors:
-            return CheckReport(name, CheckStatus.INVALID, " | ".join(errors), info)
         if installed_sha256(prepared.stage) != sidecar.output_sha256:
             return CheckReport(
                 name, CheckStatus.STALE_SOURCE,

@@ -216,3 +216,19 @@ def test_diff_is_empty_when_up_to_date(tmp_path):
     assert build(env).ok
     manifest = load_manifest(env.manifest_path, None)
     assert diff_skill(manifest.skills["a-skill"], manifest, today="2026-12-01") == ""
+
+
+def test_check_reports_patch_failure_before_install_state(tmp_path):
+    env = rcs_env(tmp_path)
+    (env.data_dir / "patches").mkdir()
+    (env.data_dir / "patches" / "a-skill.patch").write_text(BAD_PATCH)
+    report = check(env)
+    assert report.status is CheckStatus.PATCH_FAILS, report
+    assert not (env.skills_root / "a-skill").exists()
+
+
+def test_check_reports_invalid_before_install_state(tmp_path):
+    env = rcs_env(tmp_path, body=RCS_SKILL_MD.replace("Does a thing for a test.", "Use when x < y."))
+    report = check(env)
+    assert report.status is CheckStatus.INVALID, report
+    assert "angle" in report.details
