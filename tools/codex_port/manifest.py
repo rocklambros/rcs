@@ -73,6 +73,9 @@ class Manifest:
     rcs_root: Path
     skills: dict[str, SkillEntry]
     data_dirs: tuple[Path, ...]
+    # Relative paths whose hand edits capture must refuse to turn into a
+    # tracked patch, such as a references file that holds published text.
+    capture_exclude: tuple[str, ...] = ()
 
 
 def _read_toml(path: Path) -> dict:
@@ -167,6 +170,10 @@ def load_manifest(tracked: Path, local: Path | None) -> Manifest:
     if not isinstance(defaults["cache_roots"], dict):
         raise ManifestError("defaults.cache_roots must be a table of profile = path")
 
+    capture_exclude = defaults.get("capture_exclude", [])
+    if not isinstance(capture_exclude, list) or not all(isinstance(item, str) for item in capture_exclude):
+        raise ManifestError("defaults.capture_exclude must be a list of relative paths")
+
     cache_roots = {profile: _expand(str(path)) for profile, path in defaults["cache_roots"].items()}
     skills = {name: _parse_entry(name, raw, cache_roots) for name, raw in skills_raw.items()}
     return Manifest(
@@ -175,4 +182,5 @@ def load_manifest(tracked: Path, local: Path | None) -> Manifest:
         rcs_root=_expand(str(defaults["rcs_root"])),
         skills=skills,
         data_dirs=data_dirs,
+        capture_exclude=tuple(capture_exclude),
     )

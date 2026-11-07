@@ -232,3 +232,69 @@ def test_check_reports_invalid_before_install_state(tmp_path):
     report = check(env)
     assert report.status is CheckStatus.INVALID, report
     assert "angle" in report.details
+
+
+def test_diff_shows_picker_change(tmp_path):
+    env = rcs_env(tmp_path)
+    assert build(env).ok
+    text = env.manifest_path.read_text().replace("Does one thing well for a test", "Does one thing differently now")
+    env.manifest_path.write_text(text)
+    manifest = load_manifest(env.manifest_path, None)
+    out = diff_skill(manifest.skills["a-skill"], manifest, today="2026-12-01")
+    assert "agents/openai.yaml" in out
+    assert '+  short_description: "Does one thing differently now"' in out
+    assert check(env).status is CheckStatus.STALE_SOURCE
+
+
+@pytest.mark.parametrize("case", ["zip-without-skill-md", "name-mismatch", "dangling-symlink"])
+def test_source_problems_fail_one_skill_and_leave_install_untouched(tmp_path, case):
+    if case == "zip-without-skill-md":
+        env = make_port_env(tmp_path, {"a-skill": entry("a-skill", {"kind": "zip", "path": str(tmp_path / "z.zip")})})
+        make_zip(tmp_path / "z.zip", "a-skill", {"README.md": "no skill\n"})
+    elif case == "name-mismatch":
+        env = make_port_env(tmp_path, {"a-skill": entry("a-skill", {"kind": "dir", "path": str(tmp_path / "src" / "other")})})
+        make_skill_dir(tmp_path / "src", "other", RCS_SKILL_MD)
+    else:
+        env = make_port_env(tmp_path, {"a-skill": entry("a-skill", {"kind": "dir", "path": str(tmp_path / "src" / "a-skill")})})
+        src = make_skill_dir(tmp_path / "src", "a-skill", RCS_SKILL_MD)
+        (src / "references").mkdir()
+        (src / "references" / "gone.md").symlink_to(tmp_path / "nowhere.md")
+    result = build(env)
+    assert not result.ok
+    assert result.message
+    assert not (env.skills_root / "a-skill").exists()
+    assert not (stage_root(env.codex_home) / "a-skill").exists()
+    assert check(env).status is CheckStatus.MISSING_SOURCE
+
+
+def test_git_missing_fails_one_skill(tmp_path, monkeypatch):
+    env = rcs_env(tmp_path)
+    (env.data_dir / "patches").mkdir()
+    (env.data_dir / "patches" / "a-skill.patch").write_text(BAD_PATCH)
+    import tools.codex_port.patching as patching
+
+    def no_git(*args, **kwargs):
+        raise FileNotFoundError("git")
+
+    monkeypatch.setattr(patching.subprocess, "run", no_git)
+    result = build(env)
+    assert not result.ok
+    assert "git" in result.message
+    assert check(env).status is CheckStatus.INVALID
+    assert not (stage_root(env.codex_home) / "a-skill").exists()
+
+
+def test_capture_refuses_edit_to_excluded_path(tmp_path):
+    env = make_port_env(tmp_path, {"a-skill": entry("a-skill", {"kind": "rcs", "track": "workflow"})})
+    text = env.manifest_path.read_text().replace("[defaults]\n", '[defaults]\ncapture_exclude = ["references/voice-samples.md"]\n', 1)
+    env.manifest_path.write_text(text)
+    make_skill_dir(env.rcs_root / "workflow", "a-skill", RCS_SKILL_MD, {"references/voice-samples.md": "book text\n"})
+    assert build(env).ok
+    installed = env.skills_root / "a-skill" / "references" / "voice-samples.md"
+    installed.write_text("book text plus a hand edit\n")
+    manifest = load_manifest(env.manifest_path, None)
+    from tools.codex_port.install import InstallError
+    from tools.codex_port.pipeline import capture_skill
+    with pytest.raises(InstallError, match=r"voice-samples\.md"):
+        capture_skill(manifest.skills["a-skill"], manifest, today="2026-12-01")
+    assert not (env.data_dir / "patches" / "a-skill.patch").exists()

@@ -125,3 +125,17 @@ def test_tree_sha256_changes_on_content(tmp_path):
     one = make_skill_dir(tmp_path / "one", "a-skill", MINIMAL_SKILL_MD)
     two = make_skill_dir(tmp_path / "two", "a-skill", MINIMAL_SKILL_MD + "more\n")
     assert tree_sha256(one) != tree_sha256(two)
+
+
+def test_zip_without_skill_md_raises(tmp_path):
+    archive = make_zip(tmp_path / "z.zip", "a-skill", {"README.md": "no skill here\n"})
+    with pytest.raises(SourceError, match=r"SKILL\.md"):
+        materialize(SourceSpec("zip", path=archive), "a-skill", manifest_for(tmp_path), tmp_path / "stage")
+
+
+def test_dir_with_dangling_symlink_raises_source_error(tmp_path):
+    src = make_skill_dir(tmp_path / "src", "a-skill", MINIMAL_SKILL_MD)
+    (src / "references").mkdir()
+    (src / "references" / "gone.md").symlink_to(tmp_path / "nowhere.md")
+    with pytest.raises(SourceError, match=r"gone\.md"):
+        materialize(SourceSpec("dir", path=src), "a-skill", manifest_for(tmp_path), tmp_path / "stage")

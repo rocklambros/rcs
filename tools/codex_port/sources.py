@@ -70,6 +70,10 @@ def _copy_dir(src: Path, name: str, dest: Path) -> Path:
         shutil.copytree(src, target, symlinks=False, ignore=_copytree_ignore)
     except FileExistsError as exc:
         raise SourceError(f"skill {name!r}: staging directory {target} already exists") from exc
+    except OSError as exc:
+        # shutil.Error is an OSError and carries every failed path, for
+        # example a dangling symlink inside the source tree.
+        raise SourceError(f"skill {name!r}: copying {src} failed: {exc}") from exc
     return target
 
 
@@ -101,6 +105,8 @@ def _extract_zip(archive: Path, name: str, dest: Path) -> Path:
             target.parent.mkdir(parents=True, exist_ok=True)
             with zf.open(member) as src, target.open("wb") as out:
                 shutil.copyfileobj(src, out)
+    if not (dest / name / "SKILL.md").is_file():
+        raise SourceError(f"skill {name!r}: zip {archive.name} has no {name}/SKILL.md")
     return dest / name
 
 

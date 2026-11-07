@@ -115,3 +115,12 @@ def test_source_label_abbreviates_home(tmp_path, monkeypatch):
     path = tracked(tmp_path, {"a-skill": entry("a-skill", {"kind": "zip", "path": str(zip_path)})})
     m = load_manifest(path, None)
     assert m.skills["a-skill"].source.label("a-skill") == "zip:~/Templates/a-skill-portable.zip"
+
+
+def test_capture_exclude_defaults_to_empty_and_loads_list(tmp_path):
+    path = tracked(tmp_path, {"a-skill": entry("a-skill", {"kind": "rcs", "track": "workflow"})})
+    assert load_manifest(path, None).capture_exclude == ()
+    defaults = defaults_for(tmp_path)
+    defaults["capture_exclude"] = ["references/voice-samples.md"]
+    path = tracked(tmp_path, {"a-skill": entry("a-skill", {"kind": "rcs", "track": "workflow"})}, defaults)
+    assert load_manifest(path, None).capture_exclude == ("references/voice-samples.md",)

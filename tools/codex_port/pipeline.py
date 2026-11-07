@@ -115,7 +115,9 @@ def build_skill(entry: SkillEntry, manifest: Manifest, force: bool, today: str) 
         )
         decision = install(prepared.stage, target, force)
         return BuildResult(name, True, decision, f"installed ({decision.value})")
-    except (SourceError, TransformError, InstallError) as exc:
+    except (SourceError, TransformError, InstallError, OSError) as exc:
+        # OSError covers a missing git binary or an unreadable source file:
+        # one skill fails, the rest of the run continues.
         return BuildResult(name, False, None, str(exc))
     finally:
         # After a successful install the stage has moved, so this is a no-op.
@@ -149,7 +151,7 @@ def check_skill(entry: SkillEntry, manifest: Manifest, today: str) -> CheckRepor
             prepared = prepare_stage(entry, manifest, today, check_root)
         except SourceError as exc:
             return CheckReport(name, CheckStatus.MISSING_SOURCE, str(exc))
-        except (TransformError, InstallError) as exc:
+        except (TransformError, InstallError, OSError) as exc:
             return CheckReport(name, CheckStatus.INVALID, str(exc))
         info = _profile_info(entry, manifest, prepared.source_sha256)
         # Patch and validation problems come first: a broken patch matters
@@ -186,6 +188,8 @@ def check_skill(entry: SkillEntry, manifest: Manifest, today: str) -> CheckRepor
                 info,
             )
         return CheckReport(name, CheckStatus.OK, "up to date", info)
+    except OSError as exc:
+        return CheckReport(name, CheckStatus.INVALID, f"error: {exc}")
     finally:
         _clear(stage)
 
@@ -211,7 +215,9 @@ def diff_skill(entry: SkillEntry, manifest: Manifest, today: str) -> str:
             else:
                 base = Path(tmp) / "empty"
                 base.mkdir()
-            changed = capture_patch(base, prepared.stage, out)
+            # Nothing excluded: diff must show every change build would make,
+            # including the picker file, or it contradicts check.
+            changed = capture_patch(base, prepared.stage, out, exclude=())
             return header + (out.read_text() if changed else "")
     finally:
         _clear(stage)
@@ -235,6 +241,16 @@ def capture_skill(entry: SkillEntry, manifest: Manifest, today: str) -> tuple[in
     stage = check_root / name
     try:
         prepared = prepare_stage(entry, manifest, today, check_root)
+        for rel in manifest.capture_exclude:
+            staged = prepared.stage / rel
+            current = target / rel
+            staged_bytes = staged.read_bytes() if staged.is_file() else b""
+            current_bytes = current.read_bytes() if current.is_file() else b""
+            if staged_bytes != current_bytes:
+                raise InstallError(
+                    f"{current} differs from its source and is listed in capture_exclude, "
+                    "refusing to write it into a tracked patch"
+                )
         out = capture_dir(name, manifest) / "patches" / f"{name}.patch"
         return capture_patch(prepared.stage, target, out), out
     finally:

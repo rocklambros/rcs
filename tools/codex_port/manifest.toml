@@ -9,6 +9,10 @@
 [defaults]
 codex_home = "~/.codex"
 rcs_root = "~/github_projects/RCS/skills"
+# voice-samples.md holds published book text. capture refuses to turn a
+# hand edit to it into a tracked patch, the same rule .gitignore applies
+# to the claude.ai backups.
+capture_exclude = ["references/voice-samples.md"]
 
 [defaults.cache_roots]
 Claude = "~/Library/Application Support/Claude/local-agent-mode-sessions/skills-plugin"

@@ -128,6 +128,8 @@ def _toml_value(value) -> str:
     if isinstance(value, dict):
         inner = ", ".join(f"{k} = {_toml_value(v)}" for k, v in value.items())
         return "{ " + inner + " }"
+    if isinstance(value, list):
+        return "[" + ", ".join(_toml_value(v) for v in value) + "]"
     raise TypeError(f"unsupported manifest value: {value!r}")
 
 

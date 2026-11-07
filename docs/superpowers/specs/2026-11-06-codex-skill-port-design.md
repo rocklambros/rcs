@@ -129,7 +129,7 @@ uv run python -m tools.port_to_codex check [--only NAME ...] [--manifest PATH]
 uv run python -m tools.port_to_codex diff NAME
 ```
 
-`build` writes. `check` reports drift and exits non-zero on any of: source content changed since the last build, a patch that no longer applies, an installed tree edited since the last build, a source that cannot be found, or a staged skill that fails validation. Informational lines (another profile holds a different copy) do not affect the exit code. That makes `check` usable from a shell alias or a future hook. `diff` shows what `build` would change for one skill.
+`capture` refuses when the installed copy differs from its source in a path listed under `defaults.capture_exclude`, which holds `references/voice-samples.md`, so published text can never reach the repository through a patch. `build` writes. `check` reports drift and exits non-zero on any of: source content changed since the last build, a patch that no longer applies, an installed tree edited since the last build, a source that cannot be found, or a staged skill that fails validation. Informational lines (another profile holds a different copy) do not affect the exit code. That makes `check` usable from a shell alias or a future hook. `diff` shows what `build` would change for one skill.
 
 Exact flag names, output formatting, and module decomposition are the builder's.
 

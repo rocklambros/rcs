@@ -58,9 +58,9 @@ def apply_patch(tree: Path, patch: Path) -> PatchResult:
     return _git_apply(tree, patch, check_only=False)
 
 
-def _copy_for_capture(src: Path, dst: Path) -> None:
+def _copy_for_capture(src: Path, dst: Path, exclude: tuple[Path, ...]) -> None:
     shutil.copytree(src, dst, symlinks=False, ignore=lambda _d, names: {n for n in names if is_ignored(n)})
-    for rel in GENERATED_FILES:
+    for rel in exclude:
         target = dst / rel
         if target.exists():
             target.unlink()
@@ -82,16 +82,19 @@ def _strip_capture_prefixes(diff_text: str) -> str:
     return "\n".join(lines) + "\n"
 
 
-def capture_patch(generated: Path, installed: Path, out: Path) -> int:
+def capture_patch(generated: Path, installed: Path, out: Path, exclude: tuple[Path, ...] = GENERATED_FILES) -> int:
     """Write a patch turning ``generated`` into ``installed``.
 
     Returns the number of files that differ. Writes nothing when that is
-    zero, so an unchanged skill never gets an empty patch file.
+    zero, so an unchanged skill never gets an empty patch file. ``exclude``
+    defaults to the generated files, which a captured hand patch must not
+    carry. A caller that wants the whole picture, such as ``diff``, passes
+    an empty tuple.
     """
     with tempfile.TemporaryDirectory() as tmp:
         parent = Path(tmp)
-        _copy_for_capture(generated, parent / "s")
-        _copy_for_capture(installed, parent / "t")
+        _copy_for_capture(generated, parent / "s", exclude)
+        _copy_for_capture(installed, parent / "t", exclude)
         result = subprocess.run(
             ["git", "diff", "--no-index", "--no-color", "--no-renames", "s", "t"],
             cwd=parent,
