@@ -1,0 +1,13 @@
+diff --git a/SKILL.md b/SKILL.md
+index 950ba66..456a6ae 100644
+--- a/SKILL.md
++++ b/SKILL.md
+@@ -140,7 +140,7 @@ When the user gives you a draft, keep their meaning and facts intact, because yo
+ 
+ ## Before You Print: Run the Linter
+ 
+-Save the finished draft with the Write tool and keep its absolute path (DRAFT). Build every script path from the base directory the Skill tool printed when it loaded this file (SKILL_DIR). Run each script as its own Bash call: `python3 -I`, a space, the full absolute path, then the arguments. Use no `cd`, no shell variable for the folder, no `;`, `&&`, `||`, or `|`, no redirect, no `; echo $?`, and never `python3 -c` or a heredoc. An allow rule in Claude Code matches one command from its first character, so any other shape stops for a manual approval. Read output as printed, and take a non-zero exit code from the first line of the Bash result.
++Save the finished draft with the Write tool and keep its absolute path (DRAFT). The script paths below are absolute. Run each script as its own Bash call: `python3 -I`, a space, the full absolute path, then the arguments. Use no `cd`, no shell variable for the folder, no `;`, `&&`, `||`, or `|`, no redirect, no `; echo $?`, and never `python3 -c` or a heredoc. An allow rule in Claude Code matches one command from its first character, so any other shape stops for a manual approval. Read output as printed, and take a non-zero exit code from the first line of the Bash result.
+ 
+ ```bash
+ python3 -I /Users/klambros/.codex/skills/coffee-peer-voice/scripts/slop_lint.py DRAFT --profile PROFILE

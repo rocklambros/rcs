@@ -1,0 +1,275 @@
+diff --git a/SKILL.md b/SKILL.md
+index 5b587c6..1539c8e 100644
+--- a/SKILL.md
++++ b/SKILL.md
+@@ -25,19 +29,19 @@ metadata:
+ Trigger this skill when the user asks for or implies one of:
+ 
+ - "Help me write a new skill" / "scaffold a skill" / "I want to author a skill for X"
+-- "What's the right structure for a Claude Code skill?"
++- "What's the right structure for a Codex skill?" (or a Claude Code skill)
+ - "Review my SKILL.md" / "is my frontmatter right?" / "is my description third-person?"
+-- They are about to author a skill for any host (Claude Code, Copilot CLI, Gemini CLI, Anthropic API plugins) — the artifact structure is identical
++- They are about to author a skill for any host (Codex, Claude Code, Copilot CLI, Gemini CLI, Anthropic API plugins) — the artifact structure is identical
+ - They have an existing skill draft that needs to conform to the RCS Layer-3 contract or the Anthropic best-practices doc
+ 
+ ## When NOT to use
+ 
+ Skip this skill and hand off when:
+ 
+-- The user is writing code that *uses* the Anthropic SDK or Claude API directly → that is API-client work, not skill authoring; use the `claude-api` skill instead
+-- The user is writing a plugin manifest, hook script, or rules file — those are different artifacts and have their own skills (`writing-claude-code-plugin`, `writing-claude-code-hook`, `writing-deny-allow-rules`, all planned)
+-- The user is writing an MCP server, not a skill → use `writing-mcp-server-securely` (planned) or audit an existing MCP via `$auditing-mcp-server-pre-trust`
+-- The "skill" the user describes is one-off project-specific tooling that belongs in `scripts/` or `CLAUDE.md`, not a portable workflow discipline (see Failure modes → "skill vs. tool confusion")
++- The user is writing code that *uses* the Anthropic SDK or Claude API directly → that is API-client work, not skill authoring. Hand off to the SDK documentation
++- The user is writing a plugin manifest, hook script, or rules file — those are different artifacts and have their own skills (`$authoring-plugin`, `$authoring-tool-hook`, `$writing-deny-allow-rules`)
++- The user is writing an MCP server, not a skill → use `$writing-mcp-server-securely` or audit an existing MCP via `$auditing-mcp-server-pre-trust`
++- The "skill" the user describes is one-off project-specific tooling that belongs in `scripts/` or `AGENTS.md`, not a portable workflow discipline (see Failure modes → "skill vs. tool confusion")
+ 
+ ## Quick start
+ 
+@@ -46,10 +50,10 @@ User says: *"I want to write a skill that helps with auditing GraphQL schemas. W
+ Skill response:
+ 
+ 1. Confirm the slug as a gerund: `auditing-graphql-schemas`. Reject non-gerund forms (`graphql-audit`, `graphql-auditor`) and explain why.
+-2. Draft frontmatter — third-person `description` that includes WHAT + WHEN; required custom RCS fields (`version`, `status`, `track`, `audience`, `evidence`, `last-updated`).
++2. Draft frontmatter — third-person `description` that includes WHAT + WHEN; required custom RCS fields (`version`, `status`, `track`, `audience`, `evidence`, `last-updated`), nested under `metadata` for a Codex install. Add `agents/openai.yaml`.
+ 3. **Write 3 evals first** under `evals/01-happy-path.json`, `02-edge-case.json`, `03-anti-trigger.json` — each with exactly 3 rubric items.
+ 4. Fill the body: the 11 required H2 sections in order from the Layer-3 contract.
+-5. Lint: `uv run python -m tools.lint_frontmatter`, `lint_skill_md`, `lint_links`.
++5. Lint: RCS tools (`lint_frontmatter`, `lint_skill_md`, `lint_links`) for the RCS source, then Codex's `quick_validate.py` for the Codex install.
+ 
+ ## Inputs / Arguments / Flags
+ 
+@@ -58,7 +62,7 @@ Skill response:
+ | skill_topic | string | yes | — | What discipline the skill encodes (e.g., "auditing GraphQL schemas"). |
+ | target_track | one of `security` / `ml-datasci` / `workflow` / `teaching` / `claude-code-meta` | yes | — | Top-level track the skill belongs in. |
+ | audience_tags | list of audience tags | yes | — | One or more of `security-eng`, `ai-security`, `data-scientist`, `ml-engineer`, `stats-student`, `instructor`, `skill-author`, `devops`. |
+-| host | "claude-code" \| "copilot-cli" \| "gemini-cli" \| "anthropic-api" | no | "claude-code" | Target host. Structure is portable; this field only affects install-instruction tailoring in examples. |
++| host | "codex" \| "claude-code" \| "copilot-cli" \| "gemini-cli" \| "anthropic-api" | no | "codex" | Target host. The body structure is portable. The host decides frontmatter placement (Codex nests custom fields under `metadata`), UI metadata (`agents/openai.yaml` for Codex), and install location. |
+ | evidence_repos | list of repo names | no | [] | Prior work where the gap appeared. Empty is acceptable for net-new skills; flag if the skill has no provenance trail. |
+ 
+ ## Workflow
+@@ -75,37 +79,49 @@ Authoring progress:
+ - [ ] Body: 11 required H2 sections in order (see Outputs)
+ - [ ] Body ≤ 500 lines; bundle long content under reference/
+ - [ ] References one level deep — no transitive linking
+-- [ ] Lint: frontmatter, skill_md, links — all OK
++- [ ] `agents/openai.yaml` written (Codex): display_name, 25-64 char short_description, default_prompt naming `$slug`
++- [ ] Lint: frontmatter, skill_md, links — all OK (RCS source)
++- [ ] Codex `quick_validate.py` prints `Skill is valid!` (Codex install)
+ - [ ] Sanity: "does the description answer 'should I load this skill right now?'"
+ ```
+ 
+ ### Step 1 — Slug
+ 
+-Gerund (verb + -ing). Lowercase kebab-case. ≤ 64 characters. No reserved words "anthropic" or "claude". No XML tags. The slug is BOTH the directory name AND the frontmatter `name` field.
++Gerund (verb + -ing). Lowercase kebab-case (letters, digits, single hyphens, no leading or trailing hyphen). ≤ 64 characters. No reserved words "anthropic" or "claude" (Codex does not enforce this, but the skill stays portable back to Claude hosts). No XML tags. The slug is BOTH the directory name AND the frontmatter `name` field.
+ 
+ Acceptable: `auditing-graphql-schemas`, `selecting-loss-function`, `running-chaos-test`.
+ Rejected: `graphql-audit` (noun), `Audit-GraphQL` (capitalized), `claude-graphql-helper` (reserved word).
+ 
+ ### Step 2 — Frontmatter
+ 
+-Required (Anthropic spec): `name`, `description`.
++Required (Codex and Anthropic spec): `name`, `description`. Codex allows only `name`, `description`, `license`, `allowed-tools`, and `metadata` at the top level. Any other top-level key fails `quick_validate.py`.
+ 
+ Description rules — non-negotiable per Anthropic best-practices:
+ 
+ - **Third-person**: "Walks a decision tree...", NOT "I can help you..." or "You can use this...". The description is injected into the system prompt; first-person POV breaks discovery.
+-- **WHAT + WHEN**: describe the function AND the triggering conditions. A description that says only "Use when X happens" without saying what the skill does forces Claude to load the body to find out. A description that says only "Walks a decision tree" without trigger conditions never gets loaded.
+-- **≤ 1024 chars total** for the whole `description` block.
+-- **No workflow summaries**: do NOT summarize the skill's steps in the description. Claude will follow the description and skip the body. Describe triggers; let the body teach the workflow.
++- **WHAT + WHEN**: describe the function AND the triggering conditions. A description that says only "Use when X happens" without saying what the skill does forces the agent to load the body to find out. A description that says only "Walks a decision tree" without trigger conditions never gets loaded.
++- **≤ 1024 chars total** for the whole `description` block. Codex also rejects `<` and `>` anywhere in the description.
++- **No workflow summaries**: do NOT summarize the skill's steps in the description. The agent will follow the description and skip the body. Describe triggers; let the body teach the workflow.
++
++RCS custom fields. In the RCS source they sit at the top level. In a Codex install they nest under `metadata`, or `quick_validate.py` rejects the file:
++
++```yaml
++metadata:
++  version: 0.1.0                     # SemVer per skill
++  status: shipped                    # shipped | drafting | planned
++  track: claude-code-meta            # one of the 5 tracks
++  audience: [skill-author]           # list of tags
++  evidence: [RCS, anthropic-skill-best-practices]
++  last-updated: 2026-05-23           # ISO date
++```
+ 
+-RCS custom fields (don't break Anthropic schema):
++Codex UI metadata lives in `agents/openai.yaml`, not the frontmatter:
+ 
+ ```yaml
+-version: 0.1.0                       # SemVer per skill
+-status: shipped                       # shipped | drafting | planned
+-track: claude-code-meta               # one of the 5 tracks
+-audience: [skill-author]              # list of tags
+-evidence: [RCS, anthropic-skill-best-practices]
+-last-updated: 2026-05-23              # ISO date
++interface:
++  display_name: "Auditing GraphQL Schemas"
++  short_description: "Audit a GraphQL schema before exposing it"   # 25-64 chars
++  default_prompt: "Use $auditing-graphql-schemas to audit this schema."
+ ```
+ 
+ ### Step 3 — Evals first
+@@ -157,7 +173,7 @@ Lint enforces both the presence AND the order. Body ≤ 500 lines. Longer conten
+ 
+ ### Step 5 — References one level deep
+ 
+-The Anthropic doc is explicit: Claude may partially read transitively-linked files, missing content. So every markdown reference in SKILL.md must point to a file that stands alone. Do not chain reference → reference → reference.
++The Anthropic doc is explicit: an agent may partially read transitively-linked files, missing content. So every markdown reference in SKILL.md must point to a file that stands alone. Do not chain reference → reference → reference.
+ 
+ ### Step 6 — Lint
+ 
+@@ -169,6 +185,14 @@ uv run python -m tools.lint_links skills/<track>/<slug>/
+ 
+ All three must print `OK`. Fix and re-run until clean.
+ 
++For a Codex install, also run the validator Codex ships (PyYAML is pinned because system Python lacks it):
++
++```bash
++uv run --with pyyaml==6.0.2 python ~/.codex/skills/.system/skill-creator/scripts/quick_validate.py ~/.codex/skills/<slug>
++```
++
++It must print `Skill is valid!`. The RCS lints and the Codex validator check different frontmatter shapes, so run each against its own copy.
++
+ ## Outputs
+ 
+ A new skill directory with:
+@@ -176,6 +200,8 @@ A new skill directory with:
+ ```
+ skills/<track>/<slug>/
+ ├── SKILL.md           # 11 H2 sections, ≤ 500-line body, valid frontmatter
++├── agents/            # Codex only
++│   └── openai.yaml    # UI metadata and invocation policy
+ ├── evals/
+ │   ├── 01-<happy>.json
+ │   ├── 02-<edge>.json
+@@ -191,10 +217,10 @@ Plus a row added to the track README's "Shipped skills" table (or "Planned skill
+ ## Failure modes
+ 
+ - **First-person POV in description.** "I can help you..." or "You can use this..." breaks discovery and violates Anthropic spec. Caught by: `lint_frontmatter` regex check + explicit reminder in Step 2.
+-- **Workflow summary in description.** A description that summarizes steps causes Claude to follow it instead of reading the body. Caught by: this skill's Step 2 warning + a reviewer eyeball check ("does the description summarize what the skill DOES, or just when to trigger?").
+-- **Skill vs. tool confusion.** A one-off bash script that cleans up logs in one project is project-specific tooling, not a portable skill. It belongs in `scripts/` or `CLAUDE.md`. Caught by: the When-NOT-to-use section + the sanity question "would this be useful in 3+ unrelated projects? If no → not a skill."
++- **Workflow summary in description.** A description that summarizes steps causes the agent to follow it instead of reading the body. Caught by: this skill's Step 2 warning + a reviewer eyeball check ("does the description summarize what the skill DOES, or just when to trigger?").
++- **Skill vs. tool confusion.** A one-off bash script that cleans up logs in one project is project-specific tooling, not a portable skill. It belongs in `scripts/` or `AGENTS.md`. Caught by: the When-NOT-to-use section + the sanity question "would this be useful in 3+ unrelated projects? If no → not a skill."
+ - **Body over 500 lines.** Long bodies inflate every cached prefix that touches them. Caught by: `lint_skill_md` MAX_BODY_LINES check + the `reference/` bundle pattern.
+-- **Reference-chain leakage.** SKILL.md links A.md, A.md links B.md, B.md has the actual content — Claude won't reliably reach B. Caught by: `lint_links` one-level-deep enforcement.
++- **Reference-chain leakage.** SKILL.md links A.md, A.md links B.md, B.md has the actual content — the agent won't reliably reach B. Caught by: `lint_links` one-level-deep enforcement.
+ - **Evals written after body.** Body-first authoring rationalizes away inconvenient rubric items. Caught by: this skill's Workflow ordering (Step 3 before Step 4) + Anthropic best-practices doc citation.
+ 
+ ## References
+@@ -202,7 +228,8 @@ Plus a row added to the track README's "Shipped skills" table (or "Planned skill
+ - `reference/frontmatter-template.md` — copy-paste frontmatter block with required + RCS-custom fields
+ - `reference/eval-skeleton.md` — copy-paste eval JSON skeleton for all 3 scenario types
+ - [Anthropic Skill best-practices](https://platform.claude.com/docs/en/agents-and-tools/agent-skills/best-practices) — authoritative source for description rules and eval-first discipline
+-- [Claude Code skill docs](https://code.claude.com/docs/en/skills.md) — host-specific install + discovery
++- `~/.codex/skills/.system/skill-creator/SKILL.md` — Codex's own skill-authoring guide, with `scripts/quick_validate.py` and `references/openai_yaml.md`. Authoritative for the Codex frontmatter and `agents/openai.yaml` rules
++- [Claude Code skill docs](https://code.claude.com/docs/en/skills.md) — host-specific install + discovery for the Claude side
+ - RCS `docs/conventions.md` — Layer-3 H2 contract + frontmatter spec
+ - RCS `docs/eval-protocol.md` — eval JSON schema + pass thresholds
+ 
+@@ -224,11 +251,11 @@ Output: Skill flags the first-person POV violation. Rewrites in third person: *"
+ 
+ Input: *"I have a one-off bash script that cleans up logs in this project. Should I make it a skill?"*
+ 
+-Output: Skill answers no — this is project-specific tooling, not a portable, reusable workflow discipline. Suggests committing the script to `scripts/cleanup-logs.sh` in the project repo and documenting its purpose in `CLAUDE.md`. Explains that skills are reusable across 3+ unrelated projects; one-off scripts are not the same artifact.
++Output: Skill answers no — this is project-specific tooling, not a portable, reusable workflow discipline. Suggests committing the script to `scripts/cleanup-logs.sh` in the project repo and documenting its purpose in `AGENTS.md`. Explains that skills are reusable across 3+ unrelated projects; one-off scripts are not the same artifact.
+ 
+ ## See also
+ 
+-- `$auditing-instruction-hierarchy` — audit the CLAUDE.md hierarchy your new skill will run under
++- `$auditing-instruction-hierarchy` — audit the instruction hierarchy (`AGENTS.md` in Codex, `CLAUDE.md` in Claude Code) your new skill will run under
+ - `$adversarial-premortem-single` — premortem your skill before shipping (especially for high-stakes domains)
+ - `$auditing-context-window-pressure` — verify your skill doesn't bloat the cached prefix
+ 
+diff --git a/reference/eval-skeleton.md b/reference/eval-skeleton.md
+index cd7d780..378bdc3 100644
+--- a/reference/eval-skeleton.md
++++ b/reference/eval-skeleton.md
+@@ -71,4 +71,4 @@ Three scenarios per skill, one JSON file each, under `evals/`. Exactly 3 rubric
+ | edge-case | 3/3 |
+ | anti-trigger | ≥ 2/3 |
+ 
+-For full 3-model thresholds (Haiku / Sonnet / Opus), see `docs/eval-protocol.md` in the RCS root.
++For the RCS pass thresholds, see `docs/eval-protocol.md` in the RCS root. Those thresholds were set against Claude models (Haiku / Sonnet / Opus). For a Codex skill, run each scenario against a fresh `spawn_agent` subagent that has the skill installed, and judge the reply against the 3 rubric items.
+diff --git a/reference/frontmatter-template.md b/reference/frontmatter-template.md
+index 3954360..0d4f628 100644
+--- a/reference/frontmatter-template.md
++++ b/reference/frontmatter-template.md
+@@ -1,6 +1,6 @@
+ # Frontmatter template
+ 
+-Copy this block to the top of a new `SKILL.md`. Fill in the bracketed fields.
++Copy this block to the top of a new Codex `SKILL.md`. Fill in the bracketed fields. The description itself must not contain `<` or `>`. The brackets below are placeholders to replace.
+ 
+ ```yaml
+ ---
+@@ -9,29 +9,41 @@ description: >
+   <Third-person sentence describing WHAT the skill does and WHEN to trigger it.
+   No first-person ("I can help..."). No second-person ("You can use..."). No
+   workflow summaries. ≤ 1024 characters total for the whole block.>
+-version: 0.1.0
+-status: shipped         # shipped | drafting | planned
+-track: <track>          # security | ml-datasci | workflow | teaching | claude-code-meta
+-audience:               # one or more
+-  - skill-author
+-evidence:               # repos or sources where the gap appeared
+-  - <repo-or-source-name>
+-last-updated: 2026-05-23
++metadata:
++  version: 0.1.0
++  status: shipped         # shipped | drafting | planned
++  track: <track>          # security | ml-datasci | workflow | teaching | claude-code-meta
++  audience:               # one or more
++    - skill-author
++  evidence:               # repos or sources where the gap appeared
++    - <repo-or-source-name>
++  last-updated: 2026-05-23
+ ---
+ ```
+ 
++For the RCS source or a Claude Code install, the RCS fields sit at the top level instead of under `metadata`.
++
++Then add `agents/openai.yaml` next to `SKILL.md`:
++
++```yaml
++interface:
++  display_name: "<Human Title>"
++  short_description: "<25-64 character UI blurb>"
++  default_prompt: "Use $<gerund-form-slug> to <one concrete task>."
++```
++
+ ## Field-by-field rules
+ 
+ | Field | Required by | Rule |
+ |---|---|---|
+-| `name` | Anthropic spec | gerund-form, lowercase-kebab, ≤ 64 chars, no `anthropic` / `claude` reserved words, matches the directory name |
+-| `description` | Anthropic spec | third-person, WHAT + WHEN, ≤ 1024 chars, no workflow summary, no first/second-person POV |
+-| `version` | RCS | SemVer (`MAJOR.MINOR.PATCH`); start at `0.1.0` for new skills |
+-| `status` | RCS | `shipped` only after lint + eval thresholds pass; `drafting` if some scenario failed materially; `planned` only in track README, never in a real `SKILL.md` |
+-| `track` | RCS | exactly one of the 5 — must match the parent directory |
+-| `audience` | RCS | list; pick the tags that match the consumer of this skill, not every plausible reader |
+-| `evidence` | RCS | repos / sources where the underlying gap was observed; the provenance trail. Empty list is acceptable for net-new skills, but flag it if there's no real evidence |
+-| `last-updated` | RCS | ISO date (`YYYY-MM-DD`) — bump on every meaningful edit |
++| `name` | Codex + Anthropic spec | gerund-form, lowercase-kebab, ≤ 64 chars, no `anthropic` / `claude` reserved words, matches the directory name |
++| `description` | Codex + Anthropic spec | third-person, WHAT + WHEN, ≤ 1024 chars, no `<` or `>`, no workflow summary, no first/second-person POV |
++| `metadata.version` | RCS | SemVer (`MAJOR.MINOR.PATCH`); start at `0.1.0` for new skills |
++| `metadata.status` | RCS | `shipped` only after lint + eval thresholds pass; `drafting` if some scenario failed materially; `planned` only in track README, never in a real `SKILL.md` |
++| `metadata.track` | RCS | exactly one of the 5 — must match the parent directory |
++| `metadata.audience` | RCS | list; pick the tags that match the consumer of this skill, not every plausible reader |
++| `metadata.evidence` | RCS | repos / sources where the underlying gap was observed; the provenance trail. Empty list is acceptable for net-new skills, but flag it if there's no real evidence |
++| `metadata.last-updated` | RCS | ISO date (`YYYY-MM-DD`) — bump on every meaningful edit |
+ 
+ ## Description anti-patterns to avoid
+ 
+@@ -39,7 +51,7 @@ last-updated: 2026-05-23
+ |---|---|
+ | "I can help you audit GraphQL schemas." | First-person POV — breaks discovery |
+ | "You can use this to audit GraphQL schemas." | Second-person POV — same problem |
+-| "Use when auditing GraphQL schemas. Walks 6 steps: introspect, ..." | Workflow summary — Claude follows the description and skips the body |
++| "Use when auditing GraphQL schemas. Walks 6 steps: introspect, ..." | Workflow summary — the agent follows the description and skips the body |
+ | "Use when the user is unsure." | No WHAT, no concrete trigger — never gets matched |
+ | "Audits GraphQL schemas." | No WHEN, no triggering condition — never gets loaded |
+ 

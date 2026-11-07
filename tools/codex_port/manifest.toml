@@ -1,0 +1,105 @@
+# Codex skill port manifest. Version 0.1.0, owner Rock Lambros.
+#
+# Tracked entries only. Private per-machine skills live in the gitignored
+# overlay at tools/codex_port/local/manifest.toml, which merges over this
+# file by skill name. Picker text (display_name, short_description,
+# default_prompt) is what the Codex skill picker shows. short_description
+# must be 25 to 64 characters, a Codex rule.
+
+[defaults]
+codex_home = "~/.codex"
+rcs_root = "~/github_projects/RCS/skills"
+
+[defaults.cache_roots]
+Claude = "~/Library/Application Support/Claude/local-agent-mode-sessions/skills-plugin"
+Claude-Zenity = "~/Library/Application Support/Claude-Zenity/local-agent-mode-sessions/skills-plugin"
+
+# claude.ai set. The two voice skills ship as the -portable builds, which
+# inline every reference so they work without the Notion connector.
+
+[skills.anti-ai-slop]
+source = { kind = "zip", path = "~/Library/CloudStorage/OneDrive-RockCyber/Templates/Prompts/anti-ai-slop-portable.zip" }
+display_name = "Anti AI Slop"
+short_description = "Audit text for machine-writing tells and strip them"
+default_prompt = "Use $anti-ai-slop to audit this text for AI tells and strip them."
+path_tokens = true
+
+[skills.coffee-peer-voice]
+source = { kind = "zip", path = "~/Library/CloudStorage/OneDrive-RockCyber/Templates/Prompts/coffee-peer-voice-portable.zip" }
+display_name = "Coffee Peer Voice"
+short_description = "Rewrite prose in a warm, human, peer-to-peer voice"
+default_prompt = "Use $coffee-peer-voice to rewrite this draft so it sounds like a real person."
+path_tokens = true
+
+# Zenity profile on purpose: the rockcyber copy hardcodes claude.ai sandbox
+# paths, the Zenity standalone edition uses the SKILLS placeholder.
+[skills.clean-user-facing-text]
+source = { kind = "claude_ai", profile = "Claude-Zenity" }
+display_name = "Clean User-Facing Text"
+short_description = "Audit hidden Unicode and finalize prose for readers"
+default_prompt = "Use $clean-user-facing-text to audit and finalize this text before it ships."
+path_tokens = true
+
+# Zenity profile on purpose: the rockcyber copy has an unquoted description
+# with a colon that no YAML parser accepts, the Zenity copy quotes it.
+[skills.defensible-premortem]
+source = { kind = "claude_ai", profile = "Claude-Zenity" }
+display_name = "Defensible Premortem"
+short_description = "Verify claims against sources and stress-test the answer"
+default_prompt = "Use $defensible-premortem to verify this answer and tell me whether it can be defended."
+
+[skills.adversarial-premortem]
+source = { kind = "claude_ai", profile = "Claude" }
+display_name = "Adversarial Premortem"
+short_description = "Multi-agent premortem with calibrated failure modes"
+default_prompt = "Use $adversarial-premortem to red-team this design and rank what breaks."
+
+# RCS catalog skills first ported on 2026-09-29.
+
+[skills.adversarial-premortem-complete]
+source = { kind = "rcs", track = "workflow" }
+display_name = "Adversarial Premortem (Team)"
+short_description = "Six-perspective parallel premortem, up to five rounds"
+default_prompt = "Use $adversarial-premortem-complete to run a full team premortem on this spec."
+
+[skills.adversarial-premortem-single]
+source = { kind = "rcs", track = "workflow" }
+display_name = "Adversarial Premortem (Single)"
+short_description = "Single-session multi-round premortem"
+default_prompt = "Use $adversarial-premortem-single to premortem this plan in one session."
+
+[skills.authoring-skill]
+source = { kind = "rcs", track = "claude-code-meta" }
+display_name = "Authoring Skill"
+short_description = "Author a skill to the Codex and RCS skill contracts"
+default_prompt = "Use $authoring-skill to scaffold a new skill for this workflow."
+
+[skills.writing-onboarding-guide]
+source = { kind = "rcs", track = "teaching" }
+display_name = "Writing Onboarding Guide"
+short_description = "One onboarding guide layered for several audiences"
+default_prompt = "Use $writing-onboarding-guide to write onboarding for this system's audiences."
+
+[skills.writing-release-notes-as-postmortem]
+source = { kind = "rcs", track = "workflow" }
+display_name = "Release Notes as Postmortem"
+short_description = "Release notes that double as regression postmortems"
+default_prompt = "Use $writing-release-notes-as-postmortem to write the notes for this release."
+
+[skills.writing-repo-documentation]
+source = { kind = "rcs", track = "workflow" }
+display_name = "Writing Repo Documentation"
+short_description = "Write READMEs and repo docs that teach novice to contributor"
+default_prompt = "Use $writing-repo-documentation to write the README for this repository."
+
+[skills.writing-successor-primers]
+source = { kind = "rcs", track = "workflow" }
+display_name = "Writing Successor Primers"
+short_description = "Hand-off primer that carries founding context forward"
+default_prompt = "Use $writing-successor-primers to write a successor primer for this project."
+
+[skills.writing-vdp-and-coordinated-disclosure]
+source = { kind = "rcs", track = "security" }
+display_name = "Writing VDP and Disclosure"
+short_description = "Draft a VDP, disclosure runbook, and security.txt"
+default_prompt = "Use $writing-vdp-and-coordinated-disclosure to draft our vulnerability disclosure policy."

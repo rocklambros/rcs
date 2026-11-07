@@ -1,0 +1,13 @@
+diff --git a/SKILL.md b/SKILL.md
+index fafd16e..5c742ce 100644
+--- a/SKILL.md
++++ b/SKILL.md
+@@ -101,7 +101,7 @@ Every script run is its own Bash call with exactly this shape:
+ python3 -I <absolute path to the script> <arguments>
+ ```
+ 
+-The scripts live in `/Users/klambros/.codex/skills/clean-user-facing-text/scripts/`. `SKILLS` in these commands stands for the folder that holds this skill's folder. Take the base directory the Skill tool printed when it loaded this file, drop the last folder name, and write the result out in full wherever `SKILLS` appears. It is text you replace before the call, never a shell variable. In a claude.ai session it looks like `/root/.claude/skills/synced/<org id>_<account id>`.
++The scripts live in `/Users/klambros/.codex/skills/clean-user-facing-text/scripts/`. The paths in these commands are already absolute. Write each one out in full before the call, never through a shell variable.
+ 
+ The shape is fixed because Claude Code can only remember an approval as a rule that matches the start of one single command. The user keeps one allow rule per script, of the form `Bash(python3 -I <absolute script path> *)`. A call in any other shape matches no rule, and the run stops for a manual approval every time. These habits break the match:
+ 
