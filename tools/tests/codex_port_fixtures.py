@@ -12,6 +12,49 @@ from pathlib import Path
 
 MINIMAL_SKILL_MD = "---\nname: a-skill\ndescription: Does a thing. Use when asked.\n---\n\n# A skill\n\nBody.\n"
 
+# RCS Layer-3 shape: Anthropic fields plus six custom top-level fields and
+# a track-prefixed sibling reference in the body.
+RCS_SKILL_MD = """---
+name: a-skill
+description: Does a thing for a test. Use when a test asks for it.
+version: 0.1.0
+status: shipped
+track: workflow
+audience: [skill-author]
+evidence: [RCS]
+last-updated: 2026-05-24
+---
+
+# A skill
+
+See `workflow/other-skill` and `security/third-skill` (planned).
+
+## See also
+
+- `scripts/x.py` is not a sibling reference.
+"""
+
+# claude.ai upload shape: loose top-level fields and path placeholder
+# tokens the model is told to expand.
+CLAUDE_SKILL_MD = """---
+name: a-skill
+description: Does a thing for a test. Use when a test asks for it.
+version: 0.1 (draft)
+owner: Rock
+---
+
+# A skill
+
+Run the linter first:
+
+```
+python3 -I SKILL_DIR/scripts/l.py DRAFT
+python3 -I SKILLS/a-skill/scripts/x.py DRAFT
+```
+
+`SKILLS` stands for the folder that holds this skill's folder.
+"""
+
 
 def make_skill_dir(root: Path, name: str, skill_md: str, extra: dict[str, str] | None = None) -> Path:
     """Create ``root/<name>/SKILL.md`` plus any extra relative files."""

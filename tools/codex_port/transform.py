@@ -1,0 +1,65 @@
+"""Transform layer for the Codex skill port.
+
+Version 0.1.0, owner Rock Lambros.
+
+Turns a skill as its source wrote it into a skill Codex will load:
+frontmatter limited to the keys Codex allows, provenance recorded under
+``metadata``, and (in later functions of this module) body rewrites for
+sibling references, path tokens, and the runtime-notes section.
+"""
+from __future__ import annotations
+
+import yaml
+
+from tools.lint_frontmatter import parse_frontmatter
+
+ALLOWED_TOP_LEVEL = ("name", "description", "license", "allowed-tools", "metadata")
+PROVENANCE_KEYS = ("ported-from", "ported-to-codex")
+FRONTMATTER_END = "\n---\n"
+
+
+class TransformError(Exception):
+    """A source cannot be transformed. The fix belongs at the source."""
+
+
+def split_frontmatter(text: str) -> tuple[dict, str]:
+    """Parse the frontmatter mapping and return it with the untouched body."""
+    data, errors = parse_frontmatter(text)
+    if data is None:
+        raise TransformError(errors[0].message)
+    end = text.find(FRONTMATTER_END, 4)
+    return data, text[end + len(FRONTMATTER_END):]
+
+
+def normalize_frontmatter(text: str, ported_from: str, ported_on: str) -> str:
+    """Rewrite the frontmatter for Codex and leave the body byte-identical.
+
+    Key order is fixed so a rebuild from unchanged sources is byte-identical:
+    ``name``, ``description``, other allowed keys in source order, then
+    ``metadata`` holding the source's own metadata first, the moved keys in
+    source order, and the two provenance keys last.
+    """
+    data, body = split_frontmatter(text)
+    for key in ("name", "description"):
+        if key not in data:
+            raise TransformError(f"frontmatter is missing {key}")
+    existing = data.get("metadata") or {}
+    if not isinstance(existing, dict):
+        raise TransformError("frontmatter metadata must be a mapping")
+    # Drop stale provenance so normalizing an already-ported file converges.
+    metadata = {key: value for key, value in existing.items() if key not in PROVENANCE_KEYS}
+    ordered: dict = {"name": data["name"], "description": data["description"]}
+    for key, value in data.items():
+        if key in ("name", "description", "metadata"):
+            continue
+        if key in ALLOWED_TOP_LEVEL:
+            ordered[key] = value
+        else:
+            metadata[key] = value
+    metadata["ported-from"] = ported_from
+    metadata["ported-to-codex"] = ported_on
+    ordered["metadata"] = metadata
+    # A huge width keeps long descriptions on one line, so a reflow never
+    # shows up as a diff and grep finds the whole sentence.
+    dumped = yaml.safe_dump(ordered, sort_keys=False, allow_unicode=True, width=1_000_000)
+    return f"---\n{dumped}---\n{body}"
