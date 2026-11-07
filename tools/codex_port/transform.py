@@ -9,13 +9,22 @@ sibling references, path tokens, and the runtime-notes section.
 """
 from __future__ import annotations
 
+import re
+from pathlib import Path
+
 import yaml
 
+from tools.codex_port.manifest import Manifest, SkillEntry
 from tools.lint_frontmatter import parse_frontmatter
 
 ALLOWED_TOP_LEVEL = ("name", "description", "license", "allowed-tools", "metadata")
 PROVENANCE_KEYS = ("ported-from", "ported-to-codex")
 FRONTMATTER_END = "\n---\n"
+# RCS skills name siblings as `<track>/<name>`. Codex invokes a skill as
+# `$<name>`, so the track prefix goes and the dollar sign comes in.
+SIBLING_REF = re.compile(r"`(workflow|claude-code-meta|ml-datasci|security|teaching)/([a-z0-9-]+)`")
+RUNTIME_NOTES_HEADING = "## Codex runtime notes"
+DEFAULT_NOTES = "_default.md"
 
 
 class TransformError(Exception):
@@ -63,3 +72,58 @@ def normalize_frontmatter(text: str, ported_from: str, ported_on: str) -> str:
     # shows up as a diff and grep finds the whole sentence.
     dumped = yaml.safe_dump(ordered, sort_keys=False, allow_unicode=True, width=1_000_000)
     return f"---\n{dumped}---\n{body}"
+
+
+def rewrite_sibling_refs(text: str) -> str:
+    """Turn backticked ``<track>/<name>`` references into ``$<name>``."""
+    return SIBLING_REF.sub(r"`$\2`", text)
+
+
+def rewrite_path_tokens(text: str, skills_root: Path, name: str) -> str:
+    """Pin the claude.ai placeholder tokens to absolute install paths.
+
+    Only the slash-suffixed forms change. A bare ``SKILLS`` or ``SKILL_DIR``
+    in prose is the sentence that explains the token, and a patch rewrites
+    that sentence in Codex terms.
+    """
+    root = skills_root.as_posix()
+    return text.replace("SKILL_DIR/", f"{root}/{name}/").replace("SKILLS/", f"{root}/")
+
+
+def append_runtime_notes(text: str, notes_body: str) -> str:
+    """Append the runtime-notes section exactly once."""
+    if RUNTIME_NOTES_HEADING in text:
+        raise TransformError(f"SKILL.md already contains a '{RUNTIME_NOTES_HEADING}' section")
+    base = text if text.endswith("\n") else text + "\n"
+    body = notes_body.rstrip("\n")
+    return f"{base}\n{RUNTIME_NOTES_HEADING}\n\n{body}\n"
+
+
+def load_notes(name: str, data_dirs: tuple[Path, ...]) -> str:
+    """First ``notes/<name>.md`` across the data dirs, else the first default."""
+    for data_dir in data_dirs:
+        candidate = data_dir / "notes" / f"{name}.md"
+        if candidate.is_file():
+            return candidate.read_text()
+    for data_dir in data_dirs:
+        candidate = data_dir / "notes" / DEFAULT_NOTES
+        if candidate.is_file():
+            return candidate.read_text()
+    searched = ", ".join(str(d / "notes") for d in data_dirs) or "(no data dirs)"
+    raise TransformError(f"skill {name!r}: no notes/{name}.md and no notes/{DEFAULT_NOTES} under {searched}")
+
+
+def transform_tree(skill_dir: Path, entry: SkillEntry, manifest: Manifest, ported_on: str) -> None:
+    """Apply every mechanical transform in place on a materialized skill."""
+    skills_root = manifest.codex_home / "skills"
+    skill_md = skill_dir / "SKILL.md"
+    notes = load_notes(entry.name, manifest.data_dirs)
+    normalized = normalize_frontmatter(skill_md.read_text(), entry.source.label(entry.name), ported_on)
+    for markdown in sorted(skill_dir.rglob("*.md")):
+        content = normalized if markdown == skill_md else markdown.read_text()
+        content = rewrite_sibling_refs(content)
+        if entry.path_tokens:
+            content = rewrite_path_tokens(content, skills_root, entry.name)
+        if markdown == skill_md:
+            content = append_runtime_notes(content, notes)
+        markdown.write_text(content)

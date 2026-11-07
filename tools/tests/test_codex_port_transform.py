@@ -5,9 +5,18 @@ level, nests everything else under ``metadata``, and records provenance.
 """
 import pytest
 
-from tools.codex_port.transform import TransformError, normalize_frontmatter
+from tools.codex_port.manifest import Manifest, SkillEntry, SourceSpec
+from tools.codex_port.transform import (
+    TransformError,
+    append_runtime_notes,
+    load_notes,
+    normalize_frontmatter,
+    rewrite_path_tokens,
+    rewrite_sibling_refs,
+    transform_tree,
+)
 from tools.lint_frontmatter import parse_frontmatter
-from tools.tests.codex_port_fixtures import CLAUDE_SKILL_MD, RCS_SKILL_MD
+from tools.tests.codex_port_fixtures import CLAUDE_SKILL_MD, RCS_SKILL_MD, make_skill_dir
 
 
 def body_of(text: str) -> str:
@@ -79,3 +88,98 @@ def test_long_description_stays_on_one_line():
     assert out.count("\n---\n") == 1
     assert sum(1 for line in out.split("\n---\n")[0].splitlines() if line.startswith("description:")) == 1
     assert len(out.split("\n---\n")[0].splitlines()) == 6
+
+
+def test_sibling_refs_rewritten():
+    assert rewrite_sibling_refs("`workflow/a` and `security/b` (planned)") == "`$a` and `$b` (planned)"
+
+
+def test_non_sibling_backticks_untouched():
+    text = "`scripts/x.py` and `workflow/` and workflow/a without ticks and `ml-datasci/Upper`"
+    assert rewrite_sibling_refs(text) == text
+
+
+def test_path_tokens_rewritten(tmp_path):
+    root = tmp_path / "codex" / "skills"
+    text = "python3 -I SKILL_DIR/scripts/l.py\npython3 -I SKILLS/a-skill/scripts/x.py\n`SKILLS` stands for (SKILL_DIR)\n"
+    expected = (
+        f"python3 -I {root.as_posix()}/a-skill/scripts/l.py\n"
+        f"python3 -I {root.as_posix()}/a-skill/scripts/x.py\n"
+        "`SKILLS` stands for (SKILL_DIR)\n"
+    )
+    assert rewrite_path_tokens(text, root, "a-skill") == expected
+
+
+def test_notes_appended_once_with_exact_heading():
+    out = append_runtime_notes("# T\n\nBody.\n", "- one\n- two\n\n")
+    assert out == "# T\n\nBody.\n\n## Codex runtime notes\n\n- one\n- two\n"
+
+
+def test_notes_refuse_double_append():
+    once = append_runtime_notes("# T\n", "- one\n")
+    with pytest.raises(TransformError, match=r"Codex runtime notes"):
+        append_runtime_notes(once, "- one\n")
+
+
+def test_load_notes_prefers_local_then_named_then_default(tmp_path):
+    local = tmp_path / "local"
+    tracked = tmp_path / "tracked"
+    (tracked / "notes").mkdir(parents=True)
+    (tracked / "notes" / "_default.md").write_text("default\n")
+    assert load_notes("a-skill", (local, tracked)) == "default\n"
+    (tracked / "notes" / "a-skill.md").write_text("named\n")
+    assert load_notes("a-skill", (local, tracked)) == "named\n"
+    (local / "notes").mkdir(parents=True)
+    (local / "notes" / "a-skill.md").write_text("local\n")
+    assert load_notes("a-skill", (local, tracked)) == "local\n"
+
+
+def test_load_notes_missing_raises(tmp_path):
+    with pytest.raises(TransformError, match=r"a-skill"):
+        load_notes("a-skill", (tmp_path,))
+
+
+def manifest_with_notes(tmp_path):
+    tracked = tmp_path / "tracked"
+    (tracked / "notes").mkdir(parents=True)
+    (tracked / "notes" / "_default.md").write_text("- sibling note\n")
+    return Manifest(codex_home=tmp_path / "codex", cache_roots={}, rcs_root=tmp_path / "rcs", skills={}, data_dirs=(tracked,))
+
+
+def entry_for(name, path_tokens=False):
+    return SkillEntry(
+        name=name,
+        source=SourceSpec("rcs", track="workflow"),
+        display_name="A Skill",
+        short_description="x" * 30,
+        default_prompt=f"Use ${name}.",
+        path_tokens=path_tokens,
+    )
+
+
+def test_transform_tree_touches_all_markdown(tmp_path):
+    manifest = manifest_with_notes(tmp_path)
+    skill = make_skill_dir(
+        tmp_path / "stage", "a-skill", RCS_SKILL_MD,
+        {"references/x.md": "See `workflow/other-skill`. SKILL_DIR/scripts/l.py\n", "scripts/x.py": "# `workflow/other-skill`\n"},
+    )
+    transform_tree(skill, entry_for("a-skill"), manifest, "2026-11-06")
+    skill_md = (skill / "SKILL.md").read_text()
+    fm, _ = parse_frontmatter(skill_md)
+    assert fm["metadata"]["ported-to-codex"] == "2026-11-06"
+    assert "`$other-skill`" in skill_md
+    assert "`workflow/other-skill`" not in skill_md
+    assert skill_md.endswith("\n## Codex runtime notes\n\n- sibling note\n")
+    assert (skill / "references" / "x.md").read_text() == "See `$other-skill`. SKILL_DIR/scripts/l.py\n"
+    assert (skill / "scripts" / "x.py").read_text() == "# `workflow/other-skill`\n"
+
+
+def test_transform_tree_rewrites_tokens_when_enabled(tmp_path):
+    manifest = manifest_with_notes(tmp_path)
+    skill = make_skill_dir(tmp_path / "stage", "a-skill", CLAUDE_SKILL_MD)
+    transform_tree(skill, entry_for("a-skill", path_tokens=True), manifest, "2026-11-06")
+    skill_md = (skill / "SKILL.md").read_text()
+    root = (tmp_path / "codex" / "skills").as_posix()
+    assert f"python3 -I {root}/a-skill/scripts/l.py DRAFT" in skill_md
+    assert f"python3 -I {root}/a-skill/scripts/x.py DRAFT" in skill_md
+    assert "`SKILLS` stands for" in skill_md
