@@ -7,7 +7,39 @@ pytest ``tmp_path`` so no test reads or writes the real home directory.
 """
 from __future__ import annotations
 
+import zipfile
 from pathlib import Path
+
+MINIMAL_SKILL_MD = "---\nname: a-skill\ndescription: Does a thing. Use when asked.\n---\n\n# A skill\n\nBody.\n"
+
+
+def make_skill_dir(root: Path, name: str, skill_md: str, extra: dict[str, str] | None = None) -> Path:
+    """Create ``root/<name>/SKILL.md`` plus any extra relative files."""
+    skill_dir = root / name
+    skill_dir.mkdir(parents=True, exist_ok=True)
+    (skill_dir / "SKILL.md").write_text(skill_md)
+    for rel, content in (extra or {}).items():
+        target = skill_dir / rel
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_text(content)
+    return skill_dir
+
+
+def make_zip(path: Path, top_folder: str, files: dict[str, str], extra_members: dict[str, str] | None = None) -> Path:
+    """Write a zip whose ``files`` sit under ``top_folder/``.
+
+    Member names are written verbatim, so a test can plant a traversal
+    such as ``../../evil.txt`` to prove the extractor rejects it.
+    ``extra_members`` are written with no prefix, for a second top-level
+    folder.
+    """
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with zipfile.ZipFile(path, "w") as archive:
+        for rel, content in files.items():
+            archive.writestr(f"{top_folder}/{rel}", content)
+        for rel, content in (extra_members or {}).items():
+            archive.writestr(rel, content)
+    return path
 
 
 def defaults_for(tmp_path: Path) -> dict:
