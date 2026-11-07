@@ -127,3 +127,23 @@ def transform_tree(skill_dir: Path, entry: SkillEntry, manifest: Manifest, porte
         if markdown == skill_md:
             content = append_runtime_notes(content, notes)
         markdown.write_text(content)
+
+
+PICKER_KEYS = ("display_name", "short_description", "default_prompt")
+
+
+def _yaml_double_quoted(value: str) -> str:
+    return '"' + value.replace("\\", "\\\\").replace('"', '\\"') + '"'
+
+
+def write_picker(skill_dir: Path, entry: SkillEntry) -> Path:
+    """Write ``agents/openai.yaml`` in the exact shape the September port used.
+
+    Hand-formatted rather than dumped by PyYAML so the file stays byte-stable
+    and readable, with the three keys in the order the Codex picker shows them.
+    """
+    target = skill_dir / "agents" / "openai.yaml"
+    target.parent.mkdir(parents=True, exist_ok=True)
+    lines = ["interface:"] + [f"  {key}: {_yaml_double_quoted(getattr(entry, key))}" for key in PICKER_KEYS]
+    target.write_text("\n".join(lines) + "\n")
+    return target
