@@ -41,3 +41,6 @@ skills/teaching/brutal-grader/
 
 # Claude.ai skill backups: voice-samples.md holds published book text. Never commit it.
 backups/claude-ai-skills/coffee-peer-voice/references/voice-samples.md
+
+# Codex port overlay for private skills (per-machine, not for sharing)
+tools/codex_port/local/

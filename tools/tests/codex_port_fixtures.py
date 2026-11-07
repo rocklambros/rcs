@@ -8,6 +8,7 @@ pytest ``tmp_path`` so no test reads or writes the real home directory.
 from __future__ import annotations
 
 import zipfile
+from dataclasses import dataclass
 from pathlib import Path
 
 MINIMAL_SKILL_MD = "---\nname: a-skill\ndescription: Does a thing. Use when asked.\n---\n\n# A skill\n\nBody.\n"
@@ -154,3 +155,34 @@ def write_manifest(path: Path, defaults: dict, skills: dict) -> Path:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text("\n".join(lines) + "\n")
     return path
+
+
+@dataclass
+class PortEnv:
+    """Paths of a self-contained port environment under one tmp_path."""
+
+    manifest_path: Path
+    data_dir: Path
+    codex_home: Path
+    rcs_root: Path
+    cache_roots: dict[str, Path]
+
+    @property
+    def skills_root(self) -> Path:
+        return self.codex_home / "skills"
+
+
+def make_port_env(tmp_path: Path, skills: dict, notes: str = "- sibling note\n") -> PortEnv:
+    """Write a manifest plus a default notes file and return every path."""
+    data_dir = tmp_path / "data"
+    (data_dir / "notes").mkdir(parents=True, exist_ok=True)
+    (data_dir / "notes" / "_default.md").write_text(notes)
+    defaults = defaults_for(tmp_path)
+    manifest_path = write_manifest(data_dir / "manifest.toml", defaults, skills)
+    return PortEnv(
+        manifest_path=manifest_path,
+        data_dir=data_dir,
+        codex_home=Path(defaults["codex_home"]),
+        rcs_root=Path(defaults["rcs_root"]),
+        cache_roots={profile: Path(path) for profile, path in defaults["cache_roots"].items()},
+    )
