@@ -1,0 +1,91 @@
+diff --git a/SKILL.md b/SKILL.md
+index 3fc2ff9..1eb48c5 100644
+--- a/SKILL.md
++++ b/SKILL.md
+@@ -112,7 +120,7 @@ Novice and regular user share the README. Contributor reads CONTRIBUTING. Mainta
+ | `CONTRIBUTING.md` | Contributor | Development setup, branch + PR conventions, test commands, code style, review process |
+ | `SECURITY.md` | Security researcher | How to report a vulnerability privately, expected response time, scope, safe-harbor language |
+ | `CODE_OF_CONDUCT.md` | Contributor + community | Behavior norms, enforcement, contact path |
+-| `CHANGELOG.md` | Returning user + maintainer | What changed per release, with attention to breaking changes (cross-reference `writing-release-notes-as-postmortem`) |
++| `CHANGELOG.md` | Returning user + maintainer | What changed per release, with attention to breaking changes (cross-reference `$writing-release-notes-as-postmortem`) |
+ | `docs/tutorials/` | Novice | Step-by-step learning paths from zero to a working result |
+ | `docs/how-to/` | Regular user | Recipes for specific tasks ("how do I do X?") |
+ | `docs/explanation/` | Intermediate user | Concepts, design decisions, the "why" behind the API |
+@@ -126,7 +134,7 @@ Six sections, in order:
+ 
+ 1. **What it is + why care** (1-2 sentences each, ≤ 50 words total). The first sentence must let a reader who has never heard of the project decide whether to keep reading. Lead with the user benefit, not the implementation
+ 2. **30-second concrete example.** A runnable snippet that shows the project's core action. Install + import + one call + a visible result. No yak-shaving. A reader copies this, runs it, sees the result, and now believes the project works
+-3. **Install.** One command per supported package manager. Pinned versions documented separately if relevant (cross-reference `pinning-reproducible-environments`)
++3. **Install.** One command per supported package manager. Pinned versions documented separately if relevant (cross-reference `$pinning-reproducible-environments`)
+ 4. **A second, slightly deeper example.** Same shape as the first, but uses one more concept. This is the rung from "got it running" to "got an idea of what else is possible"
+ 5. **Concepts.** The vocabulary a reader needs to understand the rest of the docs. Define terms inline, not as a glossary appendix (a reader will not flip back). Keep this section short. Deeper conceptual material lives in `docs/explanation/`
+ 6. **Where to go next.** Links to `docs/tutorials/`, `docs/how-to/`, `docs/explanation/`, `docs/reference/`, CONTRIBUTING, the issue tracker, and (if applicable) the chat channel. A reader who has finished the README must know where to go for the next question without searching
+@@ -145,7 +153,7 @@ Inside each section, lead with the concrete and follow with the abstract. Define
+ 
+ ### Step 5: CONTRIBUTING and SECURITY (when scope includes them)
+ 
+-CONTRIBUTING.md sections, in order: (1) development setup (commands, not prose), (2) where the tests live and how to run them, (3) branch and commit conventions, (4) PR template expectations, (5) code style and lint commands, (6) review process and expected response time, (7) release process (if external contributors might cut releases) or a pointer to who owns releases. Cross-reference `writing-vdp-and-coordinated-disclosure` for the disclosure-policy half of SECURITY.md.
++CONTRIBUTING.md sections, in order: (1) development setup (commands, not prose), (2) where the tests live and how to run them, (3) branch and commit conventions, (4) PR template expectations, (5) code style and lint commands, (6) review process and expected response time, (7) release process (if external contributors might cut releases) or a pointer to who owns releases. Cross-reference `$writing-vdp-and-coordinated-disclosure` for the disclosure-policy half of SECURITY.md.
+ 
+ SECURITY.md sections, in order: (1) how to report a vulnerability (private channel, not a public issue), (2) what to expect (acknowledgement time, fix-and-disclose timeline), (3) scope (what is in, what is out), (4) safe-harbor language for good-faith research, (5) credits / hall of fame if applicable. See `$writing-vdp-and-coordinated-disclosure` for the full template.
+ 
+@@ -156,13 +164,13 @@ Walk the catalog in [`reference/ai-slop-patterns.md`](reference/ai-slop-patterns
+ Two cross-references that complement this catalog:
+ 
+ - The Wikipedia page "Signs of AI writing" lists patterns from a different angle (heading sprawl, emoji decoration, bulleted-prose habit). Read it once
+-- This repository's `~/.claude/CLAUDE.md` style rules forbid em-dashes, semicolons, sentences starting with conjunctions, and a list of corporate filler words. Apply those rules to documentation too. They were written for code comments and prose alike
++- The house style rules forbid em-dashes, semicolons in prose, sentences starting with conjunctions, AI filler (just, very, really, actually, certainly, basically, literally), and corporate filler (utilize, facilitate, leverage as a verb, robust, seamless, transformative, comprehensive, holistic, ecosystem, journey as metaphor, unlock, unleash, empower). Apply them to documentation too. If the target repository has an `AGENTS.md` with its own style rules, those rules win where they conflict
+ 
+ ### Step 7: Cold-read test
+ 
+ A test for documentation is not a unit test. It is a person who has not seen the project reading the document aloud and stopping at the first sentence that confuses them. The reader does not need to be a domain expert (in fact a non-expert is more useful for the novice tier). Record where they stopped, why, and what they expected to read instead. The first confusion point is the first rewrite target.
+ 
+-A solo author who cannot find a cold reader can approximate the test by reading the document aloud after a 24-hour gap (the gap matters. Fresh eyes substitute for fresh ears). A second approximation is asking a model to read the README and identify the first place a "data scientist who has never used causal inference" would lose the thread.
++A solo author who cannot find a cold reader can approximate the test by reading the document aloud after a 24-hour gap (the gap matters. Fresh eyes substitute for fresh ears). A second approximation is spawning a fresh subagent with `spawn_agent`, giving it only the README (no project context), and asking it to read the README and identify the first place a "data scientist who has never used causal inference" would lose the thread.
+ 
+ ### Step 8: Cross-link discipline
+ 
+@@ -186,7 +194,7 @@ Concrete artifacts this skill produces:
+ - **No runnable example before the API table.** Forces the reader to build a mental model from the API alone. Caught by: Step 3's mandatory 30-second example as section 2
+ - **Documentation that ages out silently.** README references a command that was renamed three releases ago. Caught by: a CI check that runs the README's quick-start example in a fresh container as part of release validation. The README example is treated as a smoke test
+ - **Heading sprawl.** Five sections, each one line long. Caught by: collapse one-line sections into the surrounding prose. A heading is a promise that a meaningful subsection follows
+-- **Em-dashes, semicolons, "delve into", "navigate the complexities", "in the ever-evolving landscape of...".** All caught by: the AI-slop catalog in `reference/ai-slop-patterns.md`, the global CLAUDE.md style rules, and the Wikipedia article on signs of AI writing
++- **Em-dashes, semicolons, "delve into", "navigate the complexities", "in the ever-evolving landscape of...".** All caught by: the AI-slop catalog in `reference/ai-slop-patterns.md`, the house style rules in Step 6, and the Wikipedia article on signs of AI writing
+ - **Orphan documents.** A SECURITY.md or `docs/explanation/concepts.md` that lives in the repo but is not linked from anything else. Caught by: Step 8 cross-link discipline
+ - **First-person voice.** README says "We built this to solve X". Reader does not know who "we" is and the phrasing does not survive the project changing hands. Use third person: "The library solves X." Same rule that applies to skill frontmatter applies here
+ - **Drifting between you-form and one-form.** The README must pick a voice and hold it. Mixing "you can install" and "users install" inside two paragraphs is jarring. Pick second-person ("install with...") and stay there, or pick imperative ("Install with...") and stay there
+@@ -233,7 +241,7 @@ Output: per-pattern findings table (concrete substring + named slop family + sub
+ - "seamlessly delve into the rich tapestry of" → metaphor cliché + empty intensifier → delete and replace with a concrete domain noun: "for causal inference" → reason: "delve into the rich tapestry" appears in millions of AI-generated documents and signals AI authorship to readers who have learned to spot it
+ - "In this ever-evolving landscape of" → time-and-place cliché → delete (the sentence works without it) → reason: nothing in the rest of the sentence depends on the landscape framing
+ - "cutting-edge" / "state-of-the-art" → marketing superlative → delete. Describe the actual technique ("backdoor-criterion adjustment over user-supplied DAGs") → reason: a reader cannot verify "cutting-edge". The named technique is verifiable
+-- " — " (em-dash) → formatting tic → replace with a comma or a period → reason: em-dashes are a Claude-family habit and a CLAUDE.md-banned character
++- " — " (em-dash) → formatting tic → replace with a comma or a period → reason: em-dashes are a common model-generated habit and a house-style-banned character
+ - "robust framework for navigating the complexities of" → faux-precision filler → "framework that adjusts for measured confounders. Does not adjust for unmeasured confounders, which is the limitation no observational design escapes" → reason: name the limitation, do not hide it behind "navigating complexities"
+ - "Let's dive in!" → sycophantic-opener cluster → delete (or replace with the start of the next concrete section) → reason: the exclamation mark plus the inclusive "Let's" signals AI authorship. The reader is already reading, they do not need to be invited
+ 
+diff --git a/reference/ai-slop-patterns.md b/reference/ai-slop-patterns.md
+index babf68f..a57aaa6 100644
+--- a/reference/ai-slop-patterns.md
++++ b/reference/ai-slop-patterns.md
+@@ -8,7 +8,7 @@ Reference for `writing-repo-documentation`. Each entry lists a pattern, a concre
+ 2. Apply the substitution. The substitution preserves the information; it strips the noise.
+ 3. The reason column tells you why the pattern signals AI authorship (or generic-corporate authorship). Knowing why prevents the same pattern from reappearing in the next paragraph.
+ 
+-This catalog complements two upstream sources: the global `~/.claude/CLAUDE.md` style rules (em-dashes, semicolons, sentence-initial conjunctions, the slop-word list) and the Wikipedia page on signs of AI writing (which adds bulleted-prose habit, emoji decoration, and heading sprawl). When the catalog disagrees with either source, defer to the source.
++This catalog complements two upstream sources: the house style rules written out in SKILL.md Step 6 (em-dashes, semicolons, sentence-initial conjunctions, the slop-word list), overridden by the target repo's `AGENTS.md` where one exists and the Wikipedia page on signs of AI writing (which adds bulleted-prose habit, emoji decoration, and heading sprawl). When the catalog disagrees with either source, defer to the source.
+ 
+ ## Family 1: Marketing superlatives
+ 
+@@ -59,9 +59,9 @@ This catalog complements two upstream sources: the global `~/.claude/CLAUDE.md`
+ 
+ | Match | Substitute with | Reason |
+ |---|---|---|
+-| em-dash ( — ) | comma or period | Em-dashes are a Claude-family habit; CLAUDE.md forbids them |
+-| semicolon ( ; ) in prose | period and a new sentence | Same as above; CLAUDE.md forbids them in prose |
+-| sentence-initial "And" / "But" / "Or" | reword the sentence to start with a noun or a verb | CLAUDE.md style rule; signals casual / blog-post register where formal documentation register is wanted |
++| em-dash ( — ) | comma or period | Em-dashes are a common model-generated habit, and the house style forbids them |
++| semicolon ( ; ) in prose | period and a new sentence | The house style forbids them in prose |
++| sentence-initial "And" / "But" / "Or" | reword the sentence to start with a noun or a verb | House style rule. Signals casual / blog-post register where formal documentation register is wanted |
+ | bulleted prose (three sentences turned into three bullets) | run them together as a paragraph | If reading the bullets aloud sounds like a sentence read in chunks, they are a sentence |
+ | heading sprawl (five one-line sections in a row) | collapse the one-liners into a paragraph under a single heading | A heading promises a meaningful subsection |
+ | emoji decoration (🚀, ✨, 🎯 prepended to sections) | use markdown headings without the decoration | Emoji-as-bullet is a blog-post move; project docs hold up better without them |

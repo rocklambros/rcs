@@ -1,0 +1,13 @@
+diff --git a/SKILL.md b/SKILL.md
+index c660ee8..04a9147 100644
+--- a/SKILL.md
++++ b/SKILL.md
+@@ -38,7 +38,7 @@ A hit is evidence that still needs a reader. These patterns also show up in huma
+ 
+ ## Run The Linter First
+ 
+-When code execution is available, run the bundled script before you read the text yourself, in every mode. Build the path from the base directory the Skill tool printed when it loaded this file, then make one Bash call written exactly like this, with SKILL_DIR, FILE, and PROFILE filled in:
++When code execution is available, run the bundled script before you read the text yourself, in every mode. The script path below is absolute. Make one Bash call written exactly like this, with FILE and PROFILE filled in:
+ 
+ ```bash
+ python3 -I /Users/klambros/.codex/skills/anti-ai-slop/scripts/slop_lint.py FILE --profile PROFILE

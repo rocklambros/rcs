@@ -1,0 +1,68 @@
+diff --git a/SKILL.md b/SKILL.md
+index 4a6dad3..16443e8 100644
+--- a/SKILL.md
++++ b/SKILL.md
+@@ -61,7 +66,7 @@ Skill response: inventories the named artifacts (spec, retriever, prompts, tools
+ | scope_hint | string | no | "full artifact" | Narrow the premortem to one component, layer, or claim when the artifact is too large for one pass. |
+ | max_rounds | integer | no | 5 | Cap on rounds. Each round attacks a distinct layer; convergence usually stops the run before five. |
+ | perspectives | list | no | all six | Override the default six perspectives. Skip a perspective only when it has nothing anchored to attack, and log the skip. |
+-| subagent_model | env `CLAUDE_CODE_SUBAGENT_MODEL` | no | inherit | Optional cost control: a smaller model for the perspective subagents while the orchestrator stays on the stronger model for adjudication. |
++| subagent_model | Codex agent role in `~/.codex/config.toml` | no | inherit | Optional cost control: a smaller model for the perspective subagents while the orchestrator stays on the stronger model for adjudication. |
+ 
+ ## Reviewer stance
+ 
+@@ -74,7 +79,7 @@ Copy this checklist into the response and check off items as the premortem progr
+ ```
+ Adversarial premortem progress:
+ - [ ] Step A: Inventory the artifacts, resolve paths, record named-but-unspecified components as findings
+-- [ ] Step B: Spawn the round's perspective subagents in one message (parallel)
++- [ ] Step B: Spawn the round's perspective subagents with `spawn_agent`, all before the first `wait_agent` (parallel)
+ - [ ] Step C: Cross-attack, update each finding prior → posterior, apply the drop rule, merge duplicates
+ - [ ] Step D: Write the round, check the stop signal, continue or converge (up to 5 rounds)
+ - [ ] Final: Dropped ledger, convergence statement, prioritized remediation plan, residual risk
+@@ -84,11 +89,11 @@ Adversarial premortem progress:
+ 
+ The session is the orchestrator. Each perspective gets its own subagent with a clean context window so it reads the artifacts independently and its deep reading never pollutes the orchestrator context. The orchestrator collects findings, runs the cross-attack, and sets the final confidence.
+ 
+-- Spawn each perspective as a subagent (the Task tool in Claude Code).
+-- Launch all of a round's subagents in a single message so they run in parallel. Sequential spawning makes the premortem far slower.
++- Spawn each perspective as a subagent with `spawn_agent`.
++- Issue all of a round's `spawn_agent` calls before the first `wait_agent` so they run in parallel. Sequential spawning makes the premortem far slower.
+ - Subagents cannot spawn their own subagents. The cross-attack and confidence updating happen in the orchestrator context.
+-- Up to 10 subagents run concurrently; six perspectives per round fits inside that limit.
+-- If the Task tool is unavailable (for example, running outside Claude Code), fall back to running each perspective as a separate, clearly labeled analytical pass in one context, in sequence. The structure and output format do not change.
++- Concurrency is capped by `[agents] max_threads` in `~/.codex/config.toml`. Six perspectives per round needs a cap of at least six, otherwise batch the round.
++- If `spawn_agent` is unavailable (Codex `multi_agent` feature off), fall back to running each perspective as a separate, clearly labeled analytical pass in one context, in sequence. The structure and output format do not change.
+ 
+ ### Step A: Inventory, then delegate
+ 
+@@ -96,7 +101,7 @@ Do a fast inventory pass. Read the spec or plan, list the referenced source file
+ 
+ ### Step B: Spawn one subagent per perspective
+ 
+-For each round, spawn these six perspectives in one message so they run in parallel. Each gets the same artifact paths and the same round attack surface, but a different lens:
++For each round, spawn these six perspectives with `spawn_agent`, all before the first `wait_agent`, so they run in parallel. Each gets the same artifact paths and the same round attack surface, but a different lens:
+ 
+ - **Red Teamer** — adversarial misuse, abuse paths, what a hostile actor or malicious input does to this layer.
+ - **Data Scientist** — data validity, label definition, leakage, distribution shift, sample size, class balance, metric soundness.
+@@ -151,7 +156,7 @@ A markdown report labeled with the artifact under review, its commit or version
+ 
+ ## References
+ 
+-- `reference/subagent-prompt-template.md` — the per-perspective Task subagent prompt template
++- `reference/subagent-prompt-template.md` — the per-perspective `spawn_agent` subagent prompt template
+ - `reference/round-report-format.md` — the per-round and final output templates
+ - `reference/confidence-and-drop-rule.md` — confidence bands, calibration penalties, the drop rule, the tail-risk carve-out
+ - [Klein 2007, *Performing a Project Premortem*, Harvard Business Review](https://hbr.org/2007/09/performing-a-project-premortem) — origin of the premortem method
+diff --git a/reference/subagent-prompt-template.md b/reference/subagent-prompt-template.md
+index ce63e93..19062a4 100644
+--- a/reference/subagent-prompt-template.md
++++ b/reference/subagent-prompt-template.md
+@@ -1,6 +1,6 @@
+ # Per-perspective subagent prompt template
+ 
+-Use this prompt for each Task subagent in a round. Fill the bracketed slots. Launch all of a round's subagents in a single message so they run in parallel.
++Use this prompt for each `spawn_agent` subagent in a round. Fill the bracketed slots. Issue all of a round's `spawn_agent` calls before the first `wait_agent` so they run in parallel.
+ 
+ ```
+ You are the [PERSPECTIVE] on an adversarial premortem. Assume the artifact below has

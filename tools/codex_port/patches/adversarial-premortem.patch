@@ -1,0 +1,53 @@
+diff --git a/SKILL.md b/SKILL.md
+index f24615c..d961849 100644
+--- a/SKILL.md
++++ b/SKILL.md
+@@ -20,15 +29,15 @@ You are the orchestrator of an expert red team and a disciplined Bayesian. You t
+ 
+ Your session is the orchestrator. Each perspective gets its own subagent with a clean context window so it reads the artifacts independently and its deep reading never pollutes your context. You collect the findings, run the cross-attack, and set the final confidence yourself.
+ 
+-Mechanics in Claude Code:
++Mechanics in Codex (see Codex runtime notes):
+ 
+-- Spawn each perspective with the Task tool.
+-- Launch all of a round's subagents in a single message so they run in parallel. Spawn them one at a time and they run sequentially, which makes the premortem far slower. Be explicit that they run concurrently.
++- Spawn each perspective with `spawn_agent`.
++- Issue all of a round's `spawn_agent` calls before the first `wait_agent` so they run in parallel. Spawn them one at a time and they run sequentially, which makes the premortem far slower. Be explicit that they run concurrently.
+ - Subagents cannot spawn their own subagents. The cross-attack and the confidence updating therefore happen in your context, not theirs.
+-- Up to 10 subagents run concurrently. Six perspectives per round fits inside that limit.
+-- Optional cost control: set the environment variable CLAUDE_CODE_SUBAGENT_MODEL to a smaller model for the perspective subagents and keep the orchestrator on the stronger model for adjudication.
++- Concurrency is capped by `[agents] max_threads` in `~/.codex/config.toml`. Six perspectives per round needs a cap of at least six, otherwise batch the round.
++- Optional cost control: define a Codex agent role with a smaller model in `~/.codex/config.toml` and pass it to `spawn_agent` for the perspective subagents. Keep the orchestrator on the stronger model for adjudication.
+ 
+-If the Task tool is not available, for example running outside Claude Code, fall back to running each perspective as a separate, clearly labeled analytical pass in this one context, in sequence. The structure and output format do not change.
++If `spawn_agent` is not available (Codex `multi_agent` feature off), fall back to running each perspective as a separate, clearly labeled analytical pass in this one context, in sequence. The structure and output format do not change.
+ 
+ ### Step A. Inventory, then delegate
+ 
+@@ -38,7 +47,7 @@ If a component is named but not specified, that omission is a finding. Record it
+ 
+ ### Step B. Spawn one subagent per perspective for the round
+ 
+-For round N, spawn these six perspectives in one message so they run in parallel:
++For round N, spawn these six perspectives with `spawn_agent`, all before the first `wait_agent`, so they run in parallel:
+ 
+ - Red Teamer: adversarial misuse, abuse paths, what a hostile actor or malicious input does to this layer.
+ - Data Scientist: data validity, label definition, leakage, distribution shift, sample size, class balance, metric soundness, statistical claims.
+@@ -49,7 +58,7 @@ For round N, spawn these six perspectives in one message so they run in parallel
+ 
+ Give each subagent the same artifact paths and the same round attack surface, but a different lens. Skip a perspective only if it has nothing anchored to attack in this layer, and log that you skipped it and why.
+ 
+-Use this prompt template for each Task subagent. Fill the bracketed slots.
++Use this prompt template for each `spawn_agent` subagent. Fill the bracketed slots.
+ 
+ ```
+ You are the [PERSPECTIVE] on an adversarial premortem. Assume the artifact below has
+@@ -123,7 +132,7 @@ Tail-risk carve-out. A Critical and irreversible finding that lands below Plausi
+ 
+ ## The five rounds
+ 
+-Conduct up to 5 rounds. Each round attacks a distinct layer. Use extended thinking, and if a sequential-thinking MCP server is available, use it to keep the reasoning chain explicit across perspectives.
++Conduct up to 5 rounds. Each round attacks a distinct layer. Reason at high effort, and if a sequential-thinking MCP server is configured in Codex, use it to keep the reasoning chain explicit across perspectives.
+ 
+ Round 1. Problem framing and data. Lead perspective: Data Scientist.
+ Attack hypothesis validity, label definition, leakage, distribution shift assumptions, sample size, class balance, and whether the dataset can actually answer the question being asked.
