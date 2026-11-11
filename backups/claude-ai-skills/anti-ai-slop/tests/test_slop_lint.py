@@ -660,3 +660,93 @@ def test_cleft_with_past_tense_verb_is_advisory() -> None:
     # Register 2026-10-23: "What decided this week was dumber."
     assert "A-CLEFT" in rules("What decided this week was dumber.", lint.ADVISORY, profile="social")
     assert "A-CLEFT" not in rules("I asked him what happened.", lint.ADVISORY, profile="social")
+
+
+# --- slop_lint 1.7.0: agreement template and ranking verdicts, 2026-11-10 ---
+# Fire cases are verbatim openers from LinkedIn Comment Brief and X Reply
+# Brief options drafted November 7 to 10, 2026. Pass cases are Rock's own
+# published reply openers from the same week and his pre-AI voice samples.
+
+
+@pytest.mark.parametrize(
+    "text",
+    [
+        "Agreed on the hygiene, and your runtime question is the one I'd put first.",
+        "Excessive agency is the one I'd move to the top.",
+        "Number 7 is the one I'd hand to procurement.",
+        "The Mt. Moon fix is the part I'd show a security team.",
+        "The fresh-session repro check is the part I'd keep.",
+        "The cost gap is the bigger story.",
+        "That’s the question I’d ask first.",
+    ],
+)
+def test_rank_pick_fires(text: str) -> None:
+    assert "H-RANK-PICK" in rules(text, lint.HARD, profile="social")
+
+
+@pytest.mark.parametrize(
+    "text",
+    [
+        "The one I'd trust is the signed build.",
+        "That word is the one I'd be careful with.",  # H-POINTBACK owns this one
+        "Patching is the one control that works when nothing else does.",
+        "I'd move excessive agency to the top of the list.",
+        "The cost gap is the story Vals measured: $2 to $3 against $17 to $46.",
+    ],
+)
+def test_rank_pick_passes(text: str) -> None:
+    assert "H-RANK-PICK" not in rules(text, lint.HARD, profile="social")
+
+
+@pytest.mark.parametrize(
+    "text",
+    [
+        "Agreed on the hygiene. Permissions say nothing about runtime.",
+        "Agreed, and the Astra case is worse.",
+        "Agreed that every agent action can't wait for a person.",
+        "A (recommended): Agreed, the AI SOC pile-up is real.",
+        "Fair point. Agreed, and the patch backs you up.",
+    ],
+)
+def test_agree_ramp_fires(text: str) -> None:
+    assert "H-AGREE-RAMP" in rules(text, lint.HARD, profile="social")
+
+
+@pytest.mark.parametrize(
+    "text",
+    [
+        "Agreed. The managed instructions shaped what the agent asked for.",
+        "I agree with Dutch Schwartz wholeheartedly that the next CISO is a business executive first.",
+        "100%. The camera now becomes an input channel.",
+        "Yes! 100% Yes! Basics still apply.",
+        "Yep... just because people think AI is black magic doesn't mean the oldies go away.",
+        "The board agreed, and the budget moved.",
+    ],
+)
+def test_agree_ramp_passes(text: str) -> None:
+    assert "H-AGREE-RAMP" not in rules(text, lint.HARD, profile="social")
+
+
+BATCH = (
+    "A (recommended): Agreed. The managed instructions shaped what the agent asked for.\n"
+    "\n"
+    "B: Yep, and the alert still has to sit outside the agent's write scope.\n"
+    "\n"
+    "C: Which of the 15 would you fund first out of the SOC line?\n"
+    "\n"
+    "R02: 100%. Recovery runs from the same tool, so the agent can turn it off.\n"
+)
+
+
+def test_second_agreement_opener_in_batch_is_hard() -> None:
+    found = [f for f in lint.lint(BATCH, profile="social") if f.rule == "H-AGREE-REPEAT"]
+    assert len(found) == 2
+
+
+def test_one_agreement_opener_in_batch_passes() -> None:
+    text = BATCH.split("\n\nR02")[0].replace("B: Yep, and", "B: The")
+    assert "H-AGREE-REPEAT" not in rules(text, lint.HARD, profile="social")
+
+
+def test_agreement_repeat_is_social_only() -> None:
+    assert "H-AGREE-REPEAT" not in rules(BATCH, lint.HARD, profile="email")

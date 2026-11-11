@@ -82,7 +82,7 @@ from collections.abc import Callable, Iterator
 from dataclasses import asdict, dataclass
 from typing import Final
 
-VERSION: Final = "1.6.0"
+VERSION: Final = "1.7.0"
 OWNER: Final = "Rock Lambros"
 MAX_BYTES: Final = 2_000_000
 DISABLE_ENV: Final = "SLOP_LINT_DISABLE"
@@ -769,6 +769,51 @@ RULES: Final[tuple[Rule, ...]] = (
         ),
         "Point-back opener or word verdict. Open on the claim about the thing itself.",
     ),
+    # 1.7.0, 2026-11-10. H-POINTBACK listed only negative verdict verbs (drop,
+    # cut, avoid), and H-PRAISE-LABEL needed "show every," so a ranking verdict
+    # with any other verb walked through. Eleven LinkedIn and X brief options
+    # from November 6 to 10 carried one, among them "your runtime question is
+    # the one I'd put first," "Excessive agency is the one I'd move to the
+    # top," "Number 7 is the one I'd hand to procurement," "The Mt. Moon fix is
+    # the part I'd show a security team," and "The cost gap is the bigger
+    # story." Each grades the author's point instead of saying what is true
+    # about it, the coffee-peer-voice "a friend doesn't grade your questions"
+    # rule. This rule matches the shape with any verb, so the next synonym
+    # does not need another register entry. Rock's voice samples trip it 0
+    # times.
+    Rule(
+        "H-RANK-PICK",
+        HARD,
+        _rx(
+            r"\b(?:is|was|are|'s|’s) the (?:one|ones|part|question|point|thing"
+            r"|line|bit|piece|detail|item|number|idea|move|call) I(?:['’]d"
+            r"| would|['’]ll| will) (?!be (?:most )?careful\b)[a-z]+\b"
+            r"|\bis the (?:bigger|biggest|more important) (?:story|point|deal)\b"
+        ),
+        "Ranking verdict on someone's point. Say the claim about the thing itself.",
+        profiles=("blog", "social", "email", "formal"),
+    ),
+    # 1.7.0, 2026-11-10. The 2026-11-04 register entry on the @Replit reply
+    # turned Rock's one rewrite ("Agreed, and outside its reach means outside
+    # its prompt too.") into the rule "open the reply in agreement and then
+    # add the angle," and the LinkedIn Comment Brief copied it into its
+    # drafting step. 10 of 25 LinkedIn reply drafts on November 8 to 10 opened
+    # "Agreed," against 0 of 17 on November 7, and three of six recommended
+    # comments did on November 10. Rock's own published openers
+    # in the same week were "Yep...", "100%.", "Yes! 100% Yes!", "YES!!!",
+    # and "Yeah...". The ramp form is the template: "Agreed" used as a hinge
+    # into a clause. A bare "Agreed." as its own sentence passes here, and
+    # check_agreement_repeat caps it across a batch. Case-sensitive on purpose.
+    Rule(
+        "H-AGREE-RAMP",
+        HARD,
+        re.compile(
+            r"(?:^|(?<=[.!?:] ))Agreed(?:,| on\b| that\b| with\b| and\b)",
+            re.MULTILINE,
+        ),
+        "Agreement ramp template. React the way Rock would out loud, or open on the angle.",
+        profiles=("blog", "social", "email", "formal"),
+    ),
     # Register 2026-10-16: "54 days left of the ninety." A standing deadline
     # restated as a countdown manufactures urgency from arithmetic.
     Rule(
@@ -1374,6 +1419,45 @@ def check_layout(original: str, masked: str, profile: str) -> list[Finding]:
 
 
 CONTRAST_RX: Final = _rx(r", not (?!only\b|just\b)|\brather than\b|\binstead of\b")
+
+# 1.7.0. A batch file from the reply and comment briefs holds one draft per
+# paragraph. The label the brief puts in front ("A (recommended):", "R02:")
+# is stripped before the opener is read. More than one agreement opener in a
+# batch is the bot pattern the briefs' own "different opening move" rule
+# names, and the drafting model does not hold that rule by itself (3 of 6
+# recommended LinkedIn options opened "Agreed" on 2026-11-10).
+BATCH_LABEL_RX: Final = re.compile(
+    r"^\s*(?:[`>*\"'“]\s*)*(?:(?:Option )?[A-C]|[RC]\d{1,2})"
+    r"(?:\s*\((?:recommended|RECOMMENDED|PIVOT)\))?(?:\s+(?:PIVOT|RECOMMENDED))?\s*:\s*"
+)
+AGREE_OPENER_RX: Final = re.compile(
+    r"^(?:agreed|agree|yes|yep|yeah|yup|exactly|absolutely|totally|100\s?%)(?![\w])",
+    re.IGNORECASE,
+)
+
+
+def check_agreement_repeat(masked: str, profile: str) -> list[Finding]:
+    """HARD for every agreement opener after the first in a social batch."""
+    if profile != "social":
+        return []
+    found: list[Finding] = []
+    seen = 0
+    for start, body in _paragraphs(masked):
+        opener = BATCH_LABEL_RX.sub("", body, count=1).lstrip()
+        if not AGREE_OPENER_RX.match(opener):
+            continue
+        seen += 1
+        if seen > 1:
+            found.append(
+                Finding(
+                    "H-AGREE-REPEAT",
+                    HARD,
+                    _line_of(masked, start),
+                    " ".join(opener.split())[:60],
+                    "Second agreement opener in this batch. Open this one on its angle.",
+                )
+            )
+    return found
 
 
 def check_contrast_budget(masked: str) -> list[Finding]:
@@ -2128,6 +2212,7 @@ def lint(text: str, profile: str = "blog", include_quotes: bool = False) -> list
             lambda: check_vocab_density(masked),
             lambda: check_cadence(masked, profile),
             lambda: check_contrast_budget(masked),
+            lambda: check_agreement_repeat(masked, profile),
             lambda: check_closers(masked),
             lambda: check_message_rules(text, masked, profile),
             lambda: check_shape(text, masked, profile),

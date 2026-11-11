@@ -1,6 +1,6 @@
 # Voice Corrections Register: Linter Coverage
 
-Version 1.0, owner Rock Lambros. Built November 6, 2026 against the register as fetched November 5, 2026 (112 entries, October 3 to November 5). slop_lint 1.6.0.
+Version 1.1, owner Rock Lambros. Built November 6, 2026 against the register as fetched November 5, 2026 (112 entries, October 3 to November 5). slop_lint 1.6.0. Updated November 10, 2026 for slop_lint 1.7.0 (see "1.7.0 Additions").
 
 This file maps every register entry to the rule that now catches it, or says why no regex can. Names of clients and colleagues are left out on purpose, because the harness-engineering repo that backs this skill up is public. Read the register itself for the full entry.
 
@@ -60,6 +60,16 @@ Most register entries say "slop_lint returned HARD 0." That was true because the
 | A-BURSTINESS, A-PARA-UNIFORM | 2026-10-29 course answers | Metronomic sentence lengths and same-skeleton paragraphs |
 | A-DO-X-AND-Y | coffee-peer-voice 1.6 rule, never linted before | "Drop it silently and every rate is wrong." |
 | A-SHAPE-* and A-SHAPE-MODAL | SlopShape core values | Roadmap openings, recap closings, closings that restate the opening, legacy-versus-modern contrasts, no date, institutional voice, no route out |
+
+## 1.7.0 Additions (November 10, 2026)
+
+| Rule | Register entries | What it catches |
+|---|---|---|
+| H-AGREE-RAMP | 2026-11-10 linkedin comment and reply brief, 2026-11-04 x reply (stance line replaced) | "Agreed, and," "Agreed on X," "Agreed that" as the hinge into a sentence |
+| H-AGREE-REPEAT | 2026-11-10 linkedin comment and reply brief | A second agreement opener ("Agreed," "Yep," "100%") in one social batch |
+| H-RANK-PICK | 2026-11-10 linkedin comment and reply brief | "X is the one I'd put first," "the part I'd keep," "is the bigger story," with any verb |
+
+The stance row below still counts the 2026-11-04 x reply entry, because its judgment (don't open on a challenge when Rock agrees with the post) still needs a reader. These rules catch the template that entry produced by accident.
 
 ## Not Lintable
 
