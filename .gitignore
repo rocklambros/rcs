@@ -44,3 +44,6 @@ backups/claude-ai-skills/coffee-peer-voice/references/voice-samples.md
 
 # Codex port overlay for private skills (per-machine, not for sharing)
 tools/codex_port/local/
+
+# Portable edition redaction lists name the clients they remove (never commit)
+backups/portable-editions/*.local.json
